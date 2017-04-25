@@ -113,8 +113,7 @@ public class MinaMod {
 	public static final Once<File> minaConfigPath = Once.ready();
 
 	@EventHandler
-	public void init(FMLInitializationEvent event) throws IllegalArgumentException, IllegalAccessException { // NO_UCD
-																												// code)
+	public void init(FMLInitializationEvent event) throws IllegalArgumentException, IllegalAccessException { 
 		proxy.registerKeyBindings();
 
 		tickHandler = new MinaTickEventHandler(this);
