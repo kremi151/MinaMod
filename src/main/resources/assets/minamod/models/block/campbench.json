@@ -1,0 +1,48 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": true,
+    "textures": {
+        "particle": "#mat_side"
+    },
+    "elements": [
+        {
+            "name": "Log",
+            "from": [ 2.0, 1.0, 6.0 ], 
+            "to": [ 14.0, 5.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 4.0, 12.0 ], "rotation": 90 },
+                "east": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "south": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 4.0, 12.0 ], "rotation": 90 },
+                "west": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "up": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 4.0, 12.0 ], "rotation": 90 },
+                "down": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 4.0, 12.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Foot1",
+            "from": [ 12.0, 0.0, 5.0 ], 
+            "to": [ 13.0, 1.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ], "rotation": 90 },
+                "south": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ], "rotation": 90 },
+                "up": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "down": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "Foot2",
+            "from": [ 3.0, 0.0, 5.0 ], 
+            "to": [ 4.0, 1.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "south": { "texture": "#mat_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "up": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "down": { "texture": "#mat_side", "uv": [ 0.0, 0.0, 2.0, 12.0 ] }
+            }
+        }
+    ]
+}

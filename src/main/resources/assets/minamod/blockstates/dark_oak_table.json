@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:dark_oak_table" },
+        "form=classic": { "model": "minamod:dark_oak_table_classic" }
+    }
+}

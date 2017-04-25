@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/table",
+  "textures": {
+    "material": "minecraft:blocks/quartz_block_top"
+  }
+}

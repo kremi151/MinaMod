@@ -1,0 +1,178 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": true,
+    "textures": {
+        "particle": "#material"
+    },
+    "elements": [
+        {
+            "name": "Leg1",
+            "from": [ 3.0, 0.0, 3.0 ], 
+            "to": [ 5.0, 8.0, 5.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg2",
+            "from": [ 11.0, 0.0, 3.0 ], 
+            "to": [ 13.0, 8.0, 5.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg3",
+            "from": [ 11.0, 0.0, 11.0 ], 
+            "to": [ 13.0, 8.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg4",
+            "from": [ 3.0, 0.0, 11.0 ], 
+            "to": [ 5.0, 8.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Connector1",
+            "from": [ 4.0, 3.0, 5.0 ], 
+            "to": [ 5.0, 5.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ], "rotation": 270 },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Connector2",
+            "from": [ 11.0, 3.0, 5.0 ], 
+            "to": [ 12.0, 5.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ], "rotation": 90 },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "Connector3",
+            "from": [ 5.0, 3.0, 4.0 ], 
+            "to": [ 11.0, 5.0, 5.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Connector4",
+            "from": [ 5.0, 3.0, 11.0 ], 
+            "to": [ 11.0, 5.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 6.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Plate",
+            "from": [ 3.0, 8.0, 3.0 ], 
+            "to": [ 13.0, 9.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
+                "up": { "texture": "#material", "uv": [ 3.0, 3.0, 13.0, 13.0 ] },
+                "down": { "texture": "#material", "uv": [ 3.0, 3.0, 13.0, 13.0 ] }
+            }
+        },
+        {
+            "name": "Back1",
+            "from": [ 3.0, 9.0, 12.0 ], 
+            "to": [ 5.0, 17.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Back2",
+            "from": [ 7.0, 9.0, 12.0 ], 
+            "to": [ 9.0, 17.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Back3",
+            "from": [ 11.0, 9.0, 12.0 ], 
+            "to": [ 13.0, 17.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 8.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 8.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "BackTop",
+            "from": [ 3.0, 17.0, 12.0 ], 
+            "to": [ 13.0, 19.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "east": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "south": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "west": { "texture": "#material", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "up": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
+                "down": { "texture": "#material", "uv": [ 0.0, 0.0, 10.0, 1.0 ] }
+            }
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:redstone_table" },
+        "form=classic": { "model": "minamod:redstone_table_classic" }
+    }
+}

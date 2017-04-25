@@ -1,0 +1,79 @@
+{
+  "parent": "block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "blocks/cobblestone",
+    "base": "blocks/cobblestone",
+    "top": "minamod:blocks/keylock_top"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        4
+      ],
+      "to": [
+        11,
+        3,
+        12
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            4,
+            3,
+            12,
+            13
+          ],
+          "texture": "#base"
+        },
+        "up": {
+          "uv": [
+            4,
+            3,
+            12,
+            13
+          ],
+          "texture": "#top"
+        },
+        "north": {
+          "uv": [
+            4,
+            0,
+            12,
+            4
+          ],
+          "texture": "#base"
+        },
+        "south": {
+          "uv": [
+            4,
+            0,
+            12,
+            4
+          ],
+          "texture": "#base"
+        },
+        "west": {
+          "uv": [
+            3,
+            0,
+            13,
+            4
+          ],
+          "texture": "#base"
+        },
+        "east": {
+          "uv": [
+            3,
+            0,
+            13,
+            4
+          ],
+          "texture": "#base"
+        }
+      }
+    }
+  ]
+}

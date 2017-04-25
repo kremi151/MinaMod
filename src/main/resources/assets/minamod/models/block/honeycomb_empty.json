@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "minamod:blocks/honeycomb_top",
+    "front": "minamod:blocks/honeycomb_hs",
+    "side": "minamod:blocks/honeycomb_ns"
+  }
+}

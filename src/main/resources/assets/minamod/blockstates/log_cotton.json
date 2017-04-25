@@ -1,0 +1,9 @@
+{
+    
+	"variants": {
+        "axis=y":  { "model": "minamod:cotton_log" },
+        "axis=z":   { "model": "minamod:cotton_log", "x": 90 },
+        "axis=x":   { "model": "minamod:cotton_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "minamod:cotton_bark" }
+    }
+}

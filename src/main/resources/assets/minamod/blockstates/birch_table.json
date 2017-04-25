@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:birch_table" },
+        "form=classic": { "model": "minamod:birch_table_classic" }
+    }
+}

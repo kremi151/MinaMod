@@ -1,0 +1,8 @@
+{
+	"variants": {
+        "axis=y":  { "model": "minamod:cherry_log" },
+        "axis=z":   { "model": "minamod:cherry_log", "x": 90 },
+        "axis=x":   { "model": "minamod:cherry_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "minamod:cherry_bark" }
+    }
+}

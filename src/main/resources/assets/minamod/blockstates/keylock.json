@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=down_z": { "model": "minamod:keylock", "x": 180, "y": 180 },
+        "facing=down_x": { "model": "minamod:keylock", "x": 180, "y": 90 },
+        "facing=up_z": { "model": "minamod:keylock" },
+        "facing=up_x": { "model": "minamod:keylock", "y": 270 },
+        "facing=east": { "model": "minamod:keylock", "x": 90, "y": 90 },
+        "facing=west": { "model": "minamod:keylock", "x": 90, "y": 270 },
+        "facing=south" : { "model": "minamod:keylock", "x": 90, "y": 180 },
+        "facing=north" : { "model": "minamod:keylock", "x": 90}
+    }
+}

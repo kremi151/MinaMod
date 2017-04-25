@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:quartz_table" },
+        "form=classic": { "model": "minamod:quartz_table_classic" }
+    }
+}

@@ -1,0 +1,84 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"centre": "minamod:blocks/cable",
+			"side": "minamod:blocks/cable"
+		},
+		"model": "minamod:pipe_center",
+		"uvlock": true
+	},
+	"variants": {
+		"down": {
+			"true": {
+				"submodel": {
+					"pipe_down": {
+						"model": "minamod:pipe_part",
+						"x": 90,
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		},
+		"up": {
+			"true": {
+				"submodel": {
+					"pipe_up": {
+						"model": "minamod:pipe_part",
+						"x": -90,
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		},
+		"north": {
+			"true": {
+				"submodel": {
+					"pipe_north": {
+						"model": "minamod:pipe_part",
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		},
+		"south": {
+			"true": {
+				"submodel": {
+					"pipe_south": {
+						"model": "minamod:pipe_part",
+						"y": 180,
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		},
+		"east": {
+			"true": {
+				"submodel": {
+					"pipe_east": {
+						"model": "minamod:pipe_part",
+						"y": 90,
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		},
+		"west": {
+			"true": {
+				"submodel": {
+					"pipe_west": {
+						"model": "minamod:pipe_part",
+						"y": -90,
+						"uvlock": true
+					}
+				}
+			},
+			"false": { }
+		}
+	}
+}

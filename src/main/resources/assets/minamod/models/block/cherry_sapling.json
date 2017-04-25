@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "minamod:blocks/sapling_cherry"
+  }
+}

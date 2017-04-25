@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/table",
+  "textures": {
+    "material": "minamod:blocks/citrin_block"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minamod:block/cake_uneaten",
+  "textures": {
+    "particle": "minamod:blocks/creepercake_side",
+    "bottom": "minamod:blocks/creepercake_bottom",
+    "top": "minamod:blocks/creepercake_top",
+    "side": "minamod:blocks/creepercake_side"
+  }
+}

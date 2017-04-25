@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "variant=poisonous": { "model": "minamod:poisonous_bush" },
+		"variant=speedy": { "model": "minamod:speedy_bush"},
+		"variant=regenerating": { "model": "minamod:regenerating_bush"},
+		"variant=withered": { "model": "minamod:withered_bush"}
+    }
+}

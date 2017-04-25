@@ -1,0 +1,7 @@
+{
+   "mob.ice_golhem.say": {"category": "neutral","sounds": [{"name": "minamod:ice_golhem_say", "stream": false}]},
+   "mob.ice_golhem.hurt": {"category": "neutral","sounds": [{"name": "minamod:ice_golhem_hurt", "stream": false}]},
+   "mob.ice_golhem.death": {"category": "neutral","sounds": [{"name": "minamod:ice_golhem_death", "stream": false}]},
+   "mob.turtle.hello": {"category": "neutral","sounds": [{"name": "minamod:turtle_hello", "stream": false}]},
+   "mob.penguin.say": {"category": "neutral","sounds": [{"name": "minamod:penguin1", "stream": false}, {"name": "minamod:penguin2", "stream": false}]}
+}

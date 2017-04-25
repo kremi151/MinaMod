@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "variant=peppel": { "model": "minamod:peppel_planks" },
+        "variant=chestnut": { "model": "minamod:chestnut_planks" },
+        "variant=cherry": { "model": "minamod:cherry_planks" },
+        "variant=kremi": { "model": "minamod:kremi_planks" }
+    }
+}

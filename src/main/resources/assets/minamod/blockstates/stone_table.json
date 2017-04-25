@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:stone_table" },
+        "form=classic": { "model": "minamod:stone_table_classic" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:cherry_table" },
+        "form=classic": { "model": "minamod:cherry_table_classic" }
+    }
+}

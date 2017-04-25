@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "black_pearl=true,white_pearl=true": { "model": "minamod:ice_altar_bw" },
+        "black_pearl=true,white_pearl=false": { "model": "minamod:ice_altar_b" },
+        "black_pearl=false,white_pearl=true": { "model": "minamod:ice_altar_w" },
+        "black_pearl=false,white_pearl=false": { "model": "minamod:ice_altar" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:acacia_table" },
+        "form=classic": { "model": "minamod:acacia_table_classic" }
+    }
+}

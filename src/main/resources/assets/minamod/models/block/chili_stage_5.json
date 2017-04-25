@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "minamod:blocks/chili_stage_5"
+  }
+}

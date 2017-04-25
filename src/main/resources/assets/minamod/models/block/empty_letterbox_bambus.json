@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/letterbox_empty",
+  "textures": {
+    "material": "minamod:blocks/bambus_side"
+  }
+}

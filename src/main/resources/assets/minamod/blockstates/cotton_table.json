@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:cotton_table" },
+        "form=classic": { "model": "minamod:cotton_table_classic" }
+    }
+}

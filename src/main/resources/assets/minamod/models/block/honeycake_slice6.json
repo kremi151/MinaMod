@@ -1,0 +1,10 @@
+{
+  "parent": "minamod:block/cake_slice6",
+  "textures": {
+    "particle": "minamod:blocks/honeycake_side",
+    "bottom": "minamod:blocks/honeycake_bottom",
+    "top": "minamod:blocks/honeycake_top",
+    "side": "minamod:blocks/honeycake_side",
+    "inside": "minamod:blocks/honeycake_inner"
+  }
+}

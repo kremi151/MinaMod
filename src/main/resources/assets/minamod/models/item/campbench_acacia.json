@@ -1,0 +1,7 @@
+{
+  "parent": "minamod:block/campbench",
+  "textures": {
+    "mat_side": "minecraft:blocks/log_acacia",
+    "mat_top": "minecraft:blocks/log_acacia_top"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "minamod:blocks/frozen_glowstone"
+  }
+}

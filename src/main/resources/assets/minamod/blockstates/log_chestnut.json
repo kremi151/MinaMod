@@ -1,0 +1,8 @@
+{
+	"variants": {
+        "axis=y":  { "model": "minamod:chestnut_log" },
+        "axis=z":   { "model": "minamod:chestnut_log", "x": 90 },
+        "axis=x":   { "model": "minamod:chestnut_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "minamod:chestnut_bark" }
+    }
+}

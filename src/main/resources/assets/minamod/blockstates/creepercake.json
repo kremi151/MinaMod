@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "bites=0": { "model": "minamod:creepercake_uneaten" },
+        "bites=1": { "model": "minamod:creepercake_slice1" },
+        "bites=2": { "model": "minamod:creepercake_slice2" },
+        "bites=3": { "model": "minamod:creepercake_slice3" },
+        "bites=4": { "model": "minamod:creepercake_slice4" },
+        "bites=5": { "model": "minamod:creepercake_slice5" },
+        "bites=6": { "model": "minamod:creepercake_slice6" }
+    }
+}

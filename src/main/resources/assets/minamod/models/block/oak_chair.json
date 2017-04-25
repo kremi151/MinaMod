@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/chair",
+  "textures": {
+    "material": "minecraft:blocks/planks_oak"
+  }
+}

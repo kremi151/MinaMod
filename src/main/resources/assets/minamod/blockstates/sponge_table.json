@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:sponge_table" },
+        "form=classic": { "model": "minamod:sponge_table_classic" }
+    }
+}

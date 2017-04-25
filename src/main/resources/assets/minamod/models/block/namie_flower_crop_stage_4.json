@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "minamod:blocks/namie_flower_4"
+  }
+}

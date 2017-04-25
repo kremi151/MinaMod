@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/tintable_cross",
+  "textures": {
+    "cross": "minamod:blocks/herb_s7"
+  }
+}

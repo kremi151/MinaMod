@@ -1,0 +1,49 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "mat_side": "minecraft:blocks/log_acacia",
+            "mat_top": "minecraft:blocks/log_acacia_top"
+        },
+        "model": "minamod:campbench",
+        "uvlock": true
+    },
+    "variants": {
+        "wood": {
+            "acacia": {
+                "textures": {}
+            },
+            "spruce": {
+                "textures": {
+                    "mat_side": "minecraft:blocks/log_spruce",
+                    "mat_top": "minecraft:blocks/log_spruce_top"
+                }
+            },
+            "dark_oak": {
+                "textures": {
+                    "mat_side": "minecraft:blocks/log_big_oak",
+                    "mat_top": "minecraft:blocks/log_big_oak_top"
+                }
+            },
+            "birch": {
+                "textures": {
+                    "mat_side": "minecraft:blocks/log_birch",
+                    "mat_top": "minecraft:blocks/log_birch_top"
+                }
+            }
+        },
+		"rotation": {
+		    "0": {},
+			"1": {
+			    "model": "minamod:campbench_rot"
+			},
+			"2": {
+			    "y": 90
+			},
+			"3": {
+			    "model": "minamod:campbench_rot",
+			    "y": 90
+			}
+		}
+    }
+}

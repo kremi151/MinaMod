@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minamod:items/mixture_bottle_empty",
+    "layer1": "minamod:items/mixture_bottle_content"
+  }
+}

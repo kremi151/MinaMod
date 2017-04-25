@@ -1,0 +1,54 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "minamod:sieve_level_0",
+        "uvlock": true
+    },
+    "variants": {
+        "level": {
+            "5": {
+			    "model": "minamod:sieve_level_5"
+            },
+			"4": {
+			    "model": "minamod:sieve_level_4"
+            },
+			"3": {
+			    "model": "minamod:sieve_level_3"
+            },
+            "2": {
+			    "model": "minamod:sieve_level_2"
+            },
+            "1": {
+			    "model": "minamod:sieve_level_1"
+            },
+            "0": {
+			    "model": "minamod:sieve_level_0"
+            }
+        },
+		"material": {
+		    "air": {
+			    "model": "minamod:sieve_level_0"
+			},
+			"sand": {
+			    "textures": {
+				    "material": "minecraft:blocks/sand"
+				}
+			},
+			"red_sand": {
+			    "textures": {
+				    "material": "minecraft:blocks/red_sand"
+				}
+			},
+			"gravel": {
+			    "textures": {
+				    "material": "minecraft:blocks/gravel"
+				}
+			},
+			"soul_sand": {
+			    "textures": {
+				    "material": "minecraft:blocks/soul_sand"
+				}
+			}
+		}
+    }
+}

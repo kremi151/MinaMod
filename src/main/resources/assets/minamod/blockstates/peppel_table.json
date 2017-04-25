@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:peppel_table" },
+        "form=classic": { "model": "minamod:peppel_table_classic" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/lit_milky_glass",
+  "textures": {
+    "glass": "minamod:blocks/milky_glass_blue"
+  }
+}

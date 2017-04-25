@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "bites=0": { "model": "minamod:strawberrycake_uneaten" },
+        "bites=1": { "model": "minamod:strawberrycake_slice1" },
+        "bites=2": { "model": "minamod:strawberrycake_slice2" },
+        "bites=3": { "model": "minamod:strawberrycake_slice3" },
+        "bites=4": { "model": "minamod:strawberrycake_slice4" },
+        "bites=5": { "model": "minamod:strawberrycake_slice5" },
+        "bites=6": { "model": "minamod:strawberrycake_slice6" }
+    }
+}

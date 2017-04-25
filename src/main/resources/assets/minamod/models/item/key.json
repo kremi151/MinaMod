@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minamod:items/key",
+    "layer1": "minamod:items/key_tag"
+  }
+}

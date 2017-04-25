@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "minamod:blocks/kevikus_stage_6"
+  }
+}

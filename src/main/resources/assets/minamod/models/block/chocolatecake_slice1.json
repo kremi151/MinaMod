@@ -1,0 +1,10 @@
+{
+  "parent": "minamod:block/cake_slice1",
+  "textures": {
+    "particle": "minamod:blocks/chocolatecake_side",
+    "bottom": "minamod:blocks/chocolatecake_bottom",
+    "top": "minamod:blocks/chocolatecake_top",
+    "side": "minamod:blocks/chocolatecake_side",
+    "inside": "minamod:blocks/chocolatecake_inner"
+  }
+}

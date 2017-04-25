@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:obsidian_table" },
+        "form=classic": { "model": "minamod:obsidian_table_classic" }
+    }
+}

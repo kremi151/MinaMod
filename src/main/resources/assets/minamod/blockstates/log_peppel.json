@@ -1,0 +1,8 @@
+{
+	"variants": {
+        "axis=y":  { "model": "minamod:peppel_log" },
+        "axis=z":   { "model": "minamod:peppel_log", "x": 90 },
+        "axis=x":   { "model": "minamod:peppel_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "minamod:peppel_bark" }
+    }
+}

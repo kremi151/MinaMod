@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "bites=0": { "model": "minamod:honeycake_uneaten" },
+        "bites=1": { "model": "minamod:honeycake_slice1" },
+        "bites=2": { "model": "minamod:honeycake_slice2" },
+        "bites=3": { "model": "minamod:honeycake_slice3" },
+        "bites=4": { "model": "minamod:honeycake_slice4" },
+        "bites=5": { "model": "minamod:honeycake_slice5" },
+        "bites=6": { "model": "minamod:honeycake_slice6" }
+    }
+}

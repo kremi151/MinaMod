@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "minamod:blocks/tracius_stage_2"
+  }
+}

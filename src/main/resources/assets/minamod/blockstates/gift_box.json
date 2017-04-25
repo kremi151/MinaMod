@@ -1,0 +1,92 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "side": "minamod:blocks/gift_white"
+        },
+        "model": "minamod:gift_box",
+        "uvlock": true
+    },
+    "variants": {
+        "color": {
+            "white": {
+                "textures": {}
+            },
+            "orange": {
+                "textures": {
+                    "side": "minamod:blocks/gift_orange"
+                }
+            },
+            "magenta": {
+                "textures": {
+                    "side": "minamod:blocks/gift_magenta"
+                }
+            },
+            "light_blue": {
+                "textures": {
+                    "side": "minamod:blocks/gift_light_blue"
+                }
+            },
+            "yellow": {
+                "textures": {
+                    "side": "minamod:blocks/gift_yellow"
+                }
+            },
+            "lime": {
+                "textures": {
+                    "side": "minamod:blocks/gift_lime"
+                }
+            },
+            "pink": {
+                "textures": {
+                    "side": "minamod:blocks/gift_pink"
+                }
+            },
+            "gray": {
+                "textures": {
+                    "side": "minamod:blocks/gift_gray"
+                }
+            },
+            "silver": {
+                "textures": {
+                    "side": "minamod:blocks/gift_silver"
+                }
+            },
+            "cyan": {
+                "textures": {
+                    "side": "minamod:blocks/gift_cyan"
+                }
+            },
+            "purple": {
+                "textures": {
+                    "side": "minamod:blocks/gift_purple"
+                }
+            },
+            "blue": {
+                "textures": {
+                    "side": "minamod:blocks/gift_blue"
+                }
+            },
+            "brown": {
+                "textures": {
+                    "side": "minamod:blocks/gift_brown"
+                }
+            },
+            "green": {
+                "textures": {
+                    "side": "minamod:blocks/gift_green"
+                }
+            },
+            "red": {
+                "textures": {
+                    "side": "minamod:blocks/gift_red"
+                }
+            },
+            "black": {
+                "textures": {
+                    "side": "minamod:blocks/gift_black"
+                }
+            }
+        }
+    }
+}

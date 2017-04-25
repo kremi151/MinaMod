@@ -1,0 +1,9 @@
+{
+  "parent": "minamod:block/cake_uneaten",
+  "textures": {
+    "particle": "minamod:blocks/strawberrycake_side",
+    "bottom": "minamod:blocks/strawberrycake_bottom",
+    "top": "minamod:blocks/strawberrycake_top",
+    "side": "minamod:blocks/strawberrycake_side"
+  }
+}

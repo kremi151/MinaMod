@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/letterbox_empty",
+  "textures": {
+    "material": "minecraft:blocks/planks_big_oak"
+  }
+}

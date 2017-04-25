@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "minamod:blocks/bambus_top",
+    "side": "minamod:blocks/bambus_side"
+  }
+}

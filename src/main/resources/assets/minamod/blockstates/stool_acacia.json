@@ -1,0 +1,93 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "material": "minecraft:blocks/planks_acacia",
+            "seat": "minecraft:blocks/wool_colored_white"
+        },
+        "model": "minamod:stool",
+        "uvlock": true
+    },
+    "variants": {
+        "color": {
+            "white": {
+                "textures": {}
+            },
+            "orange": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_orange"
+                }
+            },
+            "magenta": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_magenta"
+                }
+            },
+            "light_blue": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_light_blue"
+                }
+            },
+            "yellow": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_yellow"
+                }
+            },
+            "lime": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_lime"
+                }
+            },
+            "pink": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_pink"
+                }
+            },
+            "gray": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_gray"
+                }
+            },
+            "silver": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_silver"
+                }
+            },
+            "cyan": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_cyan"
+                }
+            },
+            "purple": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_purple"
+                }
+            },
+            "blue": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_blue"
+                }
+            },
+            "brown": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_brown"
+                }
+            },
+            "green": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_green"
+                }
+            },
+            "red": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_red"
+                }
+            },
+            "black": {
+                "textures": {
+                    "seat": "minecraft:blocks/wool_colored_black"
+                }
+            }
+        }
+    }
+}

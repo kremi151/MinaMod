@@ -1,0 +1,92 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "minamod:blocks/milky_glass_white"
+        },
+        "model": "minecraft:cube_all",
+        "uvlock": true
+    },
+    "variants": {
+        "color": {
+            "white": {
+                "textures": {}
+            },
+            "orange": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_orange"
+                }
+            },
+            "magenta": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_magenta"
+                }
+            },
+            "light_blue": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_light_blue"
+                }
+            },
+            "yellow": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_yellow"
+                }
+            },
+            "lime": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_lime"
+                }
+            },
+            "pink": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_pink"
+                }
+            },
+            "gray": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_gray"
+                }
+            },
+            "silver": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_silver"
+                }
+            },
+            "cyan": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_cyan"
+                }
+            },
+            "purple": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_purple"
+                }
+            },
+            "blue": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_blue"
+                }
+            },
+            "brown": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_brown"
+                }
+            },
+            "green": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_green"
+                }
+            },
+            "red": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_red"
+                }
+            },
+            "black": {
+                "textures": {
+                    "all": "minamod:blocks/milky_glass_black"
+                }
+            }
+        }
+    }
+}

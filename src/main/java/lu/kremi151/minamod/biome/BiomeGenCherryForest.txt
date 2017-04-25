@@ -1,0 +1,62 @@
+package lu.kremi151.minamod.biome;
+
+import java.util.Random;
+
+import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.worldgen.WorldGenCustomTree;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class BiomeGenCherryForest extends Biome{
+
+	public BiomeGenCherryForest(int id) {
+		super(id);
+		this.color = MinaUtils.convertRGBToDecimal(252, 98, 145);
+		this.theBiomeDecorator = new BiomeDecoratorCherryForest();
+		this.minHeight = Biome.height_MidHills.rootHeight;
+		this.maxHeight = Biome.height_MidHills.variation;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public int getGrassColorAtPos(BlockPos pos)
+    {
+        return this.color;
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public int getFoliageColorAtPos(BlockPos pos)
+    {
+        return this.color;
+    }
+	
+	@Override
+    public WorldGenAbstractTree genBigTreeChance(Random rand){
+    	return WorldGenCustomTree.treeGenCherry;
+    }
+
+	public static boolean allow(Decorate event){
+		switch(event.type){
+		case TREE:
+		case LAKE_WATER:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	private static class BiomeDecoratorCherryForest extends BiomeDecorator{
+		
+		BiomeDecoratorCherryForest(){
+			super();
+			this.treesPerChunk = 5;
+		}
+	}
+
+}

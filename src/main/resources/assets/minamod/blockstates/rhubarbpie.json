@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "bites=0": { "model": "minamod:rhubarbpie_uneaten" },
+        "bites=1": { "model": "minamod:rhubarbpie_slice1" },
+        "bites=2": { "model": "minamod:rhubarbpie_slice2" },
+        "bites=3": { "model": "minamod:rhubarbpie_slice3" },
+        "bites=4": { "model": "minamod:rhubarbpie_slice4" },
+        "bites=5": { "model": "minamod:rhubarbpie_slice5" },
+        "bites=6": { "model": "minamod:rhubarbpie_slice6" }
+    }
+}

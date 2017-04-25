@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "minamod:blocks/frozen_brick",
+        "top": "minamod:blocks/frozen_brick",
+        "side": "minamod:blocks/frozen_brick"
+    }
+}

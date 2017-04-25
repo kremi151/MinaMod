@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:chestnut_table" },
+        "form=classic": { "model": "minamod:chestnut_table_classic" }
+    }
+}

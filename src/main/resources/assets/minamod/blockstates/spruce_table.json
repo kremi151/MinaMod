@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:spruce_table" },
+        "form=classic": { "model": "minamod:spruce_table_classic" }
+    }
+}

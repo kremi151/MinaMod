@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minamod:items/herb_mixture_0",
+    "layer1": "minamod:items/herb_mixture_1"
+  }
+}

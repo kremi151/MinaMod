@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minamod:items/running_shoes_v1"
+  }
+}

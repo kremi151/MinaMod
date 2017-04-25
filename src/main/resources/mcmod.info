@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minamod",
+  "name": "MinaMod",
+  "description": "Extends Minecraft by adding a lot of new things which make Minecraft even better. #MakeMinecraftGreatAgain",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["kremi151", "namie"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

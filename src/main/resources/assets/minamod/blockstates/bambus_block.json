@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "minamod:bambus_block" },
+        "axis=z":   { "model": "minamod:bambus_block", "x": 90 },
+        "axis=x":   { "model": "minamod:bambus_block", "x": 90 , "y": 90 }
+    }
+}

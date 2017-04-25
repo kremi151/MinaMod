@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:gold_table" },
+        "form=classic": { "model": "minamod:gold_table_classic" }
+    }
+}

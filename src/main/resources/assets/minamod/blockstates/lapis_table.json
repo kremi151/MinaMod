@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "form=normal": { "model": "minamod:lapis_table" },
+        "form=classic": { "model": "minamod:lapis_table_classic" }
+    }
+}

@@ -1,0 +1,38 @@
+{
+   "white": {
+      "color": "red",
+	  "invert": false
+   },
+   "brown": {
+      "color": [7, 158, 0],
+	  "invert": false
+   },
+   "green": {
+      "color": [214, 0, 55],
+	  "invert": false
+   },
+   "cyan": {
+      "color": [232, 0, 246],
+	  "invert": false
+   },
+   "lime": {
+      "color": [214, 0, 106],
+	  "invert": false
+   },
+   "pink": {
+      "color": [191, 214, 0],
+	  "invert": false
+   },
+   "orange": {
+      "color": [38, 160, 0],
+	  "invert": false
+   },
+   "magenta": {
+      "color": [214, 146, 0],
+	  "invert": false
+   },
+   "light_blue": {
+      "color": [166, 214, 0],
+	  "invert": false
+   }
+}

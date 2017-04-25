@@ -1,0 +1,10 @@
+{
+  "parent": "minamod:block/pie_slice6",
+  "textures": {
+    "particle": "minamod:blocks/rhubarbpie_side",
+    "bottom": "minamod:blocks/rhubarbpie_bottom",
+    "top": "minamod:blocks/rhubarbpie_top",
+    "side": "minamod:blocks/rhubarbpie_side",
+    "inside": "minamod:blocks/rhubarbpie_inner"
+  }
+}

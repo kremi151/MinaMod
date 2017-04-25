@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "minamod:elevator_control" },
+        "facing=east":  { "model": "minamod:elevator_control", "y": 90 },
+        "facing=south": { "model": "minamod:elevator_control", "y": 180 },
+        "facing=west":  { "model": "minamod:elevator_control", "y": 270 }
+    }
+}

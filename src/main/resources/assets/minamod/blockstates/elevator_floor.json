@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "jumper=false": { "model": "minamod:elevator_floor" },
+		"jumper=true": { "model": "minamod:elevator_jumper" }
+    }
+}

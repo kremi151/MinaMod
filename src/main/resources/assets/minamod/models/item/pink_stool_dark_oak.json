@@ -1,0 +1,7 @@
+{
+  "parent": "minamod:block/stool",
+  "textures": {
+    "material": "minecraft:blocks/planks_big_oak",
+    "seat": "minecraft:blocks/wool_colored_pink"
+  }
+}

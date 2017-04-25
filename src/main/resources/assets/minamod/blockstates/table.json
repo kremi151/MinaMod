@@ -1,0 +1,26 @@
+{
+    "variants": {
+        "variant=oak": { "model": "minamod:oak_table" },
+        "variant=spruce": { "model": "minamod:spruce_table" },
+        "variant=birch":  { "model": "minamod:birch_table" },
+        "variant=jungle":  { "model": "minamod:jungle_table" },
+        "variant=acacia":  { "model": "minamod:acacia_table" },
+        "variant=dark_oak":  { "model": "minamod:dark_oak_table" },
+        "variant=chestnut":  { "model": "minamod:chestnut_table" },
+        "variant=cherry":  { "model": "minamod:cherry_table" },
+        "variant=kremi":  { "model": "minamod:kremi_table" },
+        "variant=stone":  { "model": "minamod:stone_table" },
+        "variant=frozen_stone":  { "model": "minamod:frozen_stone_table" },
+        "variant=iron":  { "model": "minamod:iron_table" },
+        "variant=gold":  { "model": "minamod:gold_table" },
+        "variant=lapis":  { "model": "minamod:lapis_table" },
+        "variant=obsidian":  { "model": "minamod:obsidian_table" },
+        "variant=diamond":  { "model": "minamod:diamond_table" },
+        "variant=redstone":  { "model": "minamod:redstone_table" },
+        "variant=ice":  { "model": "minamod:ice_table" },
+        "variant=citrin":  { "model": "minamod:citrin_table" },
+        "variant=sponge":  { "model": "minamod:sponge_table" },
+        "variant=mountain_crystal":  { "model": "minamod:mountain_crystal_table" },
+        "variant=emerald":  { "model": "minamod:emerald_table" }
+    }
+}

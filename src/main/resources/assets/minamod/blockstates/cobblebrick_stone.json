@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "type=full": { "model": "minamod:cobblebrick_stone" },
+        "type=double": { "model": "minamod:cobblebrick_stone" },
+        "type=top": { "model": "minamod:upper_slab_cobblebrick_stone" },
+        "type=bottom": { "model": "minamod:half_slab_cobblebrick_stone" }
+    }
+}

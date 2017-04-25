@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "empty=true,facing=north": { "model": "minamod:empty_letterbox_cherry" },
+        "empty=true,facing=south": { "model": "minamod:empty_letterbox_cherry", "y": 180 },
+        "empty=true,facing=west":  { "model": "minamod:empty_letterbox_cherry", "y": 270 },
+        "empty=true,facing=east":  { "model": "minamod:empty_letterbox_cherry", "y": 90 },
+		"empty=false,facing=north": { "model": "minamod:full_letterbox_cherry" },
+        "empty=false,facing=south": { "model": "minamod:full_letterbox_cherry", "y": 180 },
+        "empty=false,facing=west":  { "model": "minamod:full_letterbox_cherry", "y": 270 },
+        "empty=false,facing=east":  { "model": "minamod:full_letterbox_cherry", "y": 90 }
+    }
+}

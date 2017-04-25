@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "minamod:oak_chair" },
+        "facing=south": { "model": "minamod:oak_chair", "y": 180 },
+        "facing=west":  { "model": "minamod:oak_chair", "y": 270 },
+        "facing=east":  { "model": "minamod:oak_chair", "y": 90 }
+    }
+}

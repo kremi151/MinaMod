@@ -1,0 +1,60 @@
+package lu.kremi151.minamod.biome;
+
+import java.util.Random;
+
+import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.worldgen.WorldGenCustomTree;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class BiomeGenKremiForest extends Biome{
+
+	public BiomeGenKremiForest(int id) {
+		super(id);
+		this.color = MinaUtils.convertRGBToDecimal(20, 116, 92);
+		this.theBiomeDecorator = new BiomeDecoratorKremiForest();
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public int getGrassColorAtPos(BlockPos pos)
+    {
+        return this.color;
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public int getFoliageColorAtPos(BlockPos pos)
+    {
+        return this.color;
+    }
+	
+	@Override
+    public WorldGenAbstractTree genBigTreeChance(Random rand){
+    	return WorldGenCustomTree.treeGenKremi;
+    }
+
+	public static boolean allow(Decorate event){
+		switch(event.type){
+		case TREE:
+		case LAKE_WATER:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	private static class BiomeDecoratorKremiForest extends BiomeDecorator{
+		
+		BiomeDecoratorKremiForest(){
+			super();
+			this.treesPerChunk = 8;
+		}
+	}
+
+}

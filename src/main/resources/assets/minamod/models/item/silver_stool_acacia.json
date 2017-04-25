@@ -1,0 +1,7 @@
+{
+  "parent": "minamod:block/stool",
+  "textures": {
+    "material": "minecraft:blocks/planks_acacia",
+    "seat": "minecraft:blocks/wool_colored_silver"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minamod:block/gift_box",
+  "textures": {
+    "side": "minamod:blocks/gift_cyan"
+  }
+}

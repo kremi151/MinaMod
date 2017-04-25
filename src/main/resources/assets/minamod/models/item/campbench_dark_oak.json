@@ -1,0 +1,7 @@
+{
+  "parent": "minamod:block/campbench",
+  "textures": {
+    "mat_side": "minecraft:blocks/log_big_oak",
+    "mat_top": "minecraft:blocks/log_big_oak_top"
+  }
+}

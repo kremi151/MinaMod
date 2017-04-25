@@ -1,0 +1,8 @@
+{
+  "parent": "block/inner_stairs",
+  "textures": {
+    "bottom": "minamod:blocks/planks_cotton",
+    "top": "minamod:blocks/planks_cotton",
+    "side": "minamod:blocks/planks_cotton"
+  }
+}
