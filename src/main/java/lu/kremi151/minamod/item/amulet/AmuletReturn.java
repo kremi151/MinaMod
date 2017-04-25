@@ -15,6 +15,7 @@ public class AmuletReturn extends AmuletBase{
 	@Override
 	public boolean onUse(World world, EntityPlayer player, AmuletStack stack) {
 		if(hasLocationSaved(stack)){
+			stack.spawnAmuletAura(player, 0.0f, 0.5f, 0.5f);
 			if(tryTeleportToLocation(player, stack)){
 				player.world.playSound((EntityPlayer)null, player.prevPosX, player.prevPosY, player.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	            world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);

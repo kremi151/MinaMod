@@ -38,9 +38,13 @@ public class AmuletStack {
 		return amulet == null;
 	}
 	
+	void spawnAmuletAura(EntityPlayer player, float red, float green, float blue){
+		MinaMod.getProxy().spawnParticleEffectToAllAround(EnumParticleEffect.AMULET_AURA, player.world, player.posX, player.posY + 1.5, player.posZ, red, green, blue);
+	}
+	
 	public boolean tryUse(World world, EntityPlayer player){
 		if(!isEmpty() && cooldown_stamp < System.currentTimeMillis() && amulet.onUse(world, player, this)){
-			MinaMod.getProxy().spawnParticleEffect(EnumParticleEffect.AMULET_AURA, player.world, player.posX, player.posY + 1.5, player.posZ, 0.0f, 0.0f, 0.0f);
+			spawnAmuletAura(player, 0.0f, 0.0f, 0.0f);
 			cooldown_stamp = System.currentTimeMillis() + amulet.getUseCooldown();
 			return true;
 		}

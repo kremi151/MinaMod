@@ -8,6 +8,7 @@ import lu.kremi151.minamod.api.MinaModAPI;
 import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
+import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -39,8 +41,10 @@ public class CommonProxy implements MinaModAPI{
 	public void addStringOverlay(String message, long duration){}
 	public void setScreenLayer(int id, boolean force){}
 
-	public void spawnParticleEffect(EnumParticleEffect effect, World worldObj, double posX, double posY, double posZ, float red, float green, float blue){
-		//TODO: Make server side too
+	public void spawnParticleEffect(EnumParticleEffect effect, World worldObj, double posX, double posY, double posZ, float red, float green, float blue){}
+	
+	public void spawnParticleEffectToAllAround(EnumParticleEffect effect, World worldObj, double posX, double posY, double posZ, float red, float green, float blue){
+		if(!worldObj.isRemote)MinaMod.getMinaMod().getPacketDispatcher().sendToAllAround(new MessageSpawnParticleEffect(effect, posX, posY, posZ, red, green, blue), new TargetPoint(worldObj.provider.getDimension(), posX, posY, posZ, 40.0));
 	}
 
 	private final HashMap<String, HashMap<UUID, Long>> cooldown_map = new HashMap<String, HashMap<UUID, Long>>();
