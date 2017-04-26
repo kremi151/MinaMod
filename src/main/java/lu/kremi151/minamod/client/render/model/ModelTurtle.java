@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.client.render.model;
 
+import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -75,18 +76,23 @@ public class ModelTurtle extends ModelBase {
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		EntityTurtle turtle = (EntityTurtle) entity;
+		if(!turtle.isInDefenseMode()){
+			setBodyOffset(0F);
+			LegBL.render(f5);
+			LegFL.render(f5);
+			LegBR.render(f5);
+			LegFR.render(f5);
+			Tail.render(f5);
+			Neck.render(f5);
+			Snout.render(f5);
+		}else{
+			setBodyOffset(0.125F);
+		}
 		Body.render(f5);
-		LegBL.render(f5);
-		LegFL.render(f5);
-		LegBR.render(f5);
-		LegFR.render(f5);
-		Tail.render(f5);
-		Neck.render(f5);
-		Snout.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -96,8 +102,7 @@ public class ModelTurtle extends ModelBase {
 	}
 
 	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3,
-			float f4, float f5, Entity entity) {
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		// setHeadRotation(f4 / (180F / (float)Math.PI), f3 / (180F /
 		// (float)Math.PI));
@@ -105,6 +110,10 @@ public class ModelTurtle extends ModelBase {
 				* (float) MinaUtils.CONST_M);
 		setFeetRotation(f, f1);
 
+	}
+	
+	private void setBodyOffset(float offY){
+		this.Body.offsetY = offY;
 	}
 
 	private void setHeadRotation(float angleX, float angleY) {

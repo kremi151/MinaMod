@@ -3,6 +3,7 @@ package lu.kremi151.minamod.entity;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaSounds;
+import lu.kremi151.minamod.entity.ai.EntityAIConditionWrapper;
 import lu.kremi151.minamod.entity.ai.EntityAIHerbivore;
 import lu.kremi151.minamod.entity.ai.EntityAISwimInWater;
 import lu.kremi151.minamod.interfaces.IEntityAIHerbivoreListener;
@@ -10,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
@@ -23,6 +25,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +37,7 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 	
     private static final DataParameter<Integer> SATURATION = EntityDataManager.<Integer>createKey(EntityTurtle.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> MINE_TURTLE = EntityDataManager.<Boolean>createKey(EntityTurtle.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> DEFENSE_MODE = EntityDataManager.<Boolean>createKey(EntityTurtle.class, DataSerializers.BOOLEAN);
 	
 	public static final String entityId = "turtle";
 	public static ResourceLocation ID = new ResourceLocation(MinaMod.MODID, entityId);
@@ -50,6 +54,7 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
         super.entityInit();
         this.getDataManager().register(SATURATION, Integer.valueOf(SATURATION_MAX));
         this.getDataManager().register(MINE_TURTLE, Boolean.FALSE);
+        this.getDataManager().register(DEFENSE_MODE, Boolean.FALSE);
     }
 
 	@Override
@@ -62,14 +67,18 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 	protected void initEntityAI(){
 		if(this.tasks.taskEntries != null)this.tasks.taskEntries.clear();
 		if(this.targetTasks.taskEntries != null)this.targetTasks.taskEntries.clear();
-		this.tasks.addTask(0, new EntityAISwimInWater(this, 0.25D));
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIMate(this, 0.3D));
-		this.tasks.addTask(2, new EntityAIPanic(this, 0.3D));
-        this.tasks.addTask(3, new EntityAIWander(this, 0.3D));//Movement Speed
-        this.tasks.addTask(3, new EntityAIHerbivore(this).setListener(this));
-		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLiving.class, 6F));
-        this.tasks.addTask(4, new EntityAIFollowParent(this, 0.35D));
+		addNonDefenseTask(0, new EntityAISwimInWater(this, 0.25D));
+		addNonDefenseTask(1, new EntityAISwimming(this));
+		addNonDefenseTask(2, new EntityAIMate(this, 0.3D));
+		addNonDefenseTask(2, new EntityAIPanic(this, 0.3D));
+		addNonDefenseTask(3, new EntityAIWander(this, 0.3D));//Movement Speed
+		addNonDefenseTask(3, new EntityAIHerbivore(this).setListener(this));
+		addNonDefenseTask(4, new EntityAIWatchClosest(this, EntityLiving.class, 6F));
+		addNonDefenseTask(4, new EntityAIFollowParent(this, 0.35D));
+	}
+	
+	private void addNonDefenseTask(int priority, EntityAIBase task){
+		this.tasks.addTask(priority, new EntityAIConditionWrapper(task, t -> !isInDefenseMode()));
 	}
 	
 	private int getSaturation(){
@@ -89,11 +98,24 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 		return this;
 	}
 	
+	public boolean isInDefenseMode(){
+		return this.getDataManager().get(DEFENSE_MODE);
+	}
+	
+	public void setInDefenseMode(boolean v){
+		this.getDataManager().set(DEFENSE_MODE, v);
+	}
+	
 	@Override
     public void onLivingUpdate(){
     	super.onLivingUpdate();
-    	if(getSaturation() > 0 && getRNG().nextInt(15) == 0){
-    		setSaturation(getSaturation() - 1);
+    	if(!world.isRemote){
+    		if(getSaturation() > 0 && getRNG().nextInt(15) == 0){
+        		setSaturation(getSaturation() - 1);
+        	}
+        	if(isInDefenseMode() && getRNG().nextInt(400) == 0){
+        		setInDefenseMode(false);
+        	}
     	}
     }
 	
@@ -142,6 +164,15 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
     }
 	
 	@Override
+	protected void damageEntity(DamageSource damageSrc, float damageAmount)
+    {
+		if(!isInDefenseMode()){
+			super.damageEntity(damageSrc, damageAmount);
+			setInDefenseMode(true);
+		}
+    }
+	
+	@Override
 	protected void collideWithEntity(Entity entity){
 		super.collideWithEntity(entity);
 		if(isMineTurtle()){
@@ -154,7 +185,7 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 	@Override
     protected SoundEvent getAmbientSound()
     {
-        return MinaSounds.soundTurtleHello;
+        return (!isInDefenseMode())?MinaSounds.soundTurtleHello:null;
     }
 	
 	@Override

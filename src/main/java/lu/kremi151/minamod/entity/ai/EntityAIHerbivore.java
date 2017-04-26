@@ -86,7 +86,7 @@ public class EntityAIHerbivore extends EntityAIBase{
 	}
 	
 	private boolean isTargetableBlock(Block block){
-		return block instanceof BlockLeaves;
+		return block instanceof BlockLeaves || block instanceof net.minecraftforge.common.IPlantable;
 	}
 
 }
