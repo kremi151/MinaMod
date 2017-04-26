@@ -15,17 +15,21 @@ public class ContainerAmuletInventory extends BaseContainer{
 	
 	private final EntityPlayer player;
 	private final IAmuletHolder holder;
+	private boolean invInitState = true;
 	
 	public ContainerAmuletInventory(EntityPlayer player){
 		this.player = player;
 		this.holder = player.getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
 		
-		for(int n = 0 ; n <3 ; n++){
-			AmuletStack amulet = holder.getAmuletAt(n);
-			if(!amulet.isEmpty()){
-				internalInv.setInventorySlotContents(n, amulet.toItemStack());
+		if(!player.world.isRemote){
+			for(int n = 0 ; n <3 ; n++){
+				AmuletStack amulet = holder.getAmuletAt(n);
+				if(!amulet.isEmpty()){
+					internalInv.setInventorySlotContents(n, amulet.toItemStack());
+				}
 			}
 		}
+		invInitState = false;
 
 		addSlotToContainer(new SlotSpecific(internalInv, 0, 44, 34));
 		addSlotToContainer(new SlotSpecific(internalInv, 1, 80, 34));
@@ -69,12 +73,14 @@ public class ContainerAmuletInventory extends BaseContainer{
 
 		@Override
 		public void onCraftMatrixChanged() {
-			for(int n = 0 ; n <3 ; n++){
-				ItemStack stack = getStackInSlot(n);
-				if(stack.isEmpty()){
-					holder.setAmuletAt(n, AmuletStack.EMPTY);
-				}else{
-					holder.setAmuletAt(n, AmuletStack.fromItemStack(stack));
+			if(!invInitState){
+				for(int n = 0 ; n <3 ; n++){
+					ItemStack stack = getStackInSlot(n);
+					if(stack.isEmpty()){
+						holder.setAmuletAt(n, AmuletStack.EMPTY);
+					}else{
+						holder.setAmuletAt(n, AmuletStack.fromItemStack(stack));
+					}
 				}
 			}
 		}

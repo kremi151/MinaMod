@@ -66,4 +66,13 @@ public class AmuletStack {
 		stack.setTagCompound(nbt);
 		return stack;
 	}
+	
+	@Override
+	public String toString(){
+		if(amulet != null){
+			return "AmuletStack{type=" + amulet.getId() + "}";
+		}else{
+			return "AmuletStack{type=null}";
+		}
+	}
 }
