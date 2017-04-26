@@ -107,37 +107,21 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, renderPlate);
 
 		if(FeatureList.enable_ice_altar){
-			RenderingRegistry.registerEntityRenderingHandler(EntityIceSentinel.class,
-					new StaticRenderFactory(RenderIceSentinel.class));
+			RenderingRegistry.registerEntityRenderingHandler(EntityIceSentinel.class, rm -> new RenderIceSentinel(rm));
 		}
-		RenderingRegistry.registerEntityRenderingHandler(EntityBee.class, new StaticRenderFactory(RenderBee.class));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPenguin.class,
-				new StaticRenderFactory(RenderPenguin.class));
-		RenderingRegistry.registerEntityRenderingHandler(EntityIceGolhem.class,
-				new StaticRenderFactory(RenderIceGolhem.class));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTurtle.class,
-				new StaticRenderFactory(RenderTurtle.class));
-		RenderingRegistry.registerEntityRenderingHandler(EntityWookie.class,
-				new StaticRenderFactory(RenderWookie.class));
-		RenderingRegistry.registerEntityRenderingHandler(EntityFish.class,
-				new StaticRenderFactory(RenderFish.class));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBee.class, rm -> new RenderBee(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPenguin.class, rm -> new RenderPenguin(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityIceGolhem.class, rm -> new RenderIceGolhem(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTurtle.class, rm -> new RenderTurtle(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityWookie.class, rm -> new RenderWookie(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFish.class, rm -> new RenderFish(rm));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityFrostBall.class, new IRenderFactory<EntityFrostBall>() {
-
-			@Override
-			public Render<? super EntityFrostBall> createRenderFor(RenderManager manager) {
-				return new RenderSnowball<EntityFrostBall>(manager, MinaItems.EVER_SNOW, Minecraft.getMinecraft().getRenderItem());
-			}
-
-		});
-		RenderingRegistry.registerEntityRenderingHandler(EntitySoulPearl.class, new IRenderFactory<EntitySoulPearl>() {
-
-			@Override
-			public Render<? super EntitySoulPearl> createRenderFor(RenderManager manager) {
-				return new RenderSnowball<EntitySoulPearl>(manager, MinaItems.SOUL_PEARL, Minecraft.getMinecraft().getRenderItem());
-			}
-
-		});
+		RenderingRegistry.registerEntityRenderingHandler(EntityFrostBall.class, rm -> 
+			new RenderSnowball<EntityFrostBall>(rm, MinaItems.EVER_SNOW, Minecraft.getMinecraft().getRenderItem())
+		);
+		RenderingRegistry.registerEntityRenderingHandler(EntitySoulPearl.class, rm ->
+			new RenderSnowball<EntitySoulPearl>(rm, MinaItems.SOUL_PEARL, Minecraft.getMinecraft().getRenderItem())
+		);
 
 		// Minecraft.getMinecraft().effectRenderer.addEffect(EntityFxFrostPortal);
 
@@ -405,33 +389,11 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private class StaticRenderFactory<E extends Entity> implements IRenderFactory<E> {
-
-		private Class<? super Render<E>> cl;
-
-		private StaticRenderFactory(Class<? super Render<E>> cl) throws NoSuchMethodException, SecurityException {
-			this.cl = cl;
-			cl.getConstructor(RenderManager.class);
-		}
-
-		@Override
-		public Render<? super E> createRenderFor(RenderManager manager) {
-			try {
-				return (Render<? super E>) cl.getConstructor(RenderManager.class).newInstance(manager);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-	}
-
-	@SideOnly(Side.CLIENT)
 	private class ItemVariantsData {
 
-		Item item;
-		String name;
-		ResourceLocation[] variantNames;
+		final Item item;
+		final String name;
+		final ResourceLocation[] variantNames;
 
 		private ItemVariantsData(Item item, String name, ResourceLocation... variantNames) {
 			this.item = item;
