@@ -101,7 +101,7 @@ public class ClientProxy extends CommonProxy {
 	public static final KeyBinding KEY_AMULET_3 = new KeyBinding("gui.key.amulets.3.desc", Keyboard.KEY_P, "gui.key.category.minamod");
 	
 	@Override
-	public void registerRenderers() throws NoSuchMethodException, SecurityException {
+	public void registerRenderers() {
 		renderPlate = new RenderPlate();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, renderPlate);
@@ -122,8 +122,6 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySoulPearl.class, rm ->
 			new RenderSnowball<EntitySoulPearl>(rm, MinaItems.SOUL_PEARL, Minecraft.getMinecraft().getRenderItem())
 		);
-
-		// Minecraft.getMinecraft().effectRenderer.addEffect(EntityFxFrostPortal);
 
 		overlayHandler = new GuiMinaOverlay(Minecraft.getMinecraft());
 

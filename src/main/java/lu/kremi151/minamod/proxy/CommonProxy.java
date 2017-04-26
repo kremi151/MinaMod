@@ -24,7 +24,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy implements MinaModAPI{
 
-	public void registerRenderers() throws NoSuchMethodException, SecurityException {}
+	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
 	public void registerStateMappings() {}
 	public void registerKeyBindings(){}

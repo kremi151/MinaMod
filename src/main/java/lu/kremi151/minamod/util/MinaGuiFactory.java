@@ -32,4 +32,15 @@ public class MinaGuiFactory implements IModGuiFactory {
         return null;
     }
 
+	@Override
+	public boolean hasConfigGui() {
+		return false;//TODO: Enable gui button (rework of the actual gui...)
+	}
+
+	@Override
+	public GuiScreen createConfigGui(GuiScreen parentScreen) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

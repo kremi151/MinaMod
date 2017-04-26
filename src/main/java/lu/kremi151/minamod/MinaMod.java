@@ -360,15 +360,6 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageUpdateTileEntityHandler.class, MessageUpdateTileEntity.class, 8, Side.CLIENT);
 		networkWrapper.registerMessage(MessageUseAmuletHandler.class, MessageUseAmulet.class, 9, Side.SERVER);
 		networkWrapper.registerMessage(MessageSpawnParticleEffectHandler.class, MessageSpawnParticleEffect.class, 10, Side.CLIENT);
-		// networkWrapper.registerMessage(MessageHarmonyPearlHandler.class,
-		// MessageHarmonyPearl.class, 5, Side.CLIENT);
-		// networkWrapper.registerMessage(MessageSyncMinaPlayerHandler.class,
-		// MessageSyncMinaPlayer.class, 3, Side.CLIENT);
-		// if(side ==
-		// Side.CLIENT)networkWrapper.registerMessage(MinaconomyClient.class,
-		// MessageSyncMinaconomy.class, 4, Side.CLIENT);
-		// networkWrapper.registerMessage(MessageSyncCasinoHandler.class,
-		// MessageSyncCasino.class, 5, Side.CLIENT);
 	}
 	
 	public static String createDottedIdentifier(String name){

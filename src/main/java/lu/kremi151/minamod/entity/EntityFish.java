@@ -1,7 +1,9 @@
 package lu.kremi151.minamod.entity;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -33,6 +35,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
+import net.minecraftforge.fml.common.registry.RegistryBuilder;
 
 @Mod.EventBusSubscriber
 public class EntityFish extends EntityAnimal {
@@ -40,7 +43,8 @@ public class EntityFish extends EntityAnimal {
 	public static final String entityId = "living_fish";
 	public static ResourceLocation ID = new ResourceLocation(MinaMod.MODID, entityId);
 
-	private static RegistryNamespacedDefaultedByKey<ResourceLocation, FishType> REGISTRY;
+	private static IForgeRegistry<FishType> REGISTRY;
+	public static final ResourceLocation DEFAULT_FISH_TYPE = new ResourceLocation(MinaMod.MODID, "hikari");
 
 	private static final float MAX_WIDTH = 18f / 16f;
 	private static final float MAX_HEIGHT = 5f / 16f;
@@ -54,18 +58,23 @@ public class EntityFish extends EntityAnimal {
 	private final LinkedList<EntityAIBase> customAI = new LinkedList<EntityAIBase>();
 
 	private static final DataParameter<Float> SIZE = EntityDataManager.<Float>createKey(EntityFish.class, DataSerializers.FLOAT);
-	private static final DataParameter<Integer> VARIANT = EntityDataManager.<Integer>createKey(EntityFish.class, DataSerializers.VARINT);
+	private static final DataParameter<String> VARIANT = EntityDataManager.<String>createKey(EntityFish.class, DataSerializers.STRING);
 
 	public EntityFish(World worldIn) {
 		super(worldIn);
 		this.setSize(MAX_WIDTH, MAX_HEIGHT);
 	}
+	
+	private static FishType getRandomType(Random random){
+		List<FishType> types = REGISTRY.getValues();
+		return types.get(random.nextInt(types.size()));
+	}
 
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.getDataManager().register(VARIANT, 0);
-		fishType = REGISTRY.getObjectById(0);
+		this.getDataManager().register(VARIANT, DEFAULT_FISH_TYPE.toString());
+		fishType = REGISTRY.getValue(DEFAULT_FISH_TYPE);
 		onFishTypeChanged();
 
 		this.getDataManager().register(SIZE, Float.valueOf(
@@ -76,14 +85,17 @@ public class EntityFish extends EntityAnimal {
 	@Nullable
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-		setFishType(REGISTRY.getRandomObject(rand));
+		setFishType(getRandomType(rand));
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		if (key == VARIANT) {
-			fishType = REGISTRY.getObjectById(getDataManager().get(VARIANT));
+			fishType = REGISTRY.getValue(new ResourceLocation(getDataManager().get(VARIANT)));
+			if(fishType == null){
+				fishType = REGISTRY.getValue(DEFAULT_FISH_TYPE);
+			}
 
 			float size = getSizeF();
 			if (isChild() && size != fishType.getChildSize()) {
@@ -112,7 +124,7 @@ public class EntityFish extends EntityAnimal {
 
 	public void setFishType(FishType type) {
 		this.fishType = type;
-		getDataManager().set(VARIANT, REGISTRY.getIDForObject(type));
+		getDataManager().set(VARIANT, type.getRegistryName().toString());
 	}
 
 	private void onFishTypeChanged() {
@@ -169,7 +181,7 @@ public class EntityFish extends EntityAnimal {
 			setSizeF(nbt.getFloat("Size"));
 		}
 		if (nbt.hasKey("Type", 8)) {
-			FishType type = REGISTRY.getObject(new ResourceLocation(nbt.getString("Type")));
+			FishType type = REGISTRY.getValue(new ResourceLocation(nbt.getString("Type")));
 			if (type != null) {
 				setFishType(type);
 			}
@@ -306,53 +318,6 @@ public class EntityFish extends EntityAnimal {
 		}
 	}
 
-	private static class FishCallbacks
-			implements IForgeRegistry.AddCallback<FishType>, IForgeRegistry.ClearCallback<FishType>,
-			IForgeRegistry.CreateCallback<FishType>, IForgeRegistry.SubstitutionCallback<FishType> {
-
-		private static FishCallbacks INSTANCE = null;
-
-		private FishCallbacks() {
-			if (INSTANCE != null) {
-				throw new RuntimeException("Cannot have more than one instance");
-			}
-		}
-
-		@Override
-		public void onSubstituteActivated(Map<ResourceLocation, ?> slaveset, FishType original, FishType replacement,
-				ResourceLocation name) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onCreate(Map<ResourceLocation, ?> slaveset,
-				BiMap<ResourceLocation, ? extends IForgeRegistry<?>> registries) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onClear(IForgeRegistry<FishType> is, Map<ResourceLocation, ?> slaveset) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onAdd(FishType obj, int id, Map<ResourceLocation, ?> slaveset) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public static FishCallbacks get() {
-			if (INSTANCE == null) {
-				INSTANCE = new FishCallbacks();
-			}
-			return INSTANCE;
-		}
-
-	}
-
 	@SubscribeEvent
 	public static void registerFishTypes(RegistryEvent.Register<FishType> event) {
 		FishTypes.register();
@@ -360,9 +325,20 @@ public class EntityFish extends EntityAnimal {
 
 	@SubscribeEvent
 	public static void createFishRegistry(RegistryEvent.NewRegistry event) {
-		REGISTRY = PersistentRegistryManager.createRegistry(new ResourceLocation(MinaMod.MODID, "fishtypes"),
+		/*REGISTRY = PersistentRegistryManager.createRegistry(new ResourceLocation(MinaMod.MODID, "fishtypes"),
 				FishType.class, new ResourceLocation(MinaMod.MODID, "hikari"), 0, 15, true, FishCallbacks.get(),
-				FishCallbacks.get(), FishCallbacks.get(), FishCallbacks.get());
+				FishCallbacks.get(), FishCallbacks.get(), FishCallbacks.get());*/
+		
+		if(REGISTRY == null){
+			REGISTRY = new RegistryBuilder<FishType>()
+							.setName(new ResourceLocation(MinaMod.MODID, "fishtypes"))
+							.setDefaultKey(DEFAULT_FISH_TYPE)
+							.setIDRange(0, 15)
+							.setType(FishType.class)
+							.create();
+		}else{
+			throw new RuntimeException("Fish type registry already created");
+		}
 	}
 
 }
