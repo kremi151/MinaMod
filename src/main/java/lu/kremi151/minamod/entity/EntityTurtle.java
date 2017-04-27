@@ -77,8 +77,8 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 		addNonDefenseTask(4, new EntityAIFollowParent(this, 0.35D));
 	}
 	
-	private void addNonDefenseTask(int priority, EntityAIBase task){
-		this.tasks.addTask(priority, new EntityAIConditionWrapper(task, t -> !isInDefenseMode()));
+	private <T extends EntityAIBase> void addNonDefenseTask(int priority, T task){
+		this.tasks.addTask(priority, new EntityAIConditionWrapper<T>(task, t -> !isInDefenseMode()));
 	}
 	
 	private int getSaturation(){

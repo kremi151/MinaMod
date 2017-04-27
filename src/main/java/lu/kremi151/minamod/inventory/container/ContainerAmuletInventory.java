@@ -5,13 +5,17 @@ import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
 import lu.kremi151.minamod.inventory.BaseInventory;
 import lu.kremi151.minamod.inventory.SlotSpecific;
-import lu.kremi151.minamod.item.amulet.AmuletBase;
-import lu.kremi151.minamod.item.amulet.AmuletRegistry;
 import lu.kremi151.minamod.item.amulet.AmuletStack;
+import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class ContainerAmuletInventory extends BaseContainer{
+	
+	private static final ShiftClickManager shiftMan = ShiftClickManager.builder()
+			.addTransfer(0, 3, 3, 3 + PLAYER_INV_SLOT_COUNT)
+			.addTransfer(3, 3 + PLAYER_INV_SLOT_COUNT, 0, 3, stack -> (!stack.isEmpty() && stack.getItem() == MinaItems.AMULET))
+			.build();
 	
 	private final EntityPlayer player;
 	private final IAmuletHolder holder;
@@ -43,6 +47,11 @@ public class ContainerAmuletInventory extends BaseContainer{
 		return true;
 	}
 	
+	@Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+		return shiftMan.handle(this, player, slot);
+	}
+	
 	private final BaseInventory internalInv = new BaseInventory(3){
 
 		@Override
@@ -68,7 +77,7 @@ public class ContainerAmuletInventory extends BaseContainer{
 
 		@Override
 		public String getName() {
-			return null;
+			return "amuletInventory";
 		}
 
 		@Override

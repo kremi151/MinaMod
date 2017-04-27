@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -18,7 +19,7 @@ public class ShiftClickManager {
 	private IHandler handlers[];
 	
 	static{
-		methodMergeItemStack = ReflectionHelper.findMethod(Container.class, null, new String[]{"mergeItemStack", "func_75135_a"}, ItemStack.class, int.class, int.class, boolean.class);
+		methodMergeItemStack = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
 	}
 	
 	private ShiftClickManager(){
@@ -81,22 +82,24 @@ public class ShiftClickManager {
 	private static class Handler implements IHandler{
 		private final int srcMinIncl, srcMaxExcl, destMinIncl, destMaxExcl;
 		private final boolean inverse;
+		private final Predicate<ItemStack> predicate;
 		
-		private Handler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl){
-			this(srcMinIncl, srcMaxExcl, destMinIncl, destMaxExcl, true);
+		private Handler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl, Predicate<ItemStack> predicate){
+			this(srcMinIncl, srcMaxExcl, destMinIncl, destMaxExcl, true, predicate);
 		}
 		
-		public Handler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl, boolean inverse){
+		public Handler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl, boolean inverse, Predicate<ItemStack> predicate){
 			this.srcMinIncl = srcMinIncl;
 			this.srcMaxExcl = srcMaxExcl;
 			this.destMinIncl = destMinIncl;
 			this.destMaxExcl = destMaxExcl;
 			this.inverse = inverse;
+			this.predicate = predicate;
 		}
 
 		@Override
 		public ItemStack handle(Container container, ItemStack stack) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-			boolean result = (Boolean)methodMergeItemStack.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
+			boolean result = predicate.test(stack) && (Boolean)methodMergeItemStack.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
 			if(result){
 				return stack;
 			}else{
@@ -112,9 +115,8 @@ public class ShiftClickManager {
 	
 	private static class DefaultHandler extends Handler{
 		
-		public DefaultHandler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl,
-				boolean inverse) {
-			super(srcMinIncl, srcMaxExcl, destMinIncl, destMaxExcl, inverse);
+		public DefaultHandler(int srcMinIncl, int srcMaxExcl, int destMinIncl, int destMaxExcl, boolean inverse) {
+			super(srcMinIncl, srcMaxExcl, destMinIncl, destMaxExcl, inverse, stack -> true);
 		}
 
 		@Override
@@ -147,14 +149,22 @@ public class ShiftClickManager {
 		private Builder(){
 		}
 		
+		public Builder addTransfer(int fromMinIncl, int fromMaxExcl, int toMinIncl, int toMaxExcl, boolean reverse, Predicate<ItemStack> predicate){
+			handlers.add(new Handler(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, reverse, predicate));
+			return this;
+		}
+		
 		public Builder addTransfer(int fromMinIncl, int fromMaxExcl, int toMinIncl, int toMaxExcl, boolean reverse){
-			handlers.add(new Handler(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, reverse));
+			return addTransfer(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, reverse, stack -> true);
+		}
+		
+		public Builder addTransfer(int fromMinIncl, int fromMaxExcl, int toMinIncl, int toMaxExcl, Predicate<ItemStack> predicate){
+			handlers.add(new Handler(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, true, predicate));
 			return this;
 		}
 		
 		public Builder addTransfer(int fromMinIncl, int fromMaxExcl, int toMinIncl, int toMaxExcl){
-			handlers.add(new Handler(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, true));
-			return this;
+			return addTransfer(fromMinIncl, fromMaxExcl, toMinIncl, toMaxExcl, true, stack -> true);
 		}
 		
 		public Builder defaultTransfer(int toMinIncl, int toMaxExcl, boolean reverse){
