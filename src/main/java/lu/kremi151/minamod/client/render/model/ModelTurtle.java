@@ -90,7 +90,7 @@ public class ModelTurtle extends ModelBase {
 			Neck.render(f5);
 			Snout.render(f5);
 		}else{
-			setBodyOffset(0.125F);
+			setBodyOffset(0.0625F);
 		}
 		Body.render(f5);
 	}
