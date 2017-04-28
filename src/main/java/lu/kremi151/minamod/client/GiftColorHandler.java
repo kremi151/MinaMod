@@ -38,14 +38,7 @@ public class GiftColorHandler implements IBlockColor, IItemColor{
 	private static final ResourceLocation giftBandDefinitionJson = new ResourceLocation(MinaMod.MODID, "misc/gift_bands.json");
 	
 	private GiftColorHandler(){
-		((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(new IResourceManagerReloadListener(){
-
-			@Override
-			public void onResourceManagerReload(IResourceManager resourceManager) {
-				loadColorDefinitions();
-			}
-			
-		});
+		((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(rm -> loadColorDefinitions());
 	}
 	
 	private void loadColorDefinitions(){

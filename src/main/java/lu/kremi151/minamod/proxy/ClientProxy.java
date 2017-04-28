@@ -146,11 +146,9 @@ public class ClientProxy extends CommonProxy {
 		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.KEY);
 		ic.registerItemColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
 		
-		if (FeatureList.enable_mixtures){
-			ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.HERB);
-			ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.POWDER);
-			ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.MIXTURE);
-		}
+		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.HERB);
+		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.POWDER);
+		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.MIXTURE);
 		if (FeatureList.enable_soul_pearls)
 			ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.SOUL_PEARL);
 		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.COLORED_BOOK);

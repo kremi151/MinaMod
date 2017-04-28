@@ -64,7 +64,7 @@ public class WorldGenerators {
 		if(FeatureList.enable_ice_altar){
 			GameRegistry.registerWorldGenerator(new WorldGenFrostTemple(), 1);
 		}
-		if(FeatureList.enable_mixtures)GameRegistry.registerWorldGenerator(new WorldGenRandomHerbs(30), 5);
+		GameRegistry.registerWorldGenerator(new WorldGenRandomHerbs(30), 5);
 	
 		init = true;
 	}

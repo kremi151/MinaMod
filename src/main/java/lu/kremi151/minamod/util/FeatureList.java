@@ -15,9 +15,7 @@ public class FeatureList {
 	public static final boolean enable_palms = false;
 	
 	//1.11:
-	public static final boolean enable_amulets = true;
-	public static final boolean enable_advanced_elavator = true;
-	public static final boolean enable_soul_pearls = true;
 	public static final boolean enable_mixtures = true;
+	public static final boolean enable_soul_pearls = true;
 	
 }

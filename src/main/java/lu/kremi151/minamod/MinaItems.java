@@ -266,8 +266,8 @@ public class MinaItems {
 		proxy.registerItem(PLATINUM_BOOTS, "platinum_boots");
 		/*if(FeatureList.enable_mixtures)proxy.registerItem(HERB, "herb", EnumHerb.RVARIANTS);
 		if(FeatureList.enable_mixtures)proxy.registerItem(POWDER, "powder", EnumHerb.PVARIANTS);*/
-		if(FeatureList.enable_mixtures)proxy.registerItem(HERB, "herb");
-		if(FeatureList.enable_mixtures)proxy.registerItem(POWDER, "powder");
+		proxy.registerItem(HERB, "herb");
+		proxy.registerItem(POWDER, "powder");
 		proxy.registerItem(EMPTY_POT, "empty_pot");
 		proxy.registerItem(HONEY_POT, "honey_pot");
 		proxy.registerItemWithOre(RUBY, "ruby", "gemRuby");
@@ -277,7 +277,7 @@ public class MinaItems {
 		proxy.registerItem(TURTLE_CHESTPLATE, "turtle_shell_chestplate");
 		proxy.registerItem(TURTLE_LEGGINGS, "turtle_shell_leggings");
 		proxy.registerItem(TURTLE_BOOTS, "turtle_shell_boots");
-		if(FeatureList.enable_mixtures)proxy.registerItem(MIXTURE, "mixture");
+		proxy.registerItem(MIXTURE, "mixture");
 		proxy.registerItem(IRON_SICKLE, "iron_sickle");
 		proxy.registerItem(COLORED_BOOK, "colored_written_book");
 		proxy.registerItem(COTTON, "cotton");
@@ -289,7 +289,7 @@ public class MinaItems {
 		proxy.registerItem(GOULASH, "goulash");
 		proxy.registerItem(KATANA, "katana");
 		proxy.registerItem(COIN_BAG, "coin_bag");
-		if(FeatureList.enable_amulets)proxy.registerItem(AMULET, "amulet", AmuletRegistry.getVariantNames());
+		proxy.registerItem(AMULET, "amulet", AmuletRegistry.getVariantNames());
 		proxy.registerItem(BATTERY, "battery");
 		proxy.registerItem(HERB_GUIDE, "herb_guide");
 

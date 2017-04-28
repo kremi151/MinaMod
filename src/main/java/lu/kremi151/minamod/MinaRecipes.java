@@ -41,7 +41,7 @@ public class MinaRecipes {
 		initStoolRecipes();
 		initTableRecipes();
 		initWoodRecipes();
-		if(FeatureList.enable_mixtures)initHerbRecipes();
+		initHerbRecipes();
 		initCustomRecipes();
 		initArmorRecipes();
 		init = true;
@@ -289,7 +289,7 @@ public class MinaRecipes {
 	private static void initCustomRecipes() {
 		if (init)throw new RuntimeException("Duplicate call of function");
 		GameRegistry.addRecipe(new RecipeColoredKey());
-		if(FeatureList.enable_mixtures)GameRegistry.addRecipe(new RecipeHerbMixture());
+		GameRegistry.addRecipe(new RecipeHerbMixture());
 		if(FeatureList.enable_soul_pearls)GameRegistry.addRecipe(new RecipeDamagedSoulPearl());
 		GameRegistry.addRecipe(new RecipeColoredBook());
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
@@ -300,7 +300,7 @@ public class MinaRecipes {
 
 		RecipeSorter.register(MinaMod.MODID + ":colored_key", RecipeColoredKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
-		if(FeatureList.enable_mixtures)RecipeSorter.register(MinaMod.MODID + ":herb_mixture", RecipeHerbMixture.class, RecipeSorter.Category.SHAPELESS,
+		RecipeSorter.register(MinaMod.MODID + ":herb_mixture", RecipeHerbMixture.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":damaged_soul_pearl", RecipeDamagedSoulPearl.class,
 				RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");

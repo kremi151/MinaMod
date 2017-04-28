@@ -35,7 +35,7 @@ public class MessageUseElevatorHandler extends AbstractServerMessageHandler<Mess
 						relative--;
 					}
 					if (relative == 0) {
-						if (FeatureList.enable_advanced_elavator && MinaMod.getMinaConfig().useFancyElevatorMovement()) {
+						if (MinaMod.getMinaConfig().useFancyElevatorMovement()) {
 							TaskTransportPlayer.perform((EntityPlayerMP) player, standingPos, npos);
 						} else {
 							teleport(player, (double) npos.getX() + 0.5, (double) npos.getY() + 1d,

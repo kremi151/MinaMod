@@ -22,22 +22,13 @@ public class MinaCreativeTabs {
 		}
 
 	};
-	public static final CreativeTabs MIXTURES;
-	
-	static{
-		if(FeatureList.enable_mixtures){
-			MIXTURES = new CreativeTabs("mixtures") {
+	public static final CreativeTabs MIXTURES = new CreativeTabs("mixtures") {
 
-				@Override
-				public ItemStack getTabIconItem() {
-					return new ItemStack(MinaItems.HERB);
-				}
-
-			};
-		}else{
-			MIXTURES = null;
+		@Override
+		public ItemStack getTabIconItem() {
+			return new ItemStack(MinaItems.HERB);
 		}
-		
-	}
+
+	};
 
 }

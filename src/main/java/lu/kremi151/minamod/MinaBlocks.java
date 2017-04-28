@@ -265,10 +265,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(LEAVES_CHESTNUT, "leaves_chestnut");
 		proxy.registerBlock(LEAVES_CHERRY, "leaves_cherry");
 		proxy.registerBlockOnly(SAPLING, "mina_sapling");
+		proxy.registerBlockOnly(HERB_CROP, "herb");
 		
-		if(FeatureList.enable_mixtures){
-			proxy.registerBlockOnly(HERB_CROP, "herb");
-		}
 		if(FeatureList.enable_plate){
 			proxy.registerBlock(PLATE, "plate");
 		}
