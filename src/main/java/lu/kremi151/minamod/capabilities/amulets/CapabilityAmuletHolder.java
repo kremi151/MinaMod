@@ -76,4 +76,9 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 		
 	};
 
+	@Override
+	public int amuletAmount() {
+		return 3;
+	}
+
 }
