@@ -6,4 +6,5 @@ public interface IAmuletHolder {
 
 	AmuletStack getAmuletAt(int slot);
 	void setAmuletAt(int slot, AmuletStack amulet);
+	int amuletAmount();
 }
