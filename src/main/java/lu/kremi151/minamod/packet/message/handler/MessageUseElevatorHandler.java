@@ -5,7 +5,6 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
 import lu.kremi151.minamod.packet.message.handler.abstracts.AbstractServerMessageHandler;
-import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
 import lu.kremi151.minamod.util.TaskRepeat;
@@ -53,7 +52,7 @@ public class MessageUseElevatorHandler extends AbstractServerMessageHandler<Mess
 					if (relative == 0) {
 						// teleport(player, (double)npos.getX() + 0.5,
 						// (double)npos.getY() + 1d, (double)npos.getZ() + 0.5);
-						if (FeatureList.enable_advanced_elavator && MinaMod.getMinaConfig().useFancyElevatorMovement()) {
+						if (MinaMod.getMinaConfig().useFancyElevatorMovement()) {
 							TaskTransportPlayer.perform((EntityPlayerMP) player, standingPos, npos);
 						} else {
 							teleport(player, (double) npos.getX() + 0.5, (double) npos.getY() + 1d,
