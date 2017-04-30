@@ -5,6 +5,7 @@ import lu.kremi151.minamod.interfaces.IEntityAIHerbivoreListener;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
@@ -43,8 +44,8 @@ public class EntityAIHerbivore extends EntityAIBase{
 				int z = (int)entity.posZ - 2 + entity.getRNG().nextInt(5);
 				int y = MinaUtils.getHeightValue(entity.world, x, z) - 1;
 				BlockPos pos = new BlockPos(x,y,z);
-				Block b = entity.world.getBlockState(pos).getBlock();
-				if(isTargetableBlock(b) && Math.abs((int)(entity.posY - (double)y)) <= 1){
+				IBlockState state = entity.world.getBlockState(pos);
+				if(isTargetableBlock(state) && Math.abs((int)(entity.posY - (double)y)) <= 1){
 					this.target = pos;
 					return true;
 				}
@@ -85,8 +86,8 @@ public class EntityAIHerbivore extends EntityAIBase{
 		return this;
 	}
 	
-	private boolean isTargetableBlock(Block block){
-		return block instanceof BlockLeaves || block instanceof net.minecraftforge.common.IPlantable;
+	private boolean isTargetableBlock(IBlockState state){
+		return state.getBlock() instanceof BlockLeaves || state.getBlock() instanceof net.minecraftforge.common.IPlantable;
 	}
 
 }
