@@ -9,9 +9,15 @@ public class CustomEnchantment extends Enchantment{
 	
 	private int minLevel = 1;
 	private int maxLevel = 1;
+	private final boolean treasure;
+
+	public CustomEnchantment(Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots, boolean treasure){
+		super(rarityIn, typeIn, slots);
+		this.treasure = treasure;
+	}
 
 	public CustomEnchantment(Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots){
-		super(rarityIn, typeIn, slots);
+		this(rarityIn, typeIn, slots, false);
 	}
 	
 	/**
@@ -30,6 +36,12 @@ public class CustomEnchantment extends Enchantment{
     public int getMaxLevel()
     {
         return maxLevel;
+    }
+
+	@Override
+    public boolean isTreasureEnchantment()
+    {
+        return treasure;
     }
 	
 	public CustomEnchantment setLevelRange(int min, int max){ // NO_UCD (unused code)
