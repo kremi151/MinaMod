@@ -73,8 +73,8 @@ public class EntityFish extends EntityAnimal {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.getDataManager().register(VARIANT, DEFAULT_FISH_TYPE.toString());
 		fishType = REGISTRY.getValue(DEFAULT_FISH_TYPE);
+		this.getDataManager().register(VARIANT, fishType.getRegistryName().toString());
 		onFishTypeChanged();
 
 		this.getDataManager().register(SIZE, Float.valueOf(
@@ -91,7 +91,7 @@ public class EntityFish extends EntityAnimal {
 
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
-		if (key == VARIANT) {
+		if (key.equals(VARIANT)) {
 			fishType = REGISTRY.getValue(new ResourceLocation(getDataManager().get(VARIANT)));
 			if(fishType == null){
 				fishType = REGISTRY.getValue(DEFAULT_FISH_TYPE);
@@ -108,6 +108,7 @@ public class EntityFish extends EntityAnimal {
 
 			onFishTypeChanged();
 		}
+		super.notifyDataManagerChange(key);
 	}
 
 	public float getScale() {
