@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import lu.kremi151.minamod.interfaces.ICallback;
-
 public class DualKeyMap<T, U, V> implements Map<Pair<T, U>, V>{
 
 	private final Map<Pair<T, U>, V> internalMap;
@@ -17,8 +15,8 @@ public class DualKeyMap<T, U, V> implements Map<Pair<T, U>, V>{
 		this.internalMap = new HashMap<Pair<T, U>, V>();
 	}
 	
-	public DualKeyMap(ICallback<Map<Pair<T, U>, V>> constructor){
-		this.internalMap = constructor.callback();
+	public DualKeyMap(Map<Pair<T, U>, V> map){
+		this.internalMap = map;
 	}
 	
 	@Override
