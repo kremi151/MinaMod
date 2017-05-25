@@ -2,6 +2,7 @@ package lu.kremi151.minamod.block;
 
 import java.util.Random;
 
+import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -19,9 +20,8 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -48,6 +48,18 @@ public class BlockCampfire extends Block{
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
 		this.setTickRandomly(true);
 	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState bs)
+    {
+        return true;
+    }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState bs)
+    {
+        return new TileEntityCampfire();
+    }
 	
     @Override
     public IBlockState getStateFromMeta(int meta)
@@ -119,52 +131,18 @@ public class BlockCampfire extends Block{
 	
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity e){
-		if (!world.isRemote)
+		if (!world.isRemote && state.getValue(IGNITED))
         {
 			if(e instanceof EntityItem){
 				EntityItem ei = (EntityItem)e;
 				
 				if(!ei.getEntityItem().isEmpty()){
-					//NBTTagCompound nbt = ei.getEntityItem().getOrCreateSubCompound(ITEM_COOKING_TAG);
-					//ItemStack res;
-					/*int cooking_time = nbt.getInteger("time");
-					if(cooking_time >= 500){
-						e.setFire(5);
-					}else if(cooking_time >= 300 && !(res = FurnaceRecipes.instance().getSmeltingResult(ei.getEntityItem())).isEmpty()){
-						res = res.copy();
-						res.setCount(ei.getEntityItem().getCount());
-						ei.setEntityItemStack(res);
-					}
-					cooking_time++;
-					nbt.setInteger("time", cooking_time);*/
-					if(MinaUtils.checkHasTag(ei, "cook4")){
-						e.setFire(5);
-					}else if(MinaUtils.checkHasTag(ei, "cook3") && this.RANDOM.nextInt(100) == 0){
-						ei.removeTag("cook3");
-						ei.addTag("cook4");
-					}else if(MinaUtils.checkHasTag(ei, "cook2") && this.RANDOM.nextInt(75) == 0){
-						ei.removeTag("cook2");
-						ei.addTag("cook3");
-						ItemStack res = FurnaceRecipes.instance().getSmeltingResult(ei.getEntityItem());
-						if(!res.isEmpty()){
-							res = res.copy();
-							res.setCount(ei.getEntityItem().getCount());
-							ei.setEntityItemStack(res);
-						}
-					}else if(MinaUtils.checkHasTag(ei, "cook1") && this.RANDOM.nextInt(75) == 0){
-						ei.removeTag("cook1");
-						ei.addTag("cook2");
-					}else if(MinaUtils.checkHasTag(ei, "cook0") && this.RANDOM.nextInt(75) == 0){
-						ei.removeTag("cook0");
-						ei.addTag("cook1");
-					}else{
-						ei.addTag("cook0");
-					}
+					((TileEntityCampfire)world.getTileEntity(pos)).trackItem(ei);
 				}else{
 					e.setFire(5);
 				}
 				
-			}else if(state.getValue(IGNITED) && e.posY >= (double)pos.getY() + boundings.maxY){
+			}else if(e.posY >= (double)pos.getY() + boundings.maxY){
 				e.setFire(5);
 			}
         }

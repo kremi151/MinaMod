@@ -375,6 +375,9 @@ public class ClientProxy extends CommonProxy {
 				world.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, x, posY, z, mx, -0.03, my, null);
 			}
 			break;
+		case SMOKE:
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + (Math.random() * 0.5d) - 0.25d, posY + (Math.random() * 0.5d) - 0.25d, posZ + (Math.random() * 0.5d) - 0.25d, 0.0D, 0.0D, 0.0D, new int[0]);
+			break;
 		}
 	}
 
