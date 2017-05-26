@@ -169,6 +169,8 @@ public class EntityTurtle extends EntityAnimal implements IEntityAIHerbivoreList
 		if(!isInDefenseMode()){
 			super.damageEntity(damageSrc, damageAmount);
 			setInDefenseMode(true);
+		}else if(damageSrc == DamageSource.ON_FIRE){
+			super.damageEntity(damageSrc, damageAmount * 0.2f);
 		}
     }
 	

@@ -3,7 +3,7 @@ package lu.kremi151.minamod.block;
 import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
-import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.interfaces.IHeatable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -131,18 +131,22 @@ public class BlockCampfire extends Block{
 	
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity e){
-		if (!world.isRemote && state.getValue(IGNITED))
+		if (state.getValue(IGNITED))
         {
 			if(e instanceof EntityItem){
-				EntityItem ei = (EntityItem)e;
-				
-				if(!ei.getEntityItem().isEmpty()){
-					((TileEntityCampfire)world.getTileEntity(pos)).trackItem(ei);
-				}else{
-					e.setFire(5);
+				if(!world.isRemote){
+					EntityItem ei = (EntityItem)e;
+					
+					if(!ei.getEntityItem().isEmpty()){
+						((TileEntityCampfire)world.getTileEntity(pos)).trackItem(ei);
+					}else{
+						e.setFire(5);
+					}
 				}
-				
-			}else if(e.posY >= (double)pos.getY() + boundings.maxY){
+				if(System.currentTimeMillis() % 3 == 0){
+					world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, e.posX, e.posY + 0.35, e.posZ, 0.0, 0.1, 0.0, new int[0]);
+				}
+			}else if(!world.isRemote && (e.posY >= (double)pos.getY() + boundings.maxY || (e instanceof IHeatable && !((IHeatable)e).heatTick()))){
 				e.setFire(5);
 			}
         }

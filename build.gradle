@@ -17,8 +17,8 @@ archivesBaseName = "minamod"
 def mcVersion         = "1.11.2"
 def majorModVersion   = "1"
 def apiModVersion     = "0"
-def minorModVersion   = "3"
-def minamodPatchVersion = "4"
+def minorModVersion   = "4"
+def minamodPatchVersion = "0"
 def minamodVersion = majorModVersion+"."+apiModVersion+"."+minorModVersion+"."+minamodPatchVersion
 version = mcVersion+"-"+minamodVersion
 

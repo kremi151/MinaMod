@@ -4,13 +4,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.enums.EnumParticleEffect;
+import lu.kremi151.minamod.block.BlockCampfire;
+import lu.kremi151.minamod.util.CookingRecipes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 
 public class TileEntityCampfire extends TileEntity implements ITickable{
@@ -19,17 +17,21 @@ public class TileEntityCampfire extends TileEntity implements ITickable{
 	
 	public boolean trackItem(EntityItem item){
 		if(!cooking.contains(item)){
-			ItemStack res = FurnaceRecipes.instance().getSmeltingResult(item.getEntityItem());
+			ItemStack res = CookingRecipes.instance().fetch(item.getEntityItem());
 			int ticks = 200 * item.getEntityItem().getCount();
 			return cooking.add(new CookingItem(item, res, ticks));
 		}else{
 			return false;
 		}
 	}
+	
+	private boolean isIgnited(){
+		return world.getBlockState(getPos()).getValue(BlockCampfire.IGNITED);
+	}
 
 	@Override
 	public void update() {
-		if(!world.isRemote && cooking.size() > 0){
+		if(!world.isRemote && cooking.size() > 0 && isIgnited()){
 			Iterator<CookingItem> it = cooking.iterator();
 			while(it.hasNext()){
 				CookingItem citem = it.next();
@@ -37,9 +39,9 @@ public class TileEntityCampfire extends TileEntity implements ITickable{
 					EntityItem itemRef = citem.itemRef;
 					//itemRef.setNoDespawn();
 					itemRef.setAgeToCreativeDespawnTime();
-					if(System.currentTimeMillis() % 5 == 0){
+					/*if(System.currentTimeMillis() % 5 == 0){
 						MinaMod.getProxy().spawnParticleEffectToAllAround(EnumParticleEffect.SMOKE, world, itemRef.posX, itemRef.posY + 0.35d, itemRef.posZ, 1.0f, 1.0f, 1.0f);
-					}
+					}*/
 					if(--citem.ticksLeft <= 0){
 						if(!citem.nextStage.isEmpty()){
 							ItemStack res = citem.nextStage.copy();
