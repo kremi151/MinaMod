@@ -5,6 +5,8 @@ import java.util.concurrent.Callable;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
+import lu.kremi151.minamod.capabilities.bliss.EntityBlissImpl;
+import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +28,7 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(IKey.class, new EmptyStorage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(IPlayerStats.class, new CapabilityPlayerStats.Storage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(IAmuletHolder.class, CapabilityAmuletHolder.STORAGE, CapabilityAmuletHolder::new);
+		CapabilityManager.INSTANCE.register(ICapabilityBliss.class, ICapabilityBliss.STORAGE, new NoImplFactory());
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{
@@ -54,12 +57,14 @@ public class MinaCapabilities {
 		private final ICapabilityJetpack jetpack;
 		private final IPlayerStats playerStats;
 		private final IAmuletHolder amuletHolder;
+		private final ICapabilityBliss bliss;
 		
 		public MinaPlayerCapabilityProvider(EntityPlayer player){
 			coinHandler = new EntityCoinHandler(player);
 			jetpack = new CapabilityPlayerJetpack(player);
 			playerStats = new CapabilityPlayerStats(player);
 			amuletHolder = new CapabilityAmuletHolder();
+			bliss = new EntityBlissImpl(player);
 		}
 
 		@Override
@@ -67,7 +72,8 @@ public class MinaCapabilities {
 			return capability == ICoinHandler.CAPABILITY_COIN_HANDLER
 					|| capability == ICapabilityJetpack.CAPABILITY_JETPACK
 					|| capability == CapabilityPlayerStats.CAPABILITY
-					|| capability == CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER;
+					|| capability == CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER
+					|| capability == ICapabilityBliss.CAPABILITY_BLISS;
 		}
 
 		@Override
@@ -80,6 +86,8 @@ public class MinaCapabilities {
 				return (T) this.playerStats;
 			}else if(capability == CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER){
 				return (T) this.amuletHolder;
+			}else if(capability == ICapabilityBliss.CAPABILITY_BLISS){
+				return (T) this.bliss;
 			}else{
 				return null;
 			}
@@ -97,6 +105,8 @@ public class MinaCapabilities {
 			NBTTagCompound amulets_nbt = (NBTTagCompound) CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER.getStorage().writeNBT(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, this.amuletHolder, null);
 			root.setTag("amulets", amulets_nbt);
 			
+			root.setInteger("bliss", bliss.getBliss());
+			
 			return root;
 		}
 
@@ -110,6 +120,13 @@ public class MinaCapabilities {
 			}
 			if(nbt.hasKey("amulets", 10)){
 				CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER.getStorage().readNBT(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, this.amuletHolder, null, nbt.getCompoundTag("amulets"));
+			}
+			if(nbt.hasKey("bliss", 99)){
+				try{
+					bliss.setBliss(nbt.getInteger("bliss"));
+				}catch(IllegalArgumentException e){
+					System.err.println("Invalid bliss value detected, must be positive");
+				}
 			}
 		}
 		

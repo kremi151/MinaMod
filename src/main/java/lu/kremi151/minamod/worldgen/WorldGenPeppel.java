@@ -2,10 +2,10 @@ package lu.kremi151.minamod.worldgen;
 
 import java.util.Random;
 
-import lu.kremi151.minamod.MinaBiomes;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -122,7 +122,7 @@ public class WorldGenPeppel extends WorldGenBiomeTree{
 
 	@Override
 	boolean canGenerateAtBiome(Biome biome) {
-		return biome == MinaBiomes.RURAL;
+		return biome == Biomes.TAIGA;
 	}
 
 }

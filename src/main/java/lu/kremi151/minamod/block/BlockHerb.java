@@ -13,6 +13,7 @@ import lu.kremi151.minamod.block.abstracts.BlockCustomCrops;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemHerbGuide;
+import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -145,7 +146,7 @@ public class BlockHerb extends BlockCustomCrops{
         if(guide.isEmpty() || guide.getItem() != MinaItems.HERB_GUIDE){
         	guide = player.getHeldItem(EnumHand.OFF_HAND);
         }
-        if(!guide.isEmpty() && guide.getItem() == MinaItems.HERB_GUIDE && ItemHerbGuide.percentageCompleted(guide) == 1.0f && this.RANDOM.nextInt(1000) == 0){
+        if(!guide.isEmpty() && guide.getItem() == MinaItems.HERB_GUIDE && ItemHerbGuide.percentageCompleted(guide) == 1.0f && BlissHelper.getBliss(player).chanceOneIn(1000)){
         	spawnAsEntity(world, pos, new ItemStack(MinaItems.HERB, 1, EnumHerb.GOLD.getHerbId()));
         }
         world.setBlockToAir(pos);

@@ -8,6 +8,7 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.attribute.AttributeModifierStatSpeed;
 import lu.kremi151.minamod.enums.EnumPlayerStat;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
+import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -124,7 +125,8 @@ public class CapabilityPlayerStats implements IPlayerStats{
 	}
 	
 	private void onLevelUp(){
-		if(distribute(player.getRNG(), 3) > 0 && player instanceof EntityPlayerMP){
+		final int points = BlissHelper.getBliss(player).chanceOneIn(10) ? 5 : 3;
+		if(distribute(player.getRNG(), points) > 0 && player instanceof EntityPlayerMP){
 			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowOverlay(0, 1000), (EntityPlayerMP) player);
 		}
 	}
