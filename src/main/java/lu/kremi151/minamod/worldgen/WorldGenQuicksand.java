@@ -27,7 +27,7 @@ public class WorldGenQuicksand implements IWorldGenerator{
 			BlockPos pos = new BlockPos(x, y, z);
 			Biome biome = world.getBiome(pos);
 			if(biome == Biomes.DESERT){
-				generateQuicksandSphere(world, pos, 4 + random.nextInt(4), MinaBlocks.QUICKSAND.getDefaultState(), block -> block == Blocks.SAND || block == Blocks.SANDSTONE || block == Blocks.STONE);
+				generateQuicksandSphere(world, pos, 2 + random.nextInt(3), MinaBlocks.QUICKSAND.getDefaultState(), block -> block == Blocks.SAND || block == Blocks.SANDSTONE || block == Blocks.STONE);
 			}
 		}
 	}
