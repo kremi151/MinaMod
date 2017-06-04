@@ -32,6 +32,7 @@ import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockPlate;
+import lu.kremi151.minamod.block.BlockQuicksand;
 import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
 import lu.kremi151.minamod.block.BlockRhubarb;
 import lu.kremi151.minamod.block.BlockSieve;
@@ -49,7 +50,6 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.fluids.BlockFluidClassic;
 
 
 public class MinaBlocks { // NO_UCD (unused code)
@@ -206,6 +206,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockSieve SIEVE = (BlockSieve) new BlockSieve().setUnlocalizedName("sieve");
 	public static final BlockHerb HERB_CROP = new BlockHerb();
 	public static final BlockCampbench CAMPBENCH = (BlockCampbench) new BlockCampbench().setUnlocalizedName("campbench");
+	public static final BlockQuicksand QUICKSAND = (BlockQuicksand) new BlockQuicksand().setUnlocalizedName("quicksand");
 	//public static final BlockFluidClassic WATER_CLEAR = new BlockFluidClassic(MinaFluids.CLEAR_WATER, Material.WATER);
 
 	private static boolean init = false;
@@ -309,6 +310,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		if(FeatureList.enable_chairs)proxy.registerBlock(OAK_CHAIR, "oak_chair");
 		proxy.registerBlock(SIEVE, "sieve");
 		proxy.registerBlockOnly(CAMPBENCH, "campbench");
+		proxy.registerBlock(QUICKSAND, "quicksand");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;

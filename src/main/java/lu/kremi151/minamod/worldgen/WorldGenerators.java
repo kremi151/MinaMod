@@ -44,6 +44,8 @@ public class WorldGenerators {
 			.add(MinaBlocks.EFFECT_BUSH.getDefaultState().withProperty(BlockEffectBush.VARIANT, BlockEffectBush.EnumType.SPEEDY), 1)
 			.build();
 	
+	public static final WorldGenQuicksand QUICKSAND = new WorldGenQuicksand();
+	
 	private static boolean init = false;
 	
 	public static void registerWorldGenerators(){
@@ -53,6 +55,7 @@ public class WorldGenerators {
 		if(FeatureList.enable_wookie_houses)GameRegistry.registerWorldGenerator(WOOKIE_HOUSE, 1);
 		
 		GameRegistry.registerWorldGenerator(SURFACE_TREE, 2);
+		GameRegistry.registerWorldGenerator(QUICKSAND, 2);
 		
 		GameRegistry.registerWorldGenerator(CITRIN_ORE, 3);
 		GameRegistry.registerWorldGenerator(PLATINUM_ORE, 3);
