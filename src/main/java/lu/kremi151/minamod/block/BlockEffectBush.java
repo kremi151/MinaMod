@@ -163,7 +163,7 @@ public class BlockEffectBush extends BlockCustomBush{
         			|| (withered && world.getBlockState(npos).getBlock() == MinaBlocks.EFFECT_BUSH && r.nextInt(world.getBlockState(npos).getValue(VARIANT).getWitheringFactor()) == 0)){
         		world.setBlockState(npos, state);
         	}
-        }else if(!withered && r.nextInt(variant.getWitheringFactor() * 50) == 0){
+        }else if(!withered && r.nextInt(variant.getWitheringFactor() * 100) == 0){
         	world.setBlockState(pos, state.withProperty(VARIANT, BlockEffectBush.EnumType.WITHERED));
         }
         

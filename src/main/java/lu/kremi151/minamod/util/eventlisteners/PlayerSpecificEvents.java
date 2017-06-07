@@ -68,9 +68,8 @@ public class PlayerSpecificEvents {
 					BlockSieve.MaterialType material = te.getMaterial();
 					if(te.getLevel() == 0.0f && material.getLootTable() != null){
 						List<ItemStack> stacks = world.getLootTableManager().getLootTableFromLocation(material.getLootTable()).generateLootForPools(e.getEntityPlayer().getRNG(), new LootContext.Builder((WorldServer) world).build());
-						final int length = stacks.size();
-						if(length > 0){
-							MinaUtils.dropItem(stacks.get(e.getEntityPlayer().getRNG().nextInt(length)), world, e.getPos().getX() + 0.5, e.getPos().getY(), e.getPos().getZ() + 0.5);
+						if(stacks.size() > 0){
+							MinaUtils.dropItem(stacks.get(e.getEntityPlayer().getRNG().nextInt(stacks.size())), world, e.getPos().getX() + 0.5, e.getPos().getY(), e.getPos().getZ() + 0.5);
 						}
 					}
 				}
