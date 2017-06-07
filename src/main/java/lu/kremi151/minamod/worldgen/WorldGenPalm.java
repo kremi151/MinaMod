@@ -1,30 +1,46 @@
 package lu.kremi151.minamod.worldgen;
 
 import java.util.Random;
+import java.util.function.Predicate;
 
 import lu.kremi151.minamod.MinaBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.WorldGenTrees;
 
 public class WorldGenPalm extends WorldGenBiomeTree{
 	
 	private static final float PI_F = (float)Math.PI;
+	private final Predicate<Block> soil;
+	
+	public WorldGenPalm(boolean notify){
+		this(notify, block -> block == Blocks.SAND);
+	}
 
-	public WorldGenPalm(boolean notify) {
+	public WorldGenPalm(boolean notify, Predicate<Block> soil) {
 		super(notify);
+		this.soil = soil;
 	}
 
 	@Override
 	public boolean generate(World world, Random var2, BlockPos pos) {
-		return generatePalm(pos, world, var2) != null;
+		return generatePalm(pos, world, var2, soil) != null;
 	}
 	
 	public static BlockPos generatePalm(BlockPos pos, World world, Random random){
+		return generatePalm(pos, world, random, block -> true);
+	}
+	
+	public static BlockPos generatePalm(BlockPos pos, World world, Random random, Predicate<Block> soil){
+		if(!soil.test(world.getBlockState(pos.down()).getBlock())){
+			return null;
+		}
 		IBlockState wood = MinaBlocks.LOG_CHESTNUT.getDefaultState();
 		IBlockState leaf = MinaBlocks.LEAVES_CHESTNUT.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false).withProperty(BlockLeaves.DECAYABLE, true);
 		float ax = random.nextFloat() - 0.5f;
@@ -64,7 +80,7 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 
 	@Override
 	boolean canGenerateAtBiome(Biome biome) {
-		return true;//TODO
+		return biome == Biomes.BEACH;
 	}
 
 }
