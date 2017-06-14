@@ -63,7 +63,7 @@ public class CapabilityPlayerStats implements IPlayerStats{
 			registerData(statToDM[(stat.ordinal() * 2) + 1], 0);
 		}
 		registerData(effortBar, 0);
-		this.speedMod = new AttributeModifierStatSpeed(SPEED_MODIFIER_ID, this);
+		this.speedMod = new AttributeModifierStatSpeed(SPEED_MODIFIER_ID, () -> getStats(EnumPlayerStat.SPEED));
 	}
 	
 	private <T> void registerData(DataParameter<T> key, T value){

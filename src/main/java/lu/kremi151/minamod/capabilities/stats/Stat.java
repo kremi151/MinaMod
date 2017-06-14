@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.capabilities.stats;
 
 import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
 import java.util.function.IntSupplier;
 
 public class Stat {
@@ -20,24 +21,31 @@ public class Stat {
 		return training;
 	}
 	
+	public void initialize(){}
+	
 	public static class Value{
 		
 		private final IntSupplier getter, remaining;
-		private final IntConsumer setter;
-		private final int maxValue;
+		private final IntFunction<Integer> setter;
+		private final int defaultValue, minValue, maxValue;
 		private IntConsumer listener = null;
 		
-		public Value(IntSupplier getter, IntConsumer setter){
-			this(getter, setter, -1);
+		public Value(IntSupplier getter, IntFunction<Integer> setter, int defaultValue){
+			this(getter, setter, defaultValue, 0, -1);
 		}
 		
-		public Value(IntSupplier getter, IntConsumer setter, int maxValue){
-			this(getter, setter, -1, () -> maxValue - getter.getAsInt());
+		public Value(IntSupplier getter, IntFunction<Integer> setter, int defaultValue, int minValue, int maxValue){
+			this(getter, setter, defaultValue, 0, maxValue, () -> maxValue - getter.getAsInt());
 		}
 		
-		public Value(IntSupplier getter, IntConsumer setter, int maxValue, IntSupplier remaining){
+		public Value(IntSupplier getter, IntFunction<Integer> setter, int defaultValue, int minValue, int maxValue, IntSupplier remaining){
+			if(defaultValue < minValue || (maxValue >= 0 && defaultValue > maxValue)){
+				throw new IllegalArgumentException("The supplied defaultValue violates the bounds given by minValue and maxValue");
+			}
 			this.getter = getter;
 			this.setter = setter;
+			this.defaultValue = defaultValue;
+			this.minValue = minValue;
 			this.maxValue = maxValue;
 			this.remaining = remaining;
 		}
@@ -48,8 +56,9 @@ public class Stat {
 		}
 		
 		public void set(int value){
-			setter.accept(value);
-			if(listener != null)listener.accept(get());
+			if(setter.apply(value) != value && listener != null){
+				listener.accept(get());
+			}
 		}
 		
 		public int get(){
@@ -57,12 +66,12 @@ public class Stat {
 		}
 		
 		public void increment(int amount){
-			setter.accept(getter.getAsInt() + amount);
+			setter.apply(getter.getAsInt() + amount);
 			if(listener != null)listener.accept(get());
 		}
 		
 		public void decrement(int amount){
-			setter.accept(getter.getAsInt() - amount);
+			setter.apply(getter.getAsInt() - amount);
 			if(listener != null)listener.accept(get());
 		}
 		
@@ -74,10 +83,22 @@ public class Stat {
 			return remaining.getAsInt();
 		}
 		
+		public int getDefaultValue(){
+			return defaultValue;
+		}
+		
+		public void setToDefault(){
+			set(defaultValue);
+		}
+		
+		public int getMinValue(){
+			return minValue;
+		}
+		
 		public int getMaxValue(){
 			return maxValue;
 		}
 		
-		public static final Value ZERO = new Value(() -> 0, value -> {}, 0);
+		public static final Value ZERO = new Value(() -> 0, value -> 0, 0);
 	}
 }

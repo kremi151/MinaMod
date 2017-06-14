@@ -15,6 +15,7 @@ public interface ICapabilityStats<E extends EntityLivingBase> {
 	void reset();
 	void initAttributes();
 	int distribute(Random rand, int amount);
+	int pointsLeft();
 	
 	default Stat.Value getEffort(){
 		return Stat.Value.ZERO;

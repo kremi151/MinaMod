@@ -28,10 +28,14 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		this.entity = entity;
 		this.statMap = new HashMap<>();
 		for(StatType type : statTypes){
-			statMap.put(type, type.buildStat(entity));
+			statMap.put(type, type.buildStat(this, entity));
 		}
 		this.effortKey = entity.getDataManager().createKey(EntityLivingBase.class, DataSerializers.VARINT);
-		this.effort = new Stat.Value(() -> entity.getDataManager().get(effortKey), value -> entity.getDataManager().set(effortKey, value), maxEffortVal)
+		this.effort = new Stat.Value(() -> entity.getDataManager().get(effortKey), value -> {
+			int old = entity.getDataManager().get(effortKey);
+			entity.getDataManager().set(effortKey, value);
+			return old;
+		}, 0, 0, maxEffortVal)
 				.setListener(newValue -> {
 					int exp = Math.max(0, newValue);
 					boolean changed = false;
@@ -66,20 +70,29 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 
 	@Override
 	public void applyFrom(ICapabilityStats<E> source) {
-		// TODO Auto-generated method stub
-		
+		reset();
+		statMap.forEach((type, stat) -> {
+			if(source.supports(type)){
+				Stat srcStat = source.getStat(type);
+				stat.getActual().set(srcStat.getActual().get());
+				stat.getTraining().set(srcStat.getTraining().get());
+			}
+		});
+		effort.set(source.getEffort().get());
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
+		statMap.forEach((type, stat) -> {
+			stat.getActual().setToDefault();
+			stat.getTraining().setToDefault();
+		});
+		effort.setToDefault();
 	}
 
 	@Override
 	public void initAttributes() {
-		// TODO Auto-generated method stub
-		
+		statMap.values().forEach(stat -> stat.initialize());
 	}
 	
 	private void onLevelUp(){
@@ -120,6 +133,11 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 			}
 		}
 		return res;
+	}
+
+	@Override
+	public int pointsLeft() {
+		return Math.max(0, 510 - statMap.values().stream().mapToInt(stat -> stat.getActual().get()).sum());
 	}
 
 }
