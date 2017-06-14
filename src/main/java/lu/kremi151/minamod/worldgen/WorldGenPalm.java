@@ -4,8 +4,10 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.block.BlockStandaloneLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -41,25 +43,31 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 		if(!soil.test(world.getBlockState(pos.down()).getBlock())){
 			return null;
 		}
-		IBlockState wood = MinaBlocks.LOG_CHESTNUT.getDefaultState();
+		IBlockState wood = MinaBlocks.LOG_PALM.getDefaultState();
 		IBlockState leaf = MinaBlocks.LEAVES_CHESTNUT.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false).withProperty(BlockLeaves.DECAYABLE, true);
-		float ax = random.nextFloat() - 0.5f;
-		float az = random.nextFloat() - 0.5f;
-		final int height = 7 + random.nextInt(7);
+		final int dirLock = random.nextInt(3);
+		float ax = dirLock == 1 ? random.nextFloat() - 0.5f : 0f;
+		float az = dirLock == 2 ? random.nextFloat() - 0.5f : 0f;
+		final int height = 5 + random.nextInt(5);
 		int prevX = 0, prevZ = 0;
+		boolean bark = false;
 		for(int y = 0; y < height ; y++){
 			int x = MathHelper.floor(y * ax);
 			int z = MathHelper.floor(y * az);
 			BlockPos logpos = pos.add(x, y, z);
-			world.setBlockState(logpos, wood);
+			world.setBlockState(logpos, bark ? wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE) : wood);
+			bark = false;
 			if(prevX != x || prevZ != z){
-				world.setBlockState(logpos.down(), wood);
+				world.setBlockState(logpos.down(), wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE));
+				world.setBlockState(pos.add(prevX, y - 1, prevZ), wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE));
+//				world.setBlockState(new BlockPos(prevX, y - 1, prevZ), Blocks.NETHERRACK.getDefaultState());
 				prevX = x;
 				prevZ = z;
+				bark = true;
 			}
 		}
 		int leaves = 6 + random.nextInt(4);
-		int leaves_length = 5 + random.nextInt(3);
+		int leaves_length = 5 + random.nextInt(2);
 		float ay = (random.nextFloat() * 0.3f) - 0.15f;
 		float q = (PI_F * 2f) / leaves;
 		for(int i = 0 ; i < leaves ; i++){

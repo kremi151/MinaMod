@@ -1,0 +1,8 @@
+{
+	"variants": {
+        "axis=y":  { "model": "minamod:palm_log" },
+        "axis=z":   { "model": "minamod:palm_log", "x": 90 },
+        "axis=x":   { "model": "minamod:palm_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "minamod:palm_bark" }
+    }
+}

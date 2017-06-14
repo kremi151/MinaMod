@@ -87,7 +87,8 @@ public class BlockMinaPlanks extends BlockCustom
         PEPPEL(0, "peppel", MapColor.GRAY, MinaUtils.convertRGBToDecimal(14, 115, 29)),
         COTTON(1, "cotton", MapColor.SILVER, MinaUtils.convertRGBToDecimal(23, 71, 30)),
         CHESTNUT(2, "chestnut", MapColor.BROWN, MinaUtils.convertRGBToDecimal(72, 171, 87)),
-        CHERRY(3, "cherry", MapColor.PINK, MinaUtils.convertRGBToDecimal(152, 199, 50));
+        CHERRY(3, "cherry", MapColor.PINK, MinaUtils.convertRGBToDecimal(152, 199, 50)),
+        PALM(4, "palm", MapColor.BROWN, MinaUtils.convertRGBToDecimal(152, 199, 50));//TODO: Leaf color
 
     	public static final String[] subVariantNames, variantNamesPlanks;
         private static final BlockMinaPlanks.EnumType[] META_LOOKUP = new BlockMinaPlanks.EnumType[values().length];

@@ -144,6 +144,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockStandaloneLog LOG_COTTON = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("log_cotton");
 	public static final BlockStandaloneLog LOG_CHESTNUT = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("log_chestnut");
 	public static final BlockStandaloneLog LOG_CHERRY = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("log_cherry");
+	public static final BlockStandaloneLog LOG_PALM = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("log_palm");
 	public static final BlockStandaloneLeaf LEAVES_PEPPEL = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("leaves_peppel");
 	public static final BlockStandaloneLeaf LEAVES_COTTON = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("leaves_cotton");
 	public static final BlockStandaloneLeaf LEAVES_CHESTNUT = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("leaves_chestnut");
@@ -311,6 +312,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(SIEVE, "sieve");
 		proxy.registerBlockOnly(CAMPBENCH, "campbench");
 		proxy.registerBlock(QUICKSAND, "quicksand");
+		proxy.registerBlock(LOG_PALM, "log_palm");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;

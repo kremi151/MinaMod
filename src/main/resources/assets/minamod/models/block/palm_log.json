@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "minamod:blocks/log_palm_top",
+    "side": "minamod:blocks/log_palm"
+  }
+}
