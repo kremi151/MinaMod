@@ -13,8 +13,12 @@ import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 
 public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabilityStats<E>{
 	
@@ -138,6 +142,40 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 	@Override
 	public int pointsLeft() {
 		return Math.max(0, 510 - statMap.values().stream().mapToInt(stat -> stat.getActual().get()).sum());
+	}
+	
+	public static class Storage implements Capability.IStorage<ICapabilityStats>{
+
+		@Override
+		public NBTBase writeNBT(Capability<ICapabilityStats> capability, ICapabilityStats instance, EnumFacing side) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			instance.listSupportedStatTypes().forEach(type -> {
+				Stat stat = instance.getStat((StatType) type);
+				nbt.setIntArray(((StatType)type).getId(), new int[]{
+						stat.getActual().get(),
+						stat.getTraining().get()
+				});
+				
+			});
+			return nbt;
+		}
+
+		@Override
+		public void readNBT(Capability<ICapabilityStats> capability, ICapabilityStats instance, EnumFacing side, NBTBase nbt_) {
+			if(nbt_ instanceof NBTTagCompound){
+				NBTTagCompound nbt = (NBTTagCompound) nbt_;
+				
+				instance.listSupportedStatTypes().forEach(type -> {
+					int array[] = nbt.getIntArray(((StatType)type).getId());
+					if(array != null && array.length >= 2){
+						Stat stat = instance.getStat((StatType)type);
+						stat.getActual().set(array[0]);
+						stat.getTraining().set(array[1]);
+					}
+				});
+			}
+		}
+		
 	}
 
 }

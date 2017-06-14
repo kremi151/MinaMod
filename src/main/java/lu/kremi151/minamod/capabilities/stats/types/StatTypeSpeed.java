@@ -10,6 +10,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 
 public class StatTypeSpeed<T extends EntityLivingBase> extends StatType<T> {
 
+	public StatTypeSpeed(String id) {
+		super(id);
+	}
+
 	@Override
 	public Stat buildStat(ICapabilityStats<T> stats, T entity) {
 		return this.createDefaultStat(entity, stats::pointsLeft, 255, (a, t) -> new StatSpeed(entity, a, t));

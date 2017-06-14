@@ -12,10 +12,20 @@ import net.minecraft.network.datasync.DataSerializers;
 
 public abstract class StatType<T extends EntityLivingBase> {
 	
+	private final String id;
 	private String name;
 	private int color = MinaUtils.COLOR_GRAY;
 
 	public abstract Stat buildStat(ICapabilityStats<T> stats, T entity);
+	
+	public StatType(String id){
+		this.id = id;
+		this.name = id;
+	}
+	
+	public String getId(){
+		return id;
+	}
 	
 	public StatType<T> setUnlocalizedName(String name){
 		this.name = name;

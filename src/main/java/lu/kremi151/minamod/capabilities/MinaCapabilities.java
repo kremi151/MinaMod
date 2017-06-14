@@ -9,6 +9,8 @@ import lu.kremi151.minamod.capabilities.bliss.EntityBlissImpl;
 import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.capabilities.stats.CapabilityStatsImpl;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,6 +31,7 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(IPlayerStats.class, new CapabilityPlayerStats.Storage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(IAmuletHolder.class, CapabilityAmuletHolder.STORAGE, CapabilityAmuletHolder::new);
 		CapabilityManager.INSTANCE.register(ICapabilityBliss.class, ICapabilityBliss.STORAGE, new NoImplFactory());
+		CapabilityManager.INSTANCE.register(ICapabilityStats.class, new CapabilityStatsImpl.Storage(), new NoImplFactory());
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{

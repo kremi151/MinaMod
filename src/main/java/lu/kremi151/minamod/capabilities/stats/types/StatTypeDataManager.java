@@ -7,6 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class StatTypeDataManager<T extends EntityLivingBase> extends StatType<T>{
 
+	public StatTypeDataManager(String id) {
+		super(id);
+	}
+
 	@Override
 	public Stat buildStat(ICapabilityStats<T> stats, T entity) {
 		return this.createDefaultStat(entity, stats::pointsLeft);
