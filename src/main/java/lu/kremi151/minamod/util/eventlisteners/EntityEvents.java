@@ -26,6 +26,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.boss.EntityWither;
@@ -50,6 +51,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -152,7 +154,7 @@ public class EntityEvents {
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event){ // NO_UCD (unused code)
 		//Ab hei just nach mat damage//
-		if(MinaMod.getMinaConfig().isDebugging()){
+		/*if(MinaMod.getMinaConfig().isDebugging()){
 			if(event.getSource().getSourceOfDamage() == null){
 				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: unknown");
 				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
@@ -161,7 +163,7 @@ public class EntityEvents {
 				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: " + event.getSource().getSourceOfDamage().getName());
 				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
 			}
-		}
+		}*/
 		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
 			EntityLivingBase killed = event.getEntityLiving();
 			EntityPlayer killer = (EntityPlayer) event.getSource().getSourceOfDamage();
@@ -207,6 +209,11 @@ public class EntityEvents {
 				event.getEntityLiving().world.spawnEntity(ei);
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void onLivingDropsExp(LivingExperienceDropEvent event){
+		event.setDroppedExperience((MinaUtils.getSuperMobLevel(event.getEntityLiving()) + 1) * event.getDroppedExperience());
 	}
 	
 	@SubscribeEvent

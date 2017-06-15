@@ -1,12 +1,16 @@
 package lu.kremi151.minamod.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import lu.kremi151.minamod.block.BlockStool;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -393,6 +397,23 @@ public class MinaUtils {
 	public static boolean makePlayerSitOnBlock(EntityPlayer player, World world, BlockPos blockPos){
 		IBlockState block = world.getBlockState(blockPos);
 		return makePlayerSitDown(player, world, blockPos.getX() + 0.5, blockPos.getY() + block.getBoundingBox(world, blockPos).maxY + 0.3, blockPos.getZ() + 0.5);
+	}
+	
+	public static int getSuperMobLevel(EntityLivingBase entity){
+		if(entity.hasCapability(ICapabilityStats.CAPABILITY, null)){
+			int lvl = 0;
+			ICapabilityStats<? extends EntityLivingBase> stats = entity.getCapability(ICapabilityStats.CAPABILITY, null);
+			for(StatType type : stats.listSupportedStatTypes()){
+				int val = stats.getStat(type).getActual().get();
+				if(val >= 220){
+					lvl+=2;
+				}else if(val >= 180){
+					lvl++;
+				}
+			}
+			return lvl / 2;
+		}
+		return 0;
 	}
 
 }

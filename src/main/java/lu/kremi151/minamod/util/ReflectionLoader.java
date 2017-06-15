@@ -9,6 +9,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToFindMethodException;
 
 public class ReflectionLoader {
 
@@ -21,10 +22,13 @@ public class ReflectionLoader {
 			FML_MISSING_MAPPING_ACTION = FMLMissingMappingsEvent.MissingMapping.class.getDeclaredField("action");
 			ENTITY_LIVING_BASE_IS_JUMPING = ReflectionHelper.findField(EntityLivingBase.class, "isJumping", "field_70703_bu");
 			DIMENSION_TYPE_CLAZZ = ReflectionHelper.findField(DimensionType.class, "field_186077_g", "clazz");
+			
 		} catch (NoSuchFieldException e) {
-			throw new IllegalStateException("At least one reflection field does not exists", e);
+			throw new IllegalStateException("At least one needed reflection field does not exists", e);
+		} catch (UnableToFindMethodException e){
+			throw new IllegalStateException("At least one needed reflection method does not exists", e);
 		} catch (SecurityException e) {
-			throw new IllegalStateException("At least one reflection field or method has thrown a security exception", e);
+			throw new IllegalStateException("At least one needed reflection field or method has thrown a security exception", e);
 		}
 	}
 	
