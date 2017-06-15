@@ -85,19 +85,6 @@ public class EntityEvents {
 				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
 			}
 		}
-		
-		/*
-		if(living instanceof EntityPlayer){
-			final EntityPlayer p = (EntityPlayer) living;
-			
-			//TODO:Test
-			if(!p.getHeldItemMainhand().isEmpty() && p.getHeldItemMainhand().hasCapability(CapabilityEnergy.ENERGY, null)){
-				IEnergyStorage store = p.getHeldItemMainhand().getCapability(CapabilityEnergy.ENERGY, null);
-				store.extractEnergy(1, false);
-			}
-			
-		}
-		*/
 	}
 	
 	private boolean isJumping(EntityLivingBase e){
@@ -132,38 +119,8 @@ public class EntityEvents {
 		return (eff!=null)?eff.getDuration():-1;
 	}
 	
-	/*@SubscribeEvent
-	public void onEntityFall(LivingFallEvent event) { // NO_UCD (unused code)
-//		float rf = MinaUtils.relativisticForce(10f, (float)event.getEntityLiving().motionY);
-//		if(rf > 1f){
-//			event.getEntityLiving().world.newExplosion(event.getEntityLiving(), event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, rf, true, true);
-//		}
-		if(event.getEntityLiving() instanceof EntityPlayer){
-			EntityPlayer p = (EntityPlayer) event.getEntityLiving();
-			if(!MinaMod.getProxy().isServerSide()){
-				ItemStack chestplateArmor = p.inventory.armorItemInSlot(2);
-				if(!chestplateArmor.isEmpty()){
-//					if(chestplateArmor.getItem() == MinaItems.itemJetpack){
-//						event.distance = 1;
-//					}
-				}
-			}
-		}
-	}*/
-	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event){ // NO_UCD (unused code)
-		//Ab hei just nach mat damage//
-		/*if(MinaMod.getMinaConfig().isDebugging()){
-			if(event.getSource().getSourceOfDamage() == null){
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: unknown");
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
-				return;
-			}else{
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: " + event.getSource().getSourceOfDamage().getName());
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
-			}
-		}*/
 		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
 			EntityLivingBase killed = event.getEntityLiving();
 			EntityPlayer killer = (EntityPlayer) event.getSource().getSourceOfDamage();
@@ -218,14 +175,6 @@ public class EntityEvents {
 	
 	@SubscribeEvent
 	public void onEntitySpawn(EntityJoinWorldEvent event){ // NO_UCD (unused code)
-//		if(!(event.getEntity() instanceof EntityPlayer) && (event.getEntity() instanceof EntityLiving) &! MinaWorld.forWorld(event.getEntity().world).hasMobsEnabled()){
-//			event.getEntity().setDead();
-//			return;
-//		}
-//		if(event.getEntity() instanceof EntitySheep){
-//			EntitySheep s = (EntitySheep) event.getEntity();
-//			s.tasks.addTask(5, new EntityAIEatDarkGrass(s));
-//		}
 		if(event.getEntity() instanceof EntitySkeleton || event.getEntity() instanceof EntityZombie){
 			EntityMob s = (EntityMob)event.getEntity();
 	        s.tasks.addTask(3, new EntityAIAvoidEntity((EntityCreature) event.getEntity(), EntityIceGolhem.class, 6.0F, 0.6D, 0.6D));
