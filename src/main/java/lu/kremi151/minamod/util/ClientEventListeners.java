@@ -1,6 +1,10 @@
 package lu.kremi151.minamod.util;
 
+import java.util.Collection;
+
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.client.GuiAmuletInventory;
 import lu.kremi151.minamod.client.GuiPlayerStats;
 import lu.kremi151.minamod.packet.message.MessageJetpack;
@@ -8,6 +12,9 @@ import lu.kremi151.minamod.packet.message.MessageOpenGui;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -81,5 +88,34 @@ public class ClientEventListeners {
 	@SubscribeEvent
 	public void onEntitySpawn(ClientDisconnectionFromServerEvent event) { // NO_UCD (unused code)
 		MinaMod.getProxy().clearOverlays();
+	}
+	
+	@SubscribeEvent
+	public void onPreRenderEntity(RenderLivingEvent.Pre event){
+		if(event.getEntity() instanceof EntityLivingBase && event.getEntity().hasCapability(ICapabilityStats.CAPABILITY, null)){
+			int lvl = getSuperLevel(event.getEntity().getCapability(ICapabilityStats.CAPABILITY, null));
+			switch(lvl){
+			case 1:
+				GlStateManager.color(0.2f, 0.5f, 0.2f);
+				break;
+			case 2:
+				GlStateManager.color(0.2f, 0.2f, 0.5f);
+				break;
+			case 3:
+				GlStateManager.color(0.5f, 0.2f, 0.2f);
+			default:
+				break;
+			}
+		}
+	}
+	
+	private int getSuperLevel(ICapabilityStats<? extends EntityLivingBase> stats){
+		int lvl = 0;
+		for(StatType type : stats.listSupportedStatTypes()){
+			if(stats.getStat(type).getActual().get() >= 220){
+				lvl++;
+			}
+		}
+		return lvl;
 	}
 }
