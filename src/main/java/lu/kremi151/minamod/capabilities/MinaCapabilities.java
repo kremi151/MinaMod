@@ -166,7 +166,7 @@ public class MinaCapabilities {
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			ICapabilityStats.CAPABILITY.getStorage().readNBT(ICapabilityStats.CAPABILITY, this.stats, null, nbt.getCompoundTag("stats"));
+			ICapabilityStats.CAPABILITY.getStorage().readNBT(ICapabilityStats.CAPABILITY, this.stats, null, nbt);
 		}
 		
 	}
