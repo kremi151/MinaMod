@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.util.eventlisteners;
 
 import java.util.Map;
+import java.util.Random;
 
 import lu.kremi151.minamod.MinaArmorMaterial;
 import lu.kremi151.minamod.MinaBlocks;
@@ -10,11 +11,11 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
-import lu.kremi151.minamod.capabilities.CapabilityPlayerStats;
-import lu.kremi151.minamod.capabilities.IPlayerStats;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.entity.EntityIceGolhem;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
@@ -54,7 +55,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityEvents {
 
-	private MinaMod mod;
+	private final MinaMod mod;
+	private final Random RNG = new Random(System.currentTimeMillis());
 	
 	public EntityEvents(MinaMod mod){
 		this.mod = mod;
@@ -220,8 +222,8 @@ public class EntityEvents {
 			EntityMob s = (EntityMob)event.getEntity();
 	        s.tasks.addTask(3, new EntityAIAvoidEntity((EntityCreature) event.getEntity(), EntityIceGolhem.class, 6.0F, 0.6D, 0.6D));
 		}
-		if(event.getEntity().hasCapability(CapabilityPlayerStats.CAPABILITY, null)){
-			((IPlayerStats)event.getEntity().getCapability(CapabilityPlayerStats.CAPABILITY, null)).initAttributes();//TODO:should this be here?
+		if(event.getEntity().hasCapability(ICapabilityStats.CAPABILITY, null)){
+			((ICapabilityStats)event.getEntity().getCapability(ICapabilityStats.CAPABILITY, null)).initAttributes();//TODO:should this be here?
 		}
 	}
 	
@@ -258,17 +260,23 @@ public class EntityEvents {
 					event.setAmount(event.getAmount() * 0.55f);
 				}
 			}
-			
-			IPlayerStats pstats = event.getEntityLiving().getCapability(CapabilityPlayerStats.CAPABILITY, null);
-			float defFactor = (float)pstats.getStats(EnumPlayerStat.DEFENSE) / 127.5f;
-			event.setAmount(event.getAmount() / defFactor);
+		}
+		
+		if(event.getEntityLiving().hasCapability(ICapabilityStats.CAPABILITY, null)){
+			ICapabilityStats pstats = event.getEntityLiving().getCapability(ICapabilityStats.CAPABILITY, null);
+			if(pstats.supports(StatTypes.DEFENSE)){
+				float defFactor = (float)pstats.getStat(StatTypes.DEFENSE).getActual().get() / 127.5f;
+				event.setAmount(event.getAmount() / defFactor);
+			}
 		}
 		
 		Entity sourceEntity = event.getSource().getEntity();
-		if(sourceEntity != null && sourceEntity instanceof EntityPlayer){
-			IPlayerStats pstats = sourceEntity.getCapability(CapabilityPlayerStats.CAPABILITY, null);
-			float atkFactor = (float)pstats.getStats(EnumPlayerStat.ATTACK) / 127.5f;
-			event.setAmount(event.getAmount() * atkFactor);
+		if(sourceEntity != null && sourceEntity.hasCapability(ICapabilityStats.CAPABILITY, null)){
+			ICapabilityStats pstats = sourceEntity.getCapability(ICapabilityStats.CAPABILITY, null);
+			if(pstats.supports(StatTypes.ATTACK)){
+				float atkFactor = (float)pstats.getStat(StatTypes.ATTACK).getActual().get() / 127.5f;
+				event.setAmount(event.getAmount() * atkFactor);
+			}
 		}
 		
 		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
@@ -298,6 +306,16 @@ public class EntityEvents {
 	public void onAttachEntityCapabilities(AttachCapabilitiesEvent.Entity e){
 		if(e.getObject() instanceof EntityPlayer){
 			e.addCapability(MinaCapabilities.MINA_PLAYER_CAPS_ID, new MinaCapabilities.MinaPlayerCapabilityProvider((EntityPlayer) e.getObject()));
+		}
+		if(e.getObject() instanceof EntityMob){
+			EntityMob entity = (EntityMob) e.getObject();
+			MinaCapabilities.EntityStatsProvider<EntityMob> statsProv = new MinaCapabilities.EntityStatsProvider<EntityMob>((EntityMob)e.getObject(), new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
+			if(RNG.nextInt(10) == 0){
+				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(64 + entity.getRNG().nextInt(191));
+				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(64 + entity.getRNG().nextInt(191));
+				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(64 + entity.getRNG().nextInt(191));
+			}
+			e.addCapability(MinaCapabilities.MINA_ENTITY_STATS, statsProv);
 		}
 	}
 }
