@@ -8,8 +8,7 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
-import lu.kremi151.minamod.capabilities.CapabilityPlayerStats;
-import lu.kremi151.minamod.capabilities.IPlayerStats;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.interfaces.IFertilizable;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.worlddata.MinaWorld;
@@ -157,14 +156,14 @@ public class PlayerSpecificEvents {
 			LEVEL UP
 		}*/
 		
-		((IPlayerStats)event.getEntityPlayer().getCapability(CapabilityPlayerStats.CAPABILITY, null)).addEffort(event.getOrb().xpValue);
+		((ICapabilityStats)event.getEntityPlayer().getCapability(ICapabilityStats.CAPABILITY, null)).getEffort().increment(event.getOrb().xpValue);
 	}
 	
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){
 		if(event.isWasDeath()){
-			event.getEntityPlayer().getCapability(CapabilityPlayerStats.CAPABILITY, null)
-				.copyFrom(event.getOriginal().getCapability(CapabilityPlayerStats.CAPABILITY, null));
+			event.getEntityPlayer().getCapability(ICapabilityStats.CAPABILITY, null)
+				.applyFrom(event.getOriginal().getCapability(ICapabilityStats.CAPABILITY, null));
 		}
 	}
 	

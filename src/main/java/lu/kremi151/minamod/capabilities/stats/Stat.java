@@ -21,6 +21,14 @@ public class Stat {
 		return training;
 	}
 	
+	public int getMinTrainingValue(){
+		return -Math.min(actual.get(), actual.minValue);
+	}
+	
+	public int getMaxTrainingValue(){
+		return actual.maxValue - actual.get();
+	}
+	
 	public void initialize(){}
 	
 	public static class Value{

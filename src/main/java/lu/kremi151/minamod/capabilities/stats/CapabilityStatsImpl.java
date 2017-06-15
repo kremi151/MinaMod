@@ -22,6 +22,8 @@ import net.minecraftforge.common.capabilities.Capability;
 
 public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabilityStats<E>{
 	
+	private static Map<Class<? extends EntityLivingBase>, DataParameter<Integer>> EFFORT_PARAMETER_MAP = new HashMap<>();
+	
 	private final HashMap<StatType<E>, Stat> statMap;
 	private final Stat.Value effort;
 	private final int maxEffortVal = 60;
@@ -34,7 +36,13 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		for(StatType<E> type : statTypes){
 			statMap.put(type, type.buildStat(this, entity));
 		}
-		this.effortKey = entity.getDataManager().createKey(EntityLivingBase.class, DataSerializers.VARINT);
+		if(!EFFORT_PARAMETER_MAP.containsKey(entity.getClass())){
+			this.effortKey = entity.getDataManager().createKey(entity.getClass(), DataSerializers.VARINT);
+			EFFORT_PARAMETER_MAP.put(entity.getClass(), effortKey);
+		}else{
+			this.effortKey = EFFORT_PARAMETER_MAP.get(entity.getClass());
+		}
+		entity.getDataManager().register(effortKey, 0);
 		this.effort = new Stat.Value(() -> entity.getDataManager().get(effortKey), value -> {
 			int old = entity.getDataManager().get(effortKey);
 			entity.getDataManager().set(effortKey, value);

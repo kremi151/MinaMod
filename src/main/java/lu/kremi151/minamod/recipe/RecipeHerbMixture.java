@@ -1,10 +1,11 @@
 package lu.kremi151.minamod.recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaItems;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.interfaces.IMixtureIngredient;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -75,28 +76,27 @@ public class RecipeHerbMixture implements IRecipe{
 		NBTTagCompound nbt = r.getOrCreateSubCompound("mixture");
 		nbt.setInteger("color", MinaUtils.convertRGBToDecimal(red, green, blue));
 		
-		//int atk = 0, def = 0, spd = 0;
-		int stats[] = new int[EnumPlayerStat.values().length];
+		final HashMap<StatType, Integer> pointsMap = new HashMap<>();
 		for(IMixtureApplicator appl : appls){
-			for(EnumPlayerStat stat : EnumPlayerStat.values()){
-				stats[stat.ordinal()] = MathHelper.clamp(stats[stat.ordinal()] + appl.getStatEffect(stat), -255, 255);
+			for(StatType type : appl.getSupportedStats()){
+				pointsMap.merge(type, appl.getStatEffect(type), (a, b) -> MathHelper.clamp(a + b, -255, 255));//TODO: Dynamic bounds
 			}
 		}
 		
 		if(ppotato){
-			int moy = 0;
-			for(EnumPlayerStat stat : EnumPlayerStat.values())moy += stats[stat.ordinal()];
-			moy /= EnumPlayerStat.values().length;
-			for(EnumPlayerStat stat : EnumPlayerStat.values()){
-				int x = stats[stat.ordinal()] - moy;
-				int y = (stats[stat.ordinal()] < 0)?-(x*x):(x*x);
-				stats[stat.ordinal()] = y;
-			}
+			int moy = pointsMap.values().stream().mapToInt(v -> v).sum();
+			moy /= pointsMap.size();
+			final int fmoy = moy;
+			pointsMap.entrySet().forEach(e -> {
+				int x = e.getValue() - fmoy;
+				int y = (e.getValue() < 0)?-(x*x):(x*x);
+				pointsMap.put(e.getKey(), y);
+			});
 		}
 
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			nbt.setInteger(stat.getId(), stats[stat.ordinal()]);
-		}
+		pointsMap.entrySet().forEach(e -> {
+			nbt.setInteger(e.getKey().getId(), e.getValue());
+		});
 		
 		return r;
 	}
