@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -55,7 +56,11 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 			int x = MathHelper.floor(y * ax);
 			int z = MathHelper.floor(y * az);
 			BlockPos logpos = pos.add(x, y, z);
-			world.setBlockState(logpos, bark ? wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE) : wood);
+			IBlockState logState = bark ? wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE) : wood;
+			if(y == height - 1){
+				logState = logState.withProperty(BlockPalmLog.HEAD, true);
+			}
+			world.setBlockState(logpos, logState);
 			bark = false;
 			if(prevX != x || prevZ != z){
 				world.setBlockState(logpos.down(), wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE));
