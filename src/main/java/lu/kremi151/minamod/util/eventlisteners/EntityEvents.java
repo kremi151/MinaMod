@@ -20,6 +20,7 @@ import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import lu.kremi151.minamod.worlddata.MinaWorld;
+import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -310,7 +311,11 @@ public class EntityEvents {
 		if(e.getObject() instanceof EntityMob){
 			EntityMob entity = (EntityMob) e.getObject();
 			MinaCapabilities.EntityStatsProvider<EntityMob> statsProv = new MinaCapabilities.EntityStatsProvider<EntityMob>((EntityMob)e.getObject(), new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
-			if(RNG.nextInt(10) == 0){
+			if(WorldProviderOverworldHook.isBloodMoon(entity.world)){
+				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(127 + entity.getRNG().nextInt(128));
+				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(127 + entity.getRNG().nextInt(128));
+				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(127 + entity.getRNG().nextInt(128));
+			}else if(RNG.nextInt(10) == 0){
 				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(64 + entity.getRNG().nextInt(191));
 				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(64 + entity.getRNG().nextInt(191));
 				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(64 + entity.getRNG().nextInt(191));
