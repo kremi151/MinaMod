@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.util.IStringSerializable;
@@ -91,17 +93,21 @@ public enum EnumHerb implements IMixtureApplicator, IStringSerializable{
 	public boolean isOriginal(){
 		return herb_id < 27;
 	}
+
+	@Override
+	public StatType[] getSupportedStats() {
+		return new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED};
+	}
 	
 	@Override
-	public int getStatEffect(EnumPlayerStat stat){
-		switch(stat){
-		case ATTACK:
+	public int getStatEffect(StatType type){
+		if(type == StatTypes.ATTACK){
 			return atkEffect;
-		case DEFENSE:
+		}else if(type == StatTypes.DEFENSE){
 			return defEffect;
-		case SPEED:
+		}else if(type == StatTypes.SPEED){
 			return spdEffect;
-		default:
+		}else{
 			return 0;
 		}
 	}
@@ -131,9 +137,9 @@ public enum EnumHerb implements IMixtureApplicator, IStringSerializable{
 			boolean b1 = (mask & 1) > 0;
 			boolean b2 = (mask & 2) > 0;
 			boolean b3 = (mask & 4) > 0;
-			int a = MathHelper.clamp(b1?h2.getStatEffect(EnumPlayerStat.ATTACK):h1.getStatEffect(EnumPlayerStat.ATTACK), -1, 1) + 1;
-			int d = MathHelper.clamp(b2?h2.getStatEffect(EnumPlayerStat.DEFENSE):h1.getStatEffect(EnumPlayerStat.DEFENSE), -1, 1) + 1;
-			int s = MathHelper.clamp(b3?h2.getStatEffect(EnumPlayerStat.SPEED):h1.getStatEffect(EnumPlayerStat.SPEED), -1, 1) + 1;
+			int a = MathHelper.clamp(b1?h2.getStatEffect(StatTypes.ATTACK):h1.getStatEffect(StatTypes.ATTACK), -1, 1) + 1;
+			int d = MathHelper.clamp(b2?h2.getStatEffect(StatTypes.DEFENSE):h1.getStatEffect(StatTypes.DEFENSE), -1, 1) + 1;
+			int s = MathHelper.clamp(b3?h2.getStatEffect(StatTypes.SPEED):h1.getStatEffect(StatTypes.SPEED), -1, 1) + 1;
 			int id = (s * 9) + (d * 3) + a;
 			return EnumHerb.getByHerbId((byte)id);
 		}

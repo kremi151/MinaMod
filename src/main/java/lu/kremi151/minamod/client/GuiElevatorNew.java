@@ -3,7 +3,6 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

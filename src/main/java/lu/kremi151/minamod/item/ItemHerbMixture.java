@@ -2,9 +2,10 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
-import lu.kremi151.minamod.capabilities.CapabilityPlayerStats;
-import lu.kremi151.minamod.capabilities.IPlayerStats;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.Stat;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
@@ -32,11 +33,17 @@ public class ItemHerbMixture extends ItemFood{
         if (!worldIn.isRemote)
         {
     		NBTTagCompound nbt = stack.getOrCreateSubCompound("mixture");
-        	IPlayerStats stats = player.getCapability(CapabilityPlayerStats.CAPABILITY, null);
+        	ICapabilityStats<EntityPlayer> stats = player.getCapability(ICapabilityStats.CAPABILITY, null);
         	
-        	for(EnumPlayerStat stat : EnumPlayerStat.values()){
-            	stats.applyTraining(stat, nbt.getInteger(stat.getId()));
-        	}
+        	stats.listSupportedStatTypes().forEach(type -> {
+        		int amount = nbt.getInteger(type.getId());
+        		Stat stat = stats.getStat(type);
+        		if(stat.getTraining().remaining() > amount){
+        			stat.getTraining().increment(amount);
+        		}else{
+        			stat.getTraining().increment(stat.getTraining().remaining());
+        		}
+        	});
         	
     		player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE,1));
         }
@@ -52,30 +59,35 @@ public class ItemHerbMixture extends ItemFood{
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("mixture");
-		tooltip.add(I18n.translateToLocalFormatted("item.mixture.attack.info", nbt.getInteger("attack")));
-		tooltip.add(I18n.translateToLocalFormatted("item.mixture.defense.info", nbt.getInteger("defense")));
-		tooltip.add(I18n.translateToLocalFormatted("item.mixture.speed.info", nbt.getInteger("speed")));
-		if(!hasEffect(stack, playerIn.getCapability(CapabilityPlayerStats.CAPABILITY, null))){
+		
+		for(String key : nbt.getKeySet()){
+			StatType.findStatType(key).ifPresent(type -> {
+				tooltip.add(I18n.translateToLocalFormatted("item.mixture." + type.getUnlocalizedName() + ".info", nbt.getInteger(type.getId())));
+			});
+		}
+		
+		if(!hasEffect(stack, playerIn.getCapability(ICapabilityStats.CAPABILITY, null))){
 			tooltip.add("");
 			tooltip.add(TextFormatting.RED + I18n.translateToLocal("item.mixture.no_effect.info"));
 		}
     }
 	
-	public static boolean hasEffect(ItemStack mixture, IPlayerStats stats){
+	public static boolean hasEffect(ItemStack mixture, ICapabilityStats<? extends EntityLivingBase> stats){
 		NBTTagCompound nbt = mixture.getOrCreateSubCompound("mixture");
 		
 		int sum = 0;
 		
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			int training = nbt.getInteger(stat.getId());
-			int nval = stats.getTrainingStats(stat) + training;
-			if(!(stats.getMinTrainingStats(stat) <= nval && nval <= stats.getMaxTrainingStats(stat))){
+		for(StatType type : stats.listSupportedStatTypes()){
+			Stat stat = stats.getStat(type);
+			int training = nbt.getInteger(type.getId());
+			int nval = stat.getTraining().get() + training;
+			if(!(stat.getMinTrainingValue() <= nval && nval <= stat.getMaxTrainingValue())){
 				return false;
 			}
 			sum += training;
 		}
 		
-		return sum <= stats.getPointsLeft();
+		return sum <= stats.pointsLeft();
 	}
 
 }

@@ -2,7 +2,8 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
-import lu.kremi151.minamod.enums.EnumPlayerStat;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.interfaces.IMixtureIngredient;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -11,8 +12,13 @@ import net.minecraft.item.ItemStack;
 public class ItemChiliPowder extends ItemChili implements IMixtureIngredient, IMixtureApplicator{
 
 	@Override
-	public int getStatEffect(EnumPlayerStat stat) {
-		return (stat == EnumPlayerStat.SPEED)?4:-4;
+	public int getStatEffect(StatType stat) {
+		return (stat == StatTypes.SPEED)?4:-4;
+	}
+
+	@Override
+	public StatType[] getSupportedStats() {
+		return new StatType[]{StatTypes.SPEED};
 	}
 
 	@Override

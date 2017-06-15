@@ -66,6 +66,7 @@ import lu.kremi151.minamod.util.eventlisteners.PlayerSpecificEvents;
 import lu.kremi151.minamod.util.eventlisteners.TerrainEventListeners;
 import lu.kremi151.minamod.util.eventlisteners.WorldEvents;
 import lu.kremi151.minamod.worldgen.WorldGenerators;
+import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
@@ -286,7 +287,7 @@ public class MinaMod {
 		MinaSounds.init();
 
 		proxy.registerRenderers();
-		
+		WorldProviderOverworldHook.hookIn();
 	}
 
 	@EventHandler

@@ -1,14 +1,16 @@
 package lu.kremi151.minamod.client;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.capabilities.CapabilityPlayerStats;
-import lu.kremi151.minamod.capabilities.IPlayerStats;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
+import lu.kremi151.minamod.capabilities.stats.CapabilityStatsImpl;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.Stat;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Point;
 import net.minecraft.client.Minecraft;
@@ -25,14 +27,26 @@ public class GuiPlayerStats extends GuiNoInventory{
 	
 	private int statsCenterX = 88, statsCenterY = 79;
 	
-	private final Point statPoint[] = new Point[EnumPlayerStat.values().length], statVPoint[] = new Point[EnumPlayerStat.values().length];
+	private final Point statPoint[], statVPoint[];
 	
-	private final static double START_ANGLE = 30.0, BETWEEN_ANGLE = 360.0 / (double)EnumPlayerStat.values().length;
+	private final static double START_ANGLE = 30.0;
+	private final double BETWEEN_ANGLE;
+	private final int MAX_POINTS_TOTAL;
 	
-	private final IPlayerStats playerStats;
+	private final CapabilityStatsImpl playerStats;
+	private final StatType statTypes[];
 	
 	public GuiPlayerStats(){
-		playerStats = Minecraft.getMinecraft().player.getCapability(CapabilityPlayerStats.CAPABILITY, null);
+		playerStats = (CapabilityStatsImpl) Minecraft.getMinecraft().player.getCapability(ICapabilityStats.CAPABILITY, null);
+		Collection<StatType> statTypes = playerStats.listSupportedStatTypes();
+		this.statTypes = statTypes.toArray(new StatType[statTypes.size()]);
+		statPoint = new Point[this.statTypes.length];
+		statVPoint = new Point[this.statTypes.length];
+		BETWEEN_ANGLE = 360.0 / (double)this.statTypes.length;
+		
+		int maxPoints = 0;
+		for(StatType type : statTypes)maxPoints += playerStats.getStat(type).getActual().getMaxValue();
+		MAX_POINTS_TOTAL = maxPoints;
 	}
 	
 	@Override
@@ -58,25 +72,27 @@ public class GuiPlayerStats extends GuiNoInventory{
 				this.drawHoveringText(lines, mouseX, mouseY);
 			}
 		}
-		for(EnumPlayerStat ps : EnumPlayerStat.values()){
-			Point sp = statVPoint[ps.ordinal()];
+		for(int i = 0 ; i < statTypes.length ; i++){
+			StatType type = statTypes[i];
+			Stat stat = playerStats.getStat(type);
+			Point sp = statVPoint[i];
 			if(adjMouseX >= sp.x() - 13 && adjMouseX <= sp.x() + 13 && adjMouseY >= sp.y() - 6 && adjMouseY <= sp.y() + 7){
 				String desc;
-				int training = playerStats.getTrainingStats(ps);
-				int actual = playerStats.getStats(ps);
+				int training = stat.getTraining().get();
+				int actual = stat.getActual().get();
 				if(training > 0){
 					desc = "gui.player_stats.value.might_rise";
 				}else if(training < 0){
 					desc = "gui.player_stats.value.might_fall";
-				}else if(actual == CapabilityPlayerStats.NORMAL_STAT_MAXIMUM){
+				}else if(actual == stat.getActual().getMaxValue()){
 					desc = "gui.player_stats.value.max";
-				}else if(actual == CapabilityPlayerStats.NORMAL_STAT_MINIMUM){
+				}else if(actual == stat.getActual().getMinValue()){
 					desc = "gui.player_stats.value.min";
 				}else{
 					desc = "gui.player_stats.value.constant";
 				}
 				List<String> lines = Arrays.asList(
-						TextFormatting.GOLD + I18n.translateToLocal(ps.getUnlocalizedName()), 
+						TextFormatting.GOLD + I18n.translateToLocal(type.getUnlocalizedName()), 
 						I18n.translateToLocal(desc)
 						);
 				this.drawHoveringText(lines, mouseX, mouseY);
@@ -87,20 +103,25 @@ public class GuiPlayerStats extends GuiNoInventory{
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		float expPerc = MathHelper.clamp((float)playerStats.getEffortBar() / (float)playerStats.getMaxEffortBar(), 0.0f, 1.0f);
+		float expPerc = MathHelper.clamp((float)playerStats.getEffort().get() / (float)playerStats.getEffort().getMaxValue(), 0.0f, 1.0f);
 		this.drawTexturedModalRect(15, 183, 0, 220, (int)(expPerc * 153), 4);
 		
-		expPerc = MathHelper.clamp((float)playerStats.getPointsLeft() / (float)playerStats.getMaxDistributablePoints(), 0.0f, 1.0f);
+		
+		expPerc = MathHelper.clamp((float)playerStats.pointsLeft() / (float)MAX_POINTS_TOTAL, 0.0f, 1.0f);
 		this.drawTexturedModalRect(15, 191, 0, 224, (int)(expPerc * 153), 4);
 
 		fontRenderer.drawString(I18n.translateToLocal("gui.player_stats.title"), 8, 10, 4210752);
 		
-		int actuals[] = new int[EnumPlayerStat.values().length], trainings[] = new int[EnumPlayerStat.values().length], ctrainings[] = new int[EnumPlayerStat.values().length];
+		int actuals[] = new int[statTypes.length], trainings[] = new int[statTypes.length], ctrainings[] = new int[statTypes.length],
+				mins[] = new int[statTypes.length], maxs[] = new int[statTypes.length];
 		
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			actuals[stat.ordinal()] = playerStats.getStats(stat);
-			trainings[stat.ordinal()] = playerStats.getTrainingStats(stat);
-			ctrainings[stat.ordinal()] = actuals[stat.ordinal()] + trainings[stat.ordinal()];
+		for(int i = 0 ; i < statTypes.length ; i++){
+			Stat stat = playerStats.getStat(statTypes[i]);
+			actuals[i] = stat.getActual().get();
+			trainings[i] = stat.getTraining().get();
+			ctrainings[i] = actuals[i] + trainings[i];
+			mins[i] = stat.getActual().getMinValue();
+			maxs[i] = stat.getActual().getMaxValue();
 		}
 
 		drawStatsPoints();
@@ -108,14 +129,19 @@ public class GuiPlayerStats extends GuiNoInventory{
 		drawStats(actuals, 1f, 1f, 0f, true);
 		
 		double angle = START_ANGLE;
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			fontRenderer.drawStringWithShadow(I18n.translateToLocalFormatted(stat.getMultiplicatorString(), round((float)actuals[stat.ordinal()] / 127.5f)), 10, 133 + (stat.ordinal() * 12), stat.getDisplayColor());
+		for(int i = 0 ; i < statTypes.length ; i++){
+			StatType type = statTypes[i];
+			fontRenderer.drawStringWithShadow(I18n.translateToLocalFormatted(getMultiplicatorString(type), round((float)actuals[i] / 127.5f)), 10, 133 + (i * 12), type.getColor());
 
-			statPoint[stat.ordinal()] = calculateAnglePoint(statPoint[stat.ordinal()], statsCenterX, statsCenterY, 55, angle);
-			statVPoint[stat.ordinal()] = calculateAnglePoint(statVPoint[stat.ordinal()], statsCenterX, statsCenterY, 68, 55, angle);
+			statPoint[i] = calculateAnglePoint(statPoint[i], statsCenterX, statsCenterY, 55, angle);
+			statVPoint[i] = calculateAnglePoint(statVPoint[i], statsCenterX, statsCenterY, 68, 55, angle);
 			angle += BETWEEN_ANGLE;
-			drawStatValue(actuals[stat.ordinal()], trainings[stat.ordinal()], statVPoint[stat.ordinal()].x(), statVPoint[stat.ordinal()].y());
+			drawStatValue(actuals[i], trainings[i], mins[i], maxs[i], statVPoint[i].x(), statVPoint[i].y());
 		}
+	}
+	
+	private String getMultiplicatorString(StatType type){
+		return "gui.player_stats." + type.getId() + "_multiplicator";
 	}
 	
 	private float round(float f){
@@ -127,8 +153,8 @@ public class GuiPlayerStats extends GuiNoInventory{
 		float grayness = 0.12f;
 
 		double angle = START_ANGLE;
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			statPoint[stat.ordinal()] = calculateAnglePoint(statPoint[stat.ordinal()], statsCenterX, statsCenterY, dist, angle);
+		for(int i = 0 ; i < statTypes.length ; i++){
+			statPoint[i] = calculateAnglePoint(statPoint[i], statsCenterX, statsCenterY, dist, angle);
 			angle += BETWEEN_ANGLE;
 		}
 		
@@ -152,9 +178,9 @@ public class GuiPlayerStats extends GuiNoInventory{
 	    GL11.glLineWidth(1.0F);
 	    GL11.glDepthMask(false);
 		
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
+		for(int i = 0 ; i < statTypes.length ; i++){
 			GlStateManager.glBegin(GL11.GL_LINES);
-			GlStateManager.glVertex3f(statPoint[stat.ordinal()].x(), statPoint[stat.ordinal()].y(), 30.f);
+			GlStateManager.glVertex3f(statPoint[i].x(), statPoint[i].y(), 30.f);
 			GlStateManager.glVertex3f(statsCenterX, statsCenterY, 30.f);
 			GlStateManager.glEnd();
 		}
@@ -164,8 +190,9 @@ public class GuiPlayerStats extends GuiNoInventory{
 		
 		drawPoint(statsCenterX, statsCenterY, grayness, grayness, grayness);
 		
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			drawPoint(statPoint[stat.ordinal()].x(), statPoint[stat.ordinal()].y(), stat.getDisplayColorF()[0], stat.getDisplayColorF()[1], stat.getDisplayColorF()[2]);
+		for(int i = 0 ; i < statTypes.length ; i++){
+			StatType type = statTypes[i];
+			drawPoint(statPoint[i].x(), statPoint[i].y(), type.getColorF()[0], type.getColorF()[1], type.getColorF()[2]);
 		}
 	}
 	
@@ -173,9 +200,9 @@ public class GuiPlayerStats extends GuiNoInventory{
 		int maxDist = 40, dist[] = new int[stats.length];
 		
 		double angle = START_ANGLE;
-		for(EnumPlayerStat stat : EnumPlayerStat.values()){
-			dist[stat.ordinal()] = (int) (maxDist * (stats[stat.ordinal()] / 255.0));
-			statPoint[stat.ordinal()] = calculateAnglePoint(statPoint[stat.ordinal()], statsCenterX, statsCenterY, dist[stat.ordinal()], angle);
+		for(int i = 0 ; i < statTypes.length ; i++){
+			dist[i] = (int) (maxDist * (stats[i] / 255.0));
+			statPoint[i] = calculateAnglePoint(statPoint[i], statsCenterX, statsCenterY, dist[i], angle);
 			angle += BETWEEN_ANGLE;
 		}
 		
@@ -242,7 +269,7 @@ public class GuiPlayerStats extends GuiNoInventory{
 	    GL11.glPopAttrib();
 	}
 	
-	private void drawStatValue(int actual, int training, int cx, int cy){
+	private void drawStatValue(int actual, int training, int min, int max, int cx, int cy){
 		String caption = "" + actual;
 		int width = fontRenderer.getStringWidth(caption);
 		int x = cx - (width / 2);
@@ -252,9 +279,9 @@ public class GuiPlayerStats extends GuiNoInventory{
 			color = MinaUtils.convertRGBToDecimal(128, 255, 128);
 		}else if(training < 0){
 			color = MinaUtils.convertRGBToDecimal(255, 128, 128);
-		}else if(actual == CapabilityPlayerStats.NORMAL_STAT_MAXIMUM){
+		}else if(actual == max){
 			color = MinaUtils.convertRGBToDecimal(255, 255, 0);
-		}else if(actual == CapabilityPlayerStats.NORMAL_STAT_MINIMUM){
+		}else if(actual == min){
 			color = MinaUtils.convertRGBToDecimal(64, 64, 64);
 		}else{
 			color = MinaUtils.COLOR_WHITE;

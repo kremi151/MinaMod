@@ -7,11 +7,10 @@ import org.lwjgl.util.Rectangle;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.enums.EnumHerb;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
 import lu.kremi151.minamod.item.ItemHerbGuide;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.util.Point;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -72,9 +71,9 @@ public class GuiHerbBook extends GuiNoInventory{
 	
 	private String getClassification(EnumHerb herb){
 		if(herb.isOriginal()){
-			int atk = herb.getStatEffect(EnumPlayerStat.ATTACK);
-			int def = herb.getStatEffect(EnumPlayerStat.DEFENSE);
-			int spd = herb.getStatEffect(EnumPlayerStat.SPEED);
+			int atk = herb.getStatEffect(StatTypes.ATTACK);
+			int def = herb.getStatEffect(StatTypes.DEFENSE);
+			int spd = herb.getStatEffect(StatTypes.SPEED);
 			return ((atk < 0)?"A":((atk > 0)?"C":"B")) + ((def < 0)?"A":((def > 0)?"C":"B")) + ((spd < 0)?"A":((spd > 0)?"C":"B"));
 		}else{
 			return "???";
@@ -153,9 +152,9 @@ public class GuiHerbBook extends GuiNoInventory{
 				icon = new ItemStack(MinaItems.HERB, 1, page_index);
 				title = icon.getDisplayName();
 				
-				int atk = herb.getStatEffect(EnumPlayerStat.ATTACK);
-				int def = herb.getStatEffect(EnumPlayerStat.DEFENSE);
-				int spd = herb.getStatEffect(EnumPlayerStat.SPEED);
+				int atk = herb.getStatEffect(StatTypes.ATTACK);
+				int def = herb.getStatEffect(StatTypes.DEFENSE);
+				int spd = herb.getStatEffect(StatTypes.SPEED);
 				
 				if(ItemHerbGuide.includeStats(stack)){
 					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.attack.info", atk), 25, 65, (atk>0)?COLOR_GREEN:((atk<0)?COLOR_RED:MinaUtils.COLOR_BLACK));

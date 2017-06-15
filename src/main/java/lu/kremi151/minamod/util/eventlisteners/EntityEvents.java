@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.util.eventlisteners;
 
 import java.util.Map;
+import java.util.Random;
 
 import lu.kremi151.minamod.MinaArmorMaterial;
 import lu.kremi151.minamod.MinaBlocks;
@@ -10,20 +11,22 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
-import lu.kremi151.minamod.capabilities.CapabilityPlayerStats;
-import lu.kremi151.minamod.capabilities.IPlayerStats;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.entity.EntityIceGolhem;
-import lu.kremi151.minamod.enums.EnumPlayerStat;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import lu.kremi151.minamod.worlddata.MinaWorld;
+import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.boss.EntityWither;
@@ -48,13 +51,15 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityEvents {
 
-	private MinaMod mod;
+	private final MinaMod mod;
+	private final Random RNG = new Random(System.currentTimeMillis());
 	
 	public EntityEvents(MinaMod mod){
 		this.mod = mod;
@@ -80,19 +85,6 @@ public class EntityEvents {
 				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
 			}
 		}
-		
-		/*
-		if(living instanceof EntityPlayer){
-			final EntityPlayer p = (EntityPlayer) living;
-			
-			//TODO:Test
-			if(!p.getHeldItemMainhand().isEmpty() && p.getHeldItemMainhand().hasCapability(CapabilityEnergy.ENERGY, null)){
-				IEnergyStorage store = p.getHeldItemMainhand().getCapability(CapabilityEnergy.ENERGY, null);
-				store.extractEnergy(1, false);
-			}
-			
-		}
-		*/
 	}
 	
 	private boolean isJumping(EntityLivingBase e){
@@ -127,38 +119,8 @@ public class EntityEvents {
 		return (eff!=null)?eff.getDuration():-1;
 	}
 	
-	/*@SubscribeEvent
-	public void onEntityFall(LivingFallEvent event) { // NO_UCD (unused code)
-//		float rf = MinaUtils.relativisticForce(10f, (float)event.getEntityLiving().motionY);
-//		if(rf > 1f){
-//			event.getEntityLiving().world.newExplosion(event.getEntityLiving(), event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, rf, true, true);
-//		}
-		if(event.getEntityLiving() instanceof EntityPlayer){
-			EntityPlayer p = (EntityPlayer) event.getEntityLiving();
-			if(!MinaMod.getProxy().isServerSide()){
-				ItemStack chestplateArmor = p.inventory.armorItemInSlot(2);
-				if(!chestplateArmor.isEmpty()){
-//					if(chestplateArmor.getItem() == MinaItems.itemJetpack){
-//						event.distance = 1;
-//					}
-				}
-			}
-		}
-	}*/
-	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event){ // NO_UCD (unused code)
-		//Ab hei just nach mat damage//
-		if(MinaMod.getMinaConfig().isDebugging()){
-			if(event.getSource().getSourceOfDamage() == null){
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: unknown");
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
-				return;
-			}else{
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death source: " + event.getSource().getSourceOfDamage().getName());
-				MinaMod.debugPrintln(event.getEntityLiving().getName() + " death cause: " + event.getSource().damageType);
-			}
-		}
 		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
 			EntityLivingBase killed = event.getEntityLiving();
 			EntityPlayer killer = (EntityPlayer) event.getSource().getSourceOfDamage();
@@ -207,21 +169,18 @@ public class EntityEvents {
 	}
 	
 	@SubscribeEvent
+	public void onLivingDropsExp(LivingExperienceDropEvent event){
+		event.setDroppedExperience((MinaUtils.getSuperMobLevel(event.getEntityLiving()) + 1) * event.getDroppedExperience());
+	}
+	
+	@SubscribeEvent
 	public void onEntitySpawn(EntityJoinWorldEvent event){ // NO_UCD (unused code)
-//		if(!(event.getEntity() instanceof EntityPlayer) && (event.getEntity() instanceof EntityLiving) &! MinaWorld.forWorld(event.getEntity().world).hasMobsEnabled()){
-//			event.getEntity().setDead();
-//			return;
-//		}
-//		if(event.getEntity() instanceof EntitySheep){
-//			EntitySheep s = (EntitySheep) event.getEntity();
-//			s.tasks.addTask(5, new EntityAIEatDarkGrass(s));
-//		}
 		if(event.getEntity() instanceof EntitySkeleton || event.getEntity() instanceof EntityZombie){
 			EntityMob s = (EntityMob)event.getEntity();
 	        s.tasks.addTask(3, new EntityAIAvoidEntity((EntityCreature) event.getEntity(), EntityIceGolhem.class, 6.0F, 0.6D, 0.6D));
 		}
-		if(event.getEntity().hasCapability(CapabilityPlayerStats.CAPABILITY, null)){
-			((IPlayerStats)event.getEntity().getCapability(CapabilityPlayerStats.CAPABILITY, null)).initAttributes();//TODO:should this be here?
+		if(event.getEntity().hasCapability(ICapabilityStats.CAPABILITY, null)){
+			((ICapabilityStats)event.getEntity().getCapability(ICapabilityStats.CAPABILITY, null)).initAttributes();//TODO:should this be here?
 		}
 	}
 	
@@ -258,17 +217,23 @@ public class EntityEvents {
 					event.setAmount(event.getAmount() * 0.55f);
 				}
 			}
-			
-			IPlayerStats pstats = event.getEntityLiving().getCapability(CapabilityPlayerStats.CAPABILITY, null);
-			float defFactor = (float)pstats.getStats(EnumPlayerStat.DEFENSE) / 127.5f;
-			event.setAmount(event.getAmount() / defFactor);
+		}
+		
+		if(event.getEntityLiving().hasCapability(ICapabilityStats.CAPABILITY, null)){
+			ICapabilityStats pstats = event.getEntityLiving().getCapability(ICapabilityStats.CAPABILITY, null);
+			if(pstats.supports(StatTypes.DEFENSE)){
+				float defFactor = (float)pstats.getStat(StatTypes.DEFENSE).getActual().get() / 127.5f;
+				event.setAmount(event.getAmount() / defFactor);
+			}
 		}
 		
 		Entity sourceEntity = event.getSource().getEntity();
-		if(sourceEntity != null && sourceEntity instanceof EntityPlayer){
-			IPlayerStats pstats = sourceEntity.getCapability(CapabilityPlayerStats.CAPABILITY, null);
-			float atkFactor = (float)pstats.getStats(EnumPlayerStat.ATTACK) / 127.5f;
-			event.setAmount(event.getAmount() * atkFactor);
+		if(sourceEntity != null && sourceEntity.hasCapability(ICapabilityStats.CAPABILITY, null)){
+			ICapabilityStats pstats = sourceEntity.getCapability(ICapabilityStats.CAPABILITY, null);
+			if(pstats.supports(StatTypes.ATTACK)){
+				float atkFactor = (float)pstats.getStat(StatTypes.ATTACK).getActual().get() / 127.5f;
+				event.setAmount(event.getAmount() * atkFactor);
+			}
 		}
 		
 		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
@@ -298,6 +263,20 @@ public class EntityEvents {
 	public void onAttachEntityCapabilities(AttachCapabilitiesEvent.Entity e){
 		if(e.getObject() instanceof EntityPlayer){
 			e.addCapability(MinaCapabilities.MINA_PLAYER_CAPS_ID, new MinaCapabilities.MinaPlayerCapabilityProvider((EntityPlayer) e.getObject()));
+		}
+		if(e.getObject() instanceof EntityMob){
+			EntityMob entity = (EntityMob) e.getObject();
+			MinaCapabilities.EntityStatsProvider<EntityMob> statsProv = new MinaCapabilities.EntityStatsProvider<EntityMob>((EntityMob)e.getObject(), new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
+			if(WorldProviderOverworldHook.isBloodMoon(entity.world)){
+				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(127 + entity.getRNG().nextInt(128));
+				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(127 + entity.getRNG().nextInt(128));
+				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(127 + entity.getRNG().nextInt(128));
+			}else if(RNG.nextInt(10) == 0){
+				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(64 + entity.getRNG().nextInt(191));
+				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(64 + entity.getRNG().nextInt(191));
+				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(64 + entity.getRNG().nextInt(191));
+			}
+			e.addCapability(MinaCapabilities.MINA_ENTITY_STATS, statsProv);
 		}
 	}
 }

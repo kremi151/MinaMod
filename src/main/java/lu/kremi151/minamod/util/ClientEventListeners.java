@@ -8,6 +8,9 @@ import lu.kremi151.minamod.packet.message.MessageOpenGui;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -81,5 +84,19 @@ public class ClientEventListeners {
 	@SubscribeEvent
 	public void onEntitySpawn(ClientDisconnectionFromServerEvent event) { // NO_UCD (unused code)
 		MinaMod.getProxy().clearOverlays();
+	}
+	
+	@SubscribeEvent
+	public void onPreRenderEntity(RenderLivingEvent.Pre event){
+		if(!(event.getEntity() instanceof EntityPlayer)){
+			int lvl = MinaUtils.getSuperMobLevel(event.getEntity());
+			if(lvl == 1){
+				GlStateManager.color(0.3f, 0.5f, 0.3f);
+			}else if(lvl == 2){
+				GlStateManager.color(0.3f, 0.3f, 0.5f);
+			}else if(lvl >= 3){
+				GlStateManager.color(0.5f, 0.3f, 0.3f);
+			}
+		}
 	}
 }
