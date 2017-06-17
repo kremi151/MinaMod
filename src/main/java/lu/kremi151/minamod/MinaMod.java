@@ -20,6 +20,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.stats.datasync.StatDataSerializers;
 import lu.kremi151.minamod.commands.CommandMinaBase;
 import lu.kremi151.minamod.entity.EntityBee;
 import lu.kremi151.minamod.entity.EntityFish;
@@ -71,6 +72,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
+import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -288,6 +290,8 @@ public class MinaMod {
 
 		proxy.registerRenderers();
 		WorldProviderOverworldHook.hookIn();
+		
+		DataSerializers.registerSerializer(StatDataSerializers.STAT_DATA);
 	}
 
 	@EventHandler

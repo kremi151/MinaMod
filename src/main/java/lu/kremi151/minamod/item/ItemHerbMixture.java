@@ -62,7 +62,8 @@ public class ItemHerbMixture extends ItemFood{
 		
 		for(String key : nbt.getKeySet()){
 			StatType.findStatType(key).ifPresent(type -> {
-				tooltip.add(I18n.translateToLocalFormatted("item.mixture." + type.getUnlocalizedName() + ".info", nbt.getInteger(type.getId())));
+				int amnt = nbt.getInteger(type.getId());
+				if(amnt != 0)tooltip.add(I18n.translateToLocalFormatted("item.mixture." + type.getUnlocalizedName() + ".info", amnt));
 			});
 		}
 		

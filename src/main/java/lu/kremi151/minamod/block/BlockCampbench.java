@@ -120,7 +120,7 @@ public class BlockCampbench extends Block{
     	
     	int rot = MinaUtils.positiveModulo(MathHelper.floor((double)(placer.rotationYaw * 8.0F / 360.0F) + 0.5D), 4);
     	
-    	return state.withProperty(ROTATION, rot);
+    	return state.withProperty(ROTATION, rot % 4);
     }
     
 	@Override

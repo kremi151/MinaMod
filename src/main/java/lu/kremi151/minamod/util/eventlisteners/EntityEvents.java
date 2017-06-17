@@ -12,6 +12,7 @@ import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
@@ -26,7 +27,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.boss.EntityWither;
@@ -47,12 +47,16 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -155,6 +159,10 @@ public class EntityEvents {
 						event.getEntityLiving().world.spawnEntity(ei);
 					}
 				}
+			}
+			int superMobLvl = MinaUtils.getSuperMobLevel(killed);
+			if(superMobLvl > 0){
+				((ICapabilityStats)killer.getCapability(ICapabilityStats.CAPABILITY, null)).offer(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR, 1 + superMobLvl);
 			}
 		}
 		if(event.getEntityLiving() instanceof EntitySheep){
@@ -259,19 +267,30 @@ public class EntityEvents {
 		}
 	}
 	
+	private float localDifficulty = 0f;
+	private int localDifficultyRecalc = 0;
+	
+	private float getLocalDifficulty(World world, BlockPos pos){
+		if(localDifficultyRecalc-- <= 0){
+			localDifficulty = world.getDifficultyForLocation(pos).getAdditionalDifficulty();
+			localDifficultyRecalc = 100;
+		}
+		return localDifficulty;
+	}
+	
 	@SubscribeEvent
 	public void onAttachEntityCapabilities(AttachCapabilitiesEvent.Entity e){
 		if(e.getObject() instanceof EntityPlayer){
 			e.addCapability(MinaCapabilities.MINA_PLAYER_CAPS_ID, new MinaCapabilities.MinaPlayerCapabilityProvider((EntityPlayer) e.getObject()));
 		}
-		if(e.getObject() instanceof EntityMob){
+		if(e.getObject() instanceof EntityMob && e.getObject().world.getDifficulty() != EnumDifficulty.PEACEFUL){
 			EntityMob entity = (EntityMob) e.getObject();
 			MinaCapabilities.EntityStatsProvider<EntityMob> statsProv = new MinaCapabilities.EntityStatsProvider<EntityMob>((EntityMob)e.getObject(), new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
 			if(WorldProviderOverworldHook.isBloodMoon(entity.world)){
 				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(127 + entity.getRNG().nextInt(128));
 				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(127 + entity.getRNG().nextInt(128));
 				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(127 + entity.getRNG().nextInt(128));
-			}else if(RNG.nextInt(10) == 0){
+			}else if(RNG.nextInt(10) == 0 && RNG.nextFloat() <= MathHelper.clamp(getLocalDifficulty(e.getObject().world, e.getObject().getPosition()), 0f, 1f) * 0.5f){
 				statsProv.getStats().getStat(StatTypes.ATTACK).getActual().set(64 + entity.getRNG().nextInt(191));
 				statsProv.getStats().getStat(StatTypes.DEFENSE).getActual().set(64 + entity.getRNG().nextInt(191));
 				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(64 + entity.getRNG().nextInt(191));
