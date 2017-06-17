@@ -3,6 +3,7 @@ package lu.kremi151.minamod.worldprovider;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProviderSurface;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +19,7 @@ public class WorldProviderOverworldHook extends WorldProviderSurface{
     public Vec3d getSkyColor(net.minecraft.entity.Entity cameraEntity, float partialTicks)
     {
 		Vec3d color = super.getSkyColor(cameraEntity, partialTicks);
-		if(getBloodMoonPhase(world.getWorldTime()) == 0){
+		if(world.getDifficulty() != EnumDifficulty.PEACEFUL && getBloodMoonPhase(world.getWorldTime()) == 0){
 			color = new Vec3d((color.xCoord + 0.75) / 2.0, (color.yCoord + 0.3) / 2.0, (color.zCoord + 0.3) / 2.0);
 		}
         return color;
@@ -30,7 +31,7 @@ public class WorldProviderOverworldHook extends WorldProviderSurface{
     }
 	
 	public static boolean isBloodMoon(World world){
-		return world.provider instanceof WorldProviderOverworldHook && ((WorldProviderOverworldHook)world.provider).getBloodMoonPhase(world.getWorldTime()) == 0;
+		return world.provider instanceof WorldProviderOverworldHook && world.getDifficulty() != EnumDifficulty.PEACEFUL && ((WorldProviderOverworldHook)world.provider).getBloodMoonPhase(world.getWorldTime()) == 0;
 	}
 	
 	public static void hookIn(){

@@ -91,11 +91,11 @@ public class ClientEventListeners {
 		if(!(event.getEntity() instanceof EntityPlayer)){
 			int lvl = MinaUtils.getSuperMobLevel(event.getEntity());
 			if(lvl == 1){
-				GlStateManager.color(0.3f, 0.5f, 0.3f);
+				GlStateManager.color(0.35f, 0.5f, 0.35f);
 			}else if(lvl == 2){
-				GlStateManager.color(0.3f, 0.3f, 0.5f);
+				GlStateManager.color(0.35f, 0.35f, 0.5f);
 			}else if(lvl >= 3){
-				GlStateManager.color(0.5f, 0.3f, 0.3f);
+				GlStateManager.color(0.5f, 0.35f, 0.35f);
 			}
 		}
 	}
