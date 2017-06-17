@@ -33,7 +33,9 @@ public class CapabilityStatsPlayerImpl extends CapabilityStatsImpl<EntityPlayer>
 	@Override
 	public <T> void offer(Key<T> key, T value){
 		if(key.equals(DISTRIBUTION_MULTIPLICATOR)){
-			entity.getDataManager().set(distrMultiplicatorKey, Math.max((Integer)value, 1));
+			if((Integer)value > entity.getDataManager().get(distrMultiplicatorKey)){
+				entity.getDataManager().set(distrMultiplicatorKey, Math.max((Integer)value, 1));
+			}
 		}
 	}
 	
