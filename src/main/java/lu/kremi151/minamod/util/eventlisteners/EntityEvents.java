@@ -12,6 +12,7 @@ import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
@@ -158,6 +159,10 @@ public class EntityEvents {
 						event.getEntityLiving().world.spawnEntity(ei);
 					}
 				}
+			}
+			int superMobLvl = MinaUtils.getSuperMobLevel(killed);
+			if(superMobLvl > 0){
+				((ICapabilityStats)killer.getCapability(ICapabilityStats.CAPABILITY, null)).offer(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR, 1 + superMobLvl);
 			}
 		}
 		if(event.getEntityLiving() instanceof EntitySheep){

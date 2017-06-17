@@ -23,7 +23,11 @@ public class CapabilityStatsPlayerImpl extends CapabilityStatsImpl<EntityPlayer>
 	
 	@Override
 	public int distribute(Random rand, int amount) {
-		return super.distribute(rand, amount * Math.max(entity.getDataManager().get(distrMultiplicatorKey), 1));
+		int multi = Math.max(entity.getDataManager().get(distrMultiplicatorKey), 1);
+		if(multi > 1 && rand.nextFloat() < 0.3f){
+			entity.getDataManager().set(distrMultiplicatorKey, multi - 1);
+		}
+		return super.distribute(rand, amount * multi);
 	}
 	
 	@Override
