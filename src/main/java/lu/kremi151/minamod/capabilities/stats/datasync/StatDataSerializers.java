@@ -10,18 +10,23 @@ public class StatDataSerializers {
 
 	public static final DataSerializer<StatData> STAT_DATA = new DataSerializer<StatData>()
     {
+		@Override
         public void write(PacketBuffer buf, StatData value)
         {
             buf.writeByte((byte)(value.getActual() & 0xFF));
-            buf.writeByte((byte)(value.getTraining() & 0xFF));
+            buf.writeShort((short)(value.getTraining() & 0xFFFF));
         }
+		
+		@Override
         public StatData read(PacketBuffer buf) throws IOException
         {
             StatData data = new StatData();
             data.setActual(buf.readByte() & 0xFF);
-            data.setTraining(buf.readByte() & 0xFF);
+            data.setTraining(buf.readShort() & 0xFFFF);
             return data;
         }
+		
+		@Override
         public DataParameter<StatData> createKey(int id)
         {
             return new DataParameter(id, this);
