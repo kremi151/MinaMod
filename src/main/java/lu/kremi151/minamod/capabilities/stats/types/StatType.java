@@ -17,9 +17,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 
-public abstract class StatType<T extends EntityLivingBase> {
+public abstract class StatType {
 	
-	private static final Map<String, StatType<? extends EntityLivingBase>> REGISTER = new HashMap<>();
+	private static final Map<String, StatType> REGISTER = new HashMap<>();
 	private static final DualKeyMap<StatType, Class<? extends EntityLivingBase>, DataParameter<Integer>> ACTUAL_PARAMETER_MAP = new DualKeyMap<>();
 	private static final DualKeyMap<StatType, Class<? extends EntityLivingBase>, DataParameter<Integer>> TRAINING_PARAMETER_MAP = new DualKeyMap<>();
 	
@@ -28,7 +28,7 @@ public abstract class StatType<T extends EntityLivingBase> {
 	private int color = MinaUtils.COLOR_GRAY;
 	private float colorF[] = MinaUtils.convertDecimalToRGBFloat(color);
 
-	public abstract Stat buildStat(ICapabilityStats<T> stats, T entity);
+	public abstract <T extends EntityLivingBase> Stat buildStat(ICapabilityStats<T> stats, T entity);
 	
 	public StatType(String id){
 		if(id == null)throw new NullPointerException("No null values as id for stat types are allowed");
@@ -46,7 +46,7 @@ public abstract class StatType<T extends EntityLivingBase> {
 		return id;
 	}
 	
-	public StatType<T> setUnlocalizedName(String name){
+	public StatType setUnlocalizedName(String name){
 		this.name = name;
 		return this;
 	}
@@ -55,7 +55,7 @@ public abstract class StatType<T extends EntityLivingBase> {
 		return "minastats." + name;
 	}
 	
-	public StatType<T> setColor(int color){
+	public StatType setColor(int color){
 		this.color = color;
 		this.colorF = MinaUtils.convertDecimalToRGBFloat(color);
 		return this;
@@ -132,11 +132,11 @@ public abstract class StatType<T extends EntityLivingBase> {
 		return builder.apply(val_actual, val_training);
 	}
 	
-	public static Collection<StatType<? extends EntityLivingBase>> getRegisteredTypes(){
+	public static Collection<StatType> getRegisteredTypes(){
 		return Collections.unmodifiableCollection(REGISTER.values());
 	}
 	
-	public static Optional<StatType<? extends EntityLivingBase>> findStatType(String id){
+	public static Optional<StatType> findStatType(String id){
 		return Optional.ofNullable(REGISTER.get(id));
 	}
 	

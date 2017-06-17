@@ -24,16 +24,16 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 	
 	private static Map<Class<? extends EntityLivingBase>, DataParameter<Integer>> EFFORT_PARAMETER_MAP = new HashMap<>();
 	
-	private final HashMap<StatType<E>, Stat> statMap;
+	private final HashMap<StatType, Stat> statMap;
 	private final Stat.Value effort;
 	private final int maxEffortVal = 60;
 	private final DataParameter<Integer> effortKey;
 	private final E entity;
 	
-	public CapabilityStatsImpl(E entity, StatType<E> statTypes[]){
+	public CapabilityStatsImpl(E entity, StatType statTypes[]){
 		this.entity = entity;
 		this.statMap = new HashMap<>();
-		for(StatType<E> type : statTypes){
+		for(StatType type : statTypes){
 			statMap.put(type, type.buildStat(this, entity));
 		}
 		if(!EFFORT_PARAMETER_MAP.containsKey(entity.getClass())){
@@ -121,7 +121,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		for(int i = 0 ; i < amount ; i++){
 			avd.clear();
 			
-			for(Map.Entry<StatType<E>, Stat> e : statMap.entrySet()){
+			for(Map.Entry<StatType, Stat> e : statMap.entrySet()){
 				if(e.getValue().getTraining().get() > 0){
 					avd.add(e.getValue());
 				}
