@@ -28,7 +28,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 	private final Stat.Value effort;
 	private final int maxEffortVal = 60;
 	private final DataParameter<Integer> effortKey;
-	private final E entity;
+	protected final E entity;
 	
 	public CapabilityStatsImpl(E entity, StatType statTypes[]){
 		this.entity = entity;

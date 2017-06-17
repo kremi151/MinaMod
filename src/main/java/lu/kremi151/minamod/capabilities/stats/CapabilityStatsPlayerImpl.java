@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.capabilities.stats;
 
 import java.util.Optional;
+import java.util.Random;
 
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats.Key;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
@@ -17,18 +18,28 @@ public class CapabilityStatsPlayerImpl extends CapabilityStatsImpl<EntityPlayer>
 	
 	public CapabilityStatsPlayerImpl(EntityPlayer entity, StatType[] statTypes) {
 		super(entity, statTypes);
+		entity.getDataManager().register(distrMultiplicatorKey, 1);
 	}
 	
-	/*@Override
+	@Override
+	public int distribute(Random rand, int amount) {
+		return super.distribute(rand, amount * Math.max(entity.getDataManager().get(distrMultiplicatorKey), 1));
+	}
+	
+	@Override
 	public <T> void offer(Key<T> key, T value){
 		if(key.equals(DISTRIBUTION_MULTIPLICATOR)){
-			
+			entity.getDataManager().set(distrMultiplicatorKey, Math.max((Integer)value, 1));
 		}
 	}
 	
 	@Override
 	public <T> Optional<T> query(Key<T> key){
-		
-	}*/
+		if(key.equals(DISTRIBUTION_MULTIPLICATOR)){
+			return (Optional<T>) Optional.of(Math.max(entity.getDataManager().get(distrMultiplicatorKey), 1));
+		}else{
+			return Optional.empty();
+		}
+	}
 
 }

@@ -10,6 +10,7 @@ import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsImpl;
+import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
@@ -68,7 +69,7 @@ public class MinaCapabilities {
 		public MinaPlayerCapabilityProvider(EntityPlayer player){
 			coinHandler = new EntityCoinHandler(player);
 			jetpack = new CapabilityPlayerJetpack(player);
-			playerStats = new CapabilityStatsImpl<EntityPlayer>(player, new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
+			playerStats = new CapabilityStatsPlayerImpl(player, new StatType[]{StatTypes.ATTACK, StatTypes.DEFENSE, StatTypes.SPEED});
 			amuletHolder = new CapabilityAmuletHolder();
 			bliss = new EntityBlissImpl(player);
 		}
