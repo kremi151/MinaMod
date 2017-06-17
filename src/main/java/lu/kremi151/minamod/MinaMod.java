@@ -396,12 +396,17 @@ public class MinaMod {
 					mapping.remap(Item.getItemFromBlock(MinaBlocks.LOG_PEPPEL));
 				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
 					println("Remapping old MinaMod item leaf type to new one (peppel by default)");
-					mapping.remap(Item.getItemFromBlock(MinaBlocks.LEAVES_PEPPEL));
+					mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));
 				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "doge_seeds"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "kevikus_seeds"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "tracius_seeds"))){
 					println("Remapping old berry item type to combined item, old ones will result in doge berrys #CollateralDamage");
 					mapping.remap(MinaItems.BERRY_SEEDS);
+				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_peppel"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cotton"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_chestnut"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cherry"))){
+					mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));
 				}
 			}else if(mapping.type == GameRegistry.Type.BLOCK){
 				if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_log_g1"))){
@@ -409,8 +414,12 @@ public class MinaMod {
 					mapping.remap(MinaBlocks.LOG_PEPPEL);
 				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
 					println("Remapping old MinaMod block leaf type to new one (peppel by default)");
-					mapping.remap(MinaBlocks.LEAVES_PEPPEL);
-				}
+					mapping.remap(MinaBlocks.MINA_LEAVES_A);
+				}}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_peppel"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cotton"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_chestnut"))
+						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cherry"))){
+					mapping.remap(MinaBlocks.MINA_LEAVES_A);
 			}
 		}
 	}

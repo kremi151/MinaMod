@@ -32,28 +32,37 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinaLeaf extends BlockLeaves{
+public abstract class BlockMinaLeaf extends BlockLeaves{
 
-    public final PropertyEnum<BlockMinaPlanks.EnumType> TYPE;
+    public final PropertyEnum<BlockMinaPlanks.EnumType> TYPE = constructTypeProperty();
     private final BlockMinaPlanks.EnumType supportedTypes[];
     private final HashMap<Integer, Integer> supportedTypesMetaLookup = new HashMap<>();
     private final String variantNames[];
 	
-	public BlockMinaLeaf(Predicate<BlockMinaPlanks.EnumType> predicate){
+	public BlockMinaLeaf(){
+		this.supportedTypes = TYPE.getAllowedValues().toArray(new BlockMinaPlanks.EnumType[TYPE.getAllowedValues().size()]);
+		
+		for(int i = 0 ; i < supportedTypes.length ; i++){
+			supportedTypesMetaLookup.put(supportedTypes[i].ordinal(), i);
+		}
+		this.variantNames = new String[supportedTypes.length];
+		for(int i = 0 ; i < supportedTypes.length ; i++)this.variantNames[i] = supportedTypes[i].getName();
+		
+		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+	}
+	
+	private final PropertyEnum<BlockMinaPlanks.EnumType> constructTypeProperty(){
+		Predicate<BlockMinaPlanks.EnumType> predicate = getSupportedPredicate();
 		Set<BlockMinaPlanks.EnumType> values = new TreeSet<>();
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			if(predicate.test(type)){
 				values.add(type);
-				supportedTypesMetaLookup.put(type.ordinal(), values.size() - 1);
 			}
 		}
-		this.supportedTypes = values.toArray(new BlockMinaPlanks.EnumType[values.size()]);
-		this.variantNames = new String[supportedTypes.length];
-		for(int i = 0 ; i < supportedTypes.length ; i++)this.variantNames[i] = supportedTypes[i].getName();
-		this.TYPE = PropertyEnum.create("type", BlockMinaPlanks.EnumType.class, supportedTypes);
-		
-		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+		return PropertyEnum.create("type", BlockMinaPlanks.EnumType.class, supportedTypes);
 	}
+	
+	protected abstract Predicate<BlockMinaPlanks.EnumType> getSupportedPredicate();
 	
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -116,6 +125,10 @@ public class BlockMinaLeaf extends BlockLeaves{
 		return variantNames;
 	}
 	
+	public String[] getUnlocalizedNames(){
+		return variantNames;
+	}
+	
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
@@ -149,6 +162,9 @@ public class BlockMinaLeaf extends BlockLeaves{
     @Override
     protected BlockStateContainer createBlockState()
     {
+    	if(TYPE == null){
+    		throw new RuntimeException("Java, are you stupid?!?");
+    	}
         return new BlockStateContainer(this, new IProperty[] {CHECK_DECAY, DECAYABLE, TYPE});
     }
 

@@ -42,6 +42,7 @@ import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -50,9 +51,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemSoup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
 
@@ -307,5 +310,7 @@ public class MinaItems {
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.COBBLEBRICKS).setRegistryName(MinaBlocks.COBBLEBRICKS.getRegistryName()), "cobblebricks", "cobblebrick_stone", "cobblebrick_slab");
 		proxy.registerItem(new ItemBlockMulti<BlockElevatorFloor>(MinaBlocks.ELEVATOR_FLOOR, "default", "jumper").setRegistryName(MinaBlocks.ELEVATOR_FLOOR.getRegistryName()), "elevator_floor", "elevator_floor", "elevator_jumper");
 		proxy.registerItem(new ItemBlockMulti<BlockCampbench>(MinaBlocks.CAMPBENCH, "acacia", "birch", "dark_oak", "spruce").setRegistryName(MinaBlocks.CAMPBENCH.getRegistryName()), "campbench", "campbench_acacia", "campbench_birch", "campbench_dark_oak", "campbench_spruce");
+		proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_A, MinaBlocks.MINA_LEAVES_A.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_A.getRegistryName()), "mina_leaves_a", MinaBlocks.MINA_LEAVES_A.getVariantNames());
+		proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 	}
 }
