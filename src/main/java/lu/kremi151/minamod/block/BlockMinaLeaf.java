@@ -15,14 +15,17 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -34,6 +37,7 @@ public class BlockMinaLeaf extends BlockLeaves{
     public final PropertyEnum<BlockMinaPlanks.EnumType> TYPE;
     private final BlockMinaPlanks.EnumType supportedTypes[];
     private final HashMap<Integer, Integer> supportedTypesMetaLookup = new HashMap<>();
+    private final String variantNames[];
 	
 	public BlockMinaLeaf(Predicate<BlockMinaPlanks.EnumType> predicate){
 		Set<BlockMinaPlanks.EnumType> values = new TreeSet<>();
@@ -44,9 +48,18 @@ public class BlockMinaLeaf extends BlockLeaves{
 			}
 		}
 		this.supportedTypes = values.toArray(new BlockMinaPlanks.EnumType[values.size()]);
+		this.variantNames = new String[supportedTypes.length];
+		for(int i = 0 ; i < supportedTypes.length ; i++)this.variantNames[i] = supportedTypes[i].getName();
 		this.TYPE = PropertyEnum.create("type", BlockMinaPlanks.EnumType.class, supportedTypes);
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+	{
+	    for(int i = 0 ; i < supportedTypes.length ; i++)list.add(new ItemStack(itemIn, 1, i));
 	}
     
     @Override
@@ -97,6 +110,10 @@ public class BlockMinaLeaf extends BlockLeaves{
 	
 	public BlockMinaPlanks.EnumType getMinaWoodType(int meta) {
 		return getStateFromMeta(meta).getValue(TYPE);
+	}
+	
+	public String[] getVariantNames(){
+		return variantNames;
 	}
 	
     @Override
