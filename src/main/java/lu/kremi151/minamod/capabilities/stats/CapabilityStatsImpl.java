@@ -122,7 +122,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 			avd.clear();
 			
 			for(Map.Entry<StatType, Stat> e : statMap.entrySet()){
-				if(e.getValue().getTraining().get() > 0){
+				if(e.getValue().getTraining().get() != 0){
 					avd.add(e.getValue());
 				}
 			}
