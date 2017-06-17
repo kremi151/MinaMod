@@ -14,7 +14,7 @@ public class StatDataSerializers {
         public void write(PacketBuffer buf, StatData value)
         {
             buf.writeByte((byte)(value.getActual() & 0xFF));
-            buf.writeShort((short)(value.getTraining() & 0xFFFF));
+            buf.writeShort((short)((value.getTraining() + 255) & 0xFFFF));
         }
 		
 		@Override
@@ -22,7 +22,7 @@ public class StatDataSerializers {
         {
             StatData data = new StatData();
             data.setActual(buf.readByte() & 0xFF);
-            data.setTraining(buf.readShort() & 0xFFFF);
+            data.setTraining((buf.readShort() & 0xFFFF) - 255);
             return data;
         }
 		

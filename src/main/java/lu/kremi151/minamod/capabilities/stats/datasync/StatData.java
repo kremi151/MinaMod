@@ -7,8 +7,8 @@ public class StatData {
 	private int actual, training;
 	
 	public StatData(int actual, int training){
-		this.actual = actual;
-		this.training = training;
+		this.actual = MathHelper.clamp(actual, 0, 255);
+		this.training = MathHelper.clamp(training, -255, 255);
 	}
 	
 	public StatData(){

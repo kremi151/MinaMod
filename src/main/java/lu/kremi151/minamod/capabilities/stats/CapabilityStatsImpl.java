@@ -166,6 +166,9 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 				
 			});
 			nbt.setInteger("effort", instance.getEffort().get());
+			instance.query(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR).ifPresent(multi -> {
+				nbt.setInteger("multi", (Integer)multi);
+			});
 			return nbt;
 		}
 
@@ -184,6 +187,10 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 				});
 				
 				instance.getEffort().set(nbt.getInteger("effort"));
+				
+				if(nbt.hasKey("multi", 99)){
+					instance.offer(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR, Math.max(nbt.getInteger("multi"), 1));
+				}
 			}
 		}
 		
