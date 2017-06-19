@@ -32,7 +32,7 @@ public class BlockCoconut extends BlockFalling{
 
 	public BlockCoconut(){
 		super();
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
         this.setCreativeTab(CreativeTabs.FOOD);
 	}
 	
@@ -51,7 +51,7 @@ public class BlockCoconut extends BlockFalling{
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        EnumFacing enumfacing = (EnumFacing)getActualState(state, source, pos).getValue(FACING);
 
         switch (enumfacing)
         {
@@ -62,9 +62,9 @@ public class BlockCoconut extends BlockFalling{
             case SOUTH:
                 return AABB_SOUTH;
             case NORTH:
-            default:
                 return AABB_NORTH;
             case UP:
+            default:
                 return AABB_UP;
         }
     }
@@ -78,21 +78,19 @@ public class BlockCoconut extends BlockFalling{
         }
     }
 	
-	private boolean isAttachedToHead(World world, BlockPos pos){
+	private EnumFacing getAttachedHeadSide(IBlockAccess world, BlockPos pos){
 		for(EnumFacing facing : EnumFacing.HORIZONTALS){
 			IBlockState state = world.getBlockState(pos.offset(facing));
 			if(state.getBlock() == MinaBlocks.LOG_PALM && state.getValue(BlockPalmLog.HEAD)){
-				return true;
+				return facing;
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	@Override
-    public void onEndFalling(World worldIn, BlockPos pos)
-    {
-		worldIn.setBlockState(pos, this.getDefaultState().withProperty(FACING, EnumFacing.UP));
-    }
+	private boolean isAttachedToHead(IBlockAccess world, BlockPos pos){
+		return getAttachedHeadSide(world, pos) != null;
+	}
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
@@ -104,18 +102,28 @@ public class BlockCoconut extends BlockFalling{
         	return this.getDefaultState();
         }
     }
+	
+	@Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+		EnumFacing attached = getAttachedHeadSide(worldIn, pos);
+        if(attached != null){
+        	return state.withProperty(FACING, attached.getOpposite());
+        }else{
+        	return state.withProperty(FACING, EnumFacing.UP);
+        }
+    }
 
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		EnumFacing facing = EnumFacing.getFront((meta & 7) + 1);
-        return this.getDefaultState().withProperty(FACING, facing != EnumFacing.DOWN ? facing : EnumFacing.UP);
+        return this.getDefaultState();
     }
 
 	@Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing)state.getValue(FACING)).getIndex() - 1;
+        return 0;
     }
 
 	@Override
