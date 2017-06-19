@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.block.BlockCombined;
+import lu.kremi151.minamod.block.BlockMinaLeafBase;
+import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import net.minecraft.block.Block;
@@ -45,7 +48,7 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 			return null;
 		}
 		IBlockState wood = MinaBlocks.LOG_PALM.getDefaultState();
-		IBlockState leaf = MinaBlocks.LEAVES_CHESTNUT.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false).withProperty(BlockLeaves.DECAYABLE, true);
+		IBlockState leaf = BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.PALM).withProperty(BlockLeaves.CHECK_DECAY, false).withProperty(BlockLeaves.DECAYABLE, true);
 		final int dirLock = random.nextInt(3);
 		float ax = dirLock == 1 ? random.nextFloat() - 0.5f : 0f;
 		float az = dirLock == 2 ? random.nextFloat() - 0.5f : 0f;
@@ -58,7 +61,7 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 			BlockPos logpos = pos.add(x, y, z);
 			IBlockState logState = bark ? wood.withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE) : wood;
 			if(y == height - 1){
-				logState = logState.withProperty(BlockPalmLog.HEAD, true);
+				logState = logState.withProperty(BlockPalmLog.HEAD, true).withProperty(BlockStandaloneLog.LOG_AXIS, BlockLog.EnumAxis.NONE);
 			}
 			world.setBlockState(logpos, logState);
 			bark = false;
@@ -79,15 +82,18 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 			float angle = i * q;
 			ax = MathHelper.cos(angle);
 			az = MathHelper.sin(angle);
+			int offsetY = 1;
 			for(int j = 0 ; j < leaves_length ; j++){
-				int offsetY = j / ((leaves_length >= 7)?4:3);
-				offsetY *= offsetY;
+				/*int offsetY = j / ((leaves_length >= 7)?4:3);
+				offsetY *= offsetY;*/
+				if(j > 1)offsetY += random.nextInt(2);
 				int x = prevX + MathHelper.floor(j * ax);
 				int z = prevZ + MathHelper.floor(j * az);
-				BlockPos leafpos = pos.add(x, height - offsetY, z);
-				world.setBlockState(leafpos, leaf);
+				BlockPos leafpos = pos.add(x, height - (offsetY / 2), z);
+				world.setBlockState(leafpos, leaf.withProperty(BlockCombined.TYPE, (offsetY % 2 == 0) ? BlockCombined.EnumBlockMode.TOP : BlockCombined.EnumBlockMode.BOTTOM));
 			}
 		}
+		world.setBlockState(pos.add(prevX, height, prevZ), leaf.withProperty(BlockCombined.TYPE, BlockCombined.EnumBlockMode.FULL));
 		return pos.add(prevX, height, prevZ);
 	}
 

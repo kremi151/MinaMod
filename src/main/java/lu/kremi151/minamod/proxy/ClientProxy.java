@@ -2,6 +2,8 @@ package lu.kremi151.minamod.proxy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.lwjgl.input.Keyboard;
 
@@ -24,9 +26,9 @@ import lu.kremi151.minamod.client.HerbColorHandler;
 import lu.kremi151.minamod.client.ItemColorHandler;
 import lu.kremi151.minamod.client.LeafColorHandler;
 import lu.kremi151.minamod.client.fx.EntityFXSpore;
-import lu.kremi151.minamod.client.overlay.OverlayableTexture;
 import lu.kremi151.minamod.client.overlay.Overlayable;
 import lu.kremi151.minamod.client.overlay.OverlayableString;
+import lu.kremi151.minamod.client.overlay.OverlayableTexture;
 import lu.kremi151.minamod.client.render.RenderBee;
 import lu.kremi151.minamod.client.render.RenderFish;
 import lu.kremi151.minamod.client.render.RenderIceGolhem;
@@ -61,11 +63,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -77,7 +76,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -132,18 +130,22 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerItemAndBlockColors() {
 		BlockColors bc = Minecraft.getMinecraft().getBlockColors();
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
+		/*bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
 		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHESTNUT);
 		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_COTTON);
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);
+		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);*/
+		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.MINA_LEAVES_A);
+		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.PALM_LEAVES);
 		bc.registerBlockColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
 		bc.registerBlockColorHandler(HerbColorHandler.get(), MinaBlocks.HERB_CROP);
 
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
+		/*ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
 		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHESTNUT);
 		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_COTTON);
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);
+		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);*/
+		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.MINA_LEAVES_A);
+		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.PALM_LEAVES);
 		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.KEY);
 		ic.registerItemColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
 		
@@ -173,11 +175,14 @@ public class ClientProxy extends CommonProxy {
 				new StateMap.Builder().withName(BlockMinaPlanks.VARIANT).withSuffix("_planks").build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.SAPLING,
 				new StateMap.Builder().withName(BlockMinaSapling.TYPE).ignore(BlockMinaSapling.STAGE).withSuffix("_sapling").build());
-		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_PEPPEL, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
+		/*ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_PEPPEL, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_CHERRY, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_CHESTNUT, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
-		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_COTTON, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
-
+		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_COTTON, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());*/
+		ModelLoader.setCustomStateMapper(MinaBlocks.MINA_LEAVES_A, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
+		//ModelLoader.setCustomStateMapper(MinaBlocks.MINA_LEAVES_B, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
+		ModelLoader.setCustomStateMapper(MinaBlocks.PALM_LEAVES, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
+		
 		ModelLoader.setCustomStateMapper(MinaBlocks.CAMPFIRE, new StateMap.Builder().ignore(BlockCampfire.IGNITED).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.HERB_CROP, new StateMap.Builder().ignore(BlockHerb.TYPE).build());
 		
@@ -243,6 +248,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void clearOverlays() {
 		overlayHandler.clearOverlayables();
+	}
+	
+	@Override
+	public <T> Optional<T> tryGetClientSideResult(Supplier<T> clientCode){
+		return Optional.of(clientCode.get());
 	}
 	
 	@Override

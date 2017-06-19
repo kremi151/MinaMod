@@ -1,0 +1,8 @@
+{
+    "parent": "minamod:block/tintable_upper_slab",
+    "textures": {
+        "bottom": "minamod:blocks/leaves_palm",
+        "top": "minamod:blocks/leaves_palm",
+        "side": "minamod:blocks/leaves_palm"
+    }
+}

@@ -3,7 +3,6 @@ package lu.kremi151.minamod.item.block;
 import lu.kremi151.minamod.block.BlockCombined;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -20,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockCombined extends ItemBlock{
 
-	public ItemBlockCombined(BlockCombined block) {
+	public ItemBlockCombined(Block block) {
 		super(block);
 		this.setHasSubtypes(true);
 	}

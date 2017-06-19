@@ -1,7 +1,5 @@
 package lu.kremi151.minamod;
 
-import java.util.function.Predicate;
-
 import lu.kremi151.minamod.block.BlockAutoFeeder;
 import lu.kremi151.minamod.block.BlockBambusCrop;
 import lu.kremi151.minamod.block.BlockBerryCrop;
@@ -31,9 +29,11 @@ import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.BlockLock;
 import lu.kremi151.minamod.block.BlockMinaLeaf;
+import lu.kremi151.minamod.block.BlockMinaLeafBase;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockNamieFlower;
+import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockPlate;
 import lu.kremi151.minamod.block.BlockQuicksand;
@@ -152,18 +152,9 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockStandaloneLeaf LEAVES_COTTON = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("leaves_cotton");
 	public static final BlockStandaloneLeaf LEAVES_CHESTNUT = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("leaves_chestnut");
 	public static final BlockStandaloneLeaf LEAVES_CHERRY = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("leaves_cherry");*/
-	public static final BlockMinaLeaf MINA_LEAVES_A = (BlockMinaLeaf) new BlockMinaLeaf(){
-		@Override
-		protected Predicate<BlockMinaPlanks.EnumType> getSupportedPredicate() {
-			return type -> type.ordinal() < 4;
-		}
-	}.setUnlocalizedName("mina_leaves_a");
-	public static final BlockMinaLeaf MINA_LEAVES_B = (BlockMinaLeaf) new BlockMinaLeaf(){
-		@Override
-		protected Predicate<BlockMinaPlanks.EnumType> getSupportedPredicate() {
-			return type -> type.ordinal() >= 4 && type.ordinal() < 8;
-		}
-	}.setUnlocalizedName("mina_leaves_b");
+	public static final BlockMinaLeaf MINA_LEAVES_A = (BlockMinaLeaf) new BlockMinaLeaf.A().setUnlocalizedName("mina_leaves_a");
+	//public static final BlockMinaLeaf MINA_LEAVES_B = (BlockMinaLeaf) new BlockMinaLeaf.B().setUnlocalizedName("mina_leaves_b");
+	public static final BlockMinaLeafBase PALM_LEAVES = (BlockMinaLeafBase) new BlockPalmLeaves().setUnlocalizedName("palm_leaves");
 	public static final BlockMinaSapling SAPLING = (BlockMinaSapling) new BlockMinaSapling().setUnlocalizedName("mina_sapling");
 
 	public static final BlockPlate PLATE = (BlockPlate) new BlockPlate().setUnlocalizedName("plate");
@@ -248,12 +239,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(FROZEN_STONE, "frozen_stone");
 		proxy.registerBlock(FROZEN_BRICK, "frozen_brick");
 		proxy.registerBlock(FROZEN_GLOWSTONE, "frozen_glowstone");
-		// GameRegistry.registerBlock(blockWoodenSlab, ItemCustomSlab.class,
-		// "mina_wooden_slab", (BlockSlab)blockWoodenSlab,
-		// (BlockSlab)blockDoubleWoodenSlab);
-		// GameRegistry.registerBlock(blockDoubleWoodenSlab,
-		// ItemCustomSlab.class, "mina_double_wooden_slab",
-		// (BlockSlab)blockWoodenSlab, (BlockSlab)blockDoubleWoodenSlab);
 		BlockCustomStairs.registerStairBlocks();
 		proxy.registerBlockOnly(BAMBUS_CROP, "bambus_crop");
 		proxy.registerBlock(EVER_ICE_BLOCK, "ever_ice");
@@ -282,7 +267,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(LEAVES_CHESTNUT, "leaves_chestnut");
 		proxy.registerBlock(LEAVES_CHERRY, "leaves_cherry");*/
 		proxy.registerBlockOnly(MINA_LEAVES_A, "mina_leaves_a");
-		proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
+		//proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
+		proxy.registerBlockOnly(PALM_LEAVES, "palm_leaves");
 		proxy.registerBlockOnly(SAPLING, "mina_sapling");
 		proxy.registerBlockOnly(HERB_CROP, "herb");
 		
@@ -343,12 +329,14 @@ public class MinaBlocks { // NO_UCD (unused code)
 		Blocks.FIRE.setFireInfo(LOG_COTTON, 5, 5);
 		Blocks.FIRE.setFireInfo(LOG_CHESTNUT, 5, 5);
 		Blocks.FIRE.setFireInfo(LOG_CHERRY, 5, 5);
+		Blocks.FIRE.setFireInfo(LOG_PALM, 5, 5);
 		/*Blocks.FIRE.setFireInfo(LEAVES_PEPPEL, 30, 60);
 		Blocks.FIRE.setFireInfo(LEAVES_COTTON, 30, 60);
 		Blocks.FIRE.setFireInfo(LEAVES_CHESTNUT, 30, 60);
 		Blocks.FIRE.setFireInfo(LEAVES_CHERRY, 30, 60);*/
 		Blocks.FIRE.setFireInfo(MINA_LEAVES_A, 30, 60);
-		Blocks.FIRE.setFireInfo(MINA_LEAVES_A, 30, 60);
+		//Blocks.FIRE.setFireInfo(MINA_LEAVES_B, 30, 60);
+		Blocks.FIRE.setFireInfo(PALM_LEAVES, 30, 60);
 		Blocks.FIRE.setFireInfo(BAMBUS_BLOCK, 6, 50);
 		// Blocks.fire.setFireInfo(blockIvy, 15, 100);
 	}

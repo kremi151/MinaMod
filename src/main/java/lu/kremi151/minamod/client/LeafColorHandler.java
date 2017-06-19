@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.client;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.block.BlockMinaLeaf;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.block.Block;
@@ -22,30 +23,29 @@ public class LeafColorHandler implements IItemColor, IBlockColor{
 
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if(stack.getItem().getRegistryName().equals(MinaBlocks.LEAVES_PEPPEL.getRegistryName())){
-			return BlockMinaPlanks.EnumType.PEPPEL.getLeafColor();
-		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.LEAVES_CHERRY.getRegistryName())){
-			return BlockMinaPlanks.EnumType.CHERRY.getLeafColor();
-		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.LEAVES_CHESTNUT.getRegistryName())){
-			return BlockMinaPlanks.EnumType.CHESTNUT.getLeafColor();
-		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.LEAVES_COTTON.getRegistryName())){
-			return BlockMinaPlanks.EnumType.COTTON.getLeafColor();
+		if(stack.getItem().getRegistryName().equals(MinaBlocks.MINA_LEAVES_A.getRegistryName())){
+			return BlockMinaPlanks.EnumType.byMetadata(stack.getMetadata()).getLeafColor();
+		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.PALM_LEAVES.getRegistryName())){
+			return BlockMinaPlanks.EnumType.PALM.getLeafColor();
 		}
+		/*else if(stack.getItem().getRegistryName().equals(MinaBlocks.MINA_LEAVES_B.getRegistryName())){
+			BlockMinaPlanks.EnumType.byMetadata(stack.getMetadata() + 4).getLeafColor();
+		}*/
+		
 		return MinaUtils.COLOR_WHITE;
 	}
 
 	@Override
-	public int colorMultiplier(IBlockState state, IBlockAccess p_186720_2_, BlockPos pos, int tintIndex) {
+	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
 		Block b = state.getBlock();
-		if(b == MinaBlocks.LEAVES_PEPPEL){
-			return BlockMinaPlanks.EnumType.PEPPEL.getLeafColor();
-		}else if(b == MinaBlocks.LEAVES_CHERRY){
-			return BlockMinaPlanks.EnumType.CHERRY.getLeafColor();
-		}else if(b == MinaBlocks.LEAVES_CHESTNUT){
-			return BlockMinaPlanks.EnumType.CHESTNUT.getLeafColor();
-		}else if(b == MinaBlocks.LEAVES_COTTON){
-			return BlockMinaPlanks.EnumType.COTTON.getLeafColor();
+		if(b == MinaBlocks.MINA_LEAVES_A){
+			return state.getValue(BlockMinaLeaf.A.VARIANT).getLeafColor();
+		}else if(b == MinaBlocks.PALM_LEAVES){
+			return BlockMinaPlanks.EnumType.PALM.getLeafColor();
 		}
+		/*else if(b == MinaBlocks.MINA_LEAVES_B){
+			return state.getValue(BlockMinaLeaf.B.VARIANT).getLeafColor();
+		}*/
 		return MinaUtils.COLOR_WHITE;
 	}
 	

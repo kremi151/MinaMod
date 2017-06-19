@@ -1,13 +1,21 @@
 package lu.kremi151.minamod.worldgen;
 
+import java.util.Random;
+
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.annotations.OreInjector;
 import lu.kremi151.minamod.block.BlockBerryCrop;
 import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockEffectBush;
+import lu.kremi151.minamod.block.BlockMinaPlanks;
+import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.util.FeatureList;
+import lu.kremi151.minamod.util.MinaUtils;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class WorldGenerators {
@@ -31,7 +39,7 @@ public class WorldGenerators {
 	
 	@OreInjector(chunkVersion = 1)
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
-			.beginSection(80.0)
+			.beginSection(70.0)
 			.add(MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4, 60)
 			.beginSection(10.0)
 			.add(MinaBlocks.STRAWBERRY_CROP.getDefaultState().withProperty(BlockStrawberryCrop.AGE, Integer.valueOf(7)), 2, 10)
@@ -42,6 +50,11 @@ public class WorldGenerators {
 			.beginSection(10.0)
 			.add(MinaBlocks.EFFECT_BUSH.getDefaultState().withProperty(BlockEffectBush.VARIANT, BlockEffectBush.EnumType.POISONOUS), 3)
 			.add(MinaBlocks.EFFECT_BUSH.getDefaultState().withProperty(BlockEffectBush.VARIANT, BlockEffectBush.EnumType.SPEEDY), 1)
+			.beginSection(10.0)
+			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.CHERRY), 5)
+			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.CHESTNUT), 10)
+			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.COTTON), 2)
+			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.PEPPEL), 2)
 			.build();
 	
 	public static final WorldGenQuicksand QUICKSAND = new WorldGenQuicksand();
@@ -70,5 +83,24 @@ public class WorldGenerators {
 		GameRegistry.registerWorldGenerator(new WorldGenRandomHerbs(30), 5);
 	
 		init = true;
+	}
+	
+	private static class RandomSaplingPlant extends WorldGenSurfacePlant.Plant{
+		
+		private RandomSaplingPlant(BlockMinaPlanks.EnumType type){
+			super(MinaBlocks.SAPLING.getDefaultState().withProperty(BlockMinaSapling.TYPE, type), 0);
+		}
+		
+		@Override
+		protected void spread(int chunkX, int chunkZ, World world, Random random){
+			int x = (chunkX * 16) + random.nextInt(16);
+			int z = (chunkZ * 16) + random.nextInt(16);
+			int y = MinaUtils.getHeightValue(world, x, z);
+			BlockPos pos = new BlockPos(x,y,z);
+			if(plant.getBlock().canPlaceBlockAt(world, pos)){
+				((BlockMinaSapling)plant.getBlock()).generateTree(world, pos, plant, random);
+				System.out.println("Tree generated at " + pos);
+			}
+		}
 	}
 }

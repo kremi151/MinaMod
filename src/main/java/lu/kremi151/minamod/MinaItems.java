@@ -303,7 +303,7 @@ public class MinaItems {
 		CommonProxy proxy = MinaMod.getProxy();
 		
 		proxy.registerItem(new ItemBlockMulti<BlockMinaPlanks>(MinaBlocks.PLANKS, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.PLANKS.getRegistryName()), "mina_planks", BlockMinaPlanks.EnumType.variantNamesPlanks);
-		proxy.registerItem(new ItemBlockMulti<BlockMinaSapling>(MinaBlocks.SAPLING, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.SAPLING.getRegistryName()), "mina_sapling", "peppel_sapling", "cotton_sapling", "chestnut_sapling", "cherry_sapling");
+		proxy.registerItem(new ItemBlockMulti<BlockMinaSapling>(MinaBlocks.SAPLING, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.SAPLING.getRegistryName()), "mina_sapling", BlockMinaPlanks.EnumType.variantNamesSaplings);
 		proxy.registerItem(new ItemCloth(MinaBlocks.MILKY_GLASS).setRegistryName(MinaBlocks.MILKY_GLASS.getRegistryName()), "milky_glass", BlockCustomStainedGlass.milkyGlassVariantNames);
 		proxy.registerItem(new ItemCloth(MinaBlocks.LIT_MILKY_GLASS).setRegistryName(MinaBlocks.LIT_MILKY_GLASS.getRegistryName()), "lit_milky_glass", BlockCustomStainedGlass.litMilkyGlassVariantNames);
 		proxy.registerItem(new ItemBlockGiftBox(MinaBlocks.GIFT_BOX).setRegistryName(MinaBlocks.GIFT_BOX.getRegistryName()), "gift_box", BlockGiftBox.variantNames);
@@ -311,6 +311,7 @@ public class MinaItems {
 		proxy.registerItem(new ItemBlockMulti<BlockElevatorFloor>(MinaBlocks.ELEVATOR_FLOOR, "default", "jumper").setRegistryName(MinaBlocks.ELEVATOR_FLOOR.getRegistryName()), "elevator_floor", "elevator_floor", "elevator_jumper");
 		proxy.registerItem(new ItemBlockMulti<BlockCampbench>(MinaBlocks.CAMPBENCH, "acacia", "birch", "dark_oak", "spruce").setRegistryName(MinaBlocks.CAMPBENCH.getRegistryName()), "campbench", "campbench_acacia", "campbench_birch", "campbench_dark_oak", "campbench_spruce");
 		proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_A, MinaBlocks.MINA_LEAVES_A.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_A.getRegistryName()), "mina_leaves_a", MinaBlocks.MINA_LEAVES_A.getVariantNames());
-		proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
+		//proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
+		proxy.registerItem(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves", "palm_leaf_stack", "palm_leaf");
 	}
 }

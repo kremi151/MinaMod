@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "variant=peppel": { "model": "minamod:peppel_leaves" },
+        "variant=chestnut": { "model": "minamod:chestnut_leaves" },
+        "variant=cherry": { "model": "minamod:cherry_leaves" },
+        "variant=cotton": { "model": "minamod:cotton_leaves" }
+    }
+}

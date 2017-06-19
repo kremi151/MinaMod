@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.block;
 
+import java.util.HashMap;
+
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.SoundType;
@@ -23,6 +25,8 @@ public class BlockStandaloneLog extends BlockRotatedPillar{
 
 	private BlockMinaPlanks.EnumType type;
 	
+	private static final HashMap<BlockMinaPlanks.EnumType, BlockStandaloneLog> LOG_BLOCK_MAP = new HashMap<>();
+	
 	public BlockStandaloneLog(BlockMinaPlanks.EnumType type){
 		super(Material.WOOD);
 		this.type = type;
@@ -30,6 +34,12 @@ public class BlockStandaloneLog extends BlockRotatedPillar{
         this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+        
+        LOG_BLOCK_MAP.put(type, this);
+	}
+	
+	public static BlockStandaloneLog getBlockFor(BlockMinaPlanks.EnumType type){
+		return LOG_BLOCK_MAP.get(type);
 	}
 	
 	@Override
