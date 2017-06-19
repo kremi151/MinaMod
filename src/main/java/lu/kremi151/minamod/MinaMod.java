@@ -68,6 +68,7 @@ import lu.kremi151.minamod.util.eventlisteners.TerrainEventListeners;
 import lu.kremi151.minamod.util.eventlisteners.WorldEvents;
 import lu.kremi151.minamod.worldgen.WorldGenerators;
 import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
+import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
@@ -103,6 +104,8 @@ public class MinaMod {
 	public static final String MODID = "minamod";
 	public static final String VERSION = "@VERSION@";
 	public static final String MC_VERSION = "@MCV@";
+	
+	private static final boolean MOD_DEV_ANALYTICS = false;//Only used for mod development
 
 	@SidedProxy(modId = MODID, clientSide = "lu.kremi151.minamod.proxy.ClientProxy", serverSide = "lu.kremi151.minamod.proxy.CommonProxy")
 	private static CommonProxy proxy;
@@ -243,6 +246,28 @@ public class MinaMod {
 		// BiomeDictionary.registerAllBiomes();
 		
 		logger.info("MinaMod inside! #MakeMinecraftGreatAgain");
+		
+		if(MOD_DEV_ANALYTICS){
+			for(Field field : MinaBlocks.class.getDeclaredFields()){
+				if(net.minecraft.block.Block.class.isAssignableFrom(field.getType())){
+					try {
+						net.minecraft.block.Block theBlock = (Block) field.get(null);
+						Field blockHardness = Block.class.getDeclaredField("blockHardness");
+						Field blockResistance = Block.class.getDeclaredField("blockResistance");
+						blockHardness.setAccessible(true);
+						blockResistance.setAccessible(true);
+						if(((Float)blockHardness.get(theBlock)) == 0.0f){
+							System.out.println("### WARNING: No blockHardness parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
+						}
+						if(((Float)blockResistance.get(theBlock)) == 0.0f){
+							System.out.println("### WARNING: No blockResistance parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
+						}
+					} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 	@EventHandler

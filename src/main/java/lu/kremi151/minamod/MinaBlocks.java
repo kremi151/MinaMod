@@ -130,8 +130,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 			.setHardness(8f).setResistance(11f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 	public static final Block RHUBARB_PIE = new BlockCustomCake().setBlockHeight(4f / 16f)
 			.setUnlocalizedName("rhubarbpie");
-	public static final Block LITTLE_BUSH = new BlockCustomBush().setUnlocalizedName("little_bush");
-	public static final Block OPAQUE_BUSH = new BlockCustomBush().setUnlocalizedName("opaque_bush");
+	public static final Block LITTLE_BUSH = new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS).setUnlocalizedName("little_bush");
+	public static final Block OPAQUE_BUSH = new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS).setUnlocalizedName("opaque_bush");
 	public static final Block BAMBUS_BLOCK = new BlockCustomAxis(Material.CLOTH, MapColor.GRASS).setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
 			.setUnlocalizedName("bambus_block");
 	public static final BlockEffectBush EFFECT_BUSH = (BlockEffectBush) new BlockEffectBush()

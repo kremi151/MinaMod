@@ -42,6 +42,8 @@ public class BlockCampbench extends Block{
 		super(Material.WOOD, MapColor.WOOD);
 		this.setDefaultState(this.getBlockState().getBaseState().withProperty(ROTATION, 0).withProperty(WOOD, BlockPlanks.EnumType.ACACIA));
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
+		this.setHardness(2.0F);
+		this.setResistance(5.0F);
 	}
 	
 	@SideOnly(Side.CLIENT)
