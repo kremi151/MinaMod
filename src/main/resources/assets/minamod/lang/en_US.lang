@@ -332,6 +332,7 @@ item.amulet.ender.name=Amulet of ender
 item.amulet.return.name=Amulet of return
 item.battery.name=Battery
 item.herb_guide.name=Herb guide
+item.coconut.name=Coconut
 enchantment.emergency=Emergency
 enchantment.beheader=Beheader
 enchantment.wood_backup=Wooden slayer

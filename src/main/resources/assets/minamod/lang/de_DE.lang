@@ -331,6 +331,7 @@ item.amulet.ender.name=Enderamulett
 item.amulet.return.name=Amulett der Wiederkehr
 item.battery.name=Batterie
 item.herb_guide.name=Kräuterbuch
+item.coconut.name=Kokosnuss
 enchantment.emergency=Notfall
 enchantment.beheader=Köpfer
 enchantment.wood_backup=Holzklopfer

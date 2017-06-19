@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up":    { "model": "minamod:coconut_floor", "uvlock": true },
+        "facing=east":  { "model": "minamod:coconut_floor", "uvlock": true, "x": 90, "y": 90 },
+        "facing=west":  { "model": "minamod:coconut_floor", "uvlock": true, "x": 90, "y": 270 },
+        "facing=south": { "model": "minamod:coconut_floor", "uvlock": true, "x": 90, "y": 180 },
+        "facing=north": { "model": "minamod:coconut_floor", "uvlock": true, "x": 90 }
+    }
+}

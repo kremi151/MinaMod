@@ -1,0 +1,24 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": true,
+    "textures": {
+        "front": "minamod:blocks/coconut_front",
+        "side": "minamod:blocks/coconut_side",
+		"particle": "minamod:blocks/coconut_side"
+    },
+    "elements": [
+        {
+            "name": "Coconut",
+            "from": [ 5.0, 0.0, 5.0 ], 
+            "to": [ 11.0, 6.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "south": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "up": { "texture": "#front", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "down" }
+            }
+        }
+    ]
+}

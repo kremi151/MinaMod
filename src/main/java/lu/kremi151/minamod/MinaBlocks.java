@@ -9,6 +9,7 @@ import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockCasinoBlock;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
+import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
 import lu.kremi151.minamod.block.BlockCustom;
@@ -207,6 +208,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockHerb HERB_CROP = new BlockHerb();
 	public static final BlockCampbench CAMPBENCH = (BlockCampbench) new BlockCampbench().setUnlocalizedName("campbench");
 	public static final BlockQuicksand QUICKSAND = (BlockQuicksand) new BlockQuicksand().setUnlocalizedName("quicksand");
+	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
 	//public static final BlockFluidClassic WATER_CLEAR = new BlockFluidClassic(MinaFluids.CLEAR_WATER, Material.WATER);
 
 	private static boolean init = false;
@@ -309,6 +311,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(CHESTNUT_STAIRS, "chestnut_stairs");
 		proxy.registerBlock(CHERRY_STAIRS, "cherry_stairs");
 		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
+		proxy.registerBlock(COCONUT, "coconut");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;
