@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "variant=palm": { "model": "minamod:palm_leaves" }
+    }
+}

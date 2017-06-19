@@ -56,18 +56,21 @@ public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 	@Override
 	public void injectOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkProvider) {
 		if(world.provider.getDimensionType() == DimensionType.OVERWORLD && random.nextInt(chance) == 0){
-			Plant plant = list.randomElement(random);
-			spreadFlower(plant.plant, chunkX, chunkZ, world, plant.vein, random);
+			list.randomElement(random).spread(chunkX, chunkZ, world, random);
 		}
 	}
 	
-	private static class Plant{
+	public static class Plant{
 		private final int vein;
-		private final IBlockState plant;
+		protected final IBlockState plant;
 		
-		private Plant(IBlockState plant, int vein){
+		protected Plant(IBlockState plant, int vein){
 			this.plant = plant;
 			this.vein = vein;
+		}
+		
+		protected void spread(int chunkX, int chunkZ, World world, Random random){
+			spreadFlower(plant, chunkX, chunkZ, world, vein, random);
 		}
 	}
 	
@@ -86,6 +89,11 @@ public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 		
 		public Builder add(IBlockState plant, double weight){
 			return add(plant, 3, weight);
+		}
+		
+		public Builder add(Plant plant, double weight){
+			builder.add(plant, weight);
+			return this;
 		}
 		
 		public Builder beginSection(double percentage){

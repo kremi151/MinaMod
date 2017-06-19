@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "type=full": { "model": "minamod:palm_leaves_stack" },
+        "type=double": { "model": "minamod:palm_leaves_stack" },
+        "type=top": { "model": "minamod:upper_slab_palm_leaves" },
+        "type=bottom": { "model": "minamod:half_slab_palm_leaves" }
+    }
+}

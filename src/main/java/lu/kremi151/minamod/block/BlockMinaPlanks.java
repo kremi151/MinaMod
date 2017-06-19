@@ -87,10 +87,10 @@ public class BlockMinaPlanks extends BlockCustom
         PEPPEL(0, "peppel", MapColor.GRAY, MinaUtils.convertRGBToDecimal(14, 115, 29)),
         COTTON(1, "cotton", MapColor.SILVER, MinaUtils.convertRGBToDecimal(23, 71, 30)),
         CHESTNUT(2, "chestnut", MapColor.BROWN, MinaUtils.convertRGBToDecimal(72, 171, 87)),
-        CHERRY(3, "cherry", MapColor.PINK, MinaUtils.convertRGBToDecimal(152, 199, 50)),
-        PALM(4, "palm", MapColor.BROWN, MinaUtils.convertRGBToDecimal(152, 199, 50));//TODO: Leaf color
+        CHERRY(3, "cherry", MapColor.PINK, MinaUtils.convertRGBToDecimal(247, 54, 122)),
+        PALM(4, "palm", MapColor.BROWN, MinaUtils.convertRGBToDecimal(31, 140, 45));
 
-    	public static final String[] subVariantNames, variantNamesPlanks;
+    	public static final String[] subVariantNames, variantNamesPlanks, variantNamesSaplings;
         private static final BlockMinaPlanks.EnumType[] META_LOOKUP = new BlockMinaPlanks.EnumType[values().length];
         private final int meta;
         private final String name;
@@ -161,6 +161,7 @@ public class BlockMinaPlanks extends BlockCustom
         {
         	subVariantNames = new String[values().length];
         	variantNamesPlanks = new String[values().length];
+        	variantNamesSaplings = new String[values().length];
             for (BlockMinaPlanks.EnumType BlockMinaPlanks$enumtype : values())
             {
                 META_LOOKUP[BlockMinaPlanks$enumtype.getMetadata()] = BlockMinaPlanks$enumtype;
@@ -168,6 +169,7 @@ public class BlockMinaPlanks extends BlockCustom
             for(int i = 0 ; i < values().length ; i++){
             	subVariantNames[i] = values()[i].name;
             	variantNamesPlanks[i] = values()[i].name + "_planks";
+            	variantNamesSaplings[i] = values()[i].name + "_sapling";
             }
         }
     }

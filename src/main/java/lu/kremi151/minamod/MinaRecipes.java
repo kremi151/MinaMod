@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import lu.kremi151.minamod.annotations.AutoArmorRecipe;
 import lu.kremi151.minamod.annotations.AutoToolRecipe;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
+import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemAmulet;
 import lu.kremi151.minamod.item.ItemKey;
@@ -267,6 +268,10 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.BAMBUS_LETTERBOX, 1), " A ", "ABA", " C ", 'A',
 				MinaBlocks.BAMBUS_BLOCK, 'B',
 				Blocks.HOPPER, 'C', Items.STICK);
+		
+		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
+			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4), BlockStandaloneLog.getBlockFor(type));
+		}
 
 		//TODO: Trees
 //		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockChestnutStairs, 4), "A  ", "AA ", "AAA", 'A',

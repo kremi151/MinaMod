@@ -4,6 +4,8 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.BlockMinaLeafBase;
+import lu.kremi151.minamod.block.BlockMinaPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -58,7 +60,7 @@ public class WorldGenPeppel extends WorldGenBiomeTree{
 	
 	public static void generateTree(World world, Random rand, int i, int j, int k){
 		int height = 15 + rand.nextInt(9);
-		IBlockState leaves = MinaBlocks.LEAVES_PEPPEL.getDefaultState();
+		IBlockState leaves = BlockMinaLeafBase.getDefaultStateFor(EnumType.PEPPEL);
 		IBlockState log = MinaBlocks.LOG_PEPPEL.getDefaultState();
 		
 		if(MinaMod.getMinaConfig().canLogWorldGenInfo()){

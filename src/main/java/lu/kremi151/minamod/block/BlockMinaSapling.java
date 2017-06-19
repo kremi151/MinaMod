@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.worldgen.WorldGenPalm;
 import lu.kremi151.minamod.worldgen.WorldGenPeppel;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -43,6 +44,12 @@ public class BlockMinaSapling extends BlockBush implements IGrowable
     {
         return SAPLING_AABB;
     }
+    
+    @Override
+    protected boolean canSustainBush(IBlockState state)
+    {
+    	return state.getBlock() == Blocks.SAND || super.canSustainBush(state);
+    }
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
@@ -82,25 +89,28 @@ public class BlockMinaSapling extends BlockBush implements IGrowable
         {
             case CHERRY:
                 worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_CHERRY.getDefaultState(),
-                		MinaBlocks.LEAVES_CHERRY.getDefaultState()
+                		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHERRY)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
                 break;
             case CHESTNUT:
             	worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
-                		MinaBlocks.LEAVES_CHESTNUT.getDefaultState()
+            			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHESTNUT)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
                 break;
             case COTTON:
             	worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_COTTON.getDefaultState(),
-                		MinaBlocks.LEAVES_COTTON.getDefaultState()
+            			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.COTTON)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
                 break;
             case PEPPEL:
                 worldgenerator = new WorldGenPeppel(true, true);
                 break;
+            case PALM:
+            	worldgenerator = new WorldGenPalm(true);
+            	break;
         }
 
         IBlockState iblockstate2 = Blocks.AIR.getDefaultState();

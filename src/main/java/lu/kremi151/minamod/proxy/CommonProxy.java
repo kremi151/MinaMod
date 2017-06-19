@@ -1,7 +1,9 @@
 package lu.kremi151.minamod.proxy;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.api.MinaModAPI;
@@ -40,6 +42,10 @@ public class CommonProxy implements MinaModAPI{
 	public void addOverlay(int id, long duration){}
 	public void addStringOverlay(String message, long duration){}
 	public void setScreenLayer(int id, boolean force){}
+	
+	public <T> Optional<T> tryGetClientSideResult(Supplier<T> clientCode){
+		return Optional.empty();
+	}
 
 	public void spawnParticleEffect(EnumParticleEffect effect, World worldObj, double posX, double posY, double posZ, float red, float green, float blue){}
 	
