@@ -2,12 +2,14 @@ package lu.kremi151.minamod.block;
 
 import java.util.Random;
 
+import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.BlockMinaPlanks.EnumType;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,8 +33,12 @@ public class BlockPalmLog extends BlockStandaloneLog{
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
-		if(state.getValue(HEAD)){
-			//TODO: Insert coconuts here
+		if(!worldIn.isRemote && state.getValue(HEAD) && rand.nextInt(40) == 0){
+			EnumFacing facing = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
+			BlockPos cpos = pos.offset(facing);
+			if(worldIn.isAirBlock(cpos)){
+				worldIn.setBlockState(cpos, MinaBlocks.COCONUT.getDefaultState());
+			}
 		}
     }
 	

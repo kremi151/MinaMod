@@ -11,6 +11,7 @@ import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockCampfire;
+import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
 import lu.kremi151.minamod.block.BlockIceAltar;
@@ -192,6 +193,9 @@ public class ClientProxy extends CommonProxy {
 				new StateMap.Builder().withName(BlockMinaWoodSlab.VARIANT).withSuffix("_slab").build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.DOUBLE_WOODEN_SLAB,
 				new StateMap.Builder().withName(BlockMinaWoodSlab.VARIANT).withSuffix("_double_slab").build());
+		
+		ModelLoader.setCustomStateMapper(MinaBlocks.COCONUT, 
+				new StateMap.Builder().ignore(BlockCoconut.AGE).build());
 	}
 
 	@Override

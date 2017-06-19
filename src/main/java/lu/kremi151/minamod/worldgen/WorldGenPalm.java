@@ -3,6 +3,8 @@ package lu.kremi151.minamod.worldgen;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCombined;
@@ -37,24 +39,47 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 	}
 
 	@Override
-	public boolean generate(World world, Random var2, BlockPos pos) {
-		return generatePalm(pos, world, var2, soil) != null;
+	public boolean generate(World world, Random random, BlockPos pos) {
+		final int dirLock = random.nextInt(3);
+		float ax = dirLock == 1 ? random.nextFloat() - 0.5f : 0f;
+		float az = dirLock == 2 ? random.nextFloat() - 0.5f : 0f;
+		final int height = 5 + random.nextInt(5);
+		final int width = (int) (height * ax); 
+		final int length = (int) (height * az); 
+		for(int i = pos.getX() ; i <= pos.getX() + width ; i++){
+			for(int k = pos.getZ() ; i <= pos.getZ() + length ; k++){
+				for(int j = pos.getY() ; j < pos.getY() + height ; j++){
+					if(isReplaceable(world, new BlockPos(i, j, k))){
+						return false;
+					}
+				}
+			}
+		}
+		return generatePalm(pos, world, random, soil, ax, az, height) != null;
 	}
 	
+	@Nullable
 	public static BlockPos generatePalm(BlockPos pos, World world, Random random){
 		return generatePalm(pos, world, random, block -> true);
 	}
 	
+	@Nullable
 	public static BlockPos generatePalm(BlockPos pos, World world, Random random, Predicate<Block> soil){
+		final int dirLock = random.nextInt(3);
+		float ax = dirLock == 1 ? random.nextFloat() - 0.5f : 0f;
+		float az = dirLock == 2 ? random.nextFloat() - 0.5f : 0f;
+		final int height = 5 + random.nextInt(5);
+		return generatePalm(pos, world, random, soil, ax, az, height);
+	}
+
+	@Nullable
+	private static BlockPos generatePalm(BlockPos pos, World world, Random random, Predicate<Block> soil, float ax, float az, final int height){
 		if(!soil.test(world.getBlockState(pos.down()).getBlock())){
 			return null;
 		}
 		IBlockState wood = MinaBlocks.LOG_PALM.getDefaultState();
 		IBlockState leaf = BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.PALM).withProperty(BlockLeaves.CHECK_DECAY, false).withProperty(BlockLeaves.DECAYABLE, true);
-		final int dirLock = random.nextInt(3);
-		float ax = dirLock == 1 ? random.nextFloat() - 0.5f : 0f;
-		float az = dirLock == 2 ? random.nextFloat() - 0.5f : 0f;
-		final int height = 5 + random.nextInt(5);
+		
 		int prevX = 0, prevZ = 0;
 		boolean bark = false;
 		BlockPos headPos = null;
