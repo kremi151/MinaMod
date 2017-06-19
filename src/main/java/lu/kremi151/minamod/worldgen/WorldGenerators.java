@@ -22,7 +22,6 @@ public class WorldGenerators {
 	
 	public static final WorldGenHoneyTrees HONEY_TREES = new WorldGenHoneyTrees();
 	public static final WorldGenSurfaceTree SURFACE_TREE = new WorldGenSurfaceTree();
-	//public static final WorldGenSchematic WOOKIE_HOUSE = new WorldGenWookieHouse();
 	public static final WorldGenStructure WOOKIE_HOUSE = new WorldGenWookieHouseStructure();
 	
 	@OreInjector(chunkVersion = 1)

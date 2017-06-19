@@ -136,16 +136,6 @@ public class MinaMod {
 		OreInjectorManager.init();
 
 		TerrainEventListeners terrainEventListener = new TerrainEventListeners(this);
-//		terrainEventListener.registerDecorationHook(new DecorateHookFlower(DecorateBiomeEvent.Decorate.EventType.TREE, 80,
-//				MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4));
-
-		// GameRegistry.registerWorldGenerator(new WorldGenWookieVillage(), 1);
-
-		// TODO: Biomes
-		// BiomeDictionary.registerBiomeType(biomeVeld, Type.PLAINS);
-		// BiomeDictionary.registerBiomeType(biomeRural, Type.PLAINS);
-		// BiomeDictionary.registerBiomeType(biomeKremiForest, Type.FOREST);
-		// BiomeDictionary.registerBiomeType(biomeCherryForest, Type.FOREST);
 
 		MinaBlocks.setFireInfos();
 
