@@ -33,6 +33,7 @@ import lu.kremi151.minamod.block.BlockMinaLeafBase;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
+import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
@@ -159,7 +160,12 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockMinaSapling SAPLING = (BlockMinaSapling) new BlockMinaSapling().setUnlocalizedName("mina_sapling");
 	public static final BlockMinaWoodSlab WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Half().setUnlocalizedName("woodSlab");
 	public static final BlockMinaWoodSlab DOUBLE_WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Double().setUnlocalizedName("woodSlab");
-
+	public static final BlockMinaWoodStairs PEPPEL_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("peppel_stairs");
+	public static final BlockMinaWoodStairs COTTON_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("cotton_stairs");
+	public static final BlockMinaWoodStairs CHESTNUT_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("chestnut_stairs");
+	public static final BlockMinaWoodStairs CHERRY_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("cherry_stairs");
+	public static final BlockMinaWoodStairs PALM_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("palm_stairs");
+	
 	public static final BlockPlate PLATE = (BlockPlate) new BlockPlate().setUnlocalizedName("plate");
 	public static final Block OAK_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_oak");
 	public static final Block SPRUCE_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_spruce");
@@ -321,6 +327,11 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(LOG_PALM, "log_palm");
 		proxy.registerBlockOnly(WOODEN_SLAB, "mina_wooden_slab");
 		proxy.registerBlockOnly(DOUBLE_WOODEN_SLAB, "mina_double_wooden_slab");
+		proxy.registerBlock(PEPPEL_STAIRS, "peppel_stairs");
+		proxy.registerBlock(COTTON_STAIRS, "cotton_stairs");
+		proxy.registerBlock(CHESTNUT_STAIRS, "chestnut_stairs");
+		proxy.registerBlock(CHERRY_STAIRS, "cherry_stairs");
+		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;

@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import lu.kremi151.minamod.annotations.AutoArmorRecipe;
 import lu.kremi151.minamod.annotations.AutoToolRecipe;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
+import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemAmulet;
@@ -55,6 +56,10 @@ public class MinaRecipes {
 		// ItemStack(MinaItems.itemHoney,1), 0f);
 		GameRegistry.addSmelting(MinaItems.CHESTNUT, new ItemStack(MinaItems.CHESTNUT_COOKED, 1), 0f);
 		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 1f);
+
+		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
+			GameRegistry.addSmelting(new ItemStack(BlockStandaloneLog.getBlockFor(type), 1), new ItemStack(Items.COAL, 1, 1), 0.2f);
+		}
 		init_furnace = true;
 	}
 
@@ -270,9 +275,9 @@ public class MinaRecipes {
 				Blocks.HOPPER, 'C', Items.STICK);
 		
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
-			GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 1, 1), BlockStandaloneLog.getBlockFor(type));
 			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
 			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
+			GameRegistry.addShapedRecipe(new ItemStack(BlockMinaWoodStairs.getForType(type), 4), "  P", " PP", "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
 		}
 
 		//TODO: Trees

@@ -1,0 +1,8 @@
+{
+  "parent": "block/outer_stairs",
+  "textures": {
+    "bottom": "minamod:blocks/planks_palm",
+    "top": "minamod:blocks/planks_palm",
+    "side": "minamod:blocks/planks_palm"
+  }
+}
