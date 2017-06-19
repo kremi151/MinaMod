@@ -88,19 +88,19 @@ public class BlockMinaSapling extends BlockBush implements IGrowable
         switch ((BlockMinaPlanks.EnumType)state.getValue(TYPE))
         {
             case CHERRY:
-                worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_CHERRY.getDefaultState(),
+                worldgenerator = new WorldGenTrees(true, 4, MinaBlocks.LOG_CHERRY.getDefaultState(),
                 		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHERRY)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
                 break;
             case CHESTNUT:
-            	worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
+            	worldgenerator = new WorldGenTrees(true, 6, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
             			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHESTNUT)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
                 break;
             case COTTON:
-            	worldgenerator = new WorldGenTrees(true, 8, MinaBlocks.LOG_COTTON.getDefaultState(),
+            	worldgenerator = new WorldGenTrees(true, 4, MinaBlocks.LOG_COTTON.getDefaultState(),
             			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.COTTON)
                 		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
                 		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);

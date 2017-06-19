@@ -19,8 +19,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 	
-	private WeightedList<Plant> list;
-	int chance;
+	private final WeightedList<Plant> list;
+	private final int chance;
 	
 	private WorldGenSurfacePlant(int chance, WeightedList.WeightedItem<Plant>... plants){
 		this.list = WeightedList.from(plants);

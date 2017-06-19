@@ -41,6 +41,8 @@ public class WorldGenerators {
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
 			.beginSection(70.0)
 			.add(MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4, 60)
+			.add(MinaBlocks.LITTLE_BUSH.getDefaultState(), 10)
+			.add(MinaBlocks.OPAQUE_BUSH.getDefaultState(), 10)
 			.beginSection(10.0)
 			.add(MinaBlocks.STRAWBERRY_CROP.getDefaultState().withProperty(BlockStrawberryCrop.AGE, Integer.valueOf(7)), 2, 10)
 			.add(MinaBlocks.KEVIKUS_CROP.getDefaultState().withProperty(BlockBerryCrop.AGE, Integer.valueOf(7)), 2, 10)
