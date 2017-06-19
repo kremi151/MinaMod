@@ -42,7 +42,6 @@ import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -51,11 +50,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemSoup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
 
@@ -313,5 +311,6 @@ public class MinaItems {
 		proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_A, MinaBlocks.MINA_LEAVES_A.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_A.getRegistryName()), "mina_leaves_a", MinaBlocks.MINA_LEAVES_A.getVariantNames());
 		//proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves", "palm_leaf_stack", "palm_leaf");
+		proxy.registerItem(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab", BlockMinaPlanks.EnumType.variantNamesSlabs);
 	}
 }
