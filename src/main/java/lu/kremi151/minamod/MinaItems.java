@@ -126,9 +126,6 @@ public class MinaItems {
 			.setUnlocalizedName("citrin_leggings");
 	public static final Item CITRIN_BOOTS = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("citrin_boots");
-	// TODO public static Item itemRecordEuphoria = new
-	// ItemCustomRecord("euphoria");
-	// TODO: Oil public static Item itemOilBucket; //initialized in setFluids();
 	public static final Item KEY = new ItemKey().setUnlocalizedName("key");
 	public static final Item CHIP = new ItemChip().setUnlocalizedName("chip");
 	public static final Item OBSIDIAN_HELMET = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.HEAD)
@@ -243,8 +240,6 @@ public class MinaItems {
 		proxy.registerItem(CITRIN_CHESTPLATE, "citrin_chestplate");
 		proxy.registerItem(CITRIN_LEGGINGS, "citrin_leggings");
 		proxy.registerItem(CITRIN_BOOTS, "citrin_boots");
-		// TODO: Oil proxy.registerItem(itemOilBucket,
-		// "oil_bucket");
 		proxy.registerItem(KEY, "key");
 		proxy.registerItem(CHIP, "chip", ItemChip.variant_names);
 		proxy.registerItem(OBSIDIAN_HELMET, "obsidian_helmet");

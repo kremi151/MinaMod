@@ -143,17 +143,12 @@ public class MinaBlocks { // NO_UCD (unused code)
 			.setUnlocalizedName("platinum_ore");
 	public static final Block PLATINUM_BLOCK = new BlockCustom(Material.IRON).setUnlocalizedName("platinum_block")
 			.setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setHardness(3.5f).setResistance(6f);
-	//TODO: Trees
 	public static final BlockMinaPlanks PLANKS = (BlockMinaPlanks) new BlockMinaPlanks().setSoundType(SoundType.WOOD).setHardness(2.0f).setResistance(5.0f).setUnlocalizedName("mina_planks");
 	public static final BlockStandaloneLog LOG_PEPPEL = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("log_peppel");
 	public static final BlockStandaloneLog LOG_COTTON = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("log_cotton");
 	public static final BlockStandaloneLog LOG_CHESTNUT = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("log_chestnut");
 	public static final BlockStandaloneLog LOG_CHERRY = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("log_cherry");
 	public static final BlockPalmLog LOG_PALM = (BlockPalmLog) new BlockPalmLog(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("log_palm");
-	/*public static final BlockStandaloneLeaf LEAVES_PEPPEL = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("leaves_peppel");
-	public static final BlockStandaloneLeaf LEAVES_COTTON = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("leaves_cotton");
-	public static final BlockStandaloneLeaf LEAVES_CHESTNUT = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("leaves_chestnut");
-	public static final BlockStandaloneLeaf LEAVES_CHERRY = (BlockStandaloneLeaf) new BlockStandaloneLeaf(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("leaves_cherry");*/
 	public static final BlockMinaLeaf MINA_LEAVES_A = (BlockMinaLeaf) new BlockMinaLeaf.A().setUnlocalizedName("mina_leaves_a");
 	//public static final BlockMinaLeaf MINA_LEAVES_B = (BlockMinaLeaf) new BlockMinaLeaf.B().setUnlocalizedName("mina_leaves_b");
 	public static final BlockMinaLeafBase PALM_LEAVES = (BlockMinaLeafBase) new BlockPalmLeaves().setUnlocalizedName("palm_leaves");
@@ -179,19 +174,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final Block COTTON_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_cotton");
 	public static final Block PALM_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_palm");
 	public static final Block BAMBUS_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_bambus");
-	//TODO: Trees
-//	public static final Block blockChestnutStairs = new BlockCustomStairs(
-//			blockPlanks.getDefaultState().withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.CHESTNUT))
-//					.setUnlocalizedName("chestnut_stairs");
-//	public static final Block blockCherryStairs = new BlockCustomStairs(
-//			blockPlanks.getDefaultState().withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.CHERRY))
-//					.setUnlocalizedName("cherry_stairs");
-//	public static final Block blockPeppelStairs = new BlockCustomStairs(
-//			blockPlanks.getDefaultState().withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.PEPPEL))
-//					.setUnlocalizedName("peppel_stairs");
-//	public static final Block blockKremiStairs = new BlockCustomStairs(
-//			blockPlanks.getDefaultState().withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.KREMI))
-//					.setUnlocalizedName("kremi_stairs");
+	
 	public static final BlockCustomOre SAPPHIRE_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
 			.setResistance(5.0F).setUnlocalizedName("sapphire_ore");
 	public static final BlockCustomOre RUBY_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
@@ -257,25 +240,17 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(OPAQUE_BUSH, "opaque_bush");
 		proxy.registerBlock(BAMBUS_BLOCK, "bambus_block");
 		proxy.registerBlockOnly(EFFECT_BUSH, "effect_bush");
-		// TODO: Oil GameRegistry.registerBlock(blockOil, "oil_block");
-		// IMPLEMENT: proxy.registerBlock(blockCasino,
-		// "casino_block");
 		proxy.registerBlock(KEY_LOCK, "keylock");
 		if(FeatureList.enable_ice_altar){
 			proxy.registerBlock(ICE_ALTAR, "ice_altar");
 		}
 		proxy.registerBlockWithOre(PLATINUM_ORE, "platinum_ore", "orePlatinum");
 		proxy.registerBlock(PLATINUM_BLOCK, "platinum_block");
-		//TODO: Trees
 		proxy.registerBlockOnly(PLANKS, "mina_planks");
 		proxy.registerBlock(LOG_PEPPEL, "log_peppel");
 		proxy.registerBlock(LOG_COTTON, "log_cotton");
 		proxy.registerBlock(LOG_CHESTNUT, "log_chestnut");
 		proxy.registerBlock(LOG_CHERRY, "log_cherry");
-		/*proxy.registerBlock(LEAVES_PEPPEL, "leaves_peppel");
-		proxy.registerBlock(LEAVES_COTTON, "leaves_cotton");
-		proxy.registerBlock(LEAVES_CHESTNUT, "leaves_chestnut");
-		proxy.registerBlock(LEAVES_CHERRY, "leaves_cherry");*/
 		proxy.registerBlockOnly(MINA_LEAVES_A, "mina_leaves_a");
 		//proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
 		proxy.registerBlockOnly(PALM_LEAVES, "palm_leaves");
