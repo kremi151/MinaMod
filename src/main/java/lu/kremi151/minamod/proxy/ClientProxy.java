@@ -169,17 +169,11 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerStateMappings() {
-		// ModelLoader.setCustomStateMapper(MinaBlocks.FILTER, new
-		// StateMap.Builder().ignore(BlockFilter.ENABLED).build());
-
 		ModelLoader.setCustomStateMapper(MinaBlocks.PLANKS,
 				new StateMap.Builder().withName(BlockMinaPlanks.VARIANT).withSuffix("_planks").build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.SAPLING,
 				new StateMap.Builder().withName(BlockMinaSapling.TYPE).ignore(BlockMinaSapling.STAGE).withSuffix("_sapling").build());
-		/*ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_PEPPEL, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
-		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_CHERRY, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
-		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_CHESTNUT, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
-		ModelLoader.setCustomStateMapper(MinaBlocks.LEAVES_COTTON, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());*/
+		
 		ModelLoader.setCustomStateMapper(MinaBlocks.MINA_LEAVES_A, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
 		//ModelLoader.setCustomStateMapper(MinaBlocks.MINA_LEAVES_B, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.PALM_LEAVES, new StateMap.Builder().ignore(BlockStandaloneLeaf.CHECK_DECAY, BlockStandaloneLeaf.DECAYABLE).build());

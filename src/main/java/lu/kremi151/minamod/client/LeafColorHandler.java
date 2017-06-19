@@ -28,9 +28,6 @@ public class LeafColorHandler implements IItemColor, IBlockColor{
 		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.PALM_LEAVES.getRegistryName())){
 			return BlockMinaPlanks.EnumType.PALM.getLeafColor();
 		}
-		/*else if(stack.getItem().getRegistryName().equals(MinaBlocks.MINA_LEAVES_B.getRegistryName())){
-			BlockMinaPlanks.EnumType.byMetadata(stack.getMetadata() + 4).getLeafColor();
-		}*/
 		
 		return MinaUtils.COLOR_WHITE;
 	}
@@ -43,9 +40,6 @@ public class LeafColorHandler implements IItemColor, IBlockColor{
 		}else if(b == MinaBlocks.PALM_LEAVES){
 			return BlockMinaPlanks.EnumType.PALM.getLeafColor();
 		}
-		/*else if(b == MinaBlocks.MINA_LEAVES_B){
-			return state.getValue(BlockMinaLeaf.B.VARIANT).getLeafColor();
-		}*/
 		return MinaUtils.COLOR_WHITE;
 	}
 	
