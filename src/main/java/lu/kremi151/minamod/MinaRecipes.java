@@ -223,19 +223,6 @@ public class MinaRecipes {
 				new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.ACACIA.getMetadata()), 'B', Items.STICK);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.DARK_OAK_TABLE, 1), "AAA", " B ", " A ", 'A',
 				new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()), 'B', Items.STICK);
-		//TODO: Trees
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockChestnutTable, 1), "AAA", " B ", " A ", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.CHESTNUT.getMetadata()), 'B',
-//				Items.STICK);
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockCherryTable, 1), "AAA", " B ", " A ", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.CHERRY.getMetadata()), 'B',
-//				Items.STICK);
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockKremiTable, 1), "AAA", " B ", " A ", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.KREMI.getMetadata()), 'B',
-//				Items.STICK);
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockPeppelTable, 1), "AAA", " B ", " A ", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.PEPPEL.getMetadata()), 'B',
-//				Items.STICK);
 	}
 
 	private static void initWoodRecipes() {
@@ -270,25 +257,19 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COTTON_LETTERBOX, 1), " A ", "ABA", " C ", 'A',
 				new ItemStack(MinaBlocks.PLANKS, 1, BlockMinaPlanks.EnumType.COTTON.getMetadata()), 'B',
 				Blocks.HOPPER, 'C', Items.STICK);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.PALM_LETTERBOX, 1), " A ", "ABA", " C ", 'A',
+				new ItemStack(MinaBlocks.PLANKS, 1, BlockMinaPlanks.EnumType.PALM.getMetadata()), 'B',
+				Blocks.HOPPER, 'C', Items.STICK);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.BAMBUS_LETTERBOX, 1), " A ", "ABA", " C ", 'A',
 				MinaBlocks.BAMBUS_BLOCK, 'B',
 				Blocks.HOPPER, 'C', Items.STICK);
 		
+		GameRegistry.addShapedRecipe(new ItemStack(Items.STICK, 4), "P", "P", 'P', MinaBlocks.PLANKS);
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
 			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
 			GameRegistry.addShapedRecipe(new ItemStack(BlockMinaWoodStairs.getForType(type), 4), "  P", " PP", "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
 		}
-
-		//TODO: Trees
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockChestnutStairs, 4), "A  ", "AA ", "AAA", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.CHESTNUT.getMetadata()));
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockCherryStairs, 4), "A  ", "AA ", "AAA", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.CHERRY.getMetadata()));
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockPeppelStairs, 4), "A  ", "AA ", "AAA", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.PEPPEL.getMetadata()));
-//		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.blockKremiStairs, 4), "A  ", "AA ", "AAA", 'A',
-//				new ItemStack(MinaBlocks.blockPlanks, 1, BlockMinaPlanks.EnumType.KREMI.getMetadata()));
 	}
 
 	private static void initHerbRecipes() {

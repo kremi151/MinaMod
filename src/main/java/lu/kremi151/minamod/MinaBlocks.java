@@ -177,6 +177,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final Block CHERRY_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_cherry");
 	public static final Block PEPPEL_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_peppel");
 	public static final Block COTTON_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_cotton");
+	public static final Block PALM_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_palm");
 	public static final Block BAMBUS_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_bambus");
 	//TODO: Trees
 //	public static final Block blockChestnutStairs = new BlockCustomStairs(
@@ -294,6 +295,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(CHERRY_LETTERBOX, "letterbox_cherry");
 		proxy.registerBlock(PEPPEL_LETTERBOX, "letterbox_peppel");
 		proxy.registerBlock(COTTON_LETTERBOX, "letterbox_cotton");
+		proxy.registerBlock(PALM_LETTERBOX, "letterbox_palm");
 		proxy.registerBlock(BAMBUS_LETTERBOX, "letterbox_bambus");
 		proxy.registerBlockWithOre(RUBY_ORE, "ruby_ore", "oreRuby");
 		proxy.registerBlockWithOre(SAPPHIRE_ORE, "sapphire_ore", "oreSapphire");
