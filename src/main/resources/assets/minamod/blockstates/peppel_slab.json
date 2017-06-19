@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=bottom": { "model": "minamod:half_slab_peppel" },
+        "half=top": { "model": "minamod:upper_slab_peppel" }
+    }
+}

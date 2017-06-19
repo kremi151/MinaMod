@@ -16,6 +16,7 @@ import lu.kremi151.minamod.block.BlockHoneycomb;
 import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
+import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLeaf;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
@@ -192,6 +193,11 @@ public class ClientProxy extends CommonProxy {
 				new StateMap.Builder().ignore(BlockHoneycomb.HAS_BEES).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.LOG_PALM, 
 				new StateMap.Builder().ignore(BlockPalmLog.HEAD).build());
+
+		ModelLoader.setCustomStateMapper(MinaBlocks.WOODEN_SLAB,
+				new StateMap.Builder().withName(BlockMinaWoodSlab.VARIANT).withSuffix("_slab").build());
+		ModelLoader.setCustomStateMapper(MinaBlocks.DOUBLE_WOODEN_SLAB,
+				new StateMap.Builder().withName(BlockMinaWoodSlab.VARIANT).withSuffix("_double_slab").build());
 	}
 
 	@Override

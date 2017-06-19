@@ -270,7 +270,9 @@ public class MinaRecipes {
 				Blocks.HOPPER, 'C', Items.STICK);
 		
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
-			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4), BlockStandaloneLog.getBlockFor(type));
+			GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 1, 1), BlockStandaloneLog.getBlockFor(type));
+			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
+			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
 		}
 
 		//TODO: Trees

@@ -32,6 +32,7 @@ import lu.kremi151.minamod.block.BlockMinaLeaf;
 import lu.kremi151.minamod.block.BlockMinaLeafBase;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
+import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
@@ -156,6 +157,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 	//public static final BlockMinaLeaf MINA_LEAVES_B = (BlockMinaLeaf) new BlockMinaLeaf.B().setUnlocalizedName("mina_leaves_b");
 	public static final BlockMinaLeafBase PALM_LEAVES = (BlockMinaLeafBase) new BlockPalmLeaves().setUnlocalizedName("palm_leaves");
 	public static final BlockMinaSapling SAPLING = (BlockMinaSapling) new BlockMinaSapling().setUnlocalizedName("mina_sapling");
+	public static final BlockMinaWoodSlab WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Half().setUnlocalizedName("woodSlab");
+	public static final BlockMinaWoodSlab DOUBLE_WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Double().setUnlocalizedName("woodSlab");
 
 	public static final BlockPlate PLATE = (BlockPlate) new BlockPlate().setUnlocalizedName("plate");
 	public static final Block OAK_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_oak");
@@ -316,6 +319,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlockOnly(CAMPBENCH, "campbench");
 		proxy.registerBlock(QUICKSAND, "quicksand");
 		proxy.registerBlock(LOG_PALM, "log_palm");
+		proxy.registerBlockOnly(WOODEN_SLAB, "mina_wooden_slab");
+		proxy.registerBlockOnly(DOUBLE_WOODEN_SLAB, "mina_double_wooden_slab");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;
@@ -339,5 +344,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		Blocks.FIRE.setFireInfo(PALM_LEAVES, 30, 60);
 		Blocks.FIRE.setFireInfo(BAMBUS_BLOCK, 6, 50);
 		// Blocks.fire.setFireInfo(blockIvy, 15, 100);
+		Blocks.FIRE.setFireInfo(WOODEN_SLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(DOUBLE_WOODEN_SLAB, 5, 20);
 	}
 }
