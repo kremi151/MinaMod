@@ -157,9 +157,9 @@ public class GuiHerbBook extends GuiNoInventory{
 				int spd = herb.getStatEffect(StatTypes.SPEED);
 				
 				if(ItemHerbGuide.includeStats(stack)){
-					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.attack.info", atk), 25, 65, (atk>0)?COLOR_GREEN:((atk<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
-					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.defense.info", def), 25, 75, (def>0)?COLOR_GREEN:((def<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
-					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.speed.info", spd), 25, 85, (spd>0)?COLOR_GREEN:((spd<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
+					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.minastats.attack.info", atk), 25, 65, (atk>0)?COLOR_GREEN:((atk<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
+					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.minastats.defense.info", def), 25, 75, (def>0)?COLOR_GREEN:((def<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
+					this.fontRenderer.drawString(I18n.translateToLocalFormatted("item.mixture.minastats.speed.info", spd), 25, 85, (spd>0)?COLOR_GREEN:((spd<0)?COLOR_RED:MinaUtils.COLOR_BLACK));
 				}else{
 					this.fontRenderer.drawSplitString(I18n.translateToLocal("gui.herb_guide.stats_unk"), 25, 65, 100, MinaUtils.COLOR_BLACK);
 				}
