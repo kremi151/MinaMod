@@ -5,6 +5,8 @@ import static lu.kremi151.minamod.MinaMod.println;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
@@ -29,9 +31,9 @@ public class MappingsHandler {
 				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_log_g1"))){
 					println("Remapping old MinaMod item log type to new one (peppel by default)");
 					mapping.remap(Item.getItemFromBlock(MinaBlocks.LOG_PEPPEL));
-				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
+				/*}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
 					println("Remapping old MinaMod item leaf type to new one (peppel by default)");
-					mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));
+					mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));*/
 				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "doge_seeds"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "kevikus_seeds"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "tracius_seeds"))){
@@ -41,20 +43,24 @@ public class MappingsHandler {
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cotton"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_chestnut"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cherry"))){
-					mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));
+					//mapping.remap(Item.getItemFromBlock(MinaBlocks.MINA_LEAVES_A));
+					println("Abandon old leaf item blocks...");
+					mapping.ignore();
 				}
 			}else if(mapping.type == GameRegistry.Type.BLOCK){
 				if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_log_g1"))){
 					println("Remapping old MinaMod block log type to new one (peppel by default)");
 					mapping.remap(MinaBlocks.LOG_PEPPEL);
-				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
+				}/*else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_leaves_g1"))){
 					println("Remapping old MinaMod block leaf type to new one (peppel by default)");
 					mapping.remap(MinaBlocks.MINA_LEAVES_A);
-				}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_peppel"))
+				}*/else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_peppel"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cotton"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_chestnut"))
 						|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "leaves_cherry"))){
-					mapping.remap(MinaBlocks.MINA_LEAVES_A);
+					//mapping.remap(MinaBlocks.MINA_LEAVES_A);
+					println("Abandon old leaf blocks...");
+					mapping.ignore();
 				}
 			}
 		}
