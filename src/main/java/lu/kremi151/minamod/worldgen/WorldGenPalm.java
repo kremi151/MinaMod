@@ -49,9 +49,16 @@ public class WorldGenPalm extends WorldGenBiomeTree{
 		for(int i = pos.getX() ; i <= pos.getX() + width ; i++){
 			for(int k = pos.getZ() ; i <= pos.getZ() + length ; k++){
 				for(int j = pos.getY() ; j < pos.getY() + height ; j++){
-					if(isReplaceable(world, new BlockPos(i, j, k))){
+					if(!isReplaceable(world, new BlockPos(i, j, k))){
 						return false;
 					}
+				}
+			}
+		}
+		for(int i = pos.getX() - 1 ; i <= pos.getX() + 1 ; i++){
+			for(int j = pos.getZ() - 1 ; j <= pos.getZ() + 1 ; j++){
+				if(i != j && !isReplaceable(world, new BlockPos(i, pos.getY() + 1, j))){
+					return false;
 				}
 			}
 		}
