@@ -152,9 +152,9 @@ public class BlockPalmLeaves extends BlockMinaLeafBase{
             return super.doesSideBlockRendering(state, world, pos, face);
 
         if ( state.isOpaqueCube() )
-            return slave.doesSideBlockRendering(state, world, pos, face);
+            return false;
 
-        BlockCombined. EnumBlockMode type = state.getValue(TYPE);
+        BlockCombined.EnumBlockMode type = state.getValue(TYPE);
         return (type == BlockCombined.EnumBlockMode.TOP && face == EnumFacing.UP) || (type == BlockCombined.EnumBlockMode.BOTTOM && face != EnumFacing.DOWN);
     }
     
