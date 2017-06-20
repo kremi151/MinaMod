@@ -199,7 +199,7 @@ public class MinaItems {
 	public static final Item BATTERY = new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
 	
-	private static boolean init = false;
+	private static boolean init = false, itemBInit = false;
 
 	public static void registerItems() {
 		if (init)throw new RuntimeException("Duplicate call of function");
@@ -295,6 +295,7 @@ public class MinaItems {
 	}
 	
 	private static void registerItemBlocks(){
+		if (itemBInit)throw new RuntimeException("Duplicate call of function");
 		CommonProxy proxy = MinaMod.getProxy();
 		
 		proxy.registerItem(new ItemBlockMulti<BlockMinaPlanks>(MinaBlocks.PLANKS, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.PLANKS.getRegistryName()), "mina_planks", BlockMinaPlanks.EnumType.variantNamesPlanks);
@@ -309,5 +310,7 @@ public class MinaItems {
 		//proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves", "palm_leaf_stack", "palm_leaf");
 		proxy.registerItem(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab", BlockMinaPlanks.EnumType.variantNamesSlabs);
+	
+		itemBInit = true;
 	}
 }
