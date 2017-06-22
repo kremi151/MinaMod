@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block.tileentity;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -47,6 +48,7 @@ public class TileEntityCollector extends TileEntitySidedInventory implements ITi
 						}else{
 							item.setEntityItemStack(res);
 						}
+						MinaMod.getProxy().spawnParticleEffectToAllAround(EnumParticleEffect.COLLECT, world, item.posX, item.posY + 0.25, item.posZ, 0f, 0f, 0f);
 					}
 					ticksLeft = maxTicks;
 				}

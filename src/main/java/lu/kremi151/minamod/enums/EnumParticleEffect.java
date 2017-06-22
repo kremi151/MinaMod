@@ -4,6 +4,7 @@ public enum EnumParticleEffect {
 
 	SPORE,
 	AMULET_AURA,
-	SMOKE;
+	SMOKE,
+	COLLECT;
 	
 }

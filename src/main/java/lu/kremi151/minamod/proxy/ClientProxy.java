@@ -73,6 +73,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -394,6 +395,10 @@ public class ClientProxy extends CommonProxy {
 			break;
 		case SMOKE:
 			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + (Math.random() * 0.5d) - 0.25d, posY + (Math.random() * 0.5d) - 0.25d, posZ + (Math.random() * 0.5d) - 0.25d, 0.0D, 0.0D, 0.0D, new int[0]);
+			break;
+		case COLLECT:
+			int dis_n = 3 + MathHelper.floor(Math.random() * 3);
+			while(dis_n-- > 0)world.spawnParticle(EnumParticleTypes.REDSTONE, posX + (Math.random() * 0.5d) - 0.25d, posY + (Math.random() * 0.50d) - 0.25d, posZ + (Math.random() * 0.5d) - 0.25d, 0.0D, 0.0D, 0.0D, new int[0]);
 			break;
 		}
 	}
