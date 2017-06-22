@@ -1,13 +1,14 @@
 package lu.kremi151.minamod.block;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.BlockMinaPlanks.EnumType;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BlockMinaLeaf extends BlockMinaLeafBase
 {	
 	private final String variantNames[], unlocalizedNames[];
+	private final Map<BlockMinaPlanks.EnumType, Integer> internalMetadataMap;
 
     private BlockMinaLeaf(PropertyEnum<BlockMinaPlanks.EnumType> variantProperty, BlockMinaPlanks.EnumType defaultVariant)
     {
@@ -37,12 +39,15 @@ public abstract class BlockMinaLeaf extends BlockMinaLeafBase
         if(variantNames.length > 4)throw new IllegalStateException("Maximum 4 variants are supported");
         unlocalizedNames = new String[variantProperty.getAllowedValues().size()];
         int idx = 0;
+        HashMap<BlockMinaPlanks.EnumType, Integer> imm = new HashMap<>();
         for(BlockMinaPlanks.EnumType type : variantProperty.getAllowedValues()){
+        	imm.put(type, idx);
         	variantNames[idx] = "leaves_" + type.getName();
         	unlocalizedNames[idx++] = type.getUnlocalizedName();
         	
         	BlockMinaLeafBase.registerLeafBlock(type, this.getDefaultState().withProperty(variantProperty, type));
         }
+        this.internalMetadataMap = Collections.unmodifiableMap(imm);
     }
     
     protected abstract PropertyEnum<BlockMinaPlanks.EnumType> getVariantProperty();
@@ -80,7 +85,7 @@ public abstract class BlockMinaLeaf extends BlockMinaLeafBase
     @Override
     protected ItemStack getSilkTouchDrop(IBlockState state)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, ((BlockMinaPlanks.EnumType)state.getValue(getVariantProperty())).getMetadata() - 4);//TODO: Dynamic
+        return new ItemStack(Item.getItemFromBlock(this), 1, internalMetadataMap.get(state.getValue(getVariantProperty())));
     }
 
     @Override
@@ -116,7 +121,7 @@ public abstract class BlockMinaLeaf extends BlockMinaLeafBase
         if (!worldIn.isRemote && stack.getItem() == Items.SHEARS)
         {
             player.addStat(StatList.getBlockStats(this));
-            spawnAsEntity(worldIn, pos, new ItemStack(Item.getItemFromBlock(this), 1, ((BlockMinaPlanks.EnumType)state.getValue(getVariantProperty())).getMetadata() - 4));//TODO: Dynamic
+            spawnAsEntity(worldIn, pos, new ItemStack(Item.getItemFromBlock(this), 1, internalMetadataMap.get(state.getValue(getVariantProperty()))));
         }
         else
         {
@@ -127,7 +132,7 @@ public abstract class BlockMinaLeaf extends BlockMinaLeafBase
     @Override
     public NonNullList<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
     {
-        return NonNullList.withSize(1, new ItemStack(this, 1, world.getBlockState(pos).getValue(getVariantProperty()).getMetadata() - 4));//TODO: Dynamic
+        return NonNullList.withSize(1, new ItemStack(this, 1, internalMetadataMap.get(world.getBlockState(pos).getValue(getVariantProperty()))));
     }
     
     public static final class A extends BlockMinaLeaf{
