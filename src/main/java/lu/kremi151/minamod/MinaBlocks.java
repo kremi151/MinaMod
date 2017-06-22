@@ -56,6 +56,8 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 
 public class MinaBlocks { // NO_UCD (unused code)
@@ -315,6 +317,10 @@ public class MinaBlocks { // NO_UCD (unused code)
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;
+	}
+	
+	static void registerOreEntries(){
+		OreDictionary.registerOre("plankWood", new ItemStack(PLANKS, 1, OreDictionary.WILDCARD_VALUE));
 	}
 
 	static void setFireInfos() {

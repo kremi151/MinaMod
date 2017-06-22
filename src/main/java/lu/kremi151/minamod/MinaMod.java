@@ -285,6 +285,7 @@ public class MinaMod {
 		MinaFluids.registerFluids();
 		MinaBlocks.registerBlocks();
 		MinaItems.registerItems();
+		MinaBlocks.registerOreEntries();
 		MinaPotions.register();
 		MinaEnchantments.registerEnchantments();
 		VillagerHelper.instance().registerVillagers();

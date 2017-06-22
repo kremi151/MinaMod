@@ -263,8 +263,7 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.BAMBUS_LETTERBOX, 1), " A ", "ABA", " C ", 'A',
 				MinaBlocks.BAMBUS_BLOCK, 'B',
 				Blocks.HOPPER, 'C', Items.STICK);
-		
-		GameRegistry.addShapedRecipe(new ItemStack(Items.STICK, 4), "P", "P", 'P', MinaBlocks.PLANKS);
+
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
 			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
