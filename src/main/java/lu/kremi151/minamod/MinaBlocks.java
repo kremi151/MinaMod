@@ -213,7 +213,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
 	//public static final BlockFluidClassic WATER_CLEAR = new BlockFluidClassic(MinaFluids.CLEAR_WATER, Material.WATER);
 
-	private static boolean init = false;
+	private static boolean init = false, initOres = false;
 
 	static void registerBlocks() {
 		if (init)throw new RuntimeException("Duplicate call of function");
@@ -320,7 +320,11 @@ public class MinaBlocks { // NO_UCD (unused code)
 	}
 	
 	static void registerOreEntries(){
+		if (initOres)throw new RuntimeException("Duplicate call of function");
+		
 		OreDictionary.registerOre("plankWood", new ItemStack(PLANKS, 1, OreDictionary.WILDCARD_VALUE));
+		
+		initOres = true;
 	}
 
 	static void setFireInfos() {
@@ -332,10 +336,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		Blocks.FIRE.setFireInfo(LOG_CHESTNUT, 5, 5);
 		Blocks.FIRE.setFireInfo(LOG_CHERRY, 5, 5);
 		Blocks.FIRE.setFireInfo(LOG_PALM, 5, 5);
-		/*Blocks.FIRE.setFireInfo(LEAVES_PEPPEL, 30, 60);
-		Blocks.FIRE.setFireInfo(LEAVES_COTTON, 30, 60);
-		Blocks.FIRE.setFireInfo(LEAVES_CHESTNUT, 30, 60);
-		Blocks.FIRE.setFireInfo(LEAVES_CHERRY, 30, 60);*/
+		Blocks.FIRE.setFireInfo(PLANKS, 5, 20);
 		Blocks.FIRE.setFireInfo(MINA_LEAVES_A, 30, 60);
 		//Blocks.FIRE.setFireInfo(MINA_LEAVES_B, 30, 60);
 		Blocks.FIRE.setFireInfo(PALM_LEAVES, 30, 60);
