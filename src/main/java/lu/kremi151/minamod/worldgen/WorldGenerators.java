@@ -100,7 +100,6 @@ public class WorldGenerators {
 			BlockPos pos = new BlockPos(x,y,z);
 			if(plant.getBlock().canPlaceBlockAt(world, pos)){
 				((BlockMinaSapling)plant.getBlock()).generateTree(world, pos, plant, random);
-				System.out.println("Tree generated at " + pos);
 			}
 		}
 	}

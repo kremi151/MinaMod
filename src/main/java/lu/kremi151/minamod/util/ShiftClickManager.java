@@ -1,8 +1,6 @@
 package lu.kremi151.minamod.util;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -10,17 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import scala.collection.generic.BitOperations.Int;
 
 public class ShiftClickManager {
 	
-	private static final Method methodMergeItemStack;
 	private IHandler handlers[];
-	
-	static{
-		methodMergeItemStack = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
-	}
 	
 	private ShiftClickManager(){
 	}
@@ -99,7 +90,7 @@ public class ShiftClickManager {
 
 		@Override
 		public ItemStack handle(Container container, ItemStack stack) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-			boolean result = predicate.test(stack) && (Boolean)methodMergeItemStack.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
+			boolean result = predicate.test(stack) && ReflectionLoader.Container_mergeItemStack(container, stack, destMinIncl, destMaxExcl, inverse);
 			if(result){
 				return stack;
 			}else{

@@ -40,7 +40,7 @@ public class WorldGenRubySapphireOre implements IWorldGenerator, IOreInjector{
 			int y = minY + random.nextInt(maxY - minY);
 			int z = (chunkZ * 16) + random.nextInt(16);
 			BlockPos pos = new BlockPos(x, y, z);
-			if(random.nextBoolean()){
+			if(random.nextFloat() <= 0.5f){
 				wrapped1.generate(world, random, pos);
 			}else{
 				wrapped2.generate(world, random, pos);

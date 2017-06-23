@@ -15,12 +15,6 @@ public class IDRegistry {
 	//Free id 10
 	public static final int entityFishId = 11;
 
-	//TODO: public static final int villagerCarpenterId = 7;
-	//TODO: public static final int villagerBeekeeperId = 8;
-	//TODO: public static final int villagerBakerId = 9;
-	//TODO: public static final int villagerFloristId = 10;
-	//TODO: public static final int villagerJewelierId = 11;
-
 	//TODO: public static final int guiIdCasino = 186;
 	//TODO: public static final int guiIdVendor = 187;
 	//public static final int guiIdCoder = 188;
