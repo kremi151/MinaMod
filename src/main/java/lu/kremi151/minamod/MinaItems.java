@@ -198,6 +198,8 @@ public class MinaItems {
 	public static final Item AMULET = new ItemAmulet().setUnlocalizedName("amulet");
 	public static final Item BATTERY = new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
+	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
+	public static final Item FLOUR = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("flour");
 	
 	private static boolean init = false, itemBInit = false;
 
@@ -290,6 +292,8 @@ public class MinaItems {
 		proxy.registerItem(AMULET, "amulet", AmuletRegistry.getVariantNames());
 		proxy.registerItem(BATTERY, "battery");
 		proxy.registerItem(HERB_GUIDE, "herb_guide");
+		proxy.registerItem(CHICKEN_NUGGETS, "chicken_nuggets");
+		proxy.registerItem(FLOUR, "flour");
 
 		init = true;
 	}
