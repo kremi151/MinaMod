@@ -192,6 +192,7 @@ tile.campbench.spruce.name=Fichtenbank
 tile.cable.name=Kabel
 tile.quicksand.name=Treibsand
 tile.coconut.name=Kokosnuss
+tile.dimmable_lamp.name=Dimmbare Laterne
 item.ever_snow.name=Ewige Schneeflocke
 item.namie_seeds.name=Namiesamen
 item.namie_fruit.name=Namiefrucht

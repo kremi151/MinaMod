@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "is_on=false": { "model": "minamod:dimmable_lamp_off" },
+        "is_on=true": { "model": "minamod:dimmable_lamp_on" }
+    }
+}

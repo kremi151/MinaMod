@@ -187,6 +187,8 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.HERB_GUIDE, 1), "HBH", 'B', Items.WRITABLE_BOOK, 'H', new ItemStack(MinaItems.HERB, 1, OreDictionary.WILDCARD_VALUE));
 	
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.QUICKSAND, 1), Items.WATER_BUCKET, Blocks.SAND);
+		
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.DIMMABLE_LIGHT, 1), " Q ", "QLQ", " Q ", 'Q', Items.QUARTZ, 'L', Blocks.REDSTONE_LAMP);
 	}
 	
 	private static void initColoredRecipes(){

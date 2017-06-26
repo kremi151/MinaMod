@@ -12,6 +12,7 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockCoconut;
+import lu.kremi151.minamod.block.BlockDimmableLight;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
 import lu.kremi151.minamod.block.BlockIceAltar;
@@ -197,6 +198,8 @@ public class ClientProxy extends CommonProxy {
 		
 		ModelLoader.setCustomStateMapper(MinaBlocks.COCONUT, 
 				new StateMap.Builder().ignore(BlockCoconut.AGE).build());
+		
+		ModelLoader.setCustomStateMapper(MinaBlocks.DIMMABLE_LIGHT, new StateMap.Builder().ignore(BlockDimmableLight.LIGHT).build());
 	}
 
 	@Override

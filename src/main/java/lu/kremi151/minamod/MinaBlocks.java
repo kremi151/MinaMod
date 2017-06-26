@@ -19,6 +19,7 @@ import lu.kremi151.minamod.block.BlockCustomCake;
 import lu.kremi151.minamod.block.BlockCustomOre;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
 import lu.kremi151.minamod.block.BlockCustomStairs;
+import lu.kremi151.minamod.block.BlockDimmableLight;
 import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockElevatorControl;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
@@ -211,6 +212,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCampbench CAMPBENCH = (BlockCampbench) new BlockCampbench().setUnlocalizedName("campbench");
 	public static final BlockQuicksand QUICKSAND = (BlockQuicksand) new BlockQuicksand().setUnlocalizedName("quicksand");
 	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
+	public static final BlockDimmableLight DIMMABLE_LIGHT = (BlockDimmableLight) new BlockDimmableLight().setUnlocalizedName("dimmable_lamp");
 	//public static final BlockFluidClassic WATER_CLEAR = new BlockFluidClassic(MinaFluids.CLEAR_WATER, Material.WATER);
 
 	private static boolean init = false, initOres = false;
@@ -314,6 +316,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(CHERRY_STAIRS, "cherry_stairs");
 		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
 		proxy.registerBlock(COCONUT, "coconut");
+		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;
