@@ -21,7 +21,7 @@ public class BlockDimmableLight extends Block{
 	public static final PropertyBool IS_ON = PropertyBool.create("is_on");
 
 	public BlockDimmableLight() {
-		super(Material.GLASS, MapColor.GRAY);
+		super(Material.REDSTONE_LIGHT, MapColor.GRAY);
 		this.setSoundType(SoundType.GLASS);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LIGHT, 0));
 		this.setCreativeTab(CreativeTabs.REDSTONE);
