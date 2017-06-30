@@ -219,7 +219,7 @@ public class MinaItems {
 		proxy.registerItem(CITRIN_SHOVEL, "citrin_shovel");
 		proxy.registerItem(CITRIN_HOE, "citrin_hoe");
 		proxy.registerItem(HONEYWABE, "honeywabe");
-		proxy.registerItem(STRAWBERRY, "strawberry");
+		proxy.registerItemWithOre(STRAWBERRY, "strawberry");
 		proxy.registerItem(BAMBUS, "bambus_item");
 		proxy.registerItem(BAMBUS_SWORD, "bambus_sword");
 		proxy.registerItem(BAMBUS_AXE, "bambus_axe");
@@ -227,9 +227,9 @@ public class MinaItems {
 		proxy.registerItem(BAMBUS_SHOVEL, "bambus_shovel");
 		proxy.registerItem(BAMBUS_HOE, "bambus_hoe");
 		proxy.registerItem(RHUBARB, "rhubarb_item");
-		proxy.registerItem(CHESTNUT, "chestnut");
+		proxy.registerItemWithOre(CHESTNUT, "chestnut");
 		proxy.registerItem(CHESTNUT_COOKED, "chestnut_cooked");
-		proxy.registerItem(CHERRY, "cherry");
+		proxy.registerItemWithOre(CHERRY, "cherry");
 		proxy.registerItem(OBSIDIAN_FRAGMENT, "obsidian_fragment");
 		proxy.registerItem(OBSIDIAN_SWORD, "obsidian_sword");
 		proxy.registerItem(OBSIDIAN_AXE, "obsidian_axe");
@@ -252,7 +252,7 @@ public class MinaItems {
 			proxy.registerItem(HARMONY_PEARL, "harmony_pearl");
 		}
 		proxy.registerItem(POULET_SPECIAL_PIQUANT, "poulet_special_piquant");
-		proxy.registerItem(CHILI, "chili");
+		proxy.registerItemWithOre(CHILI, "chili");
 		proxy.registerItem(CHILI_POWDER, "chili_powder");
 		proxy.registerItem(SWEET_SOUR, "sweet_sour");
 		proxy.registerItem(GOLDEN_COIN, "golden_coin");
@@ -278,7 +278,7 @@ public class MinaItems {
 		proxy.registerItem(MIXTURE, "mixture");
 		proxy.registerItem(IRON_SICKLE, "iron_sickle");
 		proxy.registerItem(COLORED_BOOK, "colored_written_book");
-		proxy.registerItem(COTTON, "cotton");
+		proxy.registerItemWithOre(COTTON, "cotton");
 		proxy.registerItem(BERRY, "berry", ItemBerry.VARIANT_NAMES);
 		proxy.registerItem(BERRY_SEEDS, "berry_seeds", "doge_seeds", "kevikus_seeds", "tracius_seeds");
 		proxy.registerItem(PUMPKIN_SOUP, "pumpkin_soup");

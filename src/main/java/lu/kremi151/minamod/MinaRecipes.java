@@ -31,6 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class MinaRecipes {
 
@@ -89,12 +90,12 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.SAPPHIRE, 9), MinaBlocks.SAPPHIRE_BLOCK);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.RUBY_BLOCK, 1), "CCC", "CCC", "CCC", 'C',
 				MinaItems.RUBY);
-		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.RUBY, 9), MinaBlocks.RUBY_BLOCK);
-
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.RUBY, 9), MinaBlocks.RUBY_BLOCK); 
+		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.HONEY_CAKE, 1), "MMM", "HEH", "WHW", 'M',
 				Items.MILK_BUCKET, 'H', MinaItems.HONEY_POT, 'E', Items.EGG, 'W', Items.WHEAT);
-		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.STRAWBERRY_CAKE, 1), "MMM", "SES", "WSW", 'M',
-				Items.MILK_BUCKET, 'S', MinaItems.STRAWBERRY, 'E', Items.EGG, 'W', Items.WHEAT);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MinaBlocks.STRAWBERRY_CAKE, 1), "MMM", "SES", "WSW", 'M',
+				Items.MILK_BUCKET, 'S', "strawberry", 'E', Items.EGG, 'W', Items.WHEAT));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.CHOCOLATE_CAKE, 1), "MMM", "CEC", "WCW", 'M',
 				Items.MILK_BUCKET, 'C', new ItemStack(Items.DYE, 1, 3), 'E', Items.EGG, 'W', Items.WHEAT);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.RHUBARB_PIE, 1), "MMM", "RER", "WRW", 'M',

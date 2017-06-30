@@ -72,6 +72,10 @@ public class CommonProxy implements MinaModAPI{
     	return ctx.getServerHandler().player;
     }
     
+    public void registerItemWithOre(Item item, String universalName) {
+    	registerItemWithOre(item, universalName, universalName);
+    }
+    
     public void registerItemWithOre(Item item, String name, String oreName, String... variantNames){
     	registerItem(item, name, variantNames);
     	OreDictionary.registerOre(oreName, item);
@@ -82,6 +86,10 @@ public class CommonProxy implements MinaModAPI{
     		item.setRegistryName(new ResourceLocation(MinaMod.MODID, name));
     	}
     	GameRegistry.register(item);
+    }
+    
+    public void registerBlockWithOre(Block block, String universalName){
+    	registerBlockWithOre(block, universalName, universalName);
     }
     
     public void registerBlockWithOre(Block block, String name, String oreName, String... variantNames){

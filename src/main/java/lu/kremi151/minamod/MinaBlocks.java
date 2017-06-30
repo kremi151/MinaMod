@@ -251,7 +251,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 			proxy.registerBlock(ICE_ALTAR, "ice_altar");
 		}
 		proxy.registerBlockWithOre(PLATINUM_ORE, "platinum_ore", "orePlatinum");
-		proxy.registerBlock(PLATINUM_BLOCK, "platinum_block");
+		proxy.registerBlockWithOre(PLATINUM_BLOCK, "platinum_block", "blockPlatinum");
 		proxy.registerBlockOnly(PLANKS, "mina_planks");
 		proxy.registerBlock(LOG_PEPPEL, "log_peppel");
 		proxy.registerBlock(LOG_COTTON, "log_cotton");
@@ -280,8 +280,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(BAMBUS_LETTERBOX, "letterbox_bambus");
 		proxy.registerBlockWithOre(RUBY_ORE, "ruby_ore", "oreRuby");
 		proxy.registerBlockWithOre(SAPPHIRE_ORE, "sapphire_ore", "oreSapphire");
-		proxy.registerBlock(RUBY_BLOCK, "ruby_block");
-		proxy.registerBlock(SAPPHIRE_BLOCK, "sapphire_block");
+		proxy.registerBlockWithOre(RUBY_BLOCK, "ruby_block", "blockRuby");
+		proxy.registerBlockWithOre(SAPPHIRE_BLOCK, "sapphire_block", "blockSapphire");
 		proxy.registerBlockOnly(ELEVATOR_FLOOR, "elevator_floor");
 		proxy.registerBlock(ELEVATOR_CONTROL, "elevator_control");
 		proxy.registerBlock(AUTO_FEEDER, "autofeeder");
@@ -315,7 +315,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(CHESTNUT_STAIRS, "chestnut_stairs");
 		proxy.registerBlock(CHERRY_STAIRS, "cherry_stairs");
 		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
-		proxy.registerBlock(COCONUT, "coconut");
+		proxy.registerBlockWithOre(COCONUT, "coconut");
 		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
 		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
