@@ -14,17 +14,17 @@ public final class RegisteringHandler {
 	private RegisteringHandler() {}
 
 	@SubscribeEvent
-	public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
+	protected static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
 		MinaBlocks.registerBlocks();
 	}
 	
 	@SubscribeEvent
-	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
+	protected static void onRegisterItems(RegistryEvent.Register<Item> event) {
 		MinaItems.registerItems();
 	}
 	
 	@SubscribeEvent
-	public static void onRegisterModels(ModelRegistryEvent event) {
+	protected static void onRegisterModels(ModelRegistryEvent event) {
 		CommonProxy proxy = MinaMod.getProxy();
 		proxy.registerStateMappings();
 		proxy.registerVariantNames();

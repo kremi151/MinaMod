@@ -293,18 +293,12 @@ public class MinaMod {
 		setupNetworkWrapper(event.getSide());
 
 		MinaFluids.registerFluids();
-		//MinaBlocks.registerBlocks();
-		//MinaItems.registerItems();
 		MinaBlocks.registerOreEntries();
 		MinaPotions.register();
 		MinaEnchantments.registerEnchantments();
 		VillagerHelper.instance().registerVillagers();
 		
 		MinaCapabilities.init();
-
-		/*proxy.registerStateMappings();
-		proxy.registerVariantNames();
-		proxy.registerFluidModels();*/
 
 		MinaBiomes.init();
 
