@@ -293,7 +293,7 @@ public class MinaItems {
 		proxy.registerItem(BATTERY, "battery");
 		proxy.registerItem(HERB_GUIDE, "herb_guide");
 		proxy.registerItem(CHICKEN_NUGGETS, "chicken_nuggets");
-		proxy.registerItem(FLOUR, "flour");
+		proxy.registerItemWithOre(FLOUR, "flour", "flour");
 
 		init = true;
 	}
