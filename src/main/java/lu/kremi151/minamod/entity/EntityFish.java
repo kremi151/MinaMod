@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
 import net.minecraftforge.fml.common.registry.RegistryBuilder;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = MinaMod.MODID)
 public class EntityFish extends EntityAnimal {
 
 	public static final String entityId = "living_fish";

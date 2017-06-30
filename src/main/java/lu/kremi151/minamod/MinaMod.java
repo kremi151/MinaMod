@@ -72,11 +72,14 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -94,6 +97,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 @Mod(modid = MinaMod.MODID, name = MinaMod.MODNAME, version = MinaMod.VERSION, guiFactory = "lu.kremi151.minamod.util.MinaGuiFactory")
+//@Mod.EventBusSubscriber
 public class MinaMod {
 	
 	public static final String MODNAME = "Mina Mod";
@@ -117,6 +121,12 @@ public class MinaMod {
 	private MinecraftServer theServer;
 	
 	public static final Once<File> minaConfigPath = Once.ready();
+	
+	/*public MinaMod() {
+		System.out.println("##Registering handlers##");
+		MinecraftForge.EVENT_BUS.register(new RegisteringHandler());
+		System.out.println("##Registered handlers##");
+	}*/
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) throws IllegalArgumentException, IllegalAccessException { 
@@ -283,8 +293,8 @@ public class MinaMod {
 		setupNetworkWrapper(event.getSide());
 
 		MinaFluids.registerFluids();
-		MinaBlocks.registerBlocks();
-		MinaItems.registerItems();
+		//MinaBlocks.registerBlocks();
+		//MinaItems.registerItems();
 		MinaBlocks.registerOreEntries();
 		MinaPotions.register();
 		MinaEnchantments.registerEnchantments();
@@ -292,9 +302,9 @@ public class MinaMod {
 		
 		MinaCapabilities.init();
 
-		proxy.registerStateMappings();
+		/*proxy.registerStateMappings();
 		proxy.registerVariantNames();
-		proxy.registerFluidModels();
+		proxy.registerFluidModels();*/
 
 		MinaBiomes.init();
 
