@@ -317,7 +317,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
 		proxy.registerBlockWithOre(COCONUT, "coconut");
 		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
-		//proxy.registerBlockOnly(WATER_CLEAR, "clear_water");
 		
 		init = true;
 	}
@@ -341,10 +340,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		Blocks.FIRE.setFireInfo(LOG_PALM, 5, 5);
 		Blocks.FIRE.setFireInfo(PLANKS, 5, 20);
 		Blocks.FIRE.setFireInfo(MINA_LEAVES_A, 30, 60);
-		//Blocks.FIRE.setFireInfo(MINA_LEAVES_B, 30, 60);
 		Blocks.FIRE.setFireInfo(PALM_LEAVES, 30, 60);
 		Blocks.FIRE.setFireInfo(BAMBUS_BLOCK, 6, 50);
-		// Blocks.fire.setFireInfo(blockIvy, 15, 100);
 		Blocks.FIRE.setFireInfo(WOODEN_SLAB, 5, 20);
 		Blocks.FIRE.setFireInfo(DOUBLE_WOODEN_SLAB, 5, 20);
 	}

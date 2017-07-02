@@ -68,8 +68,8 @@ public class MinaItems {
 	public static final Item NAMIE_FRUIT = new Item().setUnlocalizedName("namie_fruit")
 			.setCreativeTab(CreativeTabs.FOOD);
 	public static final Item MILK_BOTTLE = new ItemMilkBottle().setUnlocalizedName("milk_bottle");
-	@AutoToolRecipe("citrin")
-	@AutoArmorRecipe("citrin")
+	@AutoToolRecipe(value="citrin", useOreName=true)
+	@AutoArmorRecipe(value="citrin", useOreName=true)
 	public static final Item CITRIN = new Item().setUnlocalizedName("citrin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item CITRIN_SWORD = new ItemCustomSword(MinaToolMaterials.CITRIN)
@@ -152,7 +152,7 @@ public class MinaItems {
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item GOLDEN_COIN = new Item().setUnlocalizedName("golden_coin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
-	@AutoArmorRecipe("platinum")
+	@AutoArmorRecipe(value="platinum", useOreName=true)
 	public static final Item PLATINUM_INGOT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
 			.setUnlocalizedName("platinum_ingot");
 	public static final Item SOUL_PEARL = new ItemSoulPearl().setUnlocalizedName("soul_pearl");
@@ -262,8 +262,6 @@ public class MinaItems {
 		proxy.registerItem(PLATINUM_CHESTPLATE, "platinum_chestplate");
 		proxy.registerItem(PLATINUM_LEGGINGS, "platinum_leggings");
 		proxy.registerItem(PLATINUM_BOOTS, "platinum_boots");
-		/*if(FeatureList.enable_mixtures)proxy.registerItem(HERB, "herb", EnumHerb.RVARIANTS);
-		if(FeatureList.enable_mixtures)proxy.registerItem(POWDER, "powder", EnumHerb.PVARIANTS);*/
 		proxy.registerItem(HERB, "herb");
 		proxy.registerItem(POWDER, "powder");
 		proxy.registerItem(EMPTY_POT, "empty_pot");

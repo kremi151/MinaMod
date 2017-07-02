@@ -14,4 +14,5 @@ public @interface AutoArmorRecipe {
 	String chestplate() default "";
 	String leggings() default "";
 	String boots() default "";
+	boolean useOreName() default false;
 }

@@ -15,4 +15,5 @@ public @interface AutoToolRecipe {
 	String pickaxe() default "";
 	String shovel() default "";
 	String hoe() default "";
+	boolean useOreName() default false;
 }
