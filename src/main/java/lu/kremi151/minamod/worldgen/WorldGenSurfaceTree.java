@@ -24,7 +24,7 @@ public class WorldGenSurfaceTree implements IWorldGenerator{
 	
 	static{
 		List<WorldGenBiomeTree> list = new ArrayList<WorldGenBiomeTree>();
-		if(FeatureList.enable_palms)list.add(new WorldGenPalm(false));
+		//list.add(new WorldGenPalm(false));
 		
 		trees = Collections.unmodifiableList(list);
 	}
