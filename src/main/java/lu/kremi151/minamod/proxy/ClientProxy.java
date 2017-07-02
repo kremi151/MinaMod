@@ -51,6 +51,7 @@ import lu.kremi151.minamod.entity.EntitySoulPearl;
 import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
+import lu.kremi151.minamod.item.ItemHerbGuide;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
@@ -200,6 +201,12 @@ public class ClientProxy extends CommonProxy {
 				new StateMap.Builder().ignore(BlockCoconut.AGE).build());
 		
 		ModelLoader.setCustomStateMapper(MinaBlocks.DIMMABLE_LIGHT, new StateMap.Builder().ignore(BlockDimmableLight.LIGHT).build());
+	}
+	
+	@Override
+	public void registerCustomMeshDefinitions() {
+		ModelBakery.registerItemVariants(MinaItems.HERB_GUIDE, MinaUtils.deserializeResourceLocations(MinaMod.MODID, "herb_guide", "herb_guide_completed"));
+		ModelLoader.setCustomMeshDefinition(MinaItems.HERB_GUIDE, new HerbGuideMeshDefinition());
 	}
 
 	@Override
@@ -440,6 +447,23 @@ public class ClientProxy extends CommonProxy {
 			return m;
 		}
 
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private class HerbGuideMeshDefinition implements ItemMeshDefinition{
+
+		private final ModelResourceLocation COMPLETED = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "herb_guide_completed"), "inventory");
+		private final ModelResourceLocation INCOMPLETED = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "herb_guide"), "inventory");
+
+		@Override
+		public ModelResourceLocation getModelLocation(ItemStack stack) {
+			if(ItemHerbGuide.percentageCompleted(stack) >= 1.0f) {
+				return COMPLETED;
+			}else {
+				return INCOMPLETED;
+			}
+		}
+		
 	}
 
 }

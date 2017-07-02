@@ -28,6 +28,7 @@ public final class RegisteringHandler {
 		CommonProxy proxy = MinaMod.getProxy();
 		proxy.registerStateMappings();
 		proxy.registerVariantNames();
+		proxy.registerCustomMeshDefinitions();
 		proxy.registerFluidModels();
 	}
 	

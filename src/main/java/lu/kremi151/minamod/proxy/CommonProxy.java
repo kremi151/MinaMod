@@ -29,6 +29,7 @@ public class CommonProxy implements MinaModAPI{
 	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
 	public void registerStateMappings() {}
+	public void registerCustomMeshDefinitions() {}
 	public void registerKeyBindings(){}
 	public void registerOverlays() {}
 	public void registerVariantNames() {}

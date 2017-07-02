@@ -9,6 +9,7 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,6 +35,19 @@ public class ItemHerbGuide extends Item{
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
 	{
 		tooltip.add(I18n.translateToLocalFormatted("item.herb_guide.lore", MathHelper.floor(percentageCompleted(stack) * 100.0f)));
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public EnumRarity getRarity(ItemStack stack)
+    {
+		if(percentageCompleted(stack) >= 1.0f) {
+			return EnumRarity.EPIC;
+		}else if(percentageSeen(stack) >= 1.0f) {
+			return EnumRarity.RARE;
+		}else {
+			return EnumRarity.COMMON;
+		}
     }
 	
 	public static float percentageSeen(ItemStack stack){

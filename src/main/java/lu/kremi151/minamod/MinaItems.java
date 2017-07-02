@@ -50,6 +50,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeedFood;
@@ -287,7 +288,7 @@ public class MinaItems {
 		proxy.registerItem(COIN_BAG, "coin_bag");
 		proxy.registerItem(AMULET, "amulet", AmuletRegistry.getVariantNames());
 		proxy.registerItem(BATTERY, "battery");
-		proxy.registerItem(HERB_GUIDE, "herb_guide");
+		GameRegistry.register(HERB_GUIDE.setRegistryName(MinaMod.MODID, "herb_guide"));
 
 		init = true;
 	}
