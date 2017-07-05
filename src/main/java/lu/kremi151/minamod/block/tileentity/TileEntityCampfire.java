@@ -15,6 +15,7 @@ public class TileEntityCampfire extends TileEntity implements ITickable{
 
 	private final Set<CookingItem> cooking = new HashSet<>();
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public boolean trackItem(EntityItem item){
 		if(!cooking.contains(item)){
 			ItemStack res = CookingRecipes.instance().fetch(item.getEntityItem());
