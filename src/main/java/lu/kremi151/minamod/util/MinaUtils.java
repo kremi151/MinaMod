@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
@@ -414,6 +415,17 @@ public class MinaUtils {
 			return lvl / 2;
 		}
 		return 0;
+	}
+	
+	public static NBTTagCompound convertUUIDToNBT(UUID uuid) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setLong("most", uuid.getMostSignificantBits());
+		nbt.setLong("least", uuid.getLeastSignificantBits());
+		return nbt;
+	}
+	
+	public static UUID convertNBTToUUID(NBTTagCompound nbt) {
+		return new UUID(nbt.getLong("most"), nbt.getLong("least"));
 	}
 
 }

@@ -20,16 +20,11 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemKey extends Item{
-	
-	@Deprecated private static final String _UUID = "uuid";
-	@Deprecated private static final String _COLOR = "tint";
-	@Deprecated private static final String _DUPLICATE = "duplicate";
-	@Deprecated private static final String _NOT_RAW = "encoded";
-	@Deprecated private static final String ROOT_TAG = "keyProps";
 
 	public ItemKey(){
 		this.setCreativeTab(CreativeTabs.MATERIALS);
@@ -87,31 +82,7 @@ public class ItemKey extends Item{
 	public static MinaKeyCapability getData(ItemStack is){
 		if(is == null)throw new NullPointerException();
 		if(is.isEmpty() || !(is.getItem() instanceof ItemKey))throw new IllegalArgumentException("The supplied item stack is empty or not a key");
-		NBTTagCompound root = is.getSubCompound(ROOT_TAG);
-		MinaKeyCapability cap = getMinaKey(is);
-		if(root != null){
-			if(root.hasKey(_UUID, 8)){
-				cap.registerUnlockable(UUID.fromString(root.getString(_UUID)));
-			}
-			if(root.hasKey(_DUPLICATE, 99)){
-				boolean v = root.getBoolean(_DUPLICATE);
-				if(v){
-					cap.setState(State.DUPLICATE);
-				}
-			}else if(root.hasKey(_NOT_RAW, 99)){
-				boolean v = root.getBoolean(_NOT_RAW);
-				if(v){
-					cap.setState(State.NORMAL);
-				}else{
-					cap.setState(State.RAW);
-				}
-			}
-			if(root.hasKey(_COLOR, 99)){
-				cap.setTint(root.getInteger(_COLOR));
-			}
-			is.removeSubCompound(ROOT_TAG);
-		}
-		return cap;
+		return getMinaKey(is);
 	}
 	
 	private static MinaKeyCapability getMinaKey(ItemStack stack){
@@ -130,7 +101,7 @@ public class ItemKey extends Item{
         return new KeyCapabilityProvider(stack);
     }
 	
-	private static class KeyCapabilityProvider implements ICapabilityProvider{
+	private static class KeyCapabilityProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 		
 		private final MinaKeyCapability cap;
 		
@@ -147,47 +118,75 @@ public class ItemKey extends Item{
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 			return (T) ((capability == IKey.CAPABILITY_KEY)?cap:null);
 		}
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			NBTTagCompound nbt = new NBTTagCompound();
+			
+			NBTTagList uuids_nbt = new NBTTagList();
+			for(UUID uuid : cap.getUnlockableUUIDs()) {
+				uuids_nbt.appendTag(MinaUtils.convertUUIDToNBT(uuid));
+			}
+			nbt.setTag("Unlockables", uuids_nbt);
+			nbt.setInteger("Tint", cap.tint);
+			nbt.setByte("State", (byte)cap.state.id);
+			
+			return nbt;
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+			cap.clearUnlockables();
+			
+			NBTTagList uuids_nbt = nbt.getTagList("Unlockables", 10);
+			for(int i = 0 ; i < uuids_nbt.tagCount() ; i++) {
+				cap.registerUnlockable(MinaUtils.convertNBTToUUID(uuids_nbt.getCompoundTagAt(i)));
+			}
+			if(nbt.hasKey("Tint", 99)) {
+				cap.tint = nbt.getInteger("Tint");
+			}else {
+				cap.tint = MinaUtils.COLOR_WHITE;
+			}
+			if(nbt.hasKey("State", 99)) {
+				cap.state = State.getById(nbt.getByte("State"));
+			}else {
+				cap.state = State.RAW;
+			}
+		}
 		
 	}
 	
 	public static class MinaKeyCapability extends CapabilityItemKey{
+		
+		private int tint = MinaUtils.COLOR_WHITE;
+		private State state = State.RAW;
 
 		private MinaKeyCapability(ItemStack stack) {
 			super(stack);
 		}
 		
 		public int getTint(){
-			NBTTagCompound nbt = nbt();
-			if(nbt.hasKey("Tint", 99)){
-				return nbt.getInteger("Tint");
-			}else{
-				return MinaUtils.COLOR_WHITE;
-			}
+			return tint;
 		}
 		
 		public void setTint(int tint){
-			nbt().setInteger("Tint", tint);
+			this.tint = tint;
 		}
 		
 		public State getState(){
-			NBTTagCompound nbt = nbt();
-			if(nbt.hasKey("State", 99)){
-				return State.getById(nbt.getByte("State"));
-			}else{
-				return State.RAW;
-			}
+			return state;
 		}
 		
 		public void setState(State state){
-			nbt().setByte("State", (byte)state.id);
+			this.state = state;
 		}
 		
 		public void apply(MinaKeyCapability src){
 			setTint(src.getTint());
 			setState(src.getState());
 			
-			NBTTagList uuids = src.getUUIDs().copy();
-			nbt().setTag("Ids", uuids);
+			clearUnlockables();
+			registerUnlockables(src.getUnlockableUUIDs());
 		}
 		
 	}
