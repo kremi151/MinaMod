@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block.tileentity;
 import java.util.UUID;
 
 import lu.kremi151.minamod.capabilities.IKey;
+import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -39,19 +40,19 @@ public class TileEntityLock extends TileEntity{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		if(nbt.hasKey("uuid")){
-			this.uuid = UUID.fromString(nbt.getString("uuid"));
+		if(nbt.hasKey("UUID", 10)){
+			this.uuid = MinaUtils.convertNBTToUUID(nbt.getCompoundTag("UUID"));
 		}
-		this.powered = nbt.getBoolean("powered");
+		this.powered = nbt.getBoolean("Powered");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
 		if(uuid != null){
-			nbt.setString("uuid", this.uuid.toString());
+			nbt.setTag("UUID", MinaUtils.convertUUIDToNBT(this.uuid));
 		}
-		nbt.setBoolean("powered", powered);
+		nbt.setBoolean("Powered", powered);
 		return nbt;
 	}
 	
