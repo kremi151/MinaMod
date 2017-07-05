@@ -123,16 +123,14 @@ public abstract class StatType {
 				val -> {
 					StatData sd = entity.getDataManager().get(key_stat);
 					int old = sd.getActual();
-					sd.setActual(val);
-					entity.getDataManager().set(key_stat, sd);
+					entity.getDataManager().set(key_stat, sd.toMutable().setActual(val).toImmutable());
 					return old;
 				}, 128, 64, maxValue, () -> Math.min(maxValue - entity.getDataManager().get(key_stat).getActual(), pointsPool.getAsInt()));
 		final Stat.Value val_training = new Stat.Value(() -> entity.getDataManager().get(key_stat).getTraining(), 
 				val -> {
 					StatData sd = entity.getDataManager().get(key_stat);
 					int old = sd.getTraining();
-					sd.setTraining(val);
-					entity.getDataManager().set(key_stat, sd);
+					entity.getDataManager().set(key_stat, sd.toMutable().setTraining(val).toImmutable());
 					return old;
 				}, 0, 0, maxValue, () -> maxValue - entity.getDataManager().get(key_stat).getTraining() - val_actual.get());
 		return builder.apply(val_actual, val_training);

@@ -20,9 +20,7 @@ public class StatDataSerializers {
 		@Override
         public StatData read(PacketBuffer buf) throws IOException
         {
-            StatData data = new StatData();
-            data.setActual(buf.readByte() & 0xFF);
-            data.setTraining((buf.readShort() & 0xFFFF) - 255);
+            StatData data = new StatData(buf.readByte() & 0xFF, (buf.readShort() & 0xFFFF) - 255);
             return data;
         }
 		
