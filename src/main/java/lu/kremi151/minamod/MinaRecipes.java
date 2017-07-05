@@ -190,6 +190,10 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.QUICKSAND, 1), Items.WATER_BUCKET, Blocks.SAND);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.DIMMABLE_LIGHT, 1), " Q ", "QLQ", " Q ", 'Q', Items.QUARTZ, 'L', Blocks.REDSTONE_LAMP);
+	
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.FLOUR, 1), Items.WHEAT);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHICKEN_NUGGETS, 1), Items.COOKED_CHICKEN, MinaItems.FLOUR);
 	}
 	
 	private static void initColoredRecipes(){
