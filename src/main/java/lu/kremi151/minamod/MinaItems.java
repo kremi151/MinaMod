@@ -6,7 +6,6 @@ import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockGiftBox;
-import lu.kremi151.minamod.block.BlockMinaLeaf;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.item.ItemAmulet;
@@ -50,7 +49,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeedFood;
@@ -58,6 +56,7 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemSoup;
 import net.minecraft.item.ItemSword;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class MinaItems {

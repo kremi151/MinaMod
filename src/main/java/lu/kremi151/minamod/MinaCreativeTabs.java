@@ -1,6 +1,5 @@
 package lu.kremi151.minamod;
 
-import lu.kremi151.minamod.util.FeatureList;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
