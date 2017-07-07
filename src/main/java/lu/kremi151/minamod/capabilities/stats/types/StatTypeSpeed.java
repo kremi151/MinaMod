@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import lu.kremi151.minamod.attribute.AttributeModifierStatSpeed;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
-import lu.kremi151.minamod.capabilities.stats.Stat;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 

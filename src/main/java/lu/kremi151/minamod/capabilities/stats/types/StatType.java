@@ -9,10 +9,10 @@ import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 import java.util.function.IntSupplier;
 
+import lu.kremi151.minamod.MinaDataSerializers;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
-import lu.kremi151.minamod.capabilities.stats.Stat;
-import lu.kremi151.minamod.capabilities.stats.datasync.StatData;
-import lu.kremi151.minamod.capabilities.stats.datasync.StatDataSerializers;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
+import lu.kremi151.minamod.capabilities.stats.util.StatData;
 import lu.kremi151.minamod.util.DualKeyMap;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.EntityLivingBase;
@@ -98,7 +98,7 @@ public abstract class StatType {
 	protected Stat createDefaultStat(EntityLivingBase entity, IntSupplier pointsPool, int maxValue, BiFunction<Stat.Value, Stat.Value, Stat> builder){
 		DataParameter<StatData> key_stat;
 		if(!STAT_PARAMETER_MAP.containsKey(this, entity.getClass())){
-			key_stat = entity.getDataManager().<StatData>createKey(entity.getClass(), StatDataSerializers.STAT_DATA);
+			key_stat = entity.getDataManager().<StatData>createKey(entity.getClass(), MinaDataSerializers.STAT_DATA);
 			STAT_PARAMETER_MAP.put(this, entity.getClass(), key_stat);
 		}else{
 			key_stat = STAT_PARAMETER_MAP.get(this, entity.getClass());

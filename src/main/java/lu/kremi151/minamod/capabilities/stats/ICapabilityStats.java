@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;

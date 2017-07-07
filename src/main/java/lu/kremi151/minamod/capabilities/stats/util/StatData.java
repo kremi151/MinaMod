@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.capabilities.stats.datasync;
+package lu.kremi151.minamod.capabilities.stats.util;
 
 import net.minecraft.util.math.MathHelper;
 

@@ -9,6 +9,7 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.capabilities.stats.types;
 
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
-import lu.kremi151.minamod.capabilities.stats.Stat;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
 import net.minecraft.entity.EntityLivingBase;
 
 public class StatTypeDataManager extends StatType{

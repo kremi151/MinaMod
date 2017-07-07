@@ -20,7 +20,6 @@ import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
-import lu.kremi151.minamod.capabilities.stats.datasync.StatDataSerializers;
 import lu.kremi151.minamod.commands.CommandMinaBase;
 import lu.kremi151.minamod.entity.EntityBee;
 import lu.kremi151.minamod.entity.EntityFish;
@@ -300,7 +299,7 @@ public class MinaMod {
 		proxy.registerRenderers();
 		WorldProviderOverworldHook.hookIn();
 		
-		DataSerializers.registerSerializer(StatDataSerializers.STAT_DATA);
+		MinaDataSerializers.register();
 	}
 
 	@EventHandler

@@ -3,8 +3,8 @@ package lu.kremi151.minamod.item;
 import java.util.List;
 
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
-import lu.kremi151.minamod.capabilities.stats.Stat;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.capabilities.stats.util.Stat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;

@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.capabilities.stats;
+package lu.kremi151.minamod.capabilities.stats.util;
 
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
