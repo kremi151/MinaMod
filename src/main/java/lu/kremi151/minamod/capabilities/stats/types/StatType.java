@@ -103,34 +103,19 @@ public abstract class StatType {
 		}else{
 			key_stat = STAT_PARAMETER_MAP.get(this, entity.getClass());
 		}
-		//try{
-			entity.getDataManager().register(key_stat, new StatData(128, 0));
-		/*	System.out.println("Actual registration succeeded");
-		}catch(IllegalArgumentException e){
-			if(!e.getMessage().startsWith("Duplicate")){
-				throw e;
-			}
-		}
-		try{
-			entity.getDataManager().register(key_training, 0);
-			System.out.println("Training registration succeeded");
-		}catch(IllegalArgumentException e){
-			if(!e.getMessage().startsWith("Duplicate")){
-				throw e;
-			}
-		}*/
+		entity.getDataManager().register(key_stat, new StatData(128, 0));
 		final Stat.Value val_actual = new Stat.Value(() -> entity.getDataManager().get(key_stat).getActual(), 
 				val -> {
 					StatData sd = entity.getDataManager().get(key_stat);
 					int old = sd.getActual();
-					entity.getDataManager().set(key_stat, sd.toMutable().setActual(val).toImmutable());
+					entity.getDataManager().set(key_stat, sd.withActual(val));
 					return old;
 				}, 128, 64, maxValue, () -> Math.min(maxValue - entity.getDataManager().get(key_stat).getActual(), pointsPool.getAsInt()));
 		final Stat.Value val_training = new Stat.Value(() -> entity.getDataManager().get(key_stat).getTraining(), 
 				val -> {
 					StatData sd = entity.getDataManager().get(key_stat);
 					int old = sd.getTraining();
-					entity.getDataManager().set(key_stat, sd.toMutable().setTraining(val).toImmutable());
+					entity.getDataManager().set(key_stat, sd.withTraining(val));
 					return old;
 				}, 0, 0, maxValue, () -> maxValue - entity.getDataManager().get(key_stat).getTraining() - val_actual.get());
 		return builder.apply(val_actual, val_training);

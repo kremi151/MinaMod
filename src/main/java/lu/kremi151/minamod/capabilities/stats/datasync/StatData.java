@@ -23,8 +23,12 @@ public class StatData {
 		return training;
 	}
 	
-	public MutableStatData toMutable() {
-		return new MutableStatData(actual, training);
+	public StatData withActual(int actual) {
+		return new StatData(actual, this.training);
+	}
+	
+	public StatData withTraining(int training) {
+		return new StatData(this.actual, training);
 	}
 	
 	@Override
