@@ -60,8 +60,8 @@ public class RecipeCopyKey implements IRecipe{
 			return ItemStack.EMPTY;
 		}
 		ItemStack res = raw_key.copy();
-		ItemKey.MinaKeyCapability capRes = ItemKey.getData(res);
-		ItemKey.MinaKeyCapability capSrc = ItemKey.getData(key);
+		ItemKey.KeyData capRes = ItemKey.getData(res);
+		ItemKey.KeyData capSrc = ItemKey.getData(key);
 		
 		capRes.apply(capSrc);
 		capRes.setState(State.DUPLICATE);

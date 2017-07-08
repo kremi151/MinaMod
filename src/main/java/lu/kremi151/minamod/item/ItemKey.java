@@ -79,14 +79,10 @@ public class ItemKey extends Item{
 		getData(is).setState(s);
 	}
 	
-	public static MinaKeyCapability getData(ItemStack is){
+	public static KeyData getData(ItemStack is){
 		if(is == null)throw new NullPointerException();
 		if(is.isEmpty() || !(is.getItem() instanceof ItemKey))throw new IllegalArgumentException("The supplied item stack is empty or not a key");
-		return getMinaKey(is);
-	}
-	
-	private static MinaKeyCapability getMinaKey(ItemStack stack){
-		return (MinaKeyCapability) stack.getCapability(IKey.CAPABILITY_KEY, null);
+		return new KeyData(is);
 	}
 	
 	public static ItemStack rawKey(){
@@ -101,12 +97,63 @@ public class ItemKey extends Item{
         return new KeyCapabilityProvider(stack);
     }
 	
+	public static class KeyData{
+		private static final String SHARED_ROOT = "KeySharedValues";
+		
+		private final CapabilityItemKey cap;
+		private final ItemStack stack;
+		
+		private KeyData(ItemStack stack) {
+			this.cap = (CapabilityItemKey) stack.getCapability(IKey.CAPABILITY_KEY, null);
+			this.stack = stack;
+		}
+		
+		public int getTint() {
+			NBTTagCompound nbt = stack.getSubCompound(SHARED_ROOT);
+			if(nbt != null && nbt.hasKey("Tint", 99)) {
+				return nbt.getInteger("Tint");
+			}else {
+				return MinaUtils.COLOR_WHITE;
+			}
+		}
+		
+		public void setTint(int color) {
+			NBTTagCompound nbt = stack.getOrCreateSubCompound(SHARED_ROOT);
+			nbt.setInteger("Tint", color);
+		}
+		
+		public State getState() {
+			NBTTagCompound nbt = stack.getSubCompound(SHARED_ROOT);
+			if(nbt != null && nbt.hasKey("State", 99)) {
+				return State.getById(nbt.getByte("State"));
+			}else {
+				return State.RAW;
+			}
+		}
+		
+		public void setState(State state) {
+			NBTTagCompound nbt = stack.getOrCreateSubCompound(SHARED_ROOT);
+			nbt.setByte("State", (byte)state.id);
+		}
+		
+		public void apply(KeyData old) {
+			setTint(old.getTint());
+			setState(old.getState());
+			cap.clearUnlockables();
+			cap.registerUnlockables(old.cap.getUnlockableUUIDs());
+		}
+		
+		public CapabilityItemKey getKey() {
+			return cap;
+		}
+	}
+	
 	private static class KeyCapabilityProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 		
-		private final MinaKeyCapability cap;
+		private final CapabilityItemKey cap;
 		
 		private KeyCapabilityProvider(ItemStack stack){
-			this.cap = new MinaKeyCapability(stack);
+			this.cap = new CapabilityItemKey(stack);
 		}
 
 		@Override
@@ -128,8 +175,6 @@ public class ItemKey extends Item{
 				uuids_nbt.appendTag(MinaUtils.convertUUIDToNBT(uuid));
 			}
 			nbt.setTag("Unlockables", uuids_nbt);
-			nbt.setInteger("Tint", cap.tint);
-			nbt.setByte("State", (byte)cap.state.id);
 			
 			return nbt;
 		}
@@ -142,51 +187,6 @@ public class ItemKey extends Item{
 			for(int i = 0 ; i < uuids_nbt.tagCount() ; i++) {
 				cap.registerUnlockable(MinaUtils.convertNBTToUUID(uuids_nbt.getCompoundTagAt(i)));
 			}
-			if(nbt.hasKey("Tint", 99)) {
-				cap.tint = nbt.getInteger("Tint");
-			}else {
-				cap.tint = MinaUtils.COLOR_WHITE;
-			}
-			if(nbt.hasKey("State", 99)) {
-				cap.state = State.getById(nbt.getByte("State"));
-			}else {
-				cap.state = State.RAW;
-			}
-		}
-		
-	}
-	
-	public static class MinaKeyCapability extends CapabilityItemKey{
-		
-		private int tint = MinaUtils.COLOR_WHITE;
-		private State state = State.RAW;
-
-		private MinaKeyCapability(ItemStack stack) {
-			super(stack);
-		}
-		
-		public int getTint(){
-			return tint;
-		}
-		
-		public void setTint(int tint){
-			this.tint = tint;
-		}
-		
-		public State getState(){
-			return state;
-		}
-		
-		public void setState(State state){
-			this.state = state;
-		}
-		
-		public void apply(MinaKeyCapability src){
-			setTint(src.getTint());
-			setState(src.getState());
-			
-			clearUnlockables();
-			registerUnlockables(src.getUnlockableUUIDs());
 		}
 		
 	}

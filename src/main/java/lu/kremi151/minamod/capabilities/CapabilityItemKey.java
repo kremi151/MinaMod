@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 
 public class CapabilityItemKey implements IKey{
 	
-	private final ItemStack stack;
+	protected final ItemStack stack;
 	private final LinkedList<UUID> uuids = new LinkedList<>();
 	
 	public CapabilityItemKey(ItemStack stack){

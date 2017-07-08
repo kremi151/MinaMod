@@ -75,9 +75,9 @@ public class RecipeColoredKey extends RecipeBase{
 //			nbt.setString(ItemCard._UUID, UUID.randomUUID().toString());
 //		}
 //		res.setTagCompound(nbt);
-		ItemKey.MinaKeyCapability cap = ItemKey.getData(res);
-		cap.apply(ItemKey.getData(old_key));
-		cap.setTint(MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
+		ItemKey.KeyData data = ItemKey.getData(res);
+		data.apply(ItemKey.getData(old_key));
+		data.setTint(MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
 		
 		return res;
 	}

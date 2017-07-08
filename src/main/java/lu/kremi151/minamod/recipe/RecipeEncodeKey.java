@@ -45,9 +45,9 @@ public class RecipeEncodeKey extends RecipeBase{
 			}
 		}
 		if(res.isEmpty())return res;
-		ItemKey.MinaKeyCapability cap = ItemKey.getData(res);
-		cap.registerUnlockable(UUID.randomUUID());
-		cap.setState(State.NORMAL);
+		ItemKey.KeyData data = ItemKey.getData(res);
+		data.getKey().registerUnlockable(UUID.randomUUID());
+		data.setState(State.NORMAL);
 		return res;
 	}
 
