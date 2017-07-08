@@ -31,7 +31,7 @@ public class ItemPowder extends Item implements IMixtureIngredient{
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
     {
-        return "item.powder." + EnumHerb.getByHerbId((byte)stack.getMetadata()).getName();
+        return "item.powder." + EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.GRAY).getName();
     }
 	
 	@Override
@@ -47,11 +47,11 @@ public class ItemPowder extends Item implements IMixtureIngredient{
 	@Override
 	public int getIngredientColor(ItemStack stack) {
 		if(stack.getMetadata() < 0 || stack.getMetadata() >= EnumHerb.values().length)return MinaUtils.COLOR_WHITE;
-		return EnumHerb.getByHerbId((byte)stack.getMetadata()).getTint();
+		return EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.WHITE).getTint();
 	}
 
 	@Override
 	public void getMixtureProperties(ItemStack stack, List<IMixtureApplicator> list) {
-		list.add(EnumHerb.getByHerbId((byte)stack.getMetadata()));
+		list.add(EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.GRAY));
 	}
 }

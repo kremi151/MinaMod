@@ -1,11 +1,13 @@
 package lu.kremi151.minamod.enums;
 
+import java.util.Optional;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
+import lu.kremi151.minamod.exceptions.InvalidIdException;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.util.IStringSerializable;
@@ -112,11 +114,30 @@ public enum EnumHerb implements IMixtureApplicator, IStringSerializable{
 		}
 	}
 	
-	public static EnumHerb getByHerbId(byte herb_id){
+	public static EnumHerb getByHerbId(byte herb_id) throws InvalidIdException{
 		if(herb_id < 0 || herb_id >= values().length){
-			throw new IndexOutOfBoundsException("Invalid id: " + herb_id);
+			throw new InvalidIdException("Invalid herb id: " + herb_id);
 		}
 		return ID_ARRAY[herb_id];
+	}
+	
+	public static EnumHerb getByHerbId(byte herb_id, EnumHerb def){
+		if(herb_id < 0 || herb_id >= values().length){
+			return def;
+		}
+		return ID_ARRAY[herb_id];
+	}
+	
+	public static Optional<EnumHerb> getByHerbIdSafely(byte herb_id){
+		try {
+			return Optional.of(getByHerbId(herb_id));
+		} catch (InvalidIdException e) {
+			return Optional.empty();
+		}
+	}
+	
+	public static boolean isValidId(byte id) {
+		return id >= 0 && id < values().length;
 	}
 	
 	@Nullable
@@ -141,7 +162,11 @@ public enum EnumHerb implements IMixtureApplicator, IStringSerializable{
 			int d = MathHelper.clamp(b2?h2.getStatEffect(StatTypes.DEFENSE):h1.getStatEffect(StatTypes.DEFENSE), -1, 1) + 1;
 			int s = MathHelper.clamp(b3?h2.getStatEffect(StatTypes.SPEED):h1.getStatEffect(StatTypes.SPEED), -1, 1) + 1;
 			int id = (s * 9) + (d * 3) + a;
-			return EnumHerb.getByHerbId((byte)id);
+			try {
+				return EnumHerb.getByHerbId((byte)id);
+			} catch (InvalidIdException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return null;

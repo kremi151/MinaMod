@@ -144,10 +144,10 @@ public class GuiHerbBook extends GuiNoInventory{
 		
 		if(page_index < 0)page_index = 0;
 		if(page_index < 27){
-			boolean seen = ItemHerbGuide.hasSeen(stack, EnumHerb.getByHerbId((byte)page_index));
+			boolean seen = EnumHerb.isValidId((byte)page_index) ? ItemHerbGuide.hasSeen(stack, EnumHerb.getByHerbId((byte)page_index, EnumHerb.GRAY)) : false;
 			ItemStack icon;
 			String title;
-			final EnumHerb herb = EnumHerb.getByHerbId((byte)page_index);
+			final EnumHerb herb = EnumHerb.getByHerbId((byte)page_index, EnumHerb.GRAY);
 			if(seen){
 				icon = new ItemStack(MinaItems.HERB, 1, page_index);
 				title = icon.getDisplayName();
@@ -186,7 +186,7 @@ public class GuiHerbBook extends GuiNoInventory{
 				}
 			}else{
 				try{
-					EnumHerb sherb = EnumHerb.getByHerbId((byte)(27 + (extra_idx - INTERMEDIATE_PAGES)));
+					EnumHerb sherb = EnumHerb.getByHerbId((byte)(27 + (extra_idx - INTERMEDIATE_PAGES)), EnumHerb.GRAY);
 					ItemStack icon = new ItemStack(MinaItems.HERB, 1, sherb.getHerbId());
 					this.itemRender.renderItemIntoGUI(icon, 24, 24);
 					this.fontRenderer.drawSplitString(icon.getDisplayName(), 45, 27, 88, COLOR_GOLD);

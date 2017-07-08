@@ -22,7 +22,7 @@ public class ItemColorHandler implements IItemColor{
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
 		if(stack.getItem() == MinaItems.HERB || stack.getItem() == MinaItems.POWDER){
-			return EnumHerb.getByHerbId((byte)stack.getMetadata()).getTint();
+			return EnumHerb.isValidId((byte)stack.getMetadata()) ? EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.WHITE).getTint() : MinaUtils.COLOR_WHITE;
 		}else if(stack.getItem() == MinaItems.MIXTURE && tintIndex == 1){
 			NBTTagCompound nbt = stack.getOrCreateSubCompound("mixture");
         	if(nbt.hasKey("color", 3)){

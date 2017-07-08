@@ -114,8 +114,9 @@ public class ItemHerbGuide extends Item{
     			ItemStack inv_stack = playerIn.inventory.getStackInSlot(i);
     			if(!inv_stack.isEmpty()){
     				if(inv_stack.getItem() == MinaItems.HERB){
-    					EnumHerb herb = EnumHerb.getByHerbId((byte)inv_stack.getMetadata());
-    					seen |= (1L << inv_stack.getMetadata());
+    					if(EnumHerb.getByHerbIdSafely((byte)inv_stack.getMetadata()).isPresent()) {
+        					seen |= (1L << inv_stack.getMetadata());
+    					}
     				}else if(inv_stack.getItem() == MinaItems.MIXTURE){
     					nbt.setBoolean("Stats", true);
     				}

@@ -183,8 +183,8 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 2), "WW", "SS", 'W', new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata() % 4), 'S', Items.STICK);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 3), "WW", "SS", 'W', new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.getMetadata() % 4), 'S', Items.STICK);
 
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.HERB_GUIDE, 1), "HBH", 'B', Items.WRITABLE_BOOK, 'H', new ItemStack(MinaItems.HERB, 1, OreDictionary.WILDCARD_VALUE));
-	
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.HERB_GUIDE, 1), Items.WRITABLE_BOOK, new ItemStack(MinaItems.HERB, 1, OreDictionary.WILDCARD_VALUE));
+		
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.QUICKSAND, 1), Items.WATER_BUCKET, Blocks.SAND);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.DIMMABLE_LIGHT, 1), " Q ", "QLQ", " Q ", 'Q', Items.QUARTZ, 'L', Blocks.REDSTONE_LAMP);
@@ -312,9 +312,6 @@ public class MinaRecipes {
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":gift_box_adding", RecipeAddToGiftBox.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
-
-//		RecipeSorter.register(MinaMod.MODID + ":herb_guidexxx", TMPRecipeHerbGuide.class, RecipeSorter.Category.SHAPELESS,
-//				"after:minecraft:shapeless");//TODO: Fix & remove
 		
 		RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
 				"after:minecraft:shaped before:minecraft:shapeless");

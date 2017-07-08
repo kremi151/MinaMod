@@ -1,9 +1,12 @@
 package lu.kremi151.minamod.block.tileentity;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.enums.EnumHerb;
+import lu.kremi151.minamod.exceptions.InvalidIdException;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -30,11 +33,21 @@ public class TileEntityHerbCrop extends TileEntity{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		type = EnumHerb.getByHerbId(nbt.getByte("Type"));
+		tryDeserializeHerb(nbt.getByte("Type"), herb -> this.type = herb);
 		mutability = nbt.getFloat("Mutability");
 		
 		if(nbt.hasKey("Mutation", 99)){
-			mutation = EnumHerb.getByHerbId(nbt.getByte("Mutation"));
+			tryDeserializeHerb(nbt.getByte("Mutation"), herb -> this.mutation = herb);
+		}
+	}
+	
+	private void tryDeserializeHerb(byte id, Consumer<EnumHerb> consumer) {
+		try {
+			EnumHerb herb = EnumHerb.getByHerbId(id);
+			consumer.accept(herb);
+		} catch (InvalidIdException e) {
+			System.err.println("Could not deserialize herb id " + id);
+			e.printStackTrace();
 		}
 	}
 

@@ -19,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemHerb extends Item implements net.minecraftforge.common.IPlantable{
 
@@ -31,13 +32,13 @@ public class ItemHerb extends Item implements net.minecraftforge.common.IPlantab
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
     {
-        return "item.herb." + EnumHerb.getByHerbId((byte)stack.getMetadata()).getName();
+        return "item.herb." + EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.GRAY).getName();
     }
 	
 	@Override
 	public int getMetadata(ItemStack stack)
     {
-        return MathHelper.clamp(stack.getItemDamage(), 0, EnumHerb.values().length - 1);
+        return stack.getItemDamage() != OreDictionary.WILDCARD_VALUE ? MathHelper.clamp(stack.getItemDamage(), 0, EnumHerb.values().length - 1) : OreDictionary.WILDCARD_VALUE;
     }
 	
 	@Override
@@ -95,7 +96,7 @@ public class ItemHerb extends Item implements net.minecraftforge.common.IPlantab
     		nbt.setFloat("Mutability", eh.getDefaultMutability());
     		return eh.getDefaultMutability();
     	}*/
-    	return EnumHerb.getByHerbId((byte)stack.getMetadata()).getDefaultMutability();//TODO
+    	return EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.GRAY).getDefaultMutability();//TODO
     }
     
     public void setMutability(ItemStack stack, float v){
@@ -104,7 +105,7 @@ public class ItemHerb extends Item implements net.minecraftforge.common.IPlantab
     }
     
     public EnumHerb getType(ItemStack stack){
-    	return EnumHerb.getByHerbId((byte)stack.getMetadata());
+    	return EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.GRAY);
     }
     
 
