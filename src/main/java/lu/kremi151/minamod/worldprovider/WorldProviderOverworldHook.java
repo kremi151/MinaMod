@@ -20,7 +20,7 @@ public class WorldProviderOverworldHook extends WorldProviderSurface{
     {
 		Vec3d color = super.getSkyColor(cameraEntity, partialTicks);
 		if(world.getDifficulty() != EnumDifficulty.PEACEFUL && getBloodMoonPhase(world.getWorldTime()) == 0){
-			color = new Vec3d((color.xCoord + 0.75) / 2.0, (color.yCoord + 0.3) / 2.0, (color.zCoord + 0.3) / 2.0);
+			color = new Vec3d((color.x + 0.75) / 2.0, (color.y + 0.3) / 2.0, (color.z + 0.3) / 2.0);
 		}
         return color;
     }

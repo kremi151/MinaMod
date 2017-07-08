@@ -64,7 +64,7 @@ public class BlockPlate extends BlockCustomHorizontal{
 		TileEntityPlate te = (TileEntityPlate) worldIn.getTileEntity(pos);
 		if(!te.getItem().isEmpty()){
 			EntityItem e = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ());
-			e.setEntityItemStack(te.getItem());
+			e.setItem(te.getItem());
 			worldIn.spawnEntity(e);
 		}
 		super.breakBlock(worldIn, pos, state);

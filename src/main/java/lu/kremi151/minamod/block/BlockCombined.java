@@ -56,7 +56,7 @@ public class BlockCombined extends BlockCustom
      * Checks if an IBlockState represents a block that is opaque and a full cube.
      */
     @Override
-    public boolean isFullyOpaque(IBlockState state)
+    public boolean isTopSolid(IBlockState state)
     {
     	EnumBlockMode type = state.getValue(TYPE);
         return type.isFull() || type == EnumBlockMode.TOP;

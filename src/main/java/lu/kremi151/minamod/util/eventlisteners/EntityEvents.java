@@ -125,9 +125,9 @@ public class EntityEvents {
 	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event){ // NO_UCD (unused code)
-		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
+		if(event.getSource().getTrueSource() instanceof EntityPlayer){
 			EntityLivingBase killed = event.getEntityLiving();
-			EntityPlayer killer = (EntityPlayer) event.getSource().getSourceOfDamage();
+			EntityPlayer killer = (EntityPlayer) event.getSource().getTrueSource();
 			if(!killer.inventory.getCurrentItem().isEmpty()){
 				Map<Enchantment, Integer> ench = EnchantmentHelper.getEnchantments(killer.inventory.getCurrentItem());
 				if(ench.containsKey(MinaEnchantments.BEHEADER)){
@@ -154,7 +154,7 @@ public class EntityEvents {
 							is.setTagCompound(nbt);
 						}
 						EntityItem ei = new EntityItem(event.getEntityLiving().world);
-						ei.setEntityItemStack(is);
+						ei.setItem(is);
 						ei.setPosition(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
 						event.getEntityLiving().world.spawnEntity(ei);
 					}
@@ -169,7 +169,7 @@ public class EntityEvents {
 			if(event.getEntityLiving().getRNG().nextInt(18) == 0){
 				ItemStack is = new ItemStack(MinaItems.BAMBUS, 1);
 				EntityItem ei = new EntityItem(event.getEntityLiving().world);
-				ei.setEntityItemStack(is);
+				ei.setItem(is);
 				ei.setPosition(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
 				event.getEntityLiving().world.spawnEntity(ei);
 			}
@@ -235,7 +235,7 @@ public class EntityEvents {
 			}
 		}
 		
-		Entity sourceEntity = event.getSource().getEntity();
+		Entity sourceEntity = event.getSource().getTrueSource();
 		if(sourceEntity != null && sourceEntity.hasCapability(ICapabilityStats.CAPABILITY, null)){
 			ICapabilityStats pstats = sourceEntity.getCapability(ICapabilityStats.CAPABILITY, null);
 			if(pstats.supports(StatTypes.ATTACK)){
@@ -244,8 +244,8 @@ public class EntityEvents {
 			}
 		}
 		
-		if(event.getSource().getSourceOfDamage() instanceof EntityPlayer){
-			EntityPlayer player = (EntityPlayer) event.getSource().getSourceOfDamage();
+		if(event.getSource().getTrueSource() instanceof EntityPlayer){
+			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 			if(!player.inventory.getCurrentItem().isEmpty()){
 				ItemStack ci = player.inventory.getCurrentItem();
 				Map<Enchantment, Integer> ench = EnchantmentHelper.getEnchantments(ci);

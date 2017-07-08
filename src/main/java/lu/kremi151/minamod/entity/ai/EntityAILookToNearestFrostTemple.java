@@ -57,7 +57,7 @@ public class EntityAILookToNearestFrostTemple extends EntityAIBase{
     }
 	
 	@Override
-    public boolean continueExecuting(){
+    public boolean shouldContinueExecuting(){
 		return this.lookTime > 0 && lp != null;
 	}
 

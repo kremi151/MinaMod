@@ -63,23 +63,23 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 		addButton(btnDPlus);
 		addButton(btnDMinus);
 
-		btnWPlus.xPosition = guiLeft + 101;
-		btnWPlus.yPosition = guiTop + 41;
+		btnWPlus.x = guiLeft + 101;
+		btnWPlus.y = guiTop + 41;
 		btnWPlus.width = 30;
 		btnWPlus.height = 18;
 
-		btnWMinus.xPosition = guiLeft + 133;
-		btnWMinus.yPosition = guiTop + 41;
+		btnWMinus.x = guiLeft + 133;
+		btnWMinus.y = guiTop + 41;
 		btnWMinus.width = 30;
 		btnWMinus.height = 18;
 
-		btnDPlus.xPosition = guiLeft + 101;
-		btnDPlus.yPosition = guiTop + 61;
+		btnDPlus.x = guiLeft + 101;
+		btnDPlus.y = guiTop + 61;
 		btnDPlus.width = 30;
 		btnDPlus.height = 18;
 
-		btnDMinus.xPosition = guiLeft + 133;
-		btnDMinus.yPosition = guiTop + 61;
+		btnDMinus.x = guiLeft + 133;
+		btnDMinus.y = guiTop + 61;
 		btnDMinus.width = 30;
 		btnDMinus.height = 18;
 	}

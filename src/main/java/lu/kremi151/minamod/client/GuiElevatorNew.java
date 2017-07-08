@@ -48,20 +48,20 @@ public class GuiElevatorNew extends GuiNoInventory{
 		final int btn_x = guiLeft + 14;
 		final int btn_y = guiTop + 69;
 		
-		btnPreviousFloors.xPosition = guiLeft + 62;
-		btnPreviousFloors.yPosition = guiTop + 45;
+		btnPreviousFloors.x = guiLeft + 62;
+		btnPreviousFloors.y = guiTop + 45;
 		
 		for(int i = 0 ; i < floorButtons.length ; i++){
 			GuiButton btn = floorButtons[i];
 			final int j = i % 3;
 			final int k = i / 3;
 			
-			btn.xPosition = btn_x + (j * BTN_WIDTH);
-			btn.yPosition = btn_y + (k * BTN_HEIGHT);
+			btn.x = btn_x + (j * BTN_WIDTH);
+			btn.y = btn_y + (k * BTN_HEIGHT);
 		}
 		
-		btnNextFloors.xPosition = guiLeft + 62;
-		btnNextFloors.yPosition = guiTop + 173;
+		btnNextFloors.x = guiLeft + 62;
+		btnNextFloors.y = guiTop + 173;
 		
 		refreshFloorButtons();
 	}

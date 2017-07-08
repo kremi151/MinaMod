@@ -290,7 +290,7 @@ public class EntityFish extends EntityAnimal {
 		}
 
 		@Override
-		public boolean continueExecuting() {
+		public boolean shouldContinueExecuting() {
 			// return fish.randomMotionVecY <= 0.0 ||
 			// fish.world.getBlockState(fish.getPosition().up()).getBlock() ==
 			// Blocks.WATER;

@@ -41,7 +41,7 @@ public class WorldGenSurfaceTree implements IWorldGenerator{
 			int y = MinaUtils.getHeightValue(world, x, z);
 			BlockPos pos = new BlockPos(x,y,z);
 			Biome biome = world.getBiomeForCoordsBody(new BlockPos(x,y,z));
-			BiomeDecorator decor = biome.theBiomeDecorator;
+			BiomeDecorator decor = biome.decorator;
 	    	boolean doGen = TerrainGen.decorate(world, random, pos, Decorate.EventType.TREE);
 			if(doGen && decor.treesPerChunk > 0){
 				int rn = random.nextInt(trees.size());

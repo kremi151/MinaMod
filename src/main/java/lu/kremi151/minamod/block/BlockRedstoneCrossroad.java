@@ -96,7 +96,7 @@ public class BlockRedstoneCrossroad extends Block{
 	
 	public boolean canBlockStay(World worldIn, BlockPos pos)
     {
-        return worldIn.getBlockState(pos.down()).isFullyOpaque();
+        return worldIn.getBlockState(pos.down()).isSideSolid(worldIn, pos, EnumFacing.UP);
     }
 	
 	/**

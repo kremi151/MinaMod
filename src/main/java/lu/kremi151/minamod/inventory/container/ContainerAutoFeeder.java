@@ -82,9 +82,9 @@ public class ContainerAutoFeeder extends BaseContainer{
         	for (int i = 0; i < l; ++i)
             {
         		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
-                icrafting.sendProgressBarUpdate(this, PB_TICKS_LEFT, te.getTicksLeft());
-                icrafting.sendProgressBarUpdate(this, PB_MAX_TICKS, te.getMaxTicks());
-                icrafting.sendProgressBarUpdate(this, PB_ENERGY, te.getEnergy());
+                icrafting.sendWindowProperty(this, PB_TICKS_LEFT, te.getTicksLeft());
+                icrafting.sendWindowProperty(this, PB_MAX_TICKS, te.getMaxTicks());
+                icrafting.sendWindowProperty(this, PB_ENERGY, te.getEnergy());
             }
         }
         

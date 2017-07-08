@@ -37,7 +37,7 @@ public class EntityAISwimInWater extends EntityAIBase
     	if(!(this.entity.isInWater() || this.entity.isInLava()))return false;
         if (!this.mustUpdate)
         {
-            if (this.entity.getAge() >= 100)
+            if (this.entity.getIdleTime() >= 100)
             {
                 return false;
             }
@@ -56,9 +56,9 @@ public class EntityAISwimInWater extends EntityAIBase
         }
         else
         {
-            this.xPosition = vec3d.xCoord;
-            this.yPosition = vec3d.yCoord;
-            this.zPosition = vec3d.zCoord;
+            this.xPosition = vec3d.x;
+            this.yPosition = vec3d.y;
+            this.zPosition = vec3d.z;
             this.mustUpdate = false;
             return true;
         }
@@ -68,7 +68,7 @@ public class EntityAISwimInWater extends EntityAIBase
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
     {
         return !this.entity.getNavigator().noPath();
     }

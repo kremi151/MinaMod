@@ -92,8 +92,8 @@ public class MinaUtils {
 
 	public static int getHeightValue(World world, int x, int z) {
 		Chunk chunk = world.getChunkFromBlockCoords(new BlockPos(x, 0, z));
-		int xInChunk = x - (chunk.xPosition * 16);
-		int zInChunk = z - (chunk.zPosition * 16);
+		int xInChunk = x - (chunk.x * 16);
+		int zInChunk = z - (chunk.z * 16);
 		return chunk.getHeightValue(xInChunk, zInChunk);
 	}
 	

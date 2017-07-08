@@ -32,10 +32,10 @@ public class WorldGenHoneyTrees implements IWorldGenerator{
 			int y = MinaUtils.getHeightValue(world, x, z);
 			BlockPos pos = new BlockPos(x,y,z);
 			Biome biome = world.getBiomeForCoordsBody(pos);
-			BiomeDecorator decor = biome.theBiomeDecorator;
+			BiomeDecorator decor = biome.decorator;
 			boolean doGen = TerrainGen.decorate(world, random, pos, TREE);
 			if(!doGen || decor.treesPerChunk <= 0)return;
-			WorldGenAbstractTree treegen = biome.genBigTreeChance(random);//random treegen
+			WorldGenAbstractTree treegen = biome.getRandomTreeFeature(random);//random treegen
 			if(treegen == null)return;
 			treegen.setDecorationDefaults();
 			generateHoneyTree(world, new BlockPos(x, y, z), random, treegen);

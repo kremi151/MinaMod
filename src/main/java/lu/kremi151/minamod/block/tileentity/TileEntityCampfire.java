@@ -18,8 +18,8 @@ public class TileEntityCampfire extends TileEntity implements ITickable{
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean trackItem(EntityItem item){
 		if(!cooking.contains(item)){
-			ItemStack res = CookingRecipes.instance().fetch(item.getEntityItem());
-			int ticks = 200 * item.getEntityItem().getCount();
+			ItemStack res = CookingRecipes.instance().fetch(item.getItem());
+			int ticks = 200 * item.getItem().getCount();
 			return cooking.add(new CookingItem(item, res, ticks));
 		}else{
 			return false;
@@ -46,8 +46,8 @@ public class TileEntityCampfire extends TileEntity implements ITickable{
 					if(--citem.ticksLeft <= 0){
 						if(!citem.nextStage.isEmpty()){
 							ItemStack res = citem.nextStage.copy();
-							res.setCount(itemRef.getEntityItem().getCount());
-							itemRef.setEntityItemStack(res);
+							res.setCount(itemRef.getItem().getCount());
+							itemRef.setItem(res);
 							it.remove();
 						}else{
 							itemRef.setFire(5);

@@ -22,7 +22,7 @@ public class BiomeVeld extends Biome{
 	
 	public BiomeVeld() {
 		super(PROPERTIES);
-		this.theBiomeDecorator = new BiomeDecoratorVeld();
+		this.decorator = new BiomeDecoratorVeld();
 		this.color = MinaUtils.convertRGBToDecimal(125, 159, 32);
 	}
 	
@@ -50,8 +50,8 @@ public class BiomeVeld extends Biome{
     	protected void genDecorations(Biome biome, World world, Random random)
         {
     		Chunk chunk = world.getChunkFromBlockCoords(this.chunkPos);
-    		int chunk_X = chunk.xPosition;
-    		int chunk_Z = chunk.zPosition;
+    		int chunk_X = chunk.x;
+    		int chunk_Z = chunk.z;
             this.generateOres(world, random);
     		int a = random.nextInt(20);
     		for(int aa = 0 ; aa < a ; aa++){

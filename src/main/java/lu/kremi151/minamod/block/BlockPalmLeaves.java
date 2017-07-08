@@ -133,7 +133,7 @@ public class BlockPalmLeaves extends BlockMinaLeafBase{
     }
     
     @Override
-    public boolean isFullyOpaque(IBlockState state)
+    public boolean isTopSolid(IBlockState state)
     {
     	BlockCombined.EnumBlockMode type = state.getValue(TYPE);
         return type.isFull() || type == BlockCombined.EnumBlockMode.TOP;

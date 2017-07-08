@@ -42,11 +42,11 @@ public class TileEntityCollector extends TileEntitySidedInventory implements ITi
 				if(--ticksLeft <= 0){
 					List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class, rangeBox);
 					for(EntityItem item : items){
-						ItemStack res = tryInsert(item.getEntityItem());
+						ItemStack res = tryInsert(item.getItem());
 						if(res.isEmpty()){
 							item.setDead();
 						}else{
-							item.setEntityItemStack(res);
+							item.setItem(res);
 						}
 						MinaMod.getProxy().spawnParticleEffectToAllAround(EnumParticleEffect.COLLECT, world, item.posX, item.posY + 0.25, item.posZ, 0f, 0f, 0f);
 					}

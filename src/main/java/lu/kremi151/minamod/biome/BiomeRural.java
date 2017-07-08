@@ -43,10 +43,10 @@ public class BiomeRural extends Biome{
     }
 	
 	@Override
-    public WorldGenAbstractTree genBigTreeChance(Random rand){
+    public WorldGenAbstractTree getRandomTreeFeature(Random rand){
     	//return rand.nextInt(3) == 0 ? WorldGenCustomTree.treeGenPeppel : WorldGenCustomTree.treeGenChestnut;
 		//TODO: Trees
-		return super.genBigTreeChance(rand);
+		return super.getRandomTreeFeature(rand);
 	}
 
 	
@@ -75,8 +75,8 @@ public class BiomeRural extends Biome{
         {
     		super.genDecorations(biome, worldIn, random);
     		Chunk chunk = worldIn.getChunkFromBlockCoords(this.chunkPos);
-    		int chunk_X = chunk.xPosition;
-    		int chunk_Z = chunk.zPosition;
+    		int chunk_X = chunk.x;
+    		int chunk_Z = chunk.z;
     		int base_X = chunk_X * 16;
     		int base_Z = chunk_Z * 16;
             

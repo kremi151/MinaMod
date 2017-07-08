@@ -60,7 +60,7 @@ public class EntityAIHerbivore extends EntityAIBase{
 	}
 	
 	@Override
-    public boolean continueExecuting(){
+    public boolean shouldContinueExecuting(){
 		return target != null;
 	}
 

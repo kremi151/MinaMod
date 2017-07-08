@@ -103,8 +103,8 @@ public class ContainerCollector extends BaseContainer{
         	for (int i = 0; i < l; ++i)
             {
         		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
-                icrafting.sendProgressBarUpdate(this, 0, te.getTicksLeft());
-                icrafting.sendProgressBarUpdate(this, 1, te.getMaxTicks());
+                icrafting.sendWindowProperty(this, 0, te.getTicksLeft());
+                icrafting.sendWindowProperty(this, 1, te.getMaxTicks());
             }
         }
         

@@ -137,7 +137,7 @@ public class BlockCampfire extends Block{
 				if(!world.isRemote){
 					EntityItem ei = (EntityItem)e;
 					
-					if(!ei.getEntityItem().isEmpty()){
+					if(!ei.getItem().isEmpty()){
 						((TileEntityCampfire)world.getTileEntity(pos)).trackItem(ei);
 					}else{
 						e.setFire(5);

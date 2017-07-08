@@ -81,7 +81,7 @@ public class WookieVillage {
      */
     private boolean isAreaClearAround(BlockPos blockSize, BlockPos blockLocation)
     {
-        if (!this.world.getBlockState(blockLocation.down()).isFullyOpaque())
+        if (!this.world.getBlockState(blockLocation.down()).isTopSolid())
         {
             return false;
         }

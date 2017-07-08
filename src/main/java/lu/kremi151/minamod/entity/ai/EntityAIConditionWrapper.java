@@ -20,7 +20,7 @@ public class EntityAIConditionWrapper<T extends EntityAIBase> extends EntityAIBa
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
     {
         return condition.test(task) && task.shouldExecute();
     }

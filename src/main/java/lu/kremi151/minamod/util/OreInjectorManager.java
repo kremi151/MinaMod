@@ -52,7 +52,7 @@ public class OreInjectorManager {
 	public static void performOreInjection(World world, Chunk chunk, int chunkVersion){
 		for(Bundle w : injectors){
 			if(chunkVersion < w.versionCode){
-				w.injector.injectOre(rand, chunk.xPosition, chunk.zPosition, world, world.getChunkProvider());
+				w.injector.injectOre(rand, chunk.x, chunk.z, world, world.getChunkProvider());
 			}
 		}
 	}

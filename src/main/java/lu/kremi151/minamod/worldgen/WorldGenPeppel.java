@@ -17,7 +17,6 @@ public class WorldGenPeppel extends WorldGenBiomeTree{
 	
 	boolean strictCoords = false;
 	
-// TODO from UCDetector: Constructor "WorldGenPeppel.WorldGenPeppel(boolean,boolean)" has 0 references
 	public WorldGenPeppel(boolean notify, boolean strictCoords) { // NO_UCD (unused code)
 		super(notify);
 		this.strictCoords = strictCoords;
@@ -43,16 +42,10 @@ public class WorldGenPeppel extends WorldGenBiomeTree{
         
         BlockPos bpos = apos.up();
         
-        if (world.isAirBlock(bpos) && (!world.provider.hasNoSky() || var8 < 127))
+        if (world.isAirBlock(bpos) && (!world.provider.isNether() || var8 < 127))
         {
         	world.setBlockState(apos, Blocks.DIRT.getDefaultState());
-        	try{
-        		generateTree(world, var2, var7, var8, var9);
-        	}catch(Throwable t){
-	        	MinaMod.errorln("Peppel tree could not be generated");
-        		t.printStackTrace(System.err);
-        	}
-        	
+        	generateTree(world, var2, var7, var8, var9);
         }
 
         return true;

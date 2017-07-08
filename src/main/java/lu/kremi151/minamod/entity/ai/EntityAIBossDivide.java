@@ -23,7 +23,7 @@ public class EntityAIBossDivide extends EntityAIBase{
 	}
 	
 	@Override
-    public boolean continueExecuting()
+    public boolean shouldContinueExecuting()
     {
         return false;
     }
