@@ -21,8 +21,8 @@ public class CommandCoins extends MinaPlayerCommandBase{
 
 	@Override
 	public void execute(MinecraftServer server, EntityPlayer player, String[] arg) throws CommandException {
-		if(player.hasCapability(ICoinHandler.CAPABILITY_COIN_HANDLER, null)){
-			ICoinHandler ch = player.getCapability(ICoinHandler.CAPABILITY_COIN_HANDLER, null);
+		if(player.hasCapability(ICoinHandler.CAPABILITY, null)){
+			ICoinHandler ch = player.getCapability(ICoinHandler.CAPABILITY, null);
 			TextHelper.sendTranslateableChatMessage(player, "gui.coin_bag.amount", ch.getAmountCoins());
 		}else{
 			throw new CommandException("No capability found");

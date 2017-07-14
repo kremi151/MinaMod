@@ -76,7 +76,7 @@ public class MinaCapabilities {
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			return capability == ICoinHandler.CAPABILITY_COIN_HANDLER
+			return capability == ICoinHandler.CAPABILITY
 					|| capability == ICapabilityJetpack.CAPABILITY_JETPACK
 					|| capability == ICapabilityStats.CAPABILITY
 					|| capability == CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER
@@ -85,7 +85,7 @@ public class MinaCapabilities {
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if(capability == ICoinHandler.CAPABILITY_COIN_HANDLER){
+			if(capability == ICoinHandler.CAPABILITY){
 				return (T) this.coinHandler;
 			}else if(capability == ICapabilityJetpack.CAPABILITY_JETPACK){
 				return (T) this.jetpack;
