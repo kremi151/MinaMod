@@ -18,7 +18,7 @@ def mcVersion         = "1.11.2"
 def majorModVersion   = "1"
 def apiModVersion     = "0"
 def minorModVersion   = "5"
-def minamodPatchVersion = "3"
+def minamodPatchVersion = "4"
 def minamodVersion = majorModVersion+"."+apiModVersion+"."+minorModVersion+"."+minamodPatchVersion
 version = mcVersion+"-"+minamodVersion
 
@@ -28,7 +28,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2315"
+    version = "1.11.2-13.20.0.2393"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
