@@ -6,6 +6,8 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
+import lu.kremi151.minamod.util.weightedlist.WeightedItem;
+import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -16,10 +18,9 @@ public class TaskGreenifyWorld implements ITaskRunnable{
 	private final WeightedList<IBlockState> list;
 	private final Random r = new Random();
 	
-	private TaskGreenifyWorld(WeightedList.WeightedItem<IBlockState> plants[]){
+	private TaskGreenifyWorld(WeightedItem<IBlockState> plants[]){
 		if(plants.length == 0)throw new RuntimeException("Cannot create TaskGreenifyWorld with 0 plants");
-		this.list = WeightedList.from(plants);
-		this.list.lock();
+		this.list = WeightedList.from(plants).immutable();
 		r.setSeed(System.currentTimeMillis());
 	}
 
@@ -46,17 +47,17 @@ public class TaskGreenifyWorld implements ITaskRunnable{
 	}
 	
 	public static class Builder{
-		private ArrayList<WeightedList.WeightedItem<IBlockState>> wlist = new ArrayList<WeightedList.WeightedItem<IBlockState>>();
+		private ArrayList<WeightedItem<IBlockState>> wlist = new ArrayList<WeightedItem<IBlockState>>();
 		
 		public Builder(){}
 		
 		public Builder add(IBlockState plant, double weight){
-			wlist.add(new WeightedList.WeightedItem<IBlockState>(plant, weight));
+			wlist.add(new WeightedItem<IBlockState>(plant, weight));
 			return this;
 		}
 		
 		public TaskGreenifyWorld build(){
-			WeightedList.WeightedItem<IBlockState> plants[] = new WeightedList.WeightedItem[wlist.size()];
+			WeightedItem<IBlockState> plants[] = new WeightedItem[wlist.size()];
 			plants = wlist.toArray(plants);
 			return new TaskGreenifyWorld(plants);
 		}

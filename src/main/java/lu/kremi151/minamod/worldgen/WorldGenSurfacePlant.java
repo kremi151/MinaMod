@@ -1,12 +1,12 @@
 package lu.kremi151.minamod.worldgen;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.IOreInjector;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.util.WeightedList;
+import lu.kremi151.minamod.util.weightedlist.WeightedItem;
+import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -22,7 +22,7 @@ public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 	private final WeightedList<Plant> list;
 	private final int chance;
 	
-	private WorldGenSurfacePlant(int chance, WeightedList.WeightedItem<Plant>... plants){
+	private WorldGenSurfacePlant(int chance, WeightedItem<Plant>... plants){
 		this.list = WeightedList.from(plants);
 		this.chance = chance;
 	}
