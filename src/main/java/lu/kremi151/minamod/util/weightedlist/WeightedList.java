@@ -11,8 +11,23 @@ import lu.kremi151.minamod.interfaces.ICallback;
 
 public interface WeightedList<T> extends Iterable<WeightedItem<T>>{
 
+	/**
+	 * Gets a random weighted element from this weighted list
+	 * @param r The random number generator
+	 * @return
+	 */
 	T randomElement(Random r);
+	
+	/**
+	 * Returns an immutable view of this weighted list. If this list is already an immutable view of another list, it can return a reference to itself.
+	 * @return
+	 */
 	ImmutableWeightedList<T> immutable();
+	
+	/**
+	 * Returns a mutable view of this weighted list. If this list is already an mutable view of another list, it can return a reference to itself.
+	 * @return
+	 */
 	MutableWeightedList<T> mutable();
 	
 	public static <T> MutableWeightedList<T> create(){
