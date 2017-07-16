@@ -6,6 +6,7 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
+import lu.kremi151.minamod.util.Task.ProgressDispatcher;
 import lu.kremi151.minamod.util.weightedlist.WeightedItem;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ public class TaskGreenifyWorld implements ITaskRunnable{
 	}
 
 	@Override
-	public void run(Task t) {
+	public void run(Task t, ProgressDispatcher progressDispatcher) {
 		WorldServer[] wsa = MinaMod.getMinaMod().getMinecraftServer().worlds;
 		for(WorldServer ws : wsa){
 			if(ws.provider.getDimension() == 0 && ws.getGameRules().getBoolean("minamod.bushPopulating")){
