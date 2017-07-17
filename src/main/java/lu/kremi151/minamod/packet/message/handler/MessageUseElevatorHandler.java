@@ -7,6 +7,7 @@ import lu.kremi151.minamod.packet.message.MessageUseElevator;
 import lu.kremi151.minamod.packet.message.handler.abstracts.AbstractServerMessageHandler;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
+import lu.kremi151.minamod.util.Task.ProgressDispatcher;
 import lu.kremi151.minamod.util.TaskRepeat;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,7 +94,7 @@ public class MessageUseElevatorHandler extends AbstractServerMessageHandler<Mess
 		}
 
 		@Override
-		public void run(Task t) {
+		public void run(Task t, ProgressDispatcher progressDispatcher) {
 			if(p != null){
 				try{
 					if (!init) {
