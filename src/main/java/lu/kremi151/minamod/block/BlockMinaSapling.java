@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.worldgen.WorldGenCustomBigTree;
 import lu.kremi151.minamod.worldgen.WorldGenPalm;
 import lu.kremi151.minamod.worldgen.WorldGenPeppel;
 import net.minecraft.block.BlockBush;
@@ -88,16 +89,26 @@ public class BlockMinaSapling extends BlockBush implements IGrowable
         switch ((BlockMinaPlanks.EnumType)state.getValue(TYPE))
         {
             case CHERRY:
-                worldgenerator = new WorldGenTrees(true, 4, MinaBlocks.LOG_CHERRY.getDefaultState(),
-                		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHERRY)
-                		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
-                		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
+                if(rand.nextInt(10) == 0) {
+                	worldgenerator = new WorldGenCustomBigTree(true, MinaBlocks.LOG_CHERRY.getDefaultState(),
+                    		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHERRY));
+                }else {
+                	worldgenerator = new WorldGenTrees(true, 4, MinaBlocks.LOG_CHERRY.getDefaultState(),
+                    		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHERRY)
+                    		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
+                    		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
+                }
                 break;
             case CHESTNUT:
-            	worldgenerator = new WorldGenTrees(true, 6, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
-            			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHESTNUT)
-                		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
-                		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
+                if(rand.nextInt(10) == 0) {
+                	worldgenerator = new WorldGenCustomBigTree(true, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
+                    		BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHESTNUT));
+                }else {
+                	worldgenerator = new WorldGenTrees(true, 6, MinaBlocks.LOG_CHESTNUT.getDefaultState(),
+                			BlockMinaLeafBase.getDefaultStateFor(BlockMinaPlanks.EnumType.CHESTNUT)
+                    		.withProperty(BlockStandaloneLeaf.CHECK_DECAY, true)
+                    		.withProperty(BlockStandaloneLeaf.DECAYABLE, true), false);
+                }
                 break;
             case COTTON:
             	worldgenerator = new WorldGenTrees(true, 4, MinaBlocks.LOG_COTTON.getDefaultState(),
