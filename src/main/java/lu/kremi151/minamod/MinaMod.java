@@ -37,6 +37,7 @@ import lu.kremi151.minamod.packet.message.MessageOpenGui;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
+import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
@@ -46,6 +47,7 @@ import lu.kremi151.minamod.packet.message.handler.MessageOpenGuiHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSetScreenLayerHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageShowOverlayHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpawnParticleEffectHandler;
+import lu.kremi151.minamod.packet.message.handler.MessageSpinSlotMachineHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUpdateTileEntityHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseAmuletHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseElevatorHandler;
@@ -365,6 +367,7 @@ public class MinaMod {
 	}
 
 	private void registerPackets(Side side) {
+		networkWrapper.registerMessage(MessageSpinSlotMachineHandler.class, MessageSpinSlotMachine.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.CLIENT);
 		networkWrapper.registerMessage(MessageShowOverlayHandler.class, MessageShowOverlay.class, 3, Side.CLIENT);

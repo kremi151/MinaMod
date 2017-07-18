@@ -1,8 +1,10 @@
 package lu.kremi151.minamod.block;
 
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.util.IDRegistry;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -42,12 +44,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 		if(!world.isRemote && player.hasCapability(ICoinHandler.CAPABILITY, null)){
 			TileEntitySlotMachine te = (TileEntitySlotMachine) world.getTileEntity(pos);
 			if(te.setCurrentPlayer(player)) {
-				ICoinHandler ch = player.getCapability(ICoinHandler.CAPABILITY, null);
-				if(ch.withdrawCoins(18)){
-					TextHelper.sendChatMessage(player, "Currently under construction, but thank you for your 18 coins!");
-				}else{
-					TextHelper.sendChatMessage(player, "Do you have some coins for me please?");
-				}
+				player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdSlotMachine, world, pos.getX(), pos.getY(), pos.getZ());
 			}else {
 				TextHelper.sendChatMessage(player, "This slot machine is currently in use");
 			}

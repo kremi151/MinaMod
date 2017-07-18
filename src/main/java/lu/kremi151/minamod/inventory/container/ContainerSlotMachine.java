@@ -1,80 +1,93 @@
 package lu.kremi151.minamod.inventory.container;
 
+import java.util.Random;
+
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.util.Task;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.Item;
 
 public class ContainerSlotMachine extends BaseContainer{
 
-	private static final int CMD_UPDATE_WHEEL = 0;
-	private static final int CMD_UPDATE_TURN_STATE = 1;
+	public static final int CMD_UPDATE_WHEEL = 0;
+	public static final int CMD_UPDATE_TURN_STATE = 1;
 	
 	private final EntityPlayer player;
-	private final TileEntitySlotMachine slotMachine;
+	protected final TileEntitySlotMachine slotMachine;
 	
-	private boolean syncUpdate = false;
+	private boolean firstSync = true;
 	
 	public ContainerSlotMachine(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		this.player = player;
 		this.slotMachine = slotMachine;
+		slotMachine.registerListeningContainer(this);
 	}
+	
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn)
+    {
+		super.onContainerClosed(playerIn);
+		EntityPlayer playing = slotMachine.getPlaying();
+		if(playing == playerIn) {
+			slotMachine.setCurrentPlayer(null);
+		}
+    }
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return true;
 	}
 	
+	public boolean isTurning() {
+		return slotMachine.isTurning();
+	}
+	
+	public void spin() {
+		slotMachine.turnSlots(new Random(System.currentTimeMillis()));
+	}
+	
+	public Item getIcon(int wheelIdx, int wheelPos) {
+		int id = slotMachine.getWheelValue(wheelIdx, wheelPos);
+		return slotMachine.getItemIcon(id);
+	}
+	
 	@Override
 	public void detectAndSendChanges(){
         super.detectAndSendChanges();
         
-    	if(syncUpdate) {
+    	if(firstSync || slotMachine.needsSync()) {
+    		firstSync = false;
     		for (int i = 0; i < this.listeners.size(); ++i)
             {
         		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
                 
         		for(int x = 0 ; x < slotMachine.getWheelCount() ; x++) {
-        			int data[] = slotMachine.getWheelData(x);
         			for(int y = 0 ; y < slotMachine.getDisplayWheelSize() ; y++) {
-        				icrafting.sendWindowProperty(this, packWheelCoordinate(x, y), data[y]);
+        				icrafting.sendWindowProperty(this, CMD_UPDATE_WHEEL, packWheelUpdate(x, y, slotMachine.getWheelValue(x, y)));
         			}
         		}
         		
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, 0);//TODO
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
             }
+    		slotMachine.notifySynced();
     	}
 	}
 	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data)
-    {
-		final int cmd = unpackCommand(id);
-		switch(cmd) {
-		case CMD_UPDATE_WHEEL:
-			final int x = unpackWheelIndex(id);
-			final int y = unpackWheelPosition(id);
-			slotMachine.getWheelData(x)[y] = data;
-			break;
-		}
-    }
-	
-	private int packWheelCoordinate(int wheelIdx, int pos) {
-		return ((wheelIdx & 15) << 8) | ((pos << 4) & 15);
+	public static int packWheelUpdate(int wheelIdx, int pos, int value) {
+		return ((wheelIdx & 255) << 24) | ((pos & 255) << 16) | (value & 65535);
 	}
 	
-	private int unpackWheelIndex(int packed) {
-		return (packed >> 8) & 15;
+	public static int unpackWheelIndex(int packed) {
+		return (packed >> 24) & 255;
 	}
 	
-	private int unpackWheelPosition(int packed) {
-		return (packed >> 4) & 15;
+	public static int unpackWheelPosition(int packed) {
+		return (packed >> 16) & 255;
 	}
 	
-	private int unpackCommand(int packed) {
-		return packed & 15;
+	public static int unpackValue(int packed) {
+		return packed & 65535;
 	}
 
 }
