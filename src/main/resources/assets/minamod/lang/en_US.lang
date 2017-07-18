@@ -411,6 +411,7 @@ gui.herb_guide.crossingr=For example a mutation of AAA and CBC would result in A
 gui.herb_guide.classification=Classification: %s
 gui.herb_guide.mutability=Mutability: %d%%
 gui.herb_guide.undocumented=A mysterious herb variant whose properties are unknown at the moment
+gui.slot_machine.credit=Coins: %s
 minastats.attack=Attack
 minastats.defense=Defense
 minastats.speed=Speed

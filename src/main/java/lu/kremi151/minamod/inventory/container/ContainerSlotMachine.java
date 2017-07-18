@@ -3,6 +3,7 @@ package lu.kremi151.minamod.inventory.container;
 import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.Task;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -21,7 +22,6 @@ public class ContainerSlotMachine extends BaseContainer{
 	public ContainerSlotMachine(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		this.player = player;
 		this.slotMachine = slotMachine;
-		slotMachine.registerListeningContainer(this);
 	}
 	
 	@Override
@@ -50,6 +50,14 @@ public class ContainerSlotMachine extends BaseContainer{
 	public Item getIcon(int wheelIdx, int wheelPos) {
 		int id = slotMachine.getWheelValue(wheelIdx, wheelPos);
 		return slotMachine.getItemIcon(id);
+	}
+	
+	public int getPlayingCash() {
+		if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
+			return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).getAmountCoins();
+		}else {
+			return 0;
+		}
 	}
 	
 	@Override

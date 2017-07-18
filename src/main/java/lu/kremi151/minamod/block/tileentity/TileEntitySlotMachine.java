@@ -30,19 +30,14 @@ public class TileEntitySlotMachine extends TileEntity{
 	private WeakReference<EntityPlayer> currentPlaying = null;
 	//field_191525_da => IRON_NUGGET -.-
 	private Item icons[] = new Item[] {Items.field_191525_da, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT, MinaItems.CHERRY, Items.DIAMOND};
-	private int occurences[] = new int[] {4, 4, 3, 3, 2, 1};
+	private int occurences[] = new int[] {4, 4, 3, 3, 1, 1};
 	private WeightedList<Integer> weightedIconIds;
 	private boolean isTurning;
-	private final LinkedList<WeakReference<ContainerSlotMachine>> listeningContainers = new LinkedList<>();
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false;
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
-	}
-	
-	public void registerListeningContainer(ContainerSlotMachine container) {
-		listeningContainers.add(new WeakReference<>(container));
 	}
 		
 	private void checkPlaying() {
@@ -61,7 +56,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	
 	public boolean isInUse() {
 		checkPlaying();
-		return currentPlaying != null;
+		return currentPlaying != null && currentPlaying.get() != null;
 	}
 	
 	public boolean setCurrentPlayer(EntityPlayer player) {
@@ -116,6 +111,12 @@ public class TileEntitySlotMachine extends TileEntity{
 			weightedIcons.add(i, (double)this.occurences[i]);
 		}
 		this.weightedIconIds = weightedIcons.immutable();
+		Random rand = new Random(System.currentTimeMillis());
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+				wheels.setWheelContent(i, j, weightedIcons.randomElement(rand));
+			}
+		}
 	}
 	
 	@Override
@@ -230,6 +231,19 @@ public class TileEntitySlotMachine extends TileEntity{
 				if(turns > 0 || spacings[i]-- > 0) {
 					cont = true;
 					turnWheel(i);
+				}else if(spacings[i] == -1) {
+					int found_cherry = -1;
+					for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+						if(getItemIcon(wheels.getWheelValue(i, j)) == MinaItems.CHERRY) {//TODO: NBT
+							found_cherry = wheels.getWheelValue(i, j);
+							break;
+						}
+					}
+					if(found_cherry > 0) {
+						for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+							wheels.setWheelContent(i, j, found_cherry);
+						}
+					}
 				}
 			}
 			turns--;

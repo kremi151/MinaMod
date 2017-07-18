@@ -41,7 +41,6 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 		switch(id) {
 		case CMD_UPDATE_WHEEL:
 			wheels.setWheelContent(unpackWheelIndex(data), unpackWheelPosition(data), unpackValue(data));
-			System.out.format("Update x=%d, y=%d => %d\n", unpackWheelIndex(data), unpackWheelPosition(data), unpackValue(data));
 			break;
 		case CMD_UPDATE_TURN_STATE:
 			this.isTurning = (data & 1) == 1;

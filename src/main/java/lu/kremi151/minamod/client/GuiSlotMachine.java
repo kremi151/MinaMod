@@ -2,77 +2,151 @@ package lu.kremi151.minamod.client;
 
 import org.lwjgl.opengl.GL11;
 
+import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient;
+import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.util.Point;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiSlotMachine extends GuiContainer{
+
+	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/slot_machine.png");
 	
 	private final ContainerSlotMachineClient container;
-	private final GuiButton spinButton;
+	private final GuiButton spin1LButton, spin3LButton, spin5LButton;
 
 	public GuiSlotMachine(ContainerSlotMachineClient container) {
 		super(container);
 		this.container = container;
 		
-		this.xSize = 270;
-		this.ySize = 180;
+		this.xSize = 176;
+		this.ySize = 186;
 
-		spinButton = new GuiButton(0, 0, 0, 100, 20, "Spin");
+		spin1LButton = new GuiButton(0, 0, 0, 100, 20, "Spin (1 Line)");
+		spin3LButton = new GuiButton(1, 0, 0, 100, 20, "Spin (3 Lines)");
+		spin5LButton = new GuiButton(2, 0, 0, 100, 20, "Spin (5 Lines)");
 	}
-	
-
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		// draw text and stuff here
-		// the parameters for drawString are: string, x, y, color
 		fontRenderer.drawString(
-				I18n.translateToLocal("gui.letterbox.in"), 8, 10,
+				I18n.translateToLocal("tile.slot_machine.name"), 8, 10,
 				4210752);
+		
 		fontRenderer.drawString(
+				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getPlayingCash()), 10,
+				168, MinaUtils.COLOR_WHITE);
+		
+		/*fontRenderer.drawString(
 				I18n.translateToLocal("gui.letterbox.storage"), 98,
 				10, 4210752);
-		// draws "Inventory" or your regional equivalent
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
-				ySize - 96 + 2, 4210752);
-	}
-
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		// draw your Gui here, only thing you need to change is the path
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		/*this.mc.renderEngine.bindTexture(guiTextures);
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-
-		if (!ct.isOwner()) {
-			this.drawTexturedModalRect(x+97, y+28, 0, 179, 54, 36);
-		}*/
+				ySize - 96 + 2, 4210752);*/
 		
 		for(int i = 0 ; i < 5 ; i++) {
-			int x = ((width - 96) / 2) + (i * 20);
+			int x = 40 + (i * 20);
 			for(int j = 0 ; j < 3 ; j++) {
-				int y = ((height - 56) / 2) + (j * 20);
+				int y = 35 + (j * 17);
 				Item icon = container.getIcon(i, j);
 				this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(icon), x, y);
 			}
 		}
+		
+		if(isHovering(mouseX, mouseY, spin1LButton)) {
+			drawLines(0.2f, 0.8f, 0.8f, new Point(48, 59), new Point(127, 59));
+		}
+		
+		if(isHovering(mouseX, mouseY, spin3LButton)) {
+			drawLines(0.8f, 0.8f, 0.2f, new Point(48, 42), new Point(127, 42));
+			drawLines(0.2f, 0.8f, 0.8f, new Point(48, 59), new Point(127, 59));
+			drawLines(0.8f, 0.2f, 0.8f, new Point(48, 76), new Point(127, 76));
+		}
+		
+		if(isHovering(mouseX, mouseY, spin5LButton)) {
+			drawLines(0.8f, 0.8f, 0.2f, new Point(48, 42), new Point(127, 42));
+			drawLines(0.2f, 0.8f, 0.8f, new Point(48, 59), new Point(127, 59));
+			drawLines(0.8f, 0.2f, 0.8f, new Point(48, 76), new Point(127, 76));
+
+			drawLines(0.5f, 0.8f, 0.5f, new Point(48, 42), new Point(88, 75), new Point(127, 42));
+			drawLines(0.8f, 0.3f, 0.4f, new Point(48, 75), new Point(88, 42), new Point(127, 75));
+		}
+
+		//TODO: Make prices dynamic:
+		drawCoinAmount(spin1LButton.x + spin1LButton.width + 2 - guiLeft, spin1LButton.y + ((spin1LButton.height - 16) / 2) - guiTop, 1);
+		drawCoinAmount(spin3LButton.x + spin3LButton.width + 2 - guiLeft, spin3LButton.y + ((spin3LButton.height - 16) / 2) - guiTop, 3);
+		drawCoinAmount(spin5LButton.x + spin5LButton.width + 2 - guiLeft, spin5LButton.y + ((spin5LButton.height - 16) / 2) - guiTop, 5);
+	}
+	
+	private void drawCoinAmount(int x, int y, int amount) {
+		this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(MinaItems.GOLDEN_COIN), x, y);
+		final String text = ""+amount;
+		fontRenderer.drawString(
+				text, x + 16 - fontRenderer.getStringWidth(text),
+				y + 16 - 9, MinaUtils.COLOR_WHITE);
+	}
+	
+	private void drawLines(float r, float g, float b, Point... points) {
+		drawLines(r, g, b, 1f, points);
+	}
+	
+	private void drawLines(float r, float g, float b, float a, Point... points) {
+		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+	    GL11.glDisable(GL11.GL_CULL_FACE);
+	    GL11.glDisable(GL11.GL_LIGHTING);
+	    GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+	    GL11.glEnable(GL11.GL_BLEND);
+	    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	    //GL11.glColor4f(red, green, blue, 1f);
+	    GL11.glLineWidth(4.0F);
+	    GL11.glDepthMask(false);
+	    
+	    GL11.glColor4f(r, g, b, 1f);
+	    
+		for(int i = 0 ; i < points.length - 1 ; i++) {
+			Point p1 = points[i];
+			Point p2 = points[i+1];
+			GlStateManager.glBegin(GL11.GL_LINES);
+			GlStateManager.glVertex3f(p1.x(), p1.y(), 30.f);
+			GlStateManager.glVertex3f(p2.x(), p2.y(), 30.f);
+			GlStateManager.glEnd();
+		}
+
+	    GL11.glDepthMask(true);
+	    GL11.glPopAttrib();
+	}
+	
+	private boolean isHovering(int mouseX, int mouseY, GuiButton element) {
+		return mouseX >= element.x && mouseX <= element.x + element.width && mouseY >= element.y && mouseY <= element.y + element.height;
+	}
+
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.mc.renderEngine.bindTexture(guiTextures);
+		int x = (width - xSize) / 2;
+		int y = (height - ySize) / 2;
+		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
 	}
 	
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
 		switch(guibutton.id){
 		case 0:
+		case 1:
+		case 2:
 			container.spin();
 			break;
 		}
@@ -82,13 +156,17 @@ public class GuiSlotMachine extends GuiContainer{
 	public void updateScreen()
     {
 		super.updateScreen();
-		this.spinButton.enabled = !container.isTurning();
+		this.spin1LButton.enabled = !container.isTurning();
+		this.spin3LButton.enabled = !container.isTurning();
+		this.spin5LButton.enabled = !container.isTurning();
     }
 	
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.buttonList.add(spinButton);
+		this.buttonList.add(spin1LButton);
+		this.buttonList.add(spin3LButton);
+		this.buttonList.add(spin5LButton);
 		
 		setupPositions();
 	}
@@ -101,7 +179,13 @@ public class GuiSlotMachine extends GuiContainer{
     }
 	
 	private void setupPositions(){
-		spinButton.x = guiLeft + ((xSize - spinButton.width) / 2);
-		spinButton.y = guiTop + ySize - spinButton.height;
+		spin1LButton.x = guiLeft + ((xSize - spin1LButton.width) / 2);
+		spin1LButton.y = guiTop + 90;
+		
+		spin3LButton.x = guiLeft + ((xSize - spin3LButton.width) / 2);
+		spin3LButton.y = spin1LButton.y + spin1LButton.height + 5;
+		
+		spin5LButton.x = guiLeft + ((xSize - spin5LButton.width) / 2);
+		spin5LButton.y = spin3LButton.y + spin3LButton.height + 5;
 	}
 }

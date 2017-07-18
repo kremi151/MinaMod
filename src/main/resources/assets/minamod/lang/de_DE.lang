@@ -410,6 +410,7 @@ gui.herb_guide.crossingr=So würde beispielsweise eine Mutation von AAA und CBC 
 gui.herb_guide.classification=Klassifikation: %s
 gui.herb_guide.mutability=Mutat. Faktor: %d%%
 gui.herb_guide.undocumented=Ein mysteriöses Kraut wessen Eigenschaften zurzeit unbekannt sind
+gui.slot_machine.credit=Münzen: %s
 minastats.attack=Attacke
 minastats.defense=Verteidigung
 minastats.speed=Geschwindigkeit
