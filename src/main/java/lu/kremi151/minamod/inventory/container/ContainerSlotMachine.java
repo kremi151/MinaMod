@@ -11,8 +11,10 @@ import net.minecraft.item.Item;
 
 public class ContainerSlotMachine extends BaseContainer{
 
-	public static final int CMD_UPDATE_WHEEL = 0;
-	public static final int CMD_UPDATE_TURN_STATE = 1;
+	protected static final int CMD_UPDATE_WHEEL = 0;
+	protected static final int CMD_UPDATE_TURN_STATE = 1;
+	protected static final int CMD_UPDATE_PRICE = 2;
+	protected static final int CMD_UPDATE_CREDITS = 3;
 	
 	private final EntityPlayer player;
 	protected final TileEntitySlotMachine slotMachine;
@@ -43,8 +45,12 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.isTurning();
 	}
 	
-	public void spin() {
-		slotMachine.turnSlots(new Random(System.currentTimeMillis()));
+	public int getCredits() {
+		return slotMachine.getPlayingCredits();
+	}
+	
+	public void spin(TileEntitySlotMachine.SpinMode mode) {
+		slotMachine.turnSlots(mode, new Random(System.currentTimeMillis()));
 	}
 	
 	public Item getIcon(int wheelIdx, int wheelPos) {
@@ -52,13 +58,19 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getItemIcon(id);
 	}
 	
-	public int getPlayingCash() {
-		if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
-			return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).getAmountCoins();
-		}else {
-			return 0;
-		}
+	public int getPriceFor1Spin() {
+		return slotMachine.getPriceFor1Spin();
 	}
+	
+	public int getPriceFor3Spins() {
+		return slotMachine.getPriceFor3Spins();
+	}
+	
+	public int getPriceFor5Spins() {
+		return slotMachine.getPriceFor5Spins();
+	}
+	
+	public void report() {}//TODO: Remove when out of beta
 	
 	@Override
 	public void detectAndSendChanges(){
@@ -77,6 +89,8 @@ public class ContainerSlotMachine extends BaseContainer{
         		}
         		
         		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, ((slotMachine.getPriceFor1Spin() & 255) << 16) | ((slotMachine.getPriceFor3Spins() & 255) << 8) | (slotMachine.getPriceFor5Spins() & 255));
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS, slotMachine.getPlayingCredits());
             }
     		slotMachine.notifySynced();
     	}

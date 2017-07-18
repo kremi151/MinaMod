@@ -2,6 +2,7 @@ package lu.kremi151.minamod.inventory.container;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.packet.message.MessageReportSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,6 +14,8 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	
 	private boolean isTurning = false;
 	private final TileEntitySlotMachine.WheelManager wheels = new TileEntitySlotMachine.WheelManager(5, 3);
+	private final int prices[] = new int[3];
+	private int credits = 0;
 
 	public ContainerSlotMachineClient(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		super(player, slotMachine);
@@ -24,8 +27,28 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	}
 	
 	@Override
-	public void spin() {
-		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageSpinSlotMachine(slotMachine.getPos()));
+	public void spin(TileEntitySlotMachine.SpinMode mode) {
+		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageSpinSlotMachine(mode, slotMachine.getPos()));
+	}
+
+	@Override
+	public int getPriceFor1Spin() {
+		return prices[0];
+	}
+
+	@Override
+	public int getPriceFor3Spins() {
+		return prices[1];
+	}
+
+	@Override
+	public int getPriceFor5Spins() {
+		return prices[2];
+	}
+	
+	@Override
+	public int getCredits() {
+		return credits;
 	}
 	
 	@Override
@@ -45,7 +68,20 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 		case CMD_UPDATE_TURN_STATE:
 			this.isTurning = (data & 1) == 1;
 			break;
+		case CMD_UPDATE_PRICE:
+			prices[0] = (data >> 16) & 255;
+			prices[1] = (data >> 8) & 255;
+			prices[2] = data & 255;
+			break;
+		case CMD_UPDATE_CREDITS:
+			credits = data;
+			break;
 		}
     }
+	
+	@Override
+	public void report() {
+		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageReportSlotMachine(slotMachine.getPos()));
+	}
 
 }

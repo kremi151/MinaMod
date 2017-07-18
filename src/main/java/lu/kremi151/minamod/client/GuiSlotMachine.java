@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Point;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,7 +26,7 @@ public class GuiSlotMachine extends GuiContainer{
 	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/slot_machine.png");
 	
 	private final ContainerSlotMachineClient container;
-	private final GuiButton spin1LButton, spin3LButton, spin5LButton;
+	private final GuiButton spin1LButton, spin3LButton, spin5LButton, reportButton;
 
 	public GuiSlotMachine(ContainerSlotMachineClient container) {
 		super(container);
@@ -33,27 +35,21 @@ public class GuiSlotMachine extends GuiContainer{
 		this.xSize = 176;
 		this.ySize = 186;
 
-		spin1LButton = new GuiButton(0, 0, 0, 100, 20, "Spin (1 Line)");
-		spin3LButton = new GuiButton(1, 0, 0, 100, 20, "Spin (3 Lines)");
-		spin5LButton = new GuiButton(2, 0, 0, 100, 20, "Spin (5 Lines)");
+		spin1LButton = new GuiButton(0, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 1));
+		spin3LButton = new GuiButton(1, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 3));
+		spin5LButton = new GuiButton(2, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 5));
+		reportButton = new GuiButton(999, 0, 0, 20, 20, "!");
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		fontRenderer.drawString(
-				I18n.translateToLocal("tile.slot_machine.name"), 8, 10,
+				I18n.translateToLocal("tile.slot_machine.name") + " (BETA)", 8, 10,
 				4210752);
 		
 		fontRenderer.drawString(
-				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getPlayingCash()), 10,
+				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getCredits()), 10,
 				168, MinaUtils.COLOR_WHITE);
-		
-		/*fontRenderer.drawString(
-				I18n.translateToLocal("gui.letterbox.storage"), 98,
-				10, 4210752);
-		fontRenderer.drawString(
-				I18n.translateToLocal("container.inventory"), 8,
-				ySize - 96 + 2, 4210752);*/
 		
 		for(int i = 0 ; i < 5 ; i++) {
 			int x = 40 + (i * 20);
@@ -83,10 +79,13 @@ public class GuiSlotMachine extends GuiContainer{
 			drawLines(0.8f, 0.3f, 0.4f, new Point(48, 75), new Point(88, 42), new Point(127, 75));
 		}
 
-		//TODO: Make prices dynamic:
-		drawCoinAmount(spin1LButton.x + spin1LButton.width + 2 - guiLeft, spin1LButton.y + ((spin1LButton.height - 16) / 2) - guiTop, 1);
-		drawCoinAmount(spin3LButton.x + spin3LButton.width + 2 - guiLeft, spin3LButton.y + ((spin3LButton.height - 16) / 2) - guiTop, 3);
-		drawCoinAmount(spin5LButton.x + spin5LButton.width + 2 - guiLeft, spin5LButton.y + ((spin5LButton.height - 16) / 2) - guiTop, 5);
+		drawCoinAmount(spin1LButton.x + spin1LButton.width + 6 - guiLeft, spin1LButton.y + ((spin1LButton.height - 16) / 2) - guiTop, container.getPriceFor1Spin());
+		drawCoinAmount(spin3LButton.x + spin3LButton.width + 6 - guiLeft, spin3LButton.y + ((spin3LButton.height - 16) / 2) - guiTop, container.getPriceFor3Spins());
+		drawCoinAmount(spin5LButton.x + spin5LButton.width + 6 - guiLeft, spin5LButton.y + ((spin5LButton.height - 16) / 2) - guiTop, container.getPriceFor5Spins());
+		
+		if(isHovering(mouseX, mouseY, reportButton)) {
+			drawHoveringText(TextFormatting.RED + "Report in case the slot machine does not reward money when at least one row is a winning line", mouseX, mouseY);
+		}
 	}
 	
 	private void drawCoinAmount(int x, int y, int amount) {
@@ -145,9 +144,18 @@ public class GuiSlotMachine extends GuiContainer{
 	protected void actionPerformed(GuiButton guibutton) {
 		switch(guibutton.id){
 		case 0:
+			container.spin(TileEntitySlotMachine.SpinMode.ONE);
+			break;
 		case 1:
+			container.spin(TileEntitySlotMachine.SpinMode.THREE);
+			break;
 		case 2:
-			container.spin();
+			container.spin(TileEntitySlotMachine.SpinMode.FIVE);
+			break;
+		case 999:
+			container.report();
+			Minecraft.getMinecraft().player.closeScreen();
+			Minecraft.getMinecraft().player.sendChatMessage("A report has been send. Please wait until the administrator contacts you.");
 			break;
 		}
 	}
@@ -159,6 +167,7 @@ public class GuiSlotMachine extends GuiContainer{
 		this.spin1LButton.enabled = !container.isTurning();
 		this.spin3LButton.enabled = !container.isTurning();
 		this.spin5LButton.enabled = !container.isTurning();
+		this.reportButton.enabled = !container.isTurning();
     }
 	
 	@Override
@@ -167,6 +176,7 @@ public class GuiSlotMachine extends GuiContainer{
 		this.buttonList.add(spin1LButton);
 		this.buttonList.add(spin3LButton);
 		this.buttonList.add(spin5LButton);
+		this.buttonList.add(reportButton);
 		
 		setupPositions();
 	}
@@ -187,5 +197,8 @@ public class GuiSlotMachine extends GuiContainer{
 		
 		spin5LButton.x = guiLeft + ((xSize - spin5LButton.width) / 2);
 		spin5LButton.y = spin3LButton.y + spin3LButton.height + 5;
+		
+		reportButton.x = guiLeft + 142;
+		reportButton.y = guiTop + 50;
 	}
 }

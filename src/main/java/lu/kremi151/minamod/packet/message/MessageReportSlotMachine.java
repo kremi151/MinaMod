@@ -6,21 +6,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-public class MessageSpinSlotMachine implements IMessage{
+public class MessageReportSlotMachine implements IMessage{
 	
 	private BlockPos pos;
-	private TileEntitySlotMachine.SpinMode mode;
 	
-	public MessageSpinSlotMachine() {}
+	public MessageReportSlotMachine() {}
 	
-	public MessageSpinSlotMachine(TileEntitySlotMachine.SpinMode mode, BlockPos pos) {
-		this.mode = mode;
+	public MessageReportSlotMachine(BlockPos pos) {
 		this.pos = pos;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		mode = TileEntitySlotMachine.SpinMode.values()[(int)buf.readByte()];
 		pos = new BlockPos(
 				ByteBufUtils.readVarInt(buf, 5),
 				ByteBufUtils.readVarInt(buf, 5),
@@ -30,7 +27,6 @@ public class MessageSpinSlotMachine implements IMessage{
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeByte((byte)mode.ordinal());
 		ByteBufUtils.writeVarInt(buf, pos.getX(), 5);
 		ByteBufUtils.writeVarInt(buf, pos.getY(), 5);
 		ByteBufUtils.writeVarInt(buf, pos.getZ(), 5);
@@ -38,10 +34,6 @@ public class MessageSpinSlotMachine implements IMessage{
 	
 	public BlockPos getPos() {
 		return pos;
-	}
-	
-	public TileEntitySlotMachine.SpinMode getSpinMode(){
-		return mode;
 	}
 
 }
