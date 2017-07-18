@@ -22,6 +22,7 @@ public class MinaModConfiguration {
     private boolean enable_player_stats;    
     private boolean use_fancy_elevator_movement;
     private boolean use_new_honeycomb_generation;
+    private boolean disable_zombie_aid_summons;
 
     @SideOnly(Side.CLIENT)
     private int overlay_x;
@@ -54,6 +55,7 @@ public class MinaModConfiguration {
 		enable_player_stats = config.getBoolean("player_stats", CATEGORY_FEATURES, true, "Defines if the player stats system should be enabled");
 		use_new_honeycomb_generation = config.getBoolean("new_honeycomb_generation", CATEGORY_TERRAIN, true, "Defines if the new method to generate honeycombs in the world should be used");
 		use_fancy_elevator_movement = config.getBoolean("use_fancy_elevator_movement", CATEGORY_FEATURES, false, "Defines is elevators should use the fancy but slow transport between levels. Set to false to teleport instantly.");
+		disable_zombie_aid_summons = config.getBoolean("prevent_zombie_summon_aid", CATEGORY_FEATURES, false, "Prevents that zombies can summon aid");
 		
 		if(!MinaMod.getProxy().isServerSide()){
 			enable_overlay = config.getBoolean("enable_overlay", Configuration.CATEGORY_CLIENT, true, "Enables or disables overlay elements");
@@ -96,6 +98,10 @@ public class MinaModConfiguration {
 	
 	public boolean useFancyElevatorMovement(){
 		return use_fancy_elevator_movement;
+	}
+	
+	public boolean preventZombieSummonAid() {
+		return disable_zombie_aid_summons;
 	}
 	
 	public boolean getCustomBoolean(String node, String category){ // NO_UCD (unused code)

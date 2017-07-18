@@ -56,8 +56,10 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityEvents {
@@ -296,6 +298,13 @@ public class EntityEvents {
 				statsProv.getStats().getStat(StatTypes.SPEED).getActual().set(64 + entity.getRNG().nextInt(191));
 			}
 			e.addCapability(MinaCapabilities.MINA_ENTITY_STATS, statsProv);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onZombieSummonAid(SummonAidEvent event) {
+		if(MinaMod.getMinaConfig().preventZombieSummonAid()) {
+			event.setResult(Result.DENY);
 		}
 	}
 }
