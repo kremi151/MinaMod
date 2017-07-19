@@ -15,6 +15,7 @@ public class ContainerSlotMachine extends BaseContainer{
 	protected static final int CMD_UPDATE_TURN_STATE = 1;
 	protected static final int CMD_UPDATE_PRICE = 2;
 	protected static final int CMD_UPDATE_CREDITS = 3;
+	protected static final int CMD_UPDATE_SESSION_WIN = 4;
 	
 	private final EntityPlayer player;
 	protected final TileEntitySlotMachine slotMachine;
@@ -70,6 +71,10 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getPriceFor5Spins();
 	}
 	
+	public int getSessionWin() {
+		return slotMachine.getSessionWin();
+	}
+	
 	public void report() {}//TODO: Remove when out of beta
 	
 	@Override
@@ -91,6 +96,7 @@ public class ContainerSlotMachine extends BaseContainer{
         		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
         		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, ((slotMachine.getPriceFor1Spin() & 255) << 16) | ((slotMachine.getPriceFor3Spins() & 255) << 8) | (slotMachine.getPriceFor5Spins() & 255));
         		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS, slotMachine.getPlayingCredits());
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN, slotMachine.getSessionWin());
             }
     		slotMachine.notifySynced();
     	}

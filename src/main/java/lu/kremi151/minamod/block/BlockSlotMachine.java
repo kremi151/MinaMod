@@ -43,7 +43,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 		if(!world.isRemote && player.hasCapability(ICoinHandler.CAPABILITY, null)){
 			TileEntitySlotMachine te = (TileEntitySlotMachine) world.getTileEntity(pos);
-			if(te.setCurrentPlayer(player)) {
+			if(te.setCurrentPlayer(player).isPresent()) {
 				player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdSlotMachine, world, pos.getX(), pos.getY(), pos.getZ());
 			}else {
 				TextHelper.sendChatMessage(player, "This slot machine is currently in use");

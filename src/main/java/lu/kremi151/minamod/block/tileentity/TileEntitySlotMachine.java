@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaItems;
@@ -31,7 +32,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class TileEntitySlotMachine extends TileEntity{
 	
-	private WeakReference<EntityPlayer> currentPlaying = null;
+	private Session currentSession = Session.empty();
 	//field_191525_da => IRON_NUGGET -.-
 	private Item icons[] = new Item[] {Items.field_191525_da, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT, MinaItems.CHERRY, Items.DIAMOND};
 	private int occurences[] = new int[] {4, 4, 3, 3, 1, 1};
@@ -49,15 +50,9 @@ public class TileEntitySlotMachine extends TileEntity{
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
 	}
-		
-	private void checkPlaying() {
-		if(currentPlaying != null && currentPlaying.get() != null && currentPlaying.get().isDead) {
-			currentPlaying = null;
-		}
-	}
 	
 	public EntityPlayer getPlaying() {
-		return currentPlaying != null ? currentPlaying.get() : null;
+		return currentSession.getPlayerIfValid();
 	}
 	
 	public boolean isTurning() {
@@ -65,22 +60,25 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public boolean isInUse() {
-		checkPlaying();
-		return currentPlaying != null && currentPlaying.get() != null;
+		return currentSession.isValid();
 	}
 	
-	public boolean setCurrentPlayer(EntityPlayer player) {
+	public Optional<Session> setCurrentPlayer(EntityPlayer player) {
 		if(player == null || !isInUse()) {
-			this.currentPlaying = new WeakReference<>(player);
+			this.currentSession = new Session(player);
 			if(coinTray > 0 && player != null) {
 				int reward = coinTray;
 				coinTray = 0;
 				rewardPlayer(reward, false);
 			}
-			return true;
+			return Optional.of(this.currentSession);
 		}else {
-			return false;
+			return Optional.empty();
 		}
+	}
+	
+	public int getSessionWin() {
+		return currentSession.currentWin;
 	}
 	
 	public int getWheelCount() {
@@ -155,6 +153,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		if(playing != null && playing.hasCapability(ICoinHandler.CAPABILITY, null)) {
 			if(((ICoinHandler)playing.getCapability(ICoinHandler.CAPABILITY, null)).depositCoins(coins)) {
 				TextHelper.sendTranslateableChatMessage(playing, TextFormatting.GREEN, won?"gui.slot_machine.won_coins":"gui.slot_machine.found_coins", coins);
+				currentSession.currentWin += coins;
 				needs_sync = true;
 			}else {
 				coinTray += coins;
@@ -301,6 +300,8 @@ public class TileEntitySlotMachine extends TileEntity{
 					if(withdrawCoins(playing, price)){
 						isTurning = true;
 						awardedForLastSpin = 0;
+						currentSession.currentWin -= price;
+						needs_sync = true;
 						new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand)).enqueueServerTask();
 					}else {
 						TextHelper.sendTranslateableErrorMessage(playing, "gui.slot_machine.not_enough_coins");
@@ -365,10 +366,25 @@ public class TileEntitySlotMachine extends TileEntity{
 			boolean cherry = false;
 			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
 				int a = wheels.getWheelValue(i, pos);
-				if(prev == -1){
-					if(!isCherryIcon(a)) {
-						prev = a;
-					}
+				if(prev == -1 && !isCherryIcon(a)){
+					prev = a;
+				}else if(prev != a && !isCherryIcon(a)) {
+					return -1;
+				}else if(isCherryIcon(a)) {
+					cherry = true;
+				}
+			}
+			return (prev == -1 && cherry) ? -2 : prev;
+		}
+		
+		private int checkVLine(boolean invert) {
+			int prev = -1;
+			boolean cherry = false;
+			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
+				int a = wheels.getWheelValue(i, pos);
+				if(prev == -1 && !isCherryIcon(a)){
+					prev = a;
 				}else if(prev != a && !isCherryIcon(a)) {
 					return -1;
 				}else if(isCherryIcon(a)) {
@@ -380,51 +396,54 @@ public class TileEntitySlotMachine extends TileEntity{
 		
 		/*private int checkHLine(int pos) {
 			int wheels[][] = new int[][] {
-				new int[] {0, 0, 0},
-				new int[] {2, 2, 1},
-				new int[] {0, 0, 0},
-				new int[] {0, 0, 0},
-				new int[] {1, 1, 1}
+				new int[] {4, 4, 4},
+				new int[] {4, 4, 4},
+				new int[] {0, 0, 3},
+				new int[] {0, 0, 3},
+				new int[] {4, 4, 4}
 			};
 			int prev = -1;
 			boolean cherry = false;
 			for(int i = 0 ; i < wheels.length ; i++) {
 				int a = wheels[i][pos];
-				if(prev == -1){
-					if(a != 0) {
-						prev = a;
-					}
-				}else if(prev != a && a != 0) {
+				if(prev == -1 && a != 4){
+					prev = a;
+				}else if(prev != a && a != 4) {
 					return -1;
-				}else if(a == 0) {
+				}else if(a == 4) {
 					cherry = true;
 				}
 			}
 			return (prev == -1 && cherry) ? -2 : prev;
 		}*/
 		
-		private int checkVLine(boolean invert) {
+		/*private int checkVLine(boolean invert) {
+			int wheels[][] = new int[][] {
+				new int[] {4, 4, 4},
+				new int[] {4, 4, 4},
+				new int[] {0, 0, 3},
+				new int[] {0, 0, 3},
+				new int[] {4, 4, 4}
+			};
 			int prev = -1;
 			boolean cherry = false;
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			for(int i = 0 ; i < wheels.length ; i++) {
 				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
-				int a = wheels.getWheelValue(i, pos);
-				if(prev == -1){
-					if(!isCherryIcon(a)) {
-						prev = a;
-					}
-				}else if(prev != a && !isCherryIcon(a)) {
+				int a = wheels[i][pos];
+				if(prev == -1 && a != 4){
+					prev = a;
+				}else if(prev != a && a != 4) {
 					return -1;
-				}else if(isCherryIcon(a)) {
+				}else if(a == 4) {
 					cherry = true;
 				}
 			}
 			return (prev == -1 && cherry) ? -2 : prev;
-		}
+		}*/
 		
 		private int rowPrice(int iconId) {//TODO: Adjust
 			float r = (float)occurences.length / (float)occurences[iconId];
-			return (int) Math.max(25f * r, 1f);
+			return (int) Math.max(50f * r, 1f);//50f perhaps too high?
 		}
 		
 		private int evaluateResult() {
@@ -441,7 +460,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			int eval = checkHLine(1);
 			if(eval == -2) {//Cherry
 				return 1000;//TODO:Adjust
-			}else if(eval > 0) {
+			}else if(eval >= 0) {
 				win += rowPrice(eval);
 			}
 			
@@ -450,7 +469,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkHLine(i);
 					if(eval == -2) {//Cherry
 						return 1000;//TODO:Adjust
-					}else if(eval > 0) {
+					}else if(eval >= 0) {
 						win += rowPrice(eval);
 					}
 				}
@@ -461,7 +480,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkVLine(i == 1);
 					if(eval == -2) {//Cherry
 						return 1000;//TODO:Adjust
-					}else if(eval > 0) {
+					}else if(eval >= 0) {
 						win += rowPrice(eval);
 					}
 				}
@@ -525,6 +544,31 @@ public class TileEntitySlotMachine extends TileEntity{
 		ONE,
 		THREE,
 		FIVE
+	}
+	
+	public static class Session{
+		private final WeakReference<EntityPlayer> playerRef;
+		private int currentWin = 0;
+		
+		private Session(EntityPlayer player) {
+			this.playerRef = new WeakReference<>(player);
+		}
+		
+		public boolean isValid() {
+			return getPlayerIfValid() != null;
+		}
+		
+		private EntityPlayer getPlayerIfValid() {
+			EntityPlayer pl = playerRef.get();
+			if(pl != null && !pl.isDead) {
+				return pl;
+			}
+			return null;
+		}
+		
+		private static Session empty() {
+			return new Session(null);
+		}
 	}
 	
 	public StateSnapshot createStateSnapshot() {

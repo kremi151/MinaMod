@@ -15,7 +15,7 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	private boolean isTurning = false;
 	private final TileEntitySlotMachine.WheelManager wheels = new TileEntitySlotMachine.WheelManager(5, 3);
 	private final int prices[] = new int[3];
-	private int credits = 0;
+	private int credits = 0, sessionWin = 0;
 
 	public ContainerSlotMachineClient(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		super(player, slotMachine);
@@ -50,6 +50,11 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	public int getCredits() {
 		return credits;
 	}
+
+	@Override
+	public int getSessionWin() {
+		return sessionWin;
+	}
 	
 	@Override
 	public Item getIcon(int wheelIdx, int wheelPos) {
@@ -75,6 +80,9 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			break;
 		case CMD_UPDATE_CREDITS:
 			credits = data;
+			break;
+		case CMD_UPDATE_SESSION_WIN:
+			sessionWin = data;
 			break;
 		}
     }

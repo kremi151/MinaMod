@@ -54,7 +54,7 @@ public class GuiSlotMachine extends GuiContainer{
 		for(int i = 0 ; i < 5 ; i++) {
 			int x = 40 + (i * 20);
 			for(int j = 0 ; j < 3 ; j++) {
-				int y = 35 + (j * 17);
+				int y = 34 + (j * 17);
 				Item icon = container.getIcon(i, j);
 				this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(icon), x, y);
 			}
@@ -83,10 +83,21 @@ public class GuiSlotMachine extends GuiContainer{
 		drawCoinAmount(spin3LButton.x + spin3LButton.width + 6 - guiLeft, spin3LButton.y + ((spin3LButton.height - 16) / 2) - guiTop, container.getPriceFor3Spins());
 		drawCoinAmount(spin5LButton.x + spin5LButton.width + 6 - guiLeft, spin5LButton.y + ((spin5LButton.height - 16) / 2) - guiTop, container.getPriceFor5Spins());
 		
+	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+
 		if(isHovering(mouseX, mouseY, reportButton)) {
 			drawHoveringText(TextFormatting.RED + "Report in case the slot machine does not reward money when at least one row is a winning line", mouseX, mouseY);
 		}
-	}
+		
+		if(isHovering(mouseX, mouseY, guiLeft + 8, guiTop + 166, guiLeft + 170, guiTop + 179)) {
+			drawHoveringText(I18n.translateToLocalFormatted("gui.slot_machine.current_win", container.getSessionWin()>=0?(TextFormatting.GREEN + "+" + container.getSessionWin()):(TextFormatting.RED + "" + container.getSessionWin())), mouseX, mouseY);
+		}
+    }
 	
 	private void drawCoinAmount(int x, int y, int amount) {
 		this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(MinaItems.GOLDEN_COIN), x, y);
@@ -128,7 +139,11 @@ public class GuiSlotMachine extends GuiContainer{
 	}
 	
 	private boolean isHovering(int mouseX, int mouseY, GuiButton element) {
-		return mouseX >= element.x && mouseX <= element.x + element.width && mouseY >= element.y && mouseY <= element.y + element.height;
+		return isHovering(mouseX, mouseY, element.x, element.y, element.x + element.width, element.y + element.height);
+	}
+	
+	private boolean isHovering(int mouseX, int mouseY, int x1, int y1, int x2, int y2) {
+		return mouseX >= x1 && mouseX < x2 && mouseY >= y1 && mouseY < y2;
 	}
 
 	@Override

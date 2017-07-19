@@ -31,7 +31,7 @@ public class MessageReportSlotMachineHandler extends AbstractServerMessageHandle
 				sb.append("\r\n");
 			}
 			sb.append("Last spin mode: " + (snapshot.lastSpinMode != null ? snapshot.lastSpinMode.name() : "none"));
-			sb.append("Awarded for last spin: " + snapshot.awardedForLastSpin);
+			sb.append("\r\nAwarded for last spin: " + snapshot.awardedForLastSpin);
 			
 			bw.write(sb.toString());
 			bw.flush();
