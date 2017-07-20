@@ -47,7 +47,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean isTurning;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false;
-	private int coinTray = 0, cherryIcon = 4;
+	private int coinTray = 0;
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -115,14 +115,6 @@ public class TileEntitySlotMachine extends TileEntity{
 		this.wheels.unmarkDirty();
 		needs_sync = false;
 	}
-	
-	/*public int getWheelOffset(int wheelIndex) {
-		return this.wheelOffsets[wheelIndex];
-	}
-	
-	public void setWheelOffset(int wheelIndex, int offset) {
-		this.wheelOffsets[wheelIndex] = (byte)MinaUtils.positiveModulo(offset, wheelLayout.length);
-	}*/
 	
 	private void fillWeigtedIcons() {
 		MutableWeightedList<Integer> weightedIcons = WeightedList.create();
@@ -374,7 +366,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		
 		private int checkHLine(int pos) {
 			int prev = -1;
-			boolean cherry = false;
+			int cherryId = -1;
 			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
 				int a = wheels.getWheelValue(i, pos);
 				if(prev == -1 && !isCherryIcon(a)){
@@ -382,15 +374,19 @@ public class TileEntitySlotMachine extends TileEntity{
 				}else if(prev != a && !isCherryIcon(a)) {
 					return -1;
 				}else if(isCherryIcon(a)) {
-					cherry = true;
+					if(cherryId == -1) {
+						cherryId = a;
+					}else if(cherryId != a){
+						return -1;
+					}
 				}
 			}
-			return (prev == -1 && cherry) ? -2 : prev;
+			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}
 		
 		private int checkVLine(boolean invert) {
 			int prev = -1;
-			boolean cherry = false;
+			int cherryId = -1;
 			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
 				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
 				int a = wheels.getWheelValue(i, pos);
@@ -399,10 +395,14 @@ public class TileEntitySlotMachine extends TileEntity{
 				}else if(prev != a && !isCherryIcon(a)) {
 					return -1;
 				}else if(isCherryIcon(a)) {
-					cherry = true;
+					if(cherryId == -1) {
+						cherryId = a;
+					}else if(cherryId != a){
+						return -1;
+					}
 				}
 			}
-			return (prev == -1 && cherry) ? -2 : prev;
+			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}
 		
 		/*private int checkHLine(int pos) {
@@ -414,7 +414,7 @@ public class TileEntitySlotMachine extends TileEntity{
 				new int[] {4, 4, 4}
 			};
 			int prev = -1;
-			boolean cherry = false;
+			int cherryId = -1;
 			for(int i = 0 ; i < wheels.length ; i++) {
 				int a = wheels[i][pos];
 				if(prev == -1 && a != 4){
@@ -422,10 +422,14 @@ public class TileEntitySlotMachine extends TileEntity{
 				}else if(prev != a && a != 4) {
 					return -1;
 				}else if(a == 4) {
-					cherry = true;
+					if(cherryId == -1) {
+						cherryId = a;
+					}else if(cherryId != a){
+						return -1;
+					}
 				}
 			}
-			return (prev == -1 && cherry) ? -2 : prev;
+			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}*/
 		
 		/*private int checkVLine(boolean invert) {
@@ -437,7 +441,7 @@ public class TileEntitySlotMachine extends TileEntity{
 				new int[] {4, 4, 4}
 			};
 			int prev = -1;
-			boolean cherry = false;
+			int cherryId = -1;
 			for(int i = 0 ; i < wheels.length ; i++) {
 				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
 				int a = wheels[i][pos];
@@ -446,10 +450,14 @@ public class TileEntitySlotMachine extends TileEntity{
 				}else if(prev != a && a != 4) {
 					return -1;
 				}else if(a == 4) {
-					cherry = true;
+					if(cherryId == -1) {
+						cherryId = a;
+					}else if(cherryId != a){
+						return -1;
+					}
 				}
 			}
-			return (prev == -1 && cherry) ? -2 : prev;
+			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}*/
 		
 		private int rowPrice(int iconId) {//TODO: Adjust
