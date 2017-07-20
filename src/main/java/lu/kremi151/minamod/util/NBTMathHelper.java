@@ -20,24 +20,24 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class NBTMathHelper {
 
 	/**
-	 * Parses a mathematical function from NBT data
+	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public SerializableOperation parseFunction(NBTTagCompound nbt) throws MathParseException{
-		return parseFunction(nbt, var -> null, var -> null);
+	public static SerializableOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
+		return parseOperation(nbt, var -> null, var -> null);
 	}
 
 	/**
-	 * Parses a mathematical function from NBT data
+	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @param varGetter A mapper function which allows to map literals to numbers
 	 * @param functionGetter A mapper function which allows to map literals to functions
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public SerializableOperation parseFunction(NBTTagCompound nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
+	public static SerializableOperation parseOperation(NBTTagCompound nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
 		NBTBase a = nbt.getTag("A");
 		NBTBase b = nbt.getTag("B");
 		String operation = nbt.getString("Operation");
@@ -50,8 +50,8 @@ public class NBTMathHelper {
 		}
 		
 		final SerializableFunction parsedA, parsedB;
-		parsedA = parseOperand(a, varGetter, functionGetter);
-		parsedB = parseOperand(b, varGetter, functionGetter);
+		parsedA = parseFunction(a, varGetter, functionGetter);
+		parsedB = parseFunction(b, varGetter, functionGetter);
 		
 		switch(operation.charAt(0)) {
 		case '+':
@@ -64,14 +64,36 @@ public class NBTMathHelper {
 			return new SerializableOperation(parsedA, parsedB, DIVISION);
 		case '^':
 			return new SerializableOperation(parsedA, parsedB, POWER);
+		case 'M':
+			return new SerializableOperation(parsedA, parsedB, MAX);
+		case 'm':
+			return new SerializableOperation(parsedA, parsedB, MIN);
 		default:
 			throw new MathParseException("Unknown operation: " + operation);
 		}
 	}
 	
-	private SerializableFunction parseOperand(NBTBase nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
+	/**
+	 * Parses a mathematical function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	public static SerializableFunction parseFunction(NBTBase nbt) throws MathParseException{
+		return parseFunction(nbt, var -> null, var -> null);
+	}
+	
+	/**
+	 * Parses a mathematical function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @param varGetter A mapper function which allows to map literals to numbers
+	 * @param functionGetter A mapper function which allows to map literals to functions
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	public static SerializableFunction parseFunction(NBTBase nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
 		if(nbt instanceof NBTTagCompound) {
-			return parseFunction((NBTTagCompound)nbt, varGetter, functionGetter);
+			return parseOperation((NBTTagCompound)nbt, varGetter, functionGetter);
 		}else if(nbt instanceof NBTPrimitive) {
 			return new SerializableConstant(((NBTPrimitive)nbt).getDouble());
 		}else if(nbt instanceof NBTTagString) {
@@ -104,42 +126,56 @@ public class NBTMathHelper {
 		}
 	}
 
-	private static final SerializableOperator ADDITION = new SerializableOperator('+') {
+	public static final SerializableOperator ADDITION = new SerializableOperator('+') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return a.doubleValue() + b.doubleValue();
 		}
 	};
 
-	private static final SerializableOperator SUBSTRACTION = new SerializableOperator('-') {
+	public static final SerializableOperator SUBSTRACTION = new SerializableOperator('-') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return a.doubleValue() - b.doubleValue();
 		}
 	};
 
-	private static final SerializableOperator MULTIPLICATION = new SerializableOperator('*') {
+	public static final SerializableOperator MULTIPLICATION = new SerializableOperator('*') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return a.doubleValue() * b.doubleValue();
 		}
 	};
 
-	private static final SerializableOperator DIVISION = new SerializableOperator('/') {
+	public static final SerializableOperator DIVISION = new SerializableOperator('/') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return a.doubleValue() / b.doubleValue();
 		}
 	};
 
-	private static final SerializableOperator POWER = new SerializableOperator('^') {
+	public static final SerializableOperator POWER = new SerializableOperator('^') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return Math.pow(a.doubleValue(), b.doubleValue());
 		}
 	};
+
+	public static final SerializableOperator MAX = new SerializableOperator('M') {
+		@Override
+		public Number apply(Number a, Number b) {
+			return Math.max(a.doubleValue(), b.doubleValue());
+		}
+	};
+
+	public static final SerializableOperator MIN = new SerializableOperator('m') {
+		@Override
+		public Number apply(Number a, Number b) {
+			return Math.min(a.doubleValue(), b.doubleValue());
+		}
+	};
 	
-	private abstract static class SerializableOperator implements BinaryOperator<Number>{
+	public abstract static class SerializableOperator implements BinaryOperator<Number>{
 		
 		private final char operation;
 		
@@ -149,18 +185,18 @@ public class NBTMathHelper {
 		
 	}
 	
-	public static abstract class SerializableFunction implements UnaryOperator<Number>{
+	public static abstract class SerializableFunction<NBTType extends NBTBase> implements UnaryOperator<Number>{
 
-		public abstract NBTBase serialize();
+		public abstract NBTType serialize();
 		
 	}
 	
-	private static class SerializableOperation extends SerializableFunction{
+	public static class SerializableOperation extends SerializableFunction<NBTTagCompound>{
 		
-		private final SerializableFunction a, b;
+		private final SerializableFunction<? extends NBTBase> a, b;
 		private final SerializableOperator operation;
 		
-		private SerializableOperation(SerializableFunction a, SerializableFunction b, SerializableOperator operation) {
+		public SerializableOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
 			this.a = a;
 			this.b = b;
 			this.operation = operation;
@@ -172,7 +208,7 @@ public class NBTMathHelper {
 		}
 
 		@Override
-		public NBTBase serialize() {
+		public NBTTagCompound serialize() {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setTag("A", a.serialize());
 			nbt.setTag("B", b.serialize());
@@ -182,11 +218,11 @@ public class NBTMathHelper {
 		
 	}
 	
-	private static class SerializableConstant extends SerializableFunction{
+	public static class SerializableConstant extends SerializableFunction<NBTPrimitive>{
 		
 		private final Number primitive;
 		
-		protected SerializableConstant(Number primitive) {
+		public SerializableConstant(Number primitive) {
 			this.primitive = primitive;
 		}
 
@@ -196,34 +232,40 @@ public class NBTMathHelper {
 		}
 
 		@Override
-		public NBTBase serialize() {
+		public NBTPrimitive serialize() {
 			return new NBTTagDouble(primitive.doubleValue());
 		}
 		
 	}
 	
-	private static class SerializableNamedConstant extends SerializableConstant{
-		
+	public static class SerializableNamedConstant extends SerializableFunction<NBTTagString>{
+
+		private final Number primitive;
 		private final String varName;
 
-		protected SerializableNamedConstant(Number primitive, String varName) {
-			super(primitive);
+		public SerializableNamedConstant(Number primitive, String varName) {
+			this.primitive = primitive;
 			this.varName = varName;
 		}
 
 		@Override
-		public NBTBase serialize() {
+		public Number apply(Number t) {
+			return primitive;
+		}
+
+		@Override
+		public NBTTagString serialize() {
 			return new NBTTagString(varName);
 		}
 		
 	}
 	
-	private static class SerializableNamedFunction extends SerializableFunction{
+	public static class SerializableNamedFunction extends SerializableFunction<NBTTagString>{
 		
 		private final String functionName;
 		private final UnaryOperator<Number> function;
 		
-		private SerializableNamedFunction(UnaryOperator<Number> function, String functionName) {
+		public SerializableNamedFunction(UnaryOperator<Number> function, String functionName) {
 			this.functionName = functionName;
 			this.function = function;
 		}
@@ -233,13 +275,13 @@ public class NBTMathHelper {
 			return function.apply(t);
 		}
 		@Override
-		public NBTBase serialize() {
+		public NBTTagString serialize() {
 			return new NBTTagString(functionName);
 		}
 
 	}
 	
-	private static class SerializableVariable extends SerializableFunction{
+	public static class SerializableVariable extends SerializableFunction<NBTTagString>{
 
 		@Override
 		public Number apply(Number t) {
@@ -247,7 +289,7 @@ public class NBTMathHelper {
 		}
 
 		@Override
-		public NBTBase serialize() {
+		public NBTTagString serialize() {
 			return new NBTTagString("x");
 		}
 		

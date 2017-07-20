@@ -2,15 +2,18 @@ package lu.kremi151.minamod.block.tileentity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
-import lu.kremi151.minamod.inventory.container.ContainerSlotMachine;
+import lu.kremi151.minamod.util.NBTMathHelper;
+import lu.kremi151.minamod.util.NBTMathHelper.MathParseException;
+import lu.kremi151.minamod.util.NBTMathHelper.SerializableConstant;
+import lu.kremi151.minamod.util.NBTMathHelper.SerializableFunction;
+import lu.kremi151.minamod.util.NBTMathHelper.SerializableNamedFunction;
+import lu.kremi151.minamod.util.NBTMathHelper.SerializableOperation;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
 import lu.kremi151.minamod.util.Task.ProgressDispatcher;
@@ -21,6 +24,7 @@ import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -48,6 +52,24 @@ public class TileEntitySlotMachine extends TileEntity{
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false;
 	private int coinTray = 0;
+
+	/*
+	 float r = (float)icons.length / (float)icons[x.intValue()].weight;
+		return (int) Math.max(50f * r, 1f);//50f perhaps too high?
+	 */
+	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableOperation(
+			new SerializableOperation(
+					new SerializableOperation(
+							new SerializableNamedFunction(id -> (double)icons.length, "iconCount"),
+							new SerializableNamedFunction(id -> (double)icons[id.intValue()].weight, "iconWeight"),
+							NBTMathHelper.DIVISION
+							),
+					new SerializableConstant(50.0),
+					NBTMathHelper.MULTIPLICATION
+					),
+			new SerializableConstant(1.0),
+			NBTMathHelper.MAX
+			);
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -206,6 +228,26 @@ public class TileEntitySlotMachine extends TileEntity{
 		if(nbt.hasKey("CoinTray", 99)) {
 			coinTray = Math.max(nbt.getInteger("CoinTray"), 0);
 		}
+		if(nbt.hasKey("RowPriceFunction", 10)) {
+			try {System.out.println("Function as nbt: " + nbt.getTag("RowPriceFunction"));
+				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), 
+						var -> {
+							return null;
+						}, 
+						var -> {
+							if(var.equalsIgnoreCase("iconWeight")) {
+								return id -> icons[id.intValue()].weight;
+							}else if(var.equalsIgnoreCase("iconCount")) {
+								return id -> icons.length;
+							}else {
+								return null;
+							}
+						});
+			} catch (MathParseException e) {
+				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -216,6 +258,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setInteger("Price3", prices[1]);
 		nbt.setInteger("Price5", prices[2]);
 		nbt.setInteger("CoinTray", coinTray);
+		nbt.setTag("RowPriceFunction", rowPriceFunction.serialize());
 		
 		return nbt;
 	}
@@ -461,8 +504,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}*/
 		
 		private int rowPrice(int iconId) {//TODO: Adjust
-			float r = (float)icons.length / (float)icons[iconId].weight;
-			return (int) Math.max(50f * r, 1f);//50f perhaps too high?
+			return rowPriceFunction.apply(iconId).intValue();
 		}
 		
 		private int evaluateResult() {
