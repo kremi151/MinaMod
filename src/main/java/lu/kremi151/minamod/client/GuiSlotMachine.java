@@ -43,9 +43,15 @@ public class GuiSlotMachine extends GuiContainer{
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		fontRenderer.drawString(
-				I18n.translateToLocal("tile.slot_machine.name") + " (BETA)", 8, 10,
-				4210752);
+		if(container.getCustomName() != null) {
+			fontRenderer.drawString(
+					container.getCustomName(), 8, 10,
+					4210752);
+		}else {
+			fontRenderer.drawString(
+					I18n.translateToLocal("tile.slot_machine.name") + " (BETA)", 8, 10,
+					4210752);
+		}
 		
 		fontRenderer.drawString(
 				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getCredits()), 10,

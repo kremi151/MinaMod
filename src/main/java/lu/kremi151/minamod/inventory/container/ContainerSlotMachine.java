@@ -42,6 +42,10 @@ public class ContainerSlotMachine extends BaseContainer{
 		return true;
 	}
 	
+	public String getCustomName() {
+		return slotMachine.getCustomName();
+	}
+	
 	public boolean isTurning() {
 		return slotMachine.isTurning();
 	}

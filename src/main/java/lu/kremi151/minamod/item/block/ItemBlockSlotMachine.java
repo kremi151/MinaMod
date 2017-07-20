@@ -2,14 +2,15 @@ package lu.kremi151.minamod.item.block;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.BlockSlotMachine;
+import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine.SpinMode;
+import lu.kremi151.minamod.util.SlotMachineBuilder;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,23 +28,17 @@ public class ItemBlockSlotMachine extends ItemBlock{
     {
         subItems.add(new ItemStack(itemIn, 1));
         
-        if(otherGame == null) {
-        	otherGame = new ItemStack(block, 1);
-            NBTTagCompound teTag = otherGame.getOrCreateSubCompound("BlockEntityTag");
-            NBTTagList iconsTag = new NBTTagList();
-            NBTTagCompound iconTag = new NBTTagCompound();
-            iconTag.setString("Item", MinaItems.RUBY.getRegistryName().toString());
-            iconTag.setInteger("Weight", 3);
-            iconsTag.appendTag(iconTag.copy());
-            iconTag.setString("Item", MinaItems.SAPPHIRE.getRegistryName().toString());
-            iconsTag.appendTag(iconTag.copy());
-            iconTag.setString("Item", MinaItems.CITRIN.getRegistryName().toString());
-            iconTag.setInteger("Weight", 2);
-            iconsTag.appendTag(iconTag.copy());
-            iconTag.setString("Item", Items.NETHER_STAR.getRegistryName().toString());
-            iconTag.setInteger("Weight", 1);
-            iconsTag.appendTag(iconTag.copy());
-            teTag.setTag("Icons", iconsTag);
+        if(otherGame == null) {        	
+        	otherGame = new SlotMachineBuilder()
+        			.addIcon(MinaItems.RUBY, 3, false)
+        			.addIcon(MinaItems.SAPPHIRE, 3, false)
+        			.addIcon(Items.EMERALD, 2, false)
+        			.addIcon(Items.NETHER_STAR, 1, false)
+        			.setPriceForSpinMode(SpinMode.ONE, 1)
+        			.setPriceForSpinMode(SpinMode.THREE, 2)
+        			.setPriceForSpinMode(SpinMode.FIVE, 3)
+        			.setCustomName(TextFormatting.BLUE + "Shiny" + TextFormatting.RED + "Gem" + TextFormatting.GREEN + "Crush")
+        			.buildItemStack();
         }
         
         subItems.add(otherGame.copy());        

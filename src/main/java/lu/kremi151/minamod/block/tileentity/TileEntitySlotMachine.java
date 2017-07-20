@@ -36,6 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class TileEntitySlotMachine extends TileEntity{
 	
+	private String customName = null;
 	private Session currentSession = Session.empty();
 	//field_191525_da => IRON_NUGGET -.-
 	private Icon icons[] = new Icon[] {
@@ -46,7 +47,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			new Icon(MinaItems.CHERRY, 1, true),
 			new Icon(Items.DIAMOND, 1, false)
 	};
-	private final int prices[] = new int[] {1, 3, 5};
+	private final int prices[] = new int[SpinMode.values().length];
 	private WeightedList<Integer> weightedIconIds;
 	private boolean isTurning;
 	private final WheelManager wheels = new WheelManager(5, 3);
@@ -77,6 +78,10 @@ public class TileEntitySlotMachine extends TileEntity{
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
+		
+		for(SpinMode mode : SpinMode.values()) {
+			prices[mode.ordinal()] = mode.defaultPrice;
+		}
 	}
 	
 	public EntityPlayer getPlaying() {
@@ -153,19 +158,19 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public int getPriceFor1Spin() {
-		return prices[0];
+		return prices[SpinMode.ONE.ordinal()];
 	}
 	
 	public int getPriceFor3Spins() {
-		return prices[1];
+		return prices[SpinMode.THREE.ordinal()];
 	}
 	
 	public int getPriceFor5Spins() {
-		return prices[2];
+		return prices[SpinMode.FIVE.ordinal()];
 	}
 	
 	public int getPriceForSpinMode(SpinMode mode) {
-		return mode == SpinMode.FIVE ? prices[2] : (mode == SpinMode.THREE ? prices[1] : prices[0]);
+		return prices[mode.ordinal()];
 	}
 	
 	private void rewardPlayer(int coins, boolean won) {
@@ -210,26 +215,22 @@ public class TileEntitySlotMachine extends TileEntity{
 			}
 			fillWeigtedIcons();
 		}
-		if(nbt.hasKey("Price1", 99)) {
-			prices[0] = MathHelper.clamp(nbt.getInteger("Price1"), 1, 255);
-		}else {
-			prices[0] = 1;
+		for(SpinMode mode : SpinMode.values()) {
+			prices[mode.ordinal()] = mode.defaultPrice;
 		}
-		if(nbt.hasKey("Price3", 99)) {
-			prices[1] = MathHelper.clamp(nbt.getInteger("Price3"), 1, 255);
-		}else {
-			prices[1] = 3;
-		}
-		if(nbt.hasKey("Price5", 99)) {
-			prices[2] = MathHelper.clamp(nbt.getInteger("Price5"), 1, 255);
-		}else {
-			prices[2] = 5;
+		if(nbt.hasKey("Prices", 10)) {
+			NBTTagCompound pnbt = nbt.getCompoundTag("Prices");
+			for(SpinMode mode : SpinMode.values()) {
+				if(pnbt.hasKey(mode.name().toLowerCase(), 99)) {
+					prices[mode.ordinal()] = MathHelper.clamp(pnbt.getInteger(mode.name().toLowerCase()), 1, 255);
+				}
+			}
 		}
 		if(nbt.hasKey("CoinTray", 99)) {
 			coinTray = Math.max(nbt.getInteger("CoinTray"), 0);
 		}
 		if(nbt.hasKey("RowPriceFunction", 10)) {
-			try {System.out.println("Function as nbt: " + nbt.getTag("RowPriceFunction"));
+			try {
 				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), 
 						var -> {
 							return null;
@@ -248,15 +249,20 @@ public class TileEntitySlotMachine extends TileEntity{
 				e.printStackTrace();
 			}
 		}
+		if(nbt.hasKey("CustomName", 8)) {
+			this.customName = nbt.getString("CustomName");
+		}
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		nbt = writeSharedToNBT(super.writeToNBT(nbt));
 
-		nbt.setInteger("Price1", prices[0]);
-		nbt.setInteger("Price3", prices[1]);
-		nbt.setInteger("Price5", prices[2]);
+		NBTTagCompound pnbt = new NBTTagCompound();
+		for(SpinMode mode : SpinMode.values()) {
+			pnbt.setInteger(mode.name().toLowerCase(), prices[mode.ordinal()]);
+		}
+		nbt.setTag("Prices", pnbt);
 		nbt.setInteger("CoinTray", coinTray);
 		nbt.setTag("RowPriceFunction", rowPriceFunction.serialize());
 		
@@ -264,6 +270,10 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private NBTTagCompound writeSharedToNBT(NBTTagCompound nbt) {
+		if(customName != null) {
+			nbt.setString("CustomName", customName);
+		}
+		
 		NBTTagList icons = new NBTTagList();
 		for(int i = 0 ; i < this.icons.length ; i++) {
 			NBTTagCompound inbt = new NBTTagCompound();
@@ -291,6 +301,10 @@ public class TileEntitySlotMachine extends TileEntity{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         readFromNBT(packet.getNbtCompound());
+	}
+	
+	public String getCustomName() {
+		return customName;
 	}
 	
 	private int getCredits(EntityPlayer player) {
@@ -594,9 +608,19 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public static enum SpinMode{
-		ONE,
-		THREE,
-		FIVE
+		ONE(1),
+		THREE(3),
+		FIVE(5);
+		
+		private final int defaultPrice;
+		
+		private SpinMode(int defaultPrice) {
+			this.defaultPrice = defaultPrice;
+		}
+		
+		public int getDefaultPrice() {
+			return defaultPrice;
+		}
 	}
 	
 	public static class Session{
