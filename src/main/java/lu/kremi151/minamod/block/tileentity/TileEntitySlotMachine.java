@@ -34,14 +34,20 @@ public class TileEntitySlotMachine extends TileEntity{
 	
 	private Session currentSession = Session.empty();
 	//field_191525_da => IRON_NUGGET -.-
-	private Item icons[] = new Item[] {Items.field_191525_da, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT, MinaItems.CHERRY, Items.DIAMOND};
-	private int occurences[] = new int[] {4, 4, 3, 3, 1, 1};
+	private Icon icons[] = new Icon[] {
+			new Icon(Items.field_191525_da, 4, false),
+			new Icon(Items.GOLD_NUGGET, 4, false),
+			new Icon(Items.IRON_INGOT, 3, false),
+			new Icon(Items.GOLD_INGOT, 3, false),
+			new Icon(MinaItems.CHERRY, 1, true),
+			new Icon(Items.DIAMOND, 1, false)
+	};
 	private final int prices[] = new int[] {1, 3, 5};
 	private WeightedList<Integer> weightedIconIds;
 	private boolean isTurning;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false;
-	private int coinTray = 0;
+	private int coinTray = 0, cherryIcon = 4;
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -94,7 +100,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public Item getItemIcon(int i) {
-		return this.icons[i];
+		return this.icons[i].icon;
 	}
 	
 	public int getWheelValue(int wheelIdx, int wheelPos) {
@@ -121,7 +127,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private void fillWeigtedIcons() {
 		MutableWeightedList<Integer> weightedIcons = WeightedList.create();
 		for(int i = 0 ; i < this.icons.length ; i++) {
-			weightedIcons.add(i, (double)this.occurences[i]);
+			weightedIcons.add(i, (double)this.icons[i].weight);
 		}
 		this.weightedIconIds = weightedIcons.immutable();
 		Random rand = new Random(System.currentTimeMillis());
@@ -169,28 +175,24 @@ public class TileEntitySlotMachine extends TileEntity{
 		super.readFromNBT(nbt);
 		if(nbt.hasKey("Icons", 9)) {
 			NBTTagList icons = nbt.getTagList("Icons", 10);
-			ArrayList<Object> parsed = new ArrayList<Object>();
+			ArrayList<Icon> parsed = new ArrayList<>();
 			for(int i = 0 ; i < icons.tagCount() ; i++) {
 				NBTTagCompound inbt = icons.getCompoundTagAt(i);
-				if(inbt.hasKey("Item", 8) && inbt.hasKey("Occurence", 99)) {
+				if(inbt.hasKey("Item", 8) && inbt.hasKey("Weight", 99)) {
 					ResourceLocation iconRes = new ResourceLocation(inbt.getString("Item"));
 					Item item = Item.REGISTRY.getObject(iconRes);
 					if(item != null) {
-						parsed.add(item);
-						parsed.add(inbt.getInteger("Occurence"));
+						parsed.add(new Icon(item, inbt.getInteger("Weight"), inbt.getBoolean("Cherry")));
 					}
 				}
 			}
-			if(parsed.size() % 2 != 0)throw new IllegalStateException("This should not happen");
-			if(parsed.size() > 32) {
+			if(parsed.size() > 16) {
 				MinaMod.println("A slot machines maximum icon count is limited at 16. Additional icons will be dropped.");
 			}
-			final int bound = Math.min(parsed.size() / 2, 16);
-			this.icons = new Item[bound];
-			this.occurences = new int[bound];
+			final int bound = Math.min(parsed.size(), 16);
+			this.icons = new Icon[bound];
 			for(int i = 0 ; i < bound ; i++) {
-				this.icons[i] = (Item) parsed.get(i * 2);
-				this.occurences[i] = ((Integer) parsed.get((i * 2) + 1)).intValue();
+				this.icons[i] = parsed.get(i);
 			}
 			fillWeigtedIcons();
 		}
@@ -227,18 +229,15 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private NBTTagCompound writeSharedToNBT(NBTTagCompound nbt) {
-		if(this.icons.length != this.occurences.length) {
-			throw new IllegalStateException("This should not happen");
-		}else {
-			NBTTagList icons = new NBTTagList();
-			for(int i = 0 ; i < this.icons.length ; i++) {
-				NBTTagCompound inbt = new NBTTagCompound();
-				inbt.setString("Item", this.icons[i].getRegistryName().toString());
-				inbt.setInteger("Occurence", this.occurences[i]);
-				icons.appendTag(inbt);
-			}
-			nbt.setTag("Icons", icons);
+		NBTTagList icons = new NBTTagList();
+		for(int i = 0 ; i < this.icons.length ; i++) {
+			NBTTagCompound inbt = new NBTTagCompound();
+			inbt.setString("Item", this.icons[i].icon.getRegistryName().toString());
+			inbt.setInteger("Weight", this.icons[i].weight);
+			if(this.icons[i].cherry)inbt.setBoolean("Cherry", true);//To reduce memory usage
+			icons.appendTag(inbt);
 		}
+		nbt.setTag("Icons", icons);
 		
 		return nbt;
 	}
@@ -276,7 +275,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private boolean isCherryIcon(int id) {
-		return getItemIcon(id) == MinaItems.CHERRY;//TODO
+		return this.icons[id].cherry;
 	}
 	
 	private boolean withdrawCoins(EntityPlayer player, int amount) {
@@ -308,6 +307,18 @@ public class TileEntitySlotMachine extends TileEntity{
 					}
 				}
 			}
+		}
+	}
+	
+	private static class Icon{
+		private final Item icon;
+		private final int weight;
+		private final boolean cherry;
+		
+		private Icon(Item icon, int weight, boolean cherry) {
+			this.icon = icon;
+			this.weight = weight;
+			this.cherry = cherry;
 		}
 	}
 	
@@ -442,19 +453,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		}*/
 		
 		private int rowPrice(int iconId) {//TODO: Adjust
-			float r = (float)occurences.length / (float)occurences[iconId];
+			float r = (float)icons.length / (float)icons[iconId].weight;
 			return (int) Math.max(50f * r, 1f);//50f perhaps too high?
 		}
 		
 		private int evaluateResult() {
-			System.out.println("Evaluate result for matrix:");
-			for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
-				for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-					System.out.print(wheels.getWheelValue(i, j) + "\t");
-				}
-				System.out.println();
-			}
-			
 			int win = 0;
 			
 			int eval = checkHLine(1);
