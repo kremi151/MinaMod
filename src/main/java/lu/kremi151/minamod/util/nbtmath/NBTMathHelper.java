@@ -1,16 +1,14 @@
-package lu.kremi151.minamod.util;
+package lu.kremi151.minamod.util.nbtmath;
 
-import java.util.function.BinaryOperator;
+import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
-import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * A helper class to parse mathematical functions from NBT data
@@ -32,12 +30,12 @@ public class NBTMathHelper {
 	/**
 	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
-	 * @param varGetter A mapper function which allows to map literals to numbers
-	 * @param functionGetter A mapper function which allows to map literals to functions
+	 * @param constGetter A mapper function which allows to map literals to constant numbers
+	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableOperation parseOperation(NBTTagCompound nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
+	public static SerializableOperation parseOperation(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
 		NBTBase a = nbt.getTag("A");
 		NBTBase b = nbt.getTag("B");
 		String operation = nbt.getString("Operation");
@@ -50,8 +48,8 @@ public class NBTMathHelper {
 		}
 		
 		final SerializableFunction parsedA, parsedB;
-		parsedA = parseFunction(a, varGetter, functionGetter);
-		parsedB = parseFunction(b, varGetter, functionGetter);
+		parsedA = parseFunction(a, constGetter, varGetter);
+		parsedB = parseFunction(b, constGetter, varGetter);
 		
 		switch(operation.charAt(0)) {
 		case '+':
@@ -74,7 +72,42 @@ public class NBTMathHelper {
 	}
 	
 	/**
-	 * Parses a mathematical function from NBT data
+	 * Parses a pure mathematical function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @param constGetter A mapper function which allows to map literals to constant numbers
+	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 * @throws MathFunctionException Thrown if the function could not be created
+	 */
+	private static SerializableNamedFunction parseMathFunction(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException, MathFunctionException{
+		NBTTagList args = nbt.getTagList("Arguments", 10);
+		String functionName = nbt.getString("Function");
+		if(args.tagCount() == 0) {
+			throw new MathParseException("No arguments parsed for function " + functionName);
+		}
+		
+		ArrayList<SerializableFunction<? extends NBTBase>> parsedArgs = new ArrayList<>();
+		for(int i = 0 ; i < args.tagCount() ; i++) {
+			NBTTagCompound anbt = args.getCompoundTagAt(i);
+			if(anbt.hasKey("Arg", 10)) {
+				parsedArgs.add(parseFunction(anbt.getTag("Arg"), constGetter, varGetter));
+			}
+		}
+		SerializableFunction<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunction[parsedArgs.size()]);
+		
+		//TODO: Make function determination dynamic
+		if(functionName.equals("abs")) {
+			return new SerializableNamedFunction.Absolute(parsedArgsArray[0]);
+		}else if(functionName.equals("neg")) {
+			return new SerializableNamedFunction.Negate(parsedArgsArray[0]);
+		}else {
+			throw new MathParseException("Unknown math function: " + functionName);
+		}
+	}
+	
+	/**
+	 * Parses a mathematical functional structure from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
@@ -84,16 +117,27 @@ public class NBTMathHelper {
 	}
 	
 	/**
-	 * Parses a mathematical function from NBT data
+	 * Parses a mathematical functional structure from NBT data
 	 * @param nbt The NBT data structure holding the function
-	 * @param varGetter A mapper function which allows to map literals to numbers
-	 * @param functionGetter A mapper function which allows to map literals to functions
+	 * @param constGetter A mapper function which allows to map literals to constant numbers
+	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunction parseFunction(NBTBase nbt, Function<String, Number> varGetter, Function<String, UnaryOperator<Number>> functionGetter) throws MathParseException{
+	public static SerializableFunction parseFunction(NBTBase nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
 		if(nbt instanceof NBTTagCompound) {
-			return parseOperation((NBTTagCompound)nbt, varGetter, functionGetter);
+			NBTTagCompound raw_nbt = (NBTTagCompound)nbt;
+			if(raw_nbt.hasKey("Operation", 8)) {
+				return parseOperation((NBTTagCompound)nbt, constGetter, varGetter);
+			}else if(raw_nbt.hasKey("Function", 8)) {
+				try {
+					return parseMathFunction((NBTTagCompound)nbt, constGetter, varGetter);
+				} catch (MathFunctionException e) {
+					throw new MathParseException("Could not parse math function named " + raw_nbt.getString("Function"), e);
+				}
+			}else {
+				throw new MathParseException("Unknown data structure: " + raw_nbt);
+			}
 		}else if(nbt instanceof NBTPrimitive) {
 			return new SerializableConstant(((NBTPrimitive)nbt).getDouble());
 		}else if(nbt instanceof NBTTagString) {
@@ -102,11 +146,11 @@ public class NBTMathHelper {
 			if(varName.equals("x")) {
 				return new SerializableVariable();
 			}else {
-				Number constant = varGetter.apply(varName);
+				Number constant = constGetter.apply(varName);
 				if(constant != null) {
 					return new SerializableNamedConstant(constant, varName);
 				}else {
-					var = functionGetter.apply(varName);
+					var = varGetter.apply(varName);
 				}
 			}
 			if(var != null) {
@@ -119,13 +163,6 @@ public class NBTMathHelper {
 		}
 	}
 	
-	public static class MathParseException extends Exception{
-		
-		private MathParseException(String msg) {
-			super(msg);
-		}
-	}
-
 	public static final SerializableOperator ADDITION = new SerializableOperator('+') {
 		@Override
 		public Number apply(Number a, Number b) {
@@ -174,124 +211,4 @@ public class NBTMathHelper {
 			return Math.min(a.doubleValue(), b.doubleValue());
 		}
 	};
-	
-	public abstract static class SerializableOperator implements BinaryOperator<Number>{
-		
-		private final char operation;
-		
-		private SerializableOperator(char operation) {
-			this.operation = operation;
-		}
-		
-	}
-	
-	public static abstract class SerializableFunction<NBTType extends NBTBase> implements UnaryOperator<Number>{
-
-		public abstract NBTType serialize();
-		
-	}
-	
-	public static class SerializableOperation extends SerializableFunction<NBTTagCompound>{
-		
-		private final SerializableFunction<? extends NBTBase> a, b;
-		private final SerializableOperator operation;
-		
-		public SerializableOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
-			this.a = a;
-			this.b = b;
-			this.operation = operation;
-		}
-
-		@Override
-		public Number apply(Number t) {
-			return operation.apply(a.apply(t), b.apply(t));
-		}
-
-		@Override
-		public NBTTagCompound serialize() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setTag("A", a.serialize());
-			nbt.setTag("B", b.serialize());
-			nbt.setString("Operation", ""+operation.operation);
-			return nbt;
-		}
-		
-	}
-	
-	public static class SerializableConstant extends SerializableFunction<NBTPrimitive>{
-		
-		private final Number primitive;
-		
-		public SerializableConstant(Number primitive) {
-			this.primitive = primitive;
-		}
-
-		@Override
-		public Number apply(Number t) {
-			return primitive;
-		}
-
-		@Override
-		public NBTPrimitive serialize() {
-			return new NBTTagDouble(primitive.doubleValue());
-		}
-		
-	}
-	
-	public static class SerializableNamedConstant extends SerializableFunction<NBTTagString>{
-
-		private final Number primitive;
-		private final String varName;
-
-		public SerializableNamedConstant(Number primitive, String varName) {
-			this.primitive = primitive;
-			this.varName = varName;
-		}
-
-		@Override
-		public Number apply(Number t) {
-			return primitive;
-		}
-
-		@Override
-		public NBTTagString serialize() {
-			return new NBTTagString(varName);
-		}
-		
-	}
-	
-	public static class SerializableNamedMapper extends SerializableFunction<NBTTagString>{
-		
-		private final String functionName;
-		private final UnaryOperator<Number> function;
-		
-		public SerializableNamedMapper(UnaryOperator<Number> function, String functionName) {
-			this.functionName = functionName;
-			this.function = function;
-		}
-		
-		@Override
-		public Number apply(Number t) {
-			return function.apply(t);
-		}
-		@Override
-		public NBTTagString serialize() {
-			return new NBTTagString(functionName);
-		}
-
-	}
-	
-	public static class SerializableVariable extends SerializableFunction<NBTTagString>{
-
-		@Override
-		public Number apply(Number t) {
-			return t;
-		}
-
-		@Override
-		public NBTTagString serialize() {
-			return new NBTTagString("x");
-		}
-		
-	}
 }
