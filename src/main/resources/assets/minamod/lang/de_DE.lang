@@ -437,3 +437,4 @@ msg.print_perms.head=Von MinaMod benutzte Berechtigungen
 msg.cmd.rmp.done=RMP Explosion wurde ausgeführt
 msg.cmd.minamod.list=Verfügbare MinaMod Befehle
 msg.cmd.minamod.missing_perm=Du bist nicht berechtigt um diesen Befehl auszuführen
+msg.gambling.not_allowed=Du bist nicht berechtigt um Glücksspiel zu betreiben

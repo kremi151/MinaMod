@@ -438,3 +438,4 @@ msg.cmd.print_perms.head=Permission nodes used by MinaMod
 msg.cmd.rmp.done=RMP explosion has been executed
 msg.cmd.minamod.list=MinaMod commands available for you
 msg.cmd.minamod.missing_perm=You are not allowed to execute this command
+msg.gambling.not_allowed=You are not allowed to gamble

@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.block;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class BlockSlotMachine extends BlockCustomHorizontal{
 	
@@ -42,11 +44,15 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 		if(!world.isRemote && player.hasCapability(ICoinHandler.CAPABILITY, null)){
-			TileEntitySlotMachine te = (TileEntitySlotMachine) world.getTileEntity(pos);
-			if(te.setCurrentPlayer(player).isPresent()) {
-				player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdSlotMachine, world, pos.getX(), pos.getY(), pos.getZ());
+			if(PermissionAPI.hasPermission(player, MinaPermissions.ALLOW_GAMBLING)) {
+				TileEntitySlotMachine te = (TileEntitySlotMachine) world.getTileEntity(pos);
+				if(te.setCurrentPlayer(player).isPresent()) {
+					player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdSlotMachine, world, pos.getX(), pos.getY(), pos.getZ());
+				}else {
+					TextHelper.sendChatMessage(player, "This slot machine is currently in use");
+				}
 			}else {
-				TextHelper.sendChatMessage(player, "This slot machine is currently in use");
+				TextHelper.sendTranslateableErrorMessage(player, "msg.gambling.not_allowed");
 			}
 		}
 		return true;
