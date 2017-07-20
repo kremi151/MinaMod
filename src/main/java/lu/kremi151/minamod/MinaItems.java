@@ -41,6 +41,7 @@ import lu.kremi151.minamod.item.block.ItemBlockCombined;
 import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import lu.kremi151.minamod.item.block.ItemBlockLeaves;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
+import lu.kremi151.minamod.item.block.ItemBlockSlotMachine;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
 import net.minecraft.creativetab.CreativeTabs;
@@ -312,7 +313,8 @@ public class MinaItems {
 		//proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves", "palm_leaf_stack", "palm_leaf");
 		proxy.registerItem(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab", BlockMinaPlanks.EnumType.variantNamesSlabs);
-	
+		proxy.registerItem(new ItemBlockSlotMachine(MinaBlocks.SLOT_MACHINE).setRegistryName(MinaBlocks.SLOT_MACHINE.getRegistryName()), "slot_machine");
+		
 		itemBInit = true;
 	}
 }
