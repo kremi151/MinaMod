@@ -12,7 +12,7 @@ import lu.kremi151.minamod.util.NBTMathHelper;
 import lu.kremi151.minamod.util.NBTMathHelper.MathParseException;
 import lu.kremi151.minamod.util.NBTMathHelper.SerializableConstant;
 import lu.kremi151.minamod.util.NBTMathHelper.SerializableFunction;
-import lu.kremi151.minamod.util.NBTMathHelper.SerializableNamedFunction;
+import lu.kremi151.minamod.util.NBTMathHelper.SerializableNamedMapper;
 import lu.kremi151.minamod.util.NBTMathHelper.SerializableOperation;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
@@ -54,15 +54,11 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false;
 	private int coinTray = 0;
 
-	/*
-	 float r = (float)icons.length / (float)icons[x.intValue()].weight;
-		return (int) Math.max(50f * r, 1f);//50f perhaps too high?
-	 */
 	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableOperation(
 			new SerializableOperation(
 					new SerializableOperation(
-							new SerializableNamedFunction(id -> (double)icons.length, "iconCount"),
-							new SerializableNamedFunction(id -> (double)icons[id.intValue()].weight, "iconWeight"),
+							new SerializableNamedMapper(id -> (double)icons.length, "iconCount"),
+							new SerializableNamedMapper(id -> (double)icons[id.intValue()].weight, "iconWeight"),
 							NBTMathHelper.DIVISION
 							),
 					new SerializableConstant(50.0),

@@ -110,7 +110,7 @@ public class NBTMathHelper {
 				}
 			}
 			if(var != null) {
-				return new SerializableNamedFunction(var, varName);
+				return new SerializableNamedMapper(var, varName);
 			}else {
 				throw new MathParseException("Unknown variable: " + varName);
 			}
@@ -260,12 +260,12 @@ public class NBTMathHelper {
 		
 	}
 	
-	public static class SerializableNamedFunction extends SerializableFunction<NBTTagString>{
+	public static class SerializableNamedMapper extends SerializableFunction<NBTTagString>{
 		
 		private final String functionName;
 		private final UnaryOperator<Number> function;
 		
-		public SerializableNamedFunction(UnaryOperator<Number> function, String functionName) {
+		public SerializableNamedMapper(UnaryOperator<Number> function, String functionName) {
 			this.functionName = functionName;
 			this.function = function;
 		}
