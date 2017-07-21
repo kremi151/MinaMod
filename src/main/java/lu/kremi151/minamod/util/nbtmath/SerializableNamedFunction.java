@@ -25,7 +25,7 @@ public abstract class SerializableNamedFunction extends SerializableFunction<NBT
 		}
 		nbt.setTag("Arguments", args);
 		nbt.setString("Function", functionName);
-		return null;
+		return nbt;
 	}
 	
 	public static class Absolute extends SerializableNamedFunction{

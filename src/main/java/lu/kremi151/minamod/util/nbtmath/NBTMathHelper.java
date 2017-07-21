@@ -1,9 +1,11 @@
 package lu.kremi151.minamod.util.nbtmath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
+import lu.kremi151.minamod.util.nbtmath.serialization.INBTFunctionDeserializer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +18,16 @@ import net.minecraft.nbt.NBTTagString;
  *
  */
 public class NBTMathHelper {
+	
+	private static final HashMap<String, INBTFunctionDeserializer<? extends SerializableNamedFunction>> mathFunctionDeserializers = new HashMap<>();
 
+	static {
+		mathFunctionDeserializers.put("abs", args -> new SerializableNamedFunction.Absolute(args[0]));
+		mathFunctionDeserializers.put("neg", args -> new SerializableNamedFunction.Negate(args[0]));
+		mathFunctionDeserializers.put("max", args -> new SerializableNamedFunction.Max(args));
+		mathFunctionDeserializers.put("min", args -> new SerializableNamedFunction.Min(args));
+	}
+	
 	/**
 	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
@@ -86,21 +97,15 @@ public class NBTMathHelper {
 		ArrayList<SerializableFunction<? extends NBTBase>> parsedArgs = new ArrayList<>();
 		for(int i = 0 ; i < args.tagCount() ; i++) {
 			NBTTagCompound anbt = args.getCompoundTagAt(i);
-			if(anbt.hasKey("Arg", 10)) {
+			if(anbt.hasKey("Arg")) {
 				parsedArgs.add(parseFunction(anbt.getTag("Arg"), constGetter, varGetter));
 			}
 		}
 		SerializableFunction<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunction[parsedArgs.size()]);
 		
-		//TODO: Make function determination dynamic
-		if(functionName.equals("abs")) {
-			return new SerializableNamedFunction.Absolute(parsedArgsArray[0]);
-		}else if(functionName.equals("neg")) {
-			return new SerializableNamedFunction.Negate(parsedArgsArray[0]);
-		}else if(functionName.equals("max")) {
-			return new SerializableNamedFunction.Max(parsedArgsArray);
-		}else if(functionName.equals("min")) {
-			return new SerializableNamedFunction.Min(parsedArgsArray);
+		INBTFunctionDeserializer<? extends SerializableNamedFunction> deserializer = mathFunctionDeserializers.get(functionName);
+		if(deserializer != null) {
+			return deserializer.deserialize(parsedArgsArray);
 		}else {
 			throw new MathParseException("Unknown math function: " + functionName);
 		}
