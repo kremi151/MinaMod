@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -44,8 +43,8 @@ public class ReflectionLoader {
 			CONTAINER_MERGE_ITEMSTACK = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
 			
 			try {
-				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
-			}catch(NoSuchFieldError | NoSuchMethodError e) {}//TODO: Find a better way to handle this}
+				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
+			}catch(NoSuchFieldError | NoSuchMethodError | NoClassDefFoundError e) {}//TODO: Find a better way to handle this}
 		} catch (NoSuchFieldException e) {
 			throw new IllegalStateException("At least one needed reflection field does not exists", e);
 		} catch (UnableToFindMethodException e){
@@ -97,7 +96,7 @@ public class ReflectionLoader {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static void GuiContainer_drawItemStack(GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
 		GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
 	}
