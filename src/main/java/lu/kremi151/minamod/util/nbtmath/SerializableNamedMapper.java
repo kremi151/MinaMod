@@ -22,5 +22,11 @@ public class SerializableNamedMapper extends SerializableFunction<NBTTagString>{
 	public NBTTagString serialize() {
 		return new NBTTagString(functionName);
 	}
+	
+	public static SerializableNamedMapper createPlaceholder(String name) {
+		return new SerializableNamedMapper(x -> {
+			throw new UnsupportedOperationException("A placeholder cannot be evaluated");
+		}, name);
+	}
 
 }

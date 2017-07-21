@@ -6,6 +6,7 @@ import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine.SpinMode;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -25,6 +26,11 @@ public class SlotMachineBuilder {
 	
 	public SlotMachineBuilder addIcon(Item icon, int weight, boolean isCherry) {
 		icons.add(new Object[] {icon, weight, isCherry});
+		return this;
+	}
+	
+	public SlotMachineBuilder addIcon(Block icon, int weight, boolean isCherry) {
+		icons.add(new Object[] {Item.getItemFromBlock(icon), weight, isCherry});
 		return this;
 	}
 	

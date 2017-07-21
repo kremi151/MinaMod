@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.client;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaItems;
@@ -8,10 +10,12 @@ import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Point;
+import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -56,15 +60,23 @@ public class GuiSlotMachine extends GuiContainer{
 		fontRenderer.drawString(
 				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getCredits()), 10,
 				168, MinaUtils.COLOR_WHITE);
-		
+
+		RenderHelper.enableStandardItemLighting();
+		RenderHelper.enableGUIStandardItemLighting();
 		for(int i = 0 ; i < 5 ; i++) {
 			int x = 40 + (i * 20);
 			for(int j = 0 ; j < 3 ; j++) {
 				int y = 34 + (j * 17);
 				Item icon = container.getIcon(i, j);
-				this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(icon), x, y);
+				try {
+					ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(icon), x, y, "");
+			        GlStateManager.translate(0.0F, 0.0F, -32.0F);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+		RenderHelper.disableStandardItemLighting();
 		
 		if(isHovering(mouseX, mouseY, spin1LButton)) {
 			drawLines(0.2f, 0.8f, 0.8f, new Point(48, 59), new Point(127, 59));
@@ -106,11 +118,12 @@ public class GuiSlotMachine extends GuiContainer{
     }
 	
 	private void drawCoinAmount(int x, int y, int amount) {
-		this.mc.getRenderItem().renderItemIntoGUI(new ItemStack(MinaItems.GOLDEN_COIN), x, y);
-		final String text = ""+amount;
-		fontRenderer.drawString(
-				text, x + 16 - fontRenderer.getStringWidth(text),
-				y + 16 - 9, MinaUtils.COLOR_WHITE);
+		try {
+			ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(MinaItems.GOLDEN_COIN, amount), x, y, ""+amount);
+	        GlStateManager.translate(0.0F, 0.0F, -32.0F);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void drawLines(float r, float g, float b, Point... points) {
@@ -135,8 +148,8 @@ public class GuiSlotMachine extends GuiContainer{
 			Point p1 = points[i];
 			Point p2 = points[i+1];
 			GlStateManager.glBegin(GL11.GL_LINES);
-			GlStateManager.glVertex3f(p1.x(), p1.y(), 30.f);
-			GlStateManager.glVertex3f(p2.x(), p2.y(), 30.f);
+			GlStateManager.glVertex3f(p1.x(), p1.y(), 400.f);
+			GlStateManager.glVertex3f(p2.x(), p2.y(), 400.f);
 			GlStateManager.glEnd();
 		}
 

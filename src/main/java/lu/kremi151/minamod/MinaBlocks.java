@@ -302,7 +302,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlockOnly(COBBLEBRICKS, "cobblebrick_stone");
 		proxy.registerBlock(COLLECTOR, "collector");
 		proxy.registerBlock(CAMPFIRE, "campfire");
-		proxy.registerBlockOnly(SLOT_MACHINE, "slot_machine");
+		proxy.registerBlock(SLOT_MACHINE, "slot_machine");
 		if(FeatureList.enable_chairs)proxy.registerBlock(OAK_CHAIR, "oak_chair");
 		proxy.registerBlock(SIEVE, "sieve");
 		proxy.registerBlockOnly(CAMPBENCH, "campbench");

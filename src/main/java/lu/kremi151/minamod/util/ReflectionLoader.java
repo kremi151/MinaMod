@@ -5,7 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -15,6 +19,8 @@ import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToFindMethodException;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ReflectionLoader {
 
@@ -25,6 +31,9 @@ public class ReflectionLoader {
 	
 	private static final Method CONTAINER_MERGE_ITEMSTACK;
 	
+	@SideOnly(Side.CLIENT)
+	private static Method GUI_CONTAINER_DRAW_ITEMSTACK;
+	
 	static{
 		try {
 			FML_MISSING_MAPPING_ACTION = FMLMissingMappingsEvent.MissingMapping.class.getDeclaredField("action");
@@ -33,6 +42,10 @@ public class ReflectionLoader {
 			BLOCK_LEAVES_LEAVES_FANCY = ReflectionHelper.findField(BlockLeaves.class, "leavesFancy", "field_185686_c");
 			
 			CONTAINER_MERGE_ITEMSTACK = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
+			
+			try {
+				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
+			}catch(NoSuchFieldError | NoSuchMethodError e) {}//TODO: Find a better way to handle this}
 		} catch (NoSuchFieldException e) {
 			throw new IllegalStateException("At least one needed reflection field does not exists", e);
 		} catch (UnableToFindMethodException e){
@@ -40,6 +53,11 @@ public class ReflectionLoader {
 		} catch (SecurityException e) {
 			throw new IllegalStateException("At least one needed reflection field or method has thrown a security exception", e);
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private static Method findClientMethod(@Nonnull Class<?> clazz, @Nonnull String methodName, @Nullable String methodObfName, Class<?>... parameterTypes) {
+		return ReflectionHelper.findMethod(clazz, methodName, methodObfName, parameterTypes);
 	}
 	
 	public static void MissingMapping_setAction(MissingMapping mapping, FMLMissingMappingsEvent.Action action) throws IllegalAccessException{
@@ -76,5 +94,11 @@ public class ReflectionLoader {
 	public static boolean Container_mergeItemStack(Container container, ItemStack stack, int destMinIncl, int destMaxExcl, boolean inverse) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		CONTAINER_MERGE_ITEMSTACK.setAccessible(true);
 		return (Boolean)CONTAINER_MERGE_ITEMSTACK.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void GuiContainer_drawItemStack(GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
+		GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
 	}
 }
