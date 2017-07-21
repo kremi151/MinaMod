@@ -52,4 +52,7 @@ public class MinaPermissions {
 	
 	@MinaPermission(desc = "Allows to use soul pearls", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_SOUL_PEARL_USE = "minamod.all.soulpearl.use";
+	
+	@MinaPermission(desc = "Allows to gamble (for example to use slot machines)", lvl = DefaultPermissionLevel.ALL)
+	public static final String ALLOW_GAMBLING = "minamod.gambling";
 }

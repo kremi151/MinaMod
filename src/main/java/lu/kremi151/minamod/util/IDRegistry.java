@@ -15,7 +15,7 @@ public class IDRegistry {
 	//Free id 10
 	public static final int entityFishId = 11;
 
-	//TODO: public static final int guiIdCasino = 186;
+	public static final int guiIdSlotMachine = 186;
 	//TODO: public static final int guiIdVendor = 187;
 	//public static final int guiIdCoder = 188;
 	//TODO: public static final int guiIdEnchantmentTransferer = 189;

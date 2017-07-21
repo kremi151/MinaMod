@@ -6,7 +6,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 public interface ICoinHandler {
 
 	@CapabilityInject(ICoinHandler.class)
-	public static final Capability<ICoinHandler> CAPABILITY_COIN_HANDLER = null;
+	public static final Capability<ICoinHandler> CAPABILITY = null;
 	
 	int getAmountCoins();
 	boolean hasCoins(int amount);

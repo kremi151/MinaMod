@@ -19,6 +19,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
+import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.commands.CommandMinaBase;
 import lu.kremi151.minamod.entity.EntityBee;
@@ -33,18 +34,22 @@ import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.packet.message.MessageCoinBag;
 import lu.kremi151.minamod.packet.message.MessageJetpack;
 import lu.kremi151.minamod.packet.message.MessageOpenGui;
+import lu.kremi151.minamod.packet.message.MessageReportSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
+import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
 import lu.kremi151.minamod.packet.message.handler.MessageCoinBagHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageJetpackHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageOpenGuiHandler;
+import lu.kremi151.minamod.packet.message.handler.MessageReportSlotMachineHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSetScreenLayerHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageShowOverlayHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpawnParticleEffectHandler;
+import lu.kremi151.minamod.packet.message.handler.MessageSpinSlotMachineHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUpdateTileEntityHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseAmuletHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseElevatorHandler;
@@ -149,6 +154,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityHerbCrop.class, createDottedIdentifier("herb"));
 		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createDottedIdentifier("elevator_control"));
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, createDottedIdentifier("camp_fire"));
+		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createDottedIdentifier("slot_machine"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),
@@ -363,6 +369,7 @@ public class MinaMod {
 	}
 
 	private void registerPackets(Side side) {
+		networkWrapper.registerMessage(MessageSpinSlotMachineHandler.class, MessageSpinSlotMachine.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.CLIENT);
 		networkWrapper.registerMessage(MessageShowOverlayHandler.class, MessageShowOverlay.class, 3, Side.CLIENT);
@@ -374,6 +381,8 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageUpdateTileEntityHandler.class, MessageUpdateTileEntity.class, 8, Side.CLIENT);
 		networkWrapper.registerMessage(MessageUseAmuletHandler.class, MessageUseAmulet.class, 9, Side.SERVER);
 		networkWrapper.registerMessage(MessageSpawnParticleEffectHandler.class, MessageSpawnParticleEffect.class, 10, Side.CLIENT);
+		
+		networkWrapper.registerMessage(MessageReportSlotMachineHandler.class, MessageReportSlotMachine.class, 90, Side.SERVER);
 	}
 	
 	public static String createDottedIdentifier(String name){

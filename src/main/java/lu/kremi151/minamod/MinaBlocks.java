@@ -6,7 +6,7 @@ import lu.kremi151.minamod.block.BlockBerryCrop;
 import lu.kremi151.minamod.block.BlockCable;
 import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCampfire;
-import lu.kremi151.minamod.block.BlockCasinoBlock;
+import lu.kremi151.minamod.block.BlockSlotMachine;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockCoconut;
@@ -203,7 +203,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockBerryCrop TRACIUS_CROP = (BlockBerryCrop) new BlockBerryCrop(BlockBerryCrop.BerryType.TRACIUS);
 	public static final BlockChiliCrop CHILI_CROP = (BlockChiliCrop) new BlockChiliCrop();
 	public static final BlockCombined COBBLEBRICKS = (BlockCombined) new BlockCombined(Material.ROCK).setSoundType(SoundType.STONE).setUnlocalizedName("cobblebrick_stone").setCreativeTab(CreativeTabs.DECORATIONS).setHardness(4.0F).setResistance(6.0F);
-	public static final BlockCasinoBlock CASINO = (BlockCasinoBlock) new BlockCasinoBlock().setHardness(4.5F).setResistance(6.0F).setCreativeTab(MinaCreativeTabs.TECHNOLOGY).setUnlocalizedName("casino_block");
+	public static final BlockSlotMachine SLOT_MACHINE = (BlockSlotMachine) new BlockSlotMachine().setHardness(4.5F).setResistance(6.0F).setCreativeTab(MinaCreativeTabs.TECHNOLOGY).setUnlocalizedName("slot_machine");
 	public static final Block COLLECTOR = new BlockCollector().setUnlocalizedName("collector");
 	public static final BlockCampfire CAMPFIRE = (BlockCampfire) new BlockCampfire().setHardness(2.0f).setResistance(5.0f).setUnlocalizedName("campfire");
 	public static final BlockChair OAK_CHAIR = (BlockChair) new BlockChair().setUnlocalizedName("oak_chair");
@@ -302,7 +302,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlockOnly(COBBLEBRICKS, "cobblebrick_stone");
 		proxy.registerBlock(COLLECTOR, "collector");
 		proxy.registerBlock(CAMPFIRE, "campfire");
-		if(FeatureList.enable_casino)proxy.registerBlock(CASINO, "casino_block");
+		proxy.registerBlock(SLOT_MACHINE, "slot_machine");
 		if(FeatureList.enable_chairs)proxy.registerBlock(OAK_CHAIR, "oak_chair");
 		proxy.registerBlock(SIEVE, "sieve");
 		proxy.registerBlockOnly(CAMPBENCH, "campbench");

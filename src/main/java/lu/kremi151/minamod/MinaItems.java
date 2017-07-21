@@ -312,7 +312,7 @@ public class MinaItems {
 		//proxy.registerItem(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves", "palm_leaf_stack", "palm_leaf");
 		proxy.registerItem(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab", BlockMinaPlanks.EnumType.variantNamesSlabs);
-	
+		
 		itemBInit = true;
 	}
 }

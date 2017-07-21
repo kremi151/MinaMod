@@ -4,8 +4,8 @@ import lu.kremi151.minamod.util.Task.ITaskRunnable;
 
 public class TaskRepeat extends Task{
 	
-	long interval;
-	long last_executed = -1l;
+	public final long interval;
+	private long last_executed = -1l;
 
 	public TaskRepeat(long date, long interval, ITaskRunnable r) {
 		super(date, r);
