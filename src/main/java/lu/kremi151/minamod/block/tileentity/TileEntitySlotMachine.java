@@ -11,14 +11,15 @@ import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
 import lu.kremi151.minamod.util.Task.ProgressDispatcher;
-import lu.kremi151.minamod.util.nbtmath.MathParseException;
-import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
-import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
-import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
-import lu.kremi151.minamod.util.nbtmath.SerializableOperation;
 import lu.kremi151.minamod.util.TaskRepeat;
 import lu.kremi151.minamod.util.TextHelper;
+import lu.kremi151.minamod.util.nbtmath.MathParseException;
+import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
+import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
+import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
+import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,9 +55,9 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false;
 	private int coinTray = 0;
 
-	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableOperation(
-			new SerializableOperation(
-					new SerializableOperation(
+	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableNamedFunction.Max(
+			new SerializableBinaryOperation(
+					new SerializableBinaryOperation(
 							new SerializableNamedMapper(id -> (double)icons.length, "iconCount"),
 							new SerializableNamedMapper(id -> (double)icons[id.intValue()].weight, "iconWeight"),
 							NBTMathHelper.DIVISION
@@ -64,8 +65,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					new SerializableConstant(50.0),
 					NBTMathHelper.MULTIPLICATION
 					),
-			new SerializableConstant(1.0),
-			NBTMathHelper.MAX
+			new SerializableConstant(1.0)
 			);
 	
 	//Log data for reports:

@@ -3,12 +3,12 @@ package lu.kremi151.minamod.util.nbtmath;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class SerializableOperation extends SerializableFunction<NBTTagCompound>{
+public class SerializableBinaryOperation extends SerializableFunction<NBTTagCompound>{
 	
 	private final SerializableFunction<? extends NBTBase> a, b;
 	private final SerializableOperator operation;
 	
-	public SerializableOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
+	public SerializableBinaryOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
 		this.a = a;
 		this.b = b;
 		this.operation = operation;

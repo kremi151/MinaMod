@@ -23,7 +23,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
+	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
 		return parseOperation(nbt, var -> null, var -> null);
 	}
 
@@ -35,7 +35,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableOperation parseOperation(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
+	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
 		NBTBase a = nbt.getTag("A");
 		NBTBase b = nbt.getTag("B");
 		String operation = nbt.getString("Operation");
@@ -53,19 +53,15 @@ public class NBTMathHelper {
 		
 		switch(operation.charAt(0)) {
 		case '+':
-			return new SerializableOperation(parsedA, parsedB, ADDITION);
+			return new SerializableBinaryOperation(parsedA, parsedB, ADDITION);
 		case '-':
-			return new SerializableOperation(parsedA, parsedB, SUBSTRACTION);
+			return new SerializableBinaryOperation(parsedA, parsedB, SUBSTRACTION);
 		case '*':
-			return new SerializableOperation(parsedA, parsedB, MULTIPLICATION);
+			return new SerializableBinaryOperation(parsedA, parsedB, MULTIPLICATION);
 		case '/':
-			return new SerializableOperation(parsedA, parsedB, DIVISION);
+			return new SerializableBinaryOperation(parsedA, parsedB, DIVISION);
 		case '^':
-			return new SerializableOperation(parsedA, parsedB, POWER);
-		case 'M':
-			return new SerializableOperation(parsedA, parsedB, MAX);
-		case 'm':
-			return new SerializableOperation(parsedA, parsedB, MIN);
+			return new SerializableBinaryOperation(parsedA, parsedB, POWER);
 		default:
 			throw new MathParseException("Unknown operation: " + operation);
 		}
@@ -101,6 +97,10 @@ public class NBTMathHelper {
 			return new SerializableNamedFunction.Absolute(parsedArgsArray[0]);
 		}else if(functionName.equals("neg")) {
 			return new SerializableNamedFunction.Negate(parsedArgsArray[0]);
+		}else if(functionName.equals("max")) {
+			return new SerializableNamedFunction.Max(parsedArgsArray);
+		}else if(functionName.equals("min")) {
+			return new SerializableNamedFunction.Min(parsedArgsArray);
 		}else {
 			throw new MathParseException("Unknown math function: " + functionName);
 		}
@@ -195,20 +195,6 @@ public class NBTMathHelper {
 		@Override
 		public Number apply(Number a, Number b) {
 			return Math.pow(a.doubleValue(), b.doubleValue());
-		}
-	};
-
-	public static final SerializableOperator MAX = new SerializableOperator('M') {
-		@Override
-		public Number apply(Number a, Number b) {
-			return Math.max(a.doubleValue(), b.doubleValue());
-		}
-	};
-
-	public static final SerializableOperator MIN = new SerializableOperator('m') {
-		@Override
-		public Number apply(Number a, Number b) {
-			return Math.min(a.doubleValue(), b.doubleValue());
 		}
 	};
 }

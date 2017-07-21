@@ -1,6 +1,6 @@
 package lu.kremi151.minamod.util.nbtmath;
 
-public class MathFunctionException extends Exception{
+public class MathFunctionException extends RuntimeException{
 	
 	MathFunctionException(String msg) {
 		super(msg);

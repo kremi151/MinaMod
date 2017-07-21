@@ -54,4 +54,46 @@ public abstract class SerializableNamedFunction extends SerializableFunction<NBT
 		
 	}
 	
+	public static class Max extends SerializableNamedFunction{
+
+		public Max(SerializableFunction<? extends NBTBase>... args) throws MathFunctionException {
+			super("max", args);
+			if(args.length == 0) {
+				throw new MathFunctionException("No arguments present");
+			}
+		}
+
+		@Override
+		public Number apply(Number t) {
+			double max = args[0].apply(t).doubleValue();
+			for(int i = 1 ; i < args.length ; i++) {
+				double tmp = args[i].apply(t).doubleValue();
+				if(tmp > max)max = tmp;
+			}
+			return max;
+		}
+		
+	}
+	
+	public static class Min extends SerializableNamedFunction{
+
+		public Min(SerializableFunction<? extends NBTBase>... args) throws MathFunctionException {
+			super("min", args);
+			if(args.length == 0) {
+				throw new MathFunctionException("No arguments present");
+			}
+		}
+
+		@Override
+		public Number apply(Number t) {
+			double min = args[0].apply(t).doubleValue();
+			for(int i = 1 ; i < args.length ; i++) {
+				double tmp = args[i].apply(t).doubleValue();
+				if(tmp < min)min = tmp;
+			}
+			return min;
+		}
+		
+	}
+	
 }
