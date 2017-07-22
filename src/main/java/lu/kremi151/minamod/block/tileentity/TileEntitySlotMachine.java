@@ -52,7 +52,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private WeightedList<Integer> weightedIconIds;
 	private boolean isTurning;
 	private final WheelManager wheels = new WheelManager(5, 3);
-	private boolean needs_sync = false;
+	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
 
 	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableNamedFunction.Max(
@@ -248,6 +248,9 @@ public class TileEntitySlotMachine extends TileEntity{
 		if(nbt.hasKey("CustomName", 8)) {
 			this.customName = nbt.getString("CustomName");
 		}
+		if(nbt.hasKey("ExpandCherryIcon", 99)) {
+			this.expandCherryItems = nbt.getBoolean("ExpandCherryIcon");
+		}
 	}
 
 	@Override
@@ -261,6 +264,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setTag("Prices", pnbt);
 		nbt.setInteger("CoinTray", coinTray);
 		nbt.setTag("RowPriceFunction", rowPriceFunction.serialize());
+		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
 		
 		return nbt;
 	}
@@ -391,16 +395,18 @@ public class TileEntitySlotMachine extends TileEntity{
 					cont = true;
 					turnWheel(i);
 				}else if(spacings[i] == -1) {
-					int found_cherry = -1;
-					for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
-						if(isCherryIcon(wheels.getWheelValue(i, j))) {
-							found_cherry = wheels.getWheelValue(i, j);
-							break;
-						}
-					}
-					if(found_cherry > 0) {
+					if(expandCherryItems) {
+						int found_cherry = -1;
 						for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
-							wheels.setWheelContent(i, j, found_cherry);
+							if(isCherryIcon(wheels.getWheelValue(i, j))) {
+								found_cherry = wheels.getWheelValue(i, j);
+								break;
+							}
+						}
+						if(found_cherry > 0) {
+							for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+								wheels.setWheelContent(i, j, found_cherry);
+							}
 						}
 					}
 				}
