@@ -225,7 +225,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		if(nbt.hasKey("CoinTray", 99)) {
 			coinTray = Math.max(nbt.getInteger("CoinTray"), 0);
 		}
-		if(nbt.hasKey("RowPriceFunction", 10)) {
+		if(nbt.hasKey("RowPriceFunction")) {
 			try {
 				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), 
 						var -> {
