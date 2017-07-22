@@ -77,9 +77,9 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
         			.addIcon(Items.APPLE, 1, true)
         			.addIcon(Items.MELON, 1, true)
         			.addIcon(Items.GOLDEN_APPLE, 1, false)
-        			.setPriceForSpinMode(SpinMode.ONE, 1)
-        			.setPriceForSpinMode(SpinMode.THREE, 2)
-        			.setPriceForSpinMode(SpinMode.FIVE, 5)
+        			.setPriceForSpinMode(SpinMode.ONE, 5)
+        			.setPriceForSpinMode(SpinMode.THREE, 5)
+        			.setPriceForSpinMode(SpinMode.FIVE, 15)
         			.setRowPriceFunction(new SerializableNamedFunction.Max(
 							new SerializableBinaryOperation(
 									new SerializableBinaryOperation(
