@@ -1,9 +1,12 @@
 package lu.kremi151.minamod.util.nbtmath;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+
+import javax.script.ScriptException;
 
 import lu.kremi151.minamod.util.nbtmath.serialization.INBTFunctionDeserializer;
 import net.minecraft.nbt.NBTBase;
@@ -147,6 +150,14 @@ public class NBTMathHelper {
 			return new SerializableConstant(((NBTPrimitive)nbt).getDouble());
 		}else if(nbt instanceof NBTTagString) {
 			String varName = ((NBTTagString)nbt).getString();
+			if(varName.startsWith("js:")) {
+				varName = varName.substring(3);
+				try {
+					return new SerializableNashornFunction(varName);
+				} catch (FileNotFoundException | ScriptException e) {
+					throw new MathParseException(e);
+				}
+			}
 			UnaryOperator<Number> var;
 			if(varName.equals("x")) {
 				return new SerializableVariable();

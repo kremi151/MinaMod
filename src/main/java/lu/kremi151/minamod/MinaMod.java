@@ -119,7 +119,7 @@ public class MinaMod {
 
 	private MinecraftServer theServer;
 	
-	public static final Once<File> minaConfigPath = Once.ready();
+	public static final Once<File> minaConfigPath = Once.ready(), scriptsPath = Once.ready();
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) throws IllegalArgumentException, IllegalAccessException { 
@@ -268,6 +268,10 @@ public class MinaMod {
 		minaConfigPath.set(new File(event.getModConfigurationDirectory(), "minamod"));
 		if(!minaConfigPath.get().exists()){
 			minaConfigPath.get().mkdirs();
+		}
+		scriptsPath.set(new File(minaConfigPath.get(), "scripts"));
+		if(!scriptsPath.get().exists()){
+			scriptsPath.get().mkdirs();
 		}
 		
 		Configuration config = new Configuration(new File(minaConfigPath.get(), "minamod.cfg"));
