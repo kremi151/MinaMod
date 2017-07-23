@@ -78,7 +78,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
         			.addIcon(Items.MELON, 1, true)
         			.addIcon(Items.GOLDEN_APPLE, 1, false)
         			.setPriceForSpinMode(SpinMode.ONE, 5)
-        			.setPriceForSpinMode(SpinMode.THREE, 5)
+        			.setPriceForSpinMode(SpinMode.THREE, 10)
         			.setPriceForSpinMode(SpinMode.FIVE, 15)
         			.setMaxWin(300.0)
         			.setCustomName(TextFormatting.DARK_AQUA + "Sweet Luxury")
