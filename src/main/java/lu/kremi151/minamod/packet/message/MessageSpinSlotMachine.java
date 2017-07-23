@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.packet.message;
 
 import io.netty.buffer.ByteBuf;
-import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -9,18 +9,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 public class MessageSpinSlotMachine implements IMessage{
 	
 	private BlockPos pos;
-	private TileEntitySlotMachine.SpinMode mode;
+	private SpinMode mode;
 	
 	public MessageSpinSlotMachine() {}
 	
-	public MessageSpinSlotMachine(TileEntitySlotMachine.SpinMode mode, BlockPos pos) {
+	public MessageSpinSlotMachine(SpinMode mode, BlockPos pos) {
 		this.mode = mode;
 		this.pos = pos;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		mode = TileEntitySlotMachine.SpinMode.values()[(int)buf.readByte()];
+		mode = SpinMode.values()[(int)buf.readByte()];
 		pos = new BlockPos(
 				ByteBufUtils.readVarInt(buf, 5),
 				ByteBufUtils.readVarInt(buf, 5),
@@ -40,7 +40,7 @@ public class MessageSpinSlotMachine implements IMessage{
 		return pos;
 	}
 	
-	public TileEntitySlotMachine.SpinMode getSpinMode(){
+	public SpinMode getSpinMode(){
 		return mode;
 	}
 

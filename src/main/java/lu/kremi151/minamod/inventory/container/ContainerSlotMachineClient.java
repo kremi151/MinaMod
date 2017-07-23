@@ -4,6 +4,8 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.packet.message.MessageReportSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
+import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	
 	private boolean isTurning = false;
-	private final TileEntitySlotMachine.WheelManager wheels = new TileEntitySlotMachine.WheelManager(5, 3);
+	private final WheelManager wheels = new WheelManager(5, 3);
 	private final int prices[] = new int[3];
 	private int credits = 0, sessionWin = 0;
 
@@ -27,7 +29,7 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	}
 	
 	@Override
-	public void spin(TileEntitySlotMachine.SpinMode mode) {
+	public void spin(SpinMode mode) {
 		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageSpinSlotMachine(mode, slotMachine.getPos()));
 	}
 

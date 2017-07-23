@@ -5,6 +5,7 @@ import java.util.Random;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.Task;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.Item;
@@ -54,7 +55,7 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getPlayingCredits();
 	}
 	
-	public void spin(TileEntitySlotMachine.SpinMode mode) {
+	public void spin(SpinMode mode) {
 		slotMachine.turnSlots(mode, new Random(System.currentTimeMillis()));
 	}
 	

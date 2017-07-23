@@ -23,12 +23,16 @@ import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.slotmachine.Icon;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
+import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -70,7 +74,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		fillWeigtedIcons();
 		
 		for(SpinMode mode : SpinMode.values()) {
-			prices[mode.ordinal()] = mode.defaultPrice;
+			prices[mode.ordinal()] = mode.getDefaultPrice();
 		}
 	}
 	
@@ -195,12 +199,10 @@ public class TileEntitySlotMachine extends TileEntity{
 			ArrayList<Icon> parsed = new ArrayList<>();
 			for(int i = 0 ; i < icons.tagCount() ; i++) {
 				NBTTagCompound inbt = icons.getCompoundTagAt(i);
-				if(inbt.hasKey("Item", 8) && inbt.hasKey("Weight", 99)) {
-					ResourceLocation iconRes = new ResourceLocation(inbt.getString("Item"));
-					Item item = Item.REGISTRY.getObject(iconRes);
-					if(item != null) {
-						parsed.add(new Icon(item, inbt.getInteger("Weight"), inbt.getBoolean("Cherry")));
-					}
+				try {
+					parsed.add(new Icon(inbt));
+				} catch (NBTException e) {
+					e.printStackTrace();
 				}
 			}
 			if(parsed.size() > 16) {
@@ -214,7 +216,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			fillWeigtedIcons();
 		}
 		for(SpinMode mode : SpinMode.values()) {
-			prices[mode.ordinal()] = mode.defaultPrice;
+			prices[mode.ordinal()] = mode.getDefaultPrice();
 		}
 		if(nbt.hasKey("Prices", 10)) {
 			NBTTagCompound pnbt = nbt.getCompoundTag("Prices");
@@ -268,11 +270,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		
 		NBTTagList icons = new NBTTagList();
 		for(int i = 0 ; i < this.icons.length ; i++) {
-			NBTTagCompound inbt = new NBTTagCompound();
-			inbt.setString("Item", this.icons[i].icon.getRegistryName().toString());
-			inbt.setInteger("Weight", this.icons[i].weight);
-			if(this.icons[i].cherry)inbt.setBoolean("Cherry", true);//To reduce memory usage
-			icons.appendTag(inbt);
+			icons.appendTag(this.icons[i].serialize());
 		}
 		nbt.setTag("Icons", icons);
 		
@@ -374,18 +372,6 @@ public class TileEntitySlotMachine extends TileEntity{
 				);
 	}
 	
-	private static class Icon{
-		private final Item icon;
-		private final int weight;
-		private final boolean cherry;
-		
-		private Icon(Item icon, int weight, boolean cherry) {
-			this.icon = icon;
-			this.weight = weight;
-			this.cherry = cherry;
-		}
-	}
-	
 	public class TaskTurnSlots implements ITaskRunnable{
 		
 		private final int spacings[] = new int[wheels.getWheelCount()];
@@ -479,61 +465,6 @@ public class TileEntitySlotMachine extends TileEntity{
 			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}
 		
-		/*private int checkHLine(int pos) {
-			int wheels[][] = new int[][] {
-				new int[] {4, 4, 4},
-				new int[] {4, 4, 4},
-				new int[] {0, 0, 3},
-				new int[] {0, 0, 3},
-				new int[] {4, 4, 4}
-			};
-			int prev = -1;
-			int cherryId = -1;
-			for(int i = 0 ; i < wheels.length ; i++) {
-				int a = wheels[i][pos];
-				if(prev == -1 && a != 4){
-					prev = a;
-				}else if(prev != a && a != 4) {
-					return -1;
-				}else if(a == 4) {
-					if(cherryId == -1) {
-						cherryId = a;
-					}else if(cherryId != a){
-						return -1;
-					}
-				}
-			}
-			return (prev == -1 && cherryId != -1) ? -2 : prev;
-		}*/
-		
-		/*private int checkVLine(boolean invert) {
-			int wheels[][] = new int[][] {
-				new int[] {4, 4, 4},
-				new int[] {4, 4, 4},
-				new int[] {0, 0, 3},
-				new int[] {0, 0, 3},
-				new int[] {4, 4, 4}
-			};
-			int prev = -1;
-			int cherryId = -1;
-			for(int i = 0 ; i < wheels.length ; i++) {
-				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
-				int a = wheels[i][pos];
-				if(prev == -1 && a != 4){
-					prev = a;
-				}else if(prev != a && a != 4) {
-					return -1;
-				}else if(a == 4) {
-					if(cherryId == -1) {
-						cherryId = a;
-					}else if(cherryId != a){
-						return -1;
-					}
-				}
-			}
-			return (prev == -1 && cherryId != -1) ? -2 : prev;
-		}*/
-		
 		private int rowPrice(int iconId) {
 			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId).intValue();
 		}
@@ -584,60 +515,6 @@ public class TileEntitySlotMachine extends TileEntity{
 			wheels.setWheelContent(wheelIdx, wheelPos, icon);
 		}
 		
-	}
-	
-	public static class WheelManager{
-		@Deprecated
-		private final int wheelData[][];//= new int[5][3]
-		
-		private boolean dirty = false;
-		
-		public WheelManager(int nWheels, int wheelSize) {
-			wheelData = new int[nWheels][wheelSize];
-		}
-		
-		public void setWheelContent(int wheelIdx, int wheelPos, int value) {
-			int old = wheelData[wheelIdx][wheelPos];
-			wheelData[wheelIdx][wheelPos] = value;
-			if(old != value)dirty = true;
-		}
-		
-		private void unmarkDirty() {
-			dirty = false;
-		}
-		
-		public boolean isDirty() {
-			return dirty;
-		}
-		
-		public int getWheelCount() {
-			return this.wheelData.length;
-		}
-		
-		public int getDisplayWheelSize() {
-			return wheelData[0].length;
-		}
-		
-		public int getWheelValue(int wheelIdx, int wheelPos) {
-			return wheelData[wheelIdx][wheelPos];
-		}
-		
-	}
-	
-	public static enum SpinMode{
-		ONE(1),
-		THREE(3),
-		FIVE(5);
-		
-		private final int defaultPrice;
-		
-		private SpinMode(int defaultPrice) {
-			this.defaultPrice = defaultPrice;
-		}
-		
-		public int getDefaultPrice() {
-			return defaultPrice;
-		}
 	}
 	
 	public static class Session{
@@ -699,8 +576,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		
 	};
 	
+	
+	
+	//TODO: Remove when out of beta
 	public StateSnapshot createStateSnapshot() {
-		return new StateSnapshot(lastSpinMode, wheels.wheelData, awardedForLastSpin);
+		return new StateSnapshot(lastSpinMode, wheels.createRawWheelSnapshot(), awardedForLastSpin);
 	}
 	
 	public static class StateSnapshot{

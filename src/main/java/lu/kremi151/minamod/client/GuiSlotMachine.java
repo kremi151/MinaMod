@@ -6,11 +6,11 @@ import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Point;
 import lu.kremi151.minamod.util.ReflectionLoader;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -178,13 +178,13 @@ public class GuiSlotMachine extends GuiContainer{
 	protected void actionPerformed(GuiButton guibutton) {
 		switch(guibutton.id){
 		case 0:
-			container.spin(TileEntitySlotMachine.SpinMode.ONE);
+			container.spin(SpinMode.ONE);
 			break;
 		case 1:
-			container.spin(TileEntitySlotMachine.SpinMode.THREE);
+			container.spin(SpinMode.THREE);
 			break;
 		case 2:
-			container.spin(TileEntitySlotMachine.SpinMode.FIVE);
+			container.spin(SpinMode.FIVE);
 			break;
 		case 999:
 			container.report();

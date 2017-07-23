@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
-import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine.SpinMode;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
+import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
