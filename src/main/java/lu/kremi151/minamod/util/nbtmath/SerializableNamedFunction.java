@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.util.nbtmath;
 
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -10,6 +11,7 @@ public abstract class SerializableNamedFunction extends SerializableFunction<NBT
 	protected final SerializableFunction<? extends NBTBase>[] args;
 	
 	SerializableNamedFunction(String functionName, SerializableFunction<? extends NBTBase>... args) throws MathFunctionException{
+		super(Context.DEFAULT);
 		this.functionName = functionName;
 		this.args = args;
 	}

@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.BiConsumer;
+import java.util.function.UnaryOperator;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
@@ -20,6 +22,7 @@ import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -227,19 +230,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		if(nbt.hasKey("RowPriceFunction")) {
 			try {
-				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), 
-						var -> {
-							return null;
-						}, 
-						var -> {
-							if(var.equalsIgnoreCase("iconWeight")) {
-								return id -> icons[id.intValue()].weight;
-							}else if(var.equalsIgnoreCase("iconCount")) {
-								return id -> icons.length;
-							}else {
-								return null;
-							}
-						});
+				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), context);
 			} catch (MathParseException e) {
 				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();
@@ -649,6 +640,41 @@ public class TileEntitySlotMachine extends TileEntity{
 			return new Session(null);
 		}
 	}
+	
+	private final Context context = new SlotMachineContext();
+	
+	private class SlotMachineContext implements Context{
+
+		@Override
+		public Number getConstant(String name) {
+			return null;
+		}
+
+		@Override
+		public UnaryOperator<Number> getVariable(String name) {
+			if(name.equalsIgnoreCase("iconWeight")) {
+				return id -> icons[id.intValue()].weight;
+			}else if(name.equalsIgnoreCase("iconCount")) {
+				return id -> icons.length;
+			}else if(name.equalsIgnoreCase("totalWeight")) {
+				return id -> {
+					int sum = icons[0].weight;
+					for(int i = 1 ; i < icons.length ; i++)sum += icons[i].weight;
+					return sum;
+				};
+			}else {
+				return null;
+			}
+		}
+
+		@Override
+		public void applyMappings(BiConsumer<String, Object> consumer) {
+			consumer.accept("iconWeight", (UnaryOperator<Number>)id -> icons[id.intValue()].weight);
+			consumer.accept("iconCount", icons.length);
+			consumer.accept("totalWeight", getVariable("totalWeight").apply(0).intValue());
+		}
+		
+	};
 	
 	public StateSnapshot createStateSnapshot() {
 		return new StateSnapshot(lastSpinMode, wheels.wheelData, awardedForLastSpin);

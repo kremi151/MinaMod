@@ -1,36 +1,73 @@
 package lu.kremi151.minamod.util.nbtmath;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
+import javax.script.Bindings;
 import javax.script.Invocable;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTTagString;
 
 public class SerializableNashornFunction extends SerializableFunction<NBTTagString>{
+
+	private static final HashMap<String, ScriptEngine> ENGINE_CACHE = new HashMap<>();
+	private static final HashMap<String, String> SCRIPT_CACHE = new HashMap<>();
 	
-	private final String scriptName;
-	private final Invocable invocable;
+	private final String scriptName, script;
+	private final ScriptEngine engine;
 	
-	public SerializableNashornFunction(String scriptName) throws FileNotFoundException, ScriptException {
+	private SerializableNashornFunction(Context context, String scriptName) throws ScriptException, IOException {
+		super(context);
 		this.scriptName = scriptName;
 		
-		ScriptEngine engine = new ScriptEngineManager(ClassLoader.getSystemClassLoader()).getEngineByName("JavaScript");
-		engine.eval(new FileReader(new File(MinaMod.scriptsPath.get(), scriptName + ".js")));
-		invocable = (Invocable) engine;
+		String script = SCRIPT_CACHE.get(scriptName);
+		if(script == null) {
+			try (BufferedReader br = new BufferedReader(new FileReader(new File(MinaMod.scriptsPath.get(), scriptName + ".js")))) {
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+				while((line = br.readLine()) != null) {
+					sb.append(line);
+				}
+				script = sb.toString();
+			}
+		}
+		this.script = script;
+		
+		ScriptEngine engine = ENGINE_CACHE.get(scriptName);
+		if(engine == null) {
+			engine = new ScriptEngineManager(ClassLoader.getSystemClassLoader()).getEngineByName("JavaScript");
+			ENGINE_CACHE.put(scriptName, engine);
+		}
+		this.engine = engine;
+	}
+	
+	public static SerializableNashornFunction getOrLoad(Context context, String scriptName) throws ScriptException, IOException {
+		return new SerializableNashornFunction(context, scriptName);
 	}
 
 	@Override
 	public Number apply(Number arg0) {
+		Bindings newBindings = engine.createBindings();
+		getContext().applyMappings((name, val) -> newBindings.put(name, val));
+		engine.setBindings(newBindings, ScriptContext.ENGINE_SCOPE);
 		try {
-			return ((Number)invocable.invokeFunction("calculate", new Object())).doubleValue();//TODO: Pass adequate objects
-		} catch (NoSuchMethodException | ScriptException e) {
+			engine.eval(script);
+			return ((Number)((Invocable) engine).invokeFunction("calculate", arg0.doubleValue())).doubleValue();
+		} catch (NoSuchMethodException e) {
 			System.err.println("Script \"" + scriptName + "\" has no method called \"calculate\"");
+			e.printStackTrace();
+		} catch (ScriptException e) {
+			System.err.println("Script \"" + scriptName + "\" produced an error");
 			e.printStackTrace();
 		} catch (ClassCastException e) {
 			System.err.println("Script \"" + scriptName + "\" does not return a value of type double");

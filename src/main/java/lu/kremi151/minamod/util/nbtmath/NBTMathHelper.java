@@ -1,14 +1,14 @@
 package lu.kremi151.minamod.util.nbtmath;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import javax.script.ScriptException;
 
 import lu.kremi151.minamod.util.nbtmath.serialization.INBTFunctionDeserializer;
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,7 +38,7 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
 	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
-		return parseOperation(nbt, var -> null, var -> null);
+		return parseOperation(nbt, Context.DEFAULT);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
+	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt, Context context) throws MathParseException{
 		NBTBase a = nbt.getTag("A");
 		NBTBase b = nbt.getTag("B");
 		String operation = nbt.getString("Operation");
@@ -62,8 +62,8 @@ public class NBTMathHelper {
 		}
 		
 		final SerializableFunction parsedA, parsedB;
-		parsedA = parseFunction(a, constGetter, varGetter);
-		parsedB = parseFunction(b, constGetter, varGetter);
+		parsedA = parseFunction(a, context);
+		parsedB = parseFunction(b, context);
 		
 		switch(operation.charAt(0)) {
 		case '+':
@@ -90,7 +90,7 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
 	 */
-	private static SerializableNamedFunction parseMathFunction(NBTTagCompound nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException, MathFunctionException{
+	private static SerializableNamedFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
 		NBTTagList args = nbt.getTagList("Arguments", 10);
 		String functionName = nbt.getString("Function");
 		if(args.tagCount() == 0) {
@@ -101,7 +101,7 @@ public class NBTMathHelper {
 		for(int i = 0 ; i < args.tagCount() ; i++) {
 			NBTTagCompound anbt = args.getCompoundTagAt(i);
 			if(anbt.hasKey("Arg")) {
-				parsedArgs.add(parseFunction(anbt.getTag("Arg"), constGetter, varGetter));
+				parsedArgs.add(parseFunction(anbt.getTag("Arg"), context));
 			}
 		}
 		SerializableFunction<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunction[parsedArgs.size()]);
@@ -121,7 +121,7 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
 	public static SerializableFunction parseFunction(NBTBase nbt) throws MathParseException{
-		return parseFunction(nbt, var -> null, var -> null);
+		return parseFunction(nbt, Context.DEFAULT);
 	}
 	
 	/**
@@ -132,14 +132,14 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunction parseFunction(NBTBase nbt, Function<String, Number> constGetter, Function<String, UnaryOperator<Number>> varGetter) throws MathParseException{
+	public static SerializableFunction parseFunction(NBTBase nbt, Context context) throws MathParseException{
 		if(nbt instanceof NBTTagCompound) {
 			NBTTagCompound raw_nbt = (NBTTagCompound)nbt;
 			if(raw_nbt.hasKey("Operation", 8)) {
-				return parseOperation((NBTTagCompound)nbt, constGetter, varGetter);
+				return parseOperation((NBTTagCompound)nbt, context);
 			}else if(raw_nbt.hasKey("Function", 8)) {
 				try {
-					return parseMathFunction((NBTTagCompound)nbt, constGetter, varGetter);
+					return parseMathFunction((NBTTagCompound)nbt, context);
 				} catch (MathFunctionException e) {
 					throw new MathParseException("Could not parse math function named " + raw_nbt.getString("Function"), e);
 				}
@@ -153,8 +153,8 @@ public class NBTMathHelper {
 			if(varName.startsWith("js:")) {
 				varName = varName.substring(3);
 				try {
-					return new SerializableNashornFunction(varName);
-				} catch (FileNotFoundException | ScriptException e) {
+					return SerializableNashornFunction.getOrLoad(context, varName);
+				} catch (IOException | ScriptException e) {
 					throw new MathParseException(e);
 				}
 			}
@@ -162,11 +162,11 @@ public class NBTMathHelper {
 			if(varName.equals("x")) {
 				return new SerializableVariable();
 			}else {
-				Number constant = constGetter.apply(varName);
+				Number constant = context.getConstant(varName);
 				if(constant != null) {
 					return new SerializableNamedConstant(constant, varName);
 				}else {
-					var = varGetter.apply(varName);
+					var = context.getVariable(varName);
 				}
 			}
 			if(var != null) {

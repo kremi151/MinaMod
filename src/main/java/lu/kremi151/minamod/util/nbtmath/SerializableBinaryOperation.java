@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.util.nbtmath;
 
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -9,6 +10,7 @@ public class SerializableBinaryOperation extends SerializableFunction<NBTTagComp
 	private final SerializableOperator operation;
 	
 	public SerializableBinaryOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
+		super(Context.DEFAULT);
 		this.a = a;
 		this.b = b;
 		this.operation = operation;

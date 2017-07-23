@@ -2,6 +2,7 @@ package lu.kremi151.minamod.util.nbtmath;
 
 import java.util.function.UnaryOperator;
 
+import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTTagString;
 
 public class SerializableNamedMapper extends SerializableFunction<NBTTagString>{
@@ -10,6 +11,7 @@ public class SerializableNamedMapper extends SerializableFunction<NBTTagString>{
 	private final UnaryOperator<Number> function;
 	
 	public SerializableNamedMapper(UnaryOperator<Number> function, String functionName) {
+		super(Context.DEFAULT);
 		this.functionName = functionName;
 		this.function = function;
 	}
