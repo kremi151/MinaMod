@@ -665,11 +665,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			}else if(name.equalsIgnoreCase("iconCount")) {
 				return id -> icons.length;
 			}else if(name.equalsIgnoreCase("totalWeight")) {
-				return id -> {
-					int sum = icons[0].weight;
-					for(int i = 1 ; i < icons.length ; i++)sum += icons[i].weight;
-					return sum;
-				};
+				return id -> ((Double)weightedIconIds.totalWeight()).intValue();
 			}else {
 				return null;
 			}
@@ -679,7 +675,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		public void applyMappings(BiConsumer<String, Object> consumer) {
 			consumer.accept("iconWeight", (UnaryOperator<Number>)id -> icons[id.intValue()].weight);
 			consumer.accept("iconCount", icons.length);
-			consumer.accept("totalWeight", getVariable("totalWeight").apply(0).intValue());
+			consumer.accept("totalWeight", (UnaryOperator<Number>)id -> ((Double)weightedIconIds.totalWeight()).intValue());
 		}
 		
 	};
