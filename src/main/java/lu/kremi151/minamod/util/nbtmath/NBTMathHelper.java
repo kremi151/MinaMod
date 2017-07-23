@@ -44,8 +44,7 @@ public class NBTMathHelper {
 	/**
 	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
-	 * @param constGetter A mapper function which allows to map literals to constant numbers
-	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
+	 * @param context Context data
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
@@ -84,8 +83,7 @@ public class NBTMathHelper {
 	/**
 	 * Parses a pure mathematical function from NBT data
 	 * @param nbt The NBT data structure holding the function
-	 * @param constGetter A mapper function which allows to map literals to constant numbers
-	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
+	 * @param context Context data
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
@@ -115,6 +113,68 @@ public class NBTMathHelper {
 	}
 	
 	/**
+	 * Parses a logical function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 * @throws MathFunctionException Thrown if the function could not be created
+	 */
+	private static SerializableLogic parseLogic(NBTTagCompound nbt) throws MathParseException, MathFunctionException{
+		return parseLogic(nbt, Context.DEFAULT);
+	}
+	
+	/**
+	 * Parses a logical function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @param context Context data
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	private static SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
+		String logic = nbt.getString("Logic");
+		if(logic.equalsIgnoreCase("and")) {
+			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+		}else if(logic.equalsIgnoreCase("or")) {
+			return new SerializableLogic.Or(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+		}else if(logic.equalsIgnoreCase("xor")) {
+			return new SerializableLogic.XOr(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+		}else if(logic.equalsIgnoreCase("not")) {
+			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A")));
+		}else {
+			throw new MathParseException("Unknown logical function: " + logic);
+		}
+	}
+	
+	/**
+	 * Parses a conditional function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	private static SerializableConditional parseConditional(NBTTagCompound nbt) throws MathParseException{
+		return parseConditional(nbt, Context.DEFAULT);
+	}
+	
+	/**
+	 * Parses a conditional function from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @param context Context data
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	private static SerializableConditional parseConditional(NBTTagCompound nbt, Context context) throws MathParseException{
+		try {
+			SerializableLogic cond = parseLogic(nbt.getCompoundTag("If"), context);
+			SerializableFunction<? extends NBTBase> t, e;
+			t = parseFunction(nbt.getTag("Then"), context);
+			e = parseFunction(nbt.getTag("Else"), context);
+			return new SerializableConditional(cond, t, e);
+		}catch(Exception e) {
+			throw new MathParseException(e);
+		}
+	}
+	
+	/**
 	 * Parses a mathematical functional structure from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
@@ -127,8 +187,7 @@ public class NBTMathHelper {
 	/**
 	 * Parses a mathematical functional structure from NBT data
 	 * @param nbt The NBT data structure holding the function
-	 * @param constGetter A mapper function which allows to map literals to constant numbers
-	 * @param varGetter A mapper function which allows to map literals to variable numbers (acting like functions)
+	 * @param context Context data
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
@@ -142,6 +201,18 @@ public class NBTMathHelper {
 					return parseMathFunction((NBTTagCompound)nbt, context);
 				} catch (MathFunctionException e) {
 					throw new MathParseException("Could not parse math function named " + raw_nbt.getString("Function"), e);
+				}
+			}else if(raw_nbt.hasKey("Logic", 8)) {
+				try {
+					return parseLogic((NBTTagCompound)nbt, context);
+				} catch (MathFunctionException e) {
+					throw new MathParseException("Could not parse logic named " + raw_nbt.getString("Logic"), e);
+				}
+			}else if(raw_nbt.hasKey("If", 10)) {
+				try {
+					return parseConditional((NBTTagCompound)nbt, context);
+				} catch (MathFunctionException e) {
+					throw new MathParseException("Could not parse conditional: " + raw_nbt, e);
 				}
 			}else {
 				throw new MathParseException("Unknown data structure: " + raw_nbt);
