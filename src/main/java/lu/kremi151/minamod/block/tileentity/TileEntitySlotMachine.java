@@ -58,7 +58,13 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
 
-	private SerializableFunction<? extends NBTBase> rowPriceFunction = new SerializableNamedFunction.Max(
+	private SerializableFunction<? extends NBTBase> customRowPriceFunction = null;
+	
+	//Log data for reports:
+	private SpinMode lastSpinMode = null;
+	private int awardedForLastSpin = 0;
+	
+	private final SerializableFunction<? extends NBTBase> defaultRowPriceFunction = new SerializableNamedFunction.Max(
 			new SerializableBinaryOperation(
 					new SerializableBinaryOperation(
 							new SerializableNamedMapper(id -> (double)icons.length, "iconCount"),
@@ -70,10 +76,6 @@ public class TileEntitySlotMachine extends TileEntity{
 					),
 			new SerializableConstant(1.0)
 			);
-	
-	//Log data for reports:
-	private SpinMode lastSpinMode = null;
-	private int awardedForLastSpin = 0;
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
@@ -84,7 +86,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public void setRowPriceFunction(SerializableFunction<? extends NBTBase> func) {
-		this.rowPriceFunction = func;
+		this.customRowPriceFunction = func;
 	}
 	
 	public SerializableFunction<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
@@ -238,7 +240,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		if(nbt.hasKey("RowPriceFunction")) {
 			try {
-				rowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), context);
+				customRowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), context);
 			} catch (MathParseException e) {
 				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();
@@ -262,7 +264,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		nbt.setTag("Prices", pnbt);
 		nbt.setInteger("CoinTray", coinTray);
-		nbt.setTag("RowPriceFunction", rowPriceFunction.serialize());
+		if(customRowPriceFunction != null)nbt.setTag("RowPriceFunction", customRowPriceFunction.serialize());
 		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
 		
 		return nbt;
@@ -518,8 +520,8 @@ public class TileEntitySlotMachine extends TileEntity{
 			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}*/
 		
-		private int rowPrice(int iconId) {//TODO: Adjust
-			return rowPriceFunction.apply(iconId).intValue();
+		private int rowPrice(int iconId) {
+			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId).intValue();
 		}
 		
 		private int evaluateResult() {
