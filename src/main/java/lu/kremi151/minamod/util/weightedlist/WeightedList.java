@@ -30,6 +30,18 @@ public interface WeightedList<T> extends Iterable<WeightedItem<T>>{
 	 */
 	MutableWeightedList<T> mutable();
 	
+	/**
+	 * Returns the amount of items in this list
+	 * @return
+	 */
+	int size();
+	
+	/**
+	 * Returns the sum of each item's weight in this list
+	 * @return
+	 */
+	double totalWeight();
+	
 	public static <T> MutableWeightedList<T> create(){
 		return new MutableWeightedList<T>();
 	}

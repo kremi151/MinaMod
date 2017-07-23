@@ -84,4 +84,14 @@ public final class MutableWeightedList<T> implements WeightedList<T>{
 	public MutableWeightedList<T> mutable() {
 		return this;
 	}
+
+	@Override
+	public int size() {
+		return items.size();
+	}
+
+	@Override
+	public double totalWeight() {
+		return totalWeight;
+	}
 }

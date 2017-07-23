@@ -30,4 +30,14 @@ public final class ImmutableWeightedList<T> implements WeightedList<T> {
 		return (MutableWeightedList<T>) WeightedList.combine(wrapped);
 	}
 
+	@Override
+	public int size() {
+		return wrapped.size();
+	}
+
+	@Override
+	public double totalWeight() {
+		return wrapped.totalWeight();
+	}
+
 }
