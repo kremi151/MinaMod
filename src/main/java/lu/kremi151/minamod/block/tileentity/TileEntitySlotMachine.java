@@ -64,18 +64,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private SpinMode lastSpinMode = null;
 	private int awardedForLastSpin = 0;
 	
-	private final SerializableFunction<? extends NBTBase> defaultRowPriceFunction = new SerializableNamedFunction.Max(
-			new SerializableBinaryOperation(
-					new SerializableBinaryOperation(
-							new SerializableNamedMapper(id -> (double)icons.length, "iconCount"),
-							new SerializableNamedMapper(id -> (double)icons[id.intValue()].weight, "iconWeight"),
-							NBTMathHelper.DIVISION
-							),
-					new SerializableConstant(50.0),
-					NBTMathHelper.MULTIPLICATION
-					),
-			new SerializableConstant(1.0)
-			);
+	private final SerializableFunction<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0);
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
@@ -245,6 +234,8 @@ public class TileEntitySlotMachine extends TileEntity{
 				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();
 			}
+		}else if(nbt.hasKey("MaxWin", 99)) {
+			customRowPriceFunction = generateDefaultRowPriceFunction(nbt.getDouble("MaxWin"));
 		}
 		if(nbt.hasKey("CustomName", 8)) {
 			this.customName = nbt.getString("CustomName");
@@ -360,6 +351,29 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 	}
 	
+	private SerializableFunction<? extends NBTBase> generateDefaultRowPriceFunction(double maxWin) {
+		return new SerializableNamedFunction.Max(
+				new SerializableBinaryOperation(
+						new SerializableBinaryOperation(
+								new SerializableConstant(1.0),
+								new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
+										new SerializableBinaryOperation(
+												new SerializableNamedMapper(id -> (double)icons[id.intValue()].weight, "iconWeight"),
+												new SerializableConstant(1.0),
+												NBTMathHelper.DIFFERENCE
+												),
+										new SerializableNamedMapper(id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)), "maxWeight"),
+										NBTMathHelper.DIVISION
+										),
+								NBTMathHelper.DIFFERENCE
+								),
+						new SerializableConstant(maxWin),
+						NBTMathHelper.MULTIPLICATION
+						),
+				new SerializableConstant(1.0)
+				);
+	}
+	
 	private static class Icon{
 		private final Item icon;
 		private final int weight;
@@ -380,7 +394,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		private final SpinMode mode;
 
 		private TaskTurnSlots(SpinMode mode, Random rand) {
-			this.mode = mode;//TODO
+			this.mode = mode;
 			this.rand = rand;
 			for(int i = 0 ; i < spacings.length ; i++) {
 				spacings[i] = 5 + rand.nextInt(10);
@@ -668,6 +682,8 @@ public class TileEntitySlotMachine extends TileEntity{
 				return id -> icons.length;
 			}else if(name.equalsIgnoreCase("totalWeight")) {
 				return id -> ((Double)weightedIconIds.totalWeight()).intValue();
+			}else if(name.equalsIgnoreCase("maxWeight")) {
+				return id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b));
 			}else {
 				return null;
 			}
@@ -678,6 +694,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			consumer.accept("iconWeight", (UnaryOperator<Number>)id -> icons[id.intValue()].weight);
 			consumer.accept("iconCount", icons.length);
 			consumer.accept("totalWeight", (UnaryOperator<Number>)id -> ((Double)weightedIconIds.totalWeight()).intValue());
+			consumer.accept("maxWeight", (UnaryOperator<Number>)id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)));
 		}
 		
 	};

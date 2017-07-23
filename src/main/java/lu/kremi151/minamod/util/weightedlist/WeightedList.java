@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.BinaryOperator;
+import java.util.function.DoubleBinaryOperator;
 
 import lu.kremi151.minamod.interfaces.ICallback;
 
@@ -41,6 +43,13 @@ public interface WeightedList<T> extends Iterable<WeightedItem<T>>{
 	 * @return
 	 */
 	double totalWeight();
+	
+	default double reduceWeight(double start, DoubleBinaryOperator reductor) {
+		for(WeightedItem<T> i : this) {
+			start = reductor.applyAsDouble(start, i.weight);
+		}
+		return start;
+	}
 	
 	public static <T> MutableWeightedList<T> create(){
 		return new MutableWeightedList<T>();

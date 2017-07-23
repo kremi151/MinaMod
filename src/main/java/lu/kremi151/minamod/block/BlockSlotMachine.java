@@ -80,18 +80,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
         			.setPriceForSpinMode(SpinMode.ONE, 5)
         			.setPriceForSpinMode(SpinMode.THREE, 5)
         			.setPriceForSpinMode(SpinMode.FIVE, 15)
-        			.setRowPriceFunction(new SerializableNamedFunction.Max(
-							new SerializableBinaryOperation(
-									new SerializableBinaryOperation(
-											SerializableNamedMapper.createPlaceholder("iconCount"),
-											SerializableNamedMapper.createPlaceholder("iconWeight"),
-											NBTMathHelper.DIVISION
-											),
-									new SerializableConstant(70.0),
-									NBTMathHelper.MULTIPLICATION
-									),
-							new SerializableConstant(1.0)
-							))
+        			.setMaxWin(300.0)
         			.setCustomName(TextFormatting.DARK_AQUA + "Sweet Luxury")
         			.buildItemStack();
         }

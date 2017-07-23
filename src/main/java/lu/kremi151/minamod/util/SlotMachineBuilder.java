@@ -20,6 +20,7 @@ public class SlotMachineBuilder {
 	private SerializableFunction rowPriceFunction = null;
 	private int prices[] = null;
 	private String customName = null;
+	private double maxWin = -1.0;
 
 	public SlotMachineBuilder() {
 	}
@@ -36,6 +37,11 @@ public class SlotMachineBuilder {
 	
 	public SlotMachineBuilder setRowPriceFunction(SerializableFunction<? extends NBTBase> function) {
 		this.rowPriceFunction = function;
+		return this;
+	}
+	
+	public SlotMachineBuilder setMaxWin(double maxWin) {
+		this.maxWin = maxWin;
 		return this;
 	}
 	
@@ -75,6 +81,8 @@ public class SlotMachineBuilder {
         
         if(rowPriceFunction != null) {
         	teTag.setTag("RowPriceFunction", rowPriceFunction.serialize());
+        }else if(maxWin > 0.0) {
+        	teTag.setDouble("MaxWin", maxWin);
         }
         
         if(prices != null) {

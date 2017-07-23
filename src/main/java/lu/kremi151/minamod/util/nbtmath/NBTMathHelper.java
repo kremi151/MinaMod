@@ -68,7 +68,7 @@ public class NBTMathHelper {
 		case '+':
 			return new SerializableBinaryOperation(parsedA, parsedB, ADDITION);
 		case '-':
-			return new SerializableBinaryOperation(parsedA, parsedB, SUBSTRACTION);
+			return new SerializableBinaryOperation(parsedA, parsedB, DIFFERENCE);
 		case '*':
 			return new SerializableBinaryOperation(parsedA, parsedB, MULTIPLICATION);
 		case '/':
@@ -259,7 +259,7 @@ public class NBTMathHelper {
 		}
 	};
 
-	public static final SerializableOperator SUBSTRACTION = new SerializableOperator('-') {
+	public static final SerializableOperator DIFFERENCE = new SerializableOperator('-') {
 		@Override
 		public Number apply(Number a, Number b) {
 			return a.doubleValue() - b.doubleValue();
