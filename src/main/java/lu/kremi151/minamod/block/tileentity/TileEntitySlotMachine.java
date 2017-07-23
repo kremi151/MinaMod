@@ -83,6 +83,14 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 	}
 	
+	public void setRowPriceFunction(SerializableFunction<? extends NBTBase> func) {
+		this.rowPriceFunction = func;
+	}
+	
+	public SerializableFunction<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
+		return NBTMathHelper.parseFunction(nbt, context);
+	}
+	
 	public EntityPlayer getPlaying() {
 		return currentSession.getPlayerIfValid();
 	}

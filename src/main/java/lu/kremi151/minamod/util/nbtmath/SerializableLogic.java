@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.util.nbtmath;
 
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class SerializableLogic extends SerializableFunction<NBTTagCompound>{
@@ -18,6 +19,32 @@ public abstract class SerializableLogic extends SerializableFunction<NBTTagCompo
 	}
 	
 	public abstract boolean evaluate(Number t);
+	
+	public static class Equals extends SerializableLogic{
+		
+		protected final SerializableFunction<? extends NBTBase> a, b;
+
+		public Equals(SerializableFunction a, SerializableFunction b) {
+			super("Equals");
+			this.a = a;
+			this.b = b;
+		}
+
+		@Override
+		public final NBTTagCompound serialize() {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setString("Logic", name);
+			nbt.setTag("A", a.serialize());
+			nbt.setTag("B", b.serialize());
+			return nbt;
+		}
+
+		@Override
+		public boolean evaluate(Number t) {
+			return a.apply(t).doubleValue() == b.apply(t).doubleValue();
+		}
+		
+	}
 	
 	public abstract static class Binary extends SerializableLogic{
 		

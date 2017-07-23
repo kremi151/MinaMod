@@ -133,13 +133,15 @@ public class NBTMathHelper {
 	private static SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
 		String logic = nbt.getString("Logic");
 		if(logic.equalsIgnoreCase("and")) {
-			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("or")) {
-			return new SerializableLogic.Or(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+			return new SerializableLogic.Or(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("xor")) {
-			return new SerializableLogic.XOr(parseLogic(nbt.getCompoundTag("A")), parseLogic(nbt.getCompoundTag("B")));
+			return new SerializableLogic.XOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("not")) {
-			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A")));
+			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A"), context));
+		}else if(logic.equalsIgnoreCase("equals")) {
+			return new SerializableLogic.Equals(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
 		}else {
 			throw new MathParseException("Unknown logical function: " + logic);
 		}
