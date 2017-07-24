@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.block.tileentity;
 
+import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.BlockSieve;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -101,5 +102,7 @@ public class TileEntitySieve extends TileEntity {
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
+		IBlockState state = world.getBlockState(getPos());
+		world.notifyBlockUpdate(getPos(), state, MinaBlocks.SIEVE.getActualState(state, world, pos), 3);
 	}
 }
