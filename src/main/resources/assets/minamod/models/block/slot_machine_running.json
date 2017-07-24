@@ -1,0 +1,7 @@
+{
+  "parent": "minamod:block/slot_machine_base",
+  "textures": {
+     "front": "minamod:blocks/slot_machine_front_turning",
+	 "side": "minamod:blocks/slot_machine_side"
+  }
+}

@@ -1,8 +1,27 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "minamod:slot_machine_idle",
+        "uvlock": true
+    },
     "variants": {
-        "facing=north": { "model": "minamod:slot_machine" },
-        "facing=south": { "model": "minamod:slot_machine", "y": 180 },
-        "facing=west":  { "model": "minamod:slot_machine", "y": 270 },
-        "facing=east":  { "model": "minamod:slot_machine", "y": 90 }
+        "facing": {
+		    "north": {},
+			"south": {
+			    "y": 180
+			},
+			"west": {
+			    "y": 270
+			},
+			"east": {
+			    "y": 90
+			}
+		},
+		"is_turning": {
+		    "true": {
+			    "model": "minamod:slot_machine_running"
+			},
+			"false": {}
+		}
     }
 }

@@ -9,6 +9,7 @@ import java.util.function.UnaryOperator;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.BlockSlotMachine;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
@@ -28,6 +29,7 @@ import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,7 +40,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 
@@ -80,6 +81,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	
 	public void setRowPriceFunction(SerializableFunction<? extends NBTBase> func) {
 		this.customRowPriceFunction = func;
+		this.markDirty();
 	}
 	
 	public SerializableFunction<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
@@ -194,6 +196,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
+		this.isTurning = nbt.getBoolean("IsTurning");
 		if(nbt.hasKey("Icons", 9)) {
 			NBTTagList icons = nbt.getTagList("Icons", 10);
 			ArrayList<Icon> parsed = new ArrayList<>();
@@ -273,6 +276,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			icons.appendTag(this.icons[i].serialize());
 		}
 		nbt.setTag("Icons", icons);
+		nbt.setBoolean("IsTurning", isTurning);
 		
 		return nbt;
 	}
@@ -291,6 +295,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         readFromNBT(packet.getNbtCompound());
+        notifyClientTurnState(isTurning);
 	}
 	
 	public String getCustomName() {
@@ -327,6 +332,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		return false;
 	}
 	
+	private void notifyClientTurnState(boolean state) {
+		IBlockState oldState = world.getBlockState(getPos());
+		world.notifyBlockUpdate(getPos(), oldState, oldState/*.withProperty(BlockSlotMachine.IS_TURNING, state)*/, 3);
+	}
+	
 	public void turnSlots(SpinMode mode, Random rand) {
 		if(!world.isRemote) {
 			if(isTurning) {
@@ -337,6 +347,7 @@ public class TileEntitySlotMachine extends TileEntity{
 				if(playing != null) {
 					if(withdrawCoins(playing, price)){
 						isTurning = true;
+						notifyClientTurnState(true);
 						awardedForLastSpin = 0;
 						currentSession.currentWin -= price;
 						needs_sync = true;
@@ -420,6 +431,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					rewardPlayer(win, true);
 				}
 				isTurning = false;
+				notifyClientTurnState(false);
 				needs_sync = true;
 			}
 		}

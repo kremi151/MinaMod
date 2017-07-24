@@ -18,6 +18,9 @@ import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +42,8 @@ import net.minecraftforge.server.permission.PermissionAPI;
 
 public class BlockSlotMachine extends BlockCustomHorizontal{
 	
+	public static final PropertyBool IS_TURNING = PropertyBool.create("is_turning");
+	
 	private ItemStack variantShinyGemCrush = null, variantSweetLuxury = null;
 	
 	protected static final AxisAlignedBB aabb = new AxisAlignedBB(2.0 / 16.0, 0d, 2.0 / 16.0, 14.0 / 16.0, 12.0 / 16.0, 14.0 / 16.0);
@@ -47,6 +52,18 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
 	}
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        return state.withProperty(IS_TURNING, ((TileEntitySlotMachine)worldIn.getTileEntity(pos)).isTurning());
+    }
+	
+	@Override
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {FACING, IS_TURNING});
+    }
 	
 	@Override
     @SideOnly(Side.CLIENT)

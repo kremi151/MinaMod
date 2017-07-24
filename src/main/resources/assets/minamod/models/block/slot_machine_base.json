@@ -1,0 +1,37 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": true,
+    "textures": {
+        "particle": "minamod:blocks/slot_machine_side",
+        "lever": "minamod:blocks/slot_machine_lever"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 2.0, 0.0, 2.0 ], 
+            "to": [ 14.0, 12.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#front", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "south": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "up": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Lever",
+            "from": [ 3.0, 5.0, 2.0 ], 
+            "to": [ 4.0, 9.0, 3.0 ], 
+            "rotation": { "origin": [ 3.0, 5.0, 2.0 ], "axis": "x", "angle": -22.5 },
+            "faces": {
+                "north": { "texture": "#lever", "uv": [ 0.0, 0.0, 1.0, 4.0 ] },
+                "east": { "texture": "#lever", "uv": [ 0.0, 0.0, 1.0, 4.0 ] },
+                "south": { "texture": "#lever", "uv": [ 0.0, 0.0, 1.0, 4.0 ] },
+                "west": { "texture": "#lever", "uv": [ 0.0, 0.0, 1.0, 4.0 ] },
+                "up": { "texture": "#lever", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "down": { "texture": "#lever", "uv": [ 0.0, 3.0, 1.0, 4.0 ] }
+            }
+        }
+    ]
+}
