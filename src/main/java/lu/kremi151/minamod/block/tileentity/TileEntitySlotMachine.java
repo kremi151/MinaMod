@@ -237,7 +237,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			NBTTagCompound pnbt = nbt.getCompoundTag("Prices");
 			for(SpinMode mode : SpinMode.values()) {
 				if(pnbt.hasKey(mode.name().toLowerCase(), 99)) {
-					prices[mode.ordinal()] = MathHelper.clamp(pnbt.getInteger(mode.name().toLowerCase()), 1, 255);
+					prices[mode.ordinal()] = MathHelper.clamp(pnbt.getInteger(mode.name().toLowerCase()), 0, 255);
 				}
 			}
 		}

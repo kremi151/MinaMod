@@ -24,6 +24,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -44,7 +45,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	
 	public static final PropertyBool IS_TURNING = PropertyBool.create("is_turning");
 	
-	private ItemStack variantShinyGemCrush = null, variantSweetLuxury = null;
+	private ItemStack variantShinyGemCrush = null, variantSweetLuxury = null, variantFree = null;
 	
 	protected static final AxisAlignedBB aabb = new AxisAlignedBB(2.0 / 16.0, 0d, 2.0 / 16.0, 14.0 / 16.0, 12.0 / 16.0, 14.0 / 16.0);
 
@@ -102,8 +103,24 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
         			.buildItemStack();
         }
         
+        if(variantFree == null) {        	
+        	variantFree = new SlotMachineBuilder()
+        			.addIcon(Items.RECORD_11, 4, false)
+        			.addIcon(Items.RECORD_CHIRP, 3, false)
+        			.addIcon(Items.RECORD_BLOCKS, 3, false)
+        			.addIcon(Items.RECORD_13, 1, false)
+        			.addIcon(Blocks.JUKEBOX, 1, true)
+        			.setPriceForSpinMode(SpinMode.ONE, 0)
+        			.setPriceForSpinMode(SpinMode.THREE, 0)
+        			.setPriceForSpinMode(SpinMode.FIVE, 0)
+        			.setRowPriceFunction(new SerializableConstant(0.0))
+        			.setCustomName("Free Spins")
+        			.buildItemStack();
+        }
+        
         list.add(variantShinyGemCrush.copy());     
-        list.add(variantSweetLuxury.copy());
+        list.add(variantSweetLuxury.copy());   
+        list.add(variantFree.copy());
     }
 	
 	@Override
