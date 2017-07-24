@@ -29,6 +29,8 @@ public class NBTMathHelper {
 		mathFunctionDeserializers.put("neg", args -> new SerializableNamedFunction.Negate(args[0]));
 		mathFunctionDeserializers.put("max", args -> new SerializableNamedFunction.Max(args));
 		mathFunctionDeserializers.put("min", args -> new SerializableNamedFunction.Min(args));
+		mathFunctionDeserializers.put("sum", args -> new SerializableNamedFunction.Sum(args));
+		mathFunctionDeserializers.put("product", args -> new SerializableNamedFunction.Product(args));
 	}
 	
 	/**

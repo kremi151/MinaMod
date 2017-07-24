@@ -98,4 +98,42 @@ public abstract class SerializableNamedFunction extends SerializableFunction<NBT
 		
 	}
 	
+	public static class Sum extends SerializableNamedFunction{
+
+		public Sum(SerializableFunction<? extends NBTBase>[] args) throws MathFunctionException {
+			super("sum", args);
+		}
+
+		@Override
+		public Number apply(Number t) {
+			double sum = 0.0;
+			for(SerializableFunction<? extends NBTBase> f : args) {
+				sum += f.apply(t).doubleValue();
+			}
+			return sum;
+		}
+		
+	}
+	
+	public static class Product extends SerializableNamedFunction{
+
+		public Product(SerializableFunction<? extends NBTBase>[] args) throws MathFunctionException {
+			super("product", args);
+		}
+
+		@Override
+		public Number apply(Number t) {
+			if(args.length > 0) {
+				double sum = 1.0;
+				for(SerializableFunction<? extends NBTBase> f : args) {
+					sum *= f.apply(t).doubleValue();
+				}
+				return sum;
+			}else {
+				return 0.0;
+			}
+		}
+		
+	}
+	
 }
