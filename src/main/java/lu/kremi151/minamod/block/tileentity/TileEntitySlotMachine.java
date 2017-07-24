@@ -153,6 +153,10 @@ public class TileEntitySlotMachine extends TileEntity{
 		return this.wheels.getWheelValue(wheelIdx, wheelPos);
 	}
 	
+	public boolean isWinningSlot(int wheelIdx, int wheelPos) {
+		return this.wheels.isWinning(wheelIdx, wheelPos);
+	}
+	
 	public boolean needsSync() {
 		return needs_sync || this.wheels.isDirty();
 	}
@@ -357,6 +361,7 @@ public class TileEntitySlotMachine extends TileEntity{
 						notifyClientTurnState(true);
 						awardedForLastSpin = 0;
 						currentSession.currentWin -= price;
+						wheels.clearWinnings();
 						needs_sync = true;
 						new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand)).enqueueServerTask();
 					}else {
@@ -488,23 +493,48 @@ public class TileEntitySlotMachine extends TileEntity{
 			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId).intValue();
 		}
 		
+		private void markEverythingWinning() {
+			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+				for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+					wheels.setWheelWinning(i, j, true);
+				}
+			}
+		}
+		
+		private void markHLineWinning(int line) {
+			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+				wheels.setWheelWinning(i, line, true);
+			}
+		}
+		
+		private void markVLineWinning(boolean invert) {
+			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
+				wheels.setWheelWinning(i, pos, true);
+			}
+		}
+		
 		private int evaluateResult() {
 			int win = 0;
 			
 			int eval = checkHLine(1);
 			if(eval == -2) {//Cherry
+				markEverythingWinning();
 				return 1000;//TODO:Adjust
 			}else if(eval >= 0) {
 				win += rowPrice(eval);
+				markHLineWinning(1);
 			}
 			
 			if(mode == SpinMode.THREE || mode == SpinMode.FIVE) {
 				for(int i = 0 ; i < 3 ; i += 2) {
 					eval = checkHLine(i);
 					if(eval == -2) {//Cherry
+						markEverythingWinning();
 						return 1000;//TODO:Adjust
 					}else if(eval >= 0) {
 						win += rowPrice(eval);
+						markHLineWinning(i);
 					}
 				}
 			}
@@ -513,9 +543,11 @@ public class TileEntitySlotMachine extends TileEntity{
 				for(int i = 0 ; i < 2 ; i ++) {
 					eval = checkVLine(i == 1);
 					if(eval == -2) {//Cherry
+						markEverythingWinning();
 						return 1000;//TODO:Adjust
 					}else if(eval >= 0) {
 						win += rowPrice(eval);
+						markVLineWinning(i == 1);
 					}
 				}
 			}

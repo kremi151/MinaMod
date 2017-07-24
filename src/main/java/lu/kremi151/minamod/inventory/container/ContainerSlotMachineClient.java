@@ -64,13 +64,28 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 		return slotMachine.getItemIcon(id);
 	}
 	
+	public int getWheelCount() {
+		return wheels.getWheelCount();
+	}
+	
+	public int getDisplayWheelSize() {
+		return wheels.getDisplayWheelSize();
+	}
+	
+	public boolean isWinning(int wheelIdx, int wheelPos) {
+		return wheels.isWinning(wheelIdx, wheelPos);
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
 		switch(id) {
 		case CMD_UPDATE_WHEEL:
-			wheels.setWheelContent(unpackWheelIndex(data), unpackWheelPosition(data), unpackValue(data));
+			int wheelIdx = unpackWheelIndex(data);
+			int wheelPos = unpackWheelPosition(data);
+			wheels.setWheelContent(wheelIdx, wheelPos, unpackValue(data));
+			wheels.setWheelWinning(wheelIdx, wheelPos, unpackWinning(data));
 			break;
 		case CMD_UPDATE_TURN_STATE:
 			this.isTurning = (data & 1) == 1;

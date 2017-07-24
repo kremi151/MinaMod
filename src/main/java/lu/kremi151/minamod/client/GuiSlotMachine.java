@@ -60,6 +60,15 @@ public class GuiSlotMachine extends GuiContainer{
 		fontRenderer.drawString(
 				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getCredits()), 10,
 				168, MinaUtils.COLOR_WHITE);
+		
+		this.mc.renderEngine.bindTexture(guiTextures);
+		for(int i = 0 ; i < container.getWheelCount() ; i++) {
+			for(int j = 0 ; j < container.getDisplayWheelSize() ; j++) {
+				if(container.isWinning(i, j)) {
+					this.drawTexturedModalRect(40 + (i * 20), 34 + (j * 17), 0, 186, 16, 16);
+				}
+			}
+		}
 
 		RenderHelper.enableStandardItemLighting();
 		RenderHelper.enableGUIStandardItemLighting();

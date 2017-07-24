@@ -94,7 +94,7 @@ public class ContainerSlotMachine extends BaseContainer{
                 
         		for(int x = 0 ; x < slotMachine.getWheelCount() ; x++) {
         			for(int y = 0 ; y < slotMachine.getDisplayWheelSize() ; y++) {
-        				icrafting.sendWindowProperty(this, CMD_UPDATE_WHEEL, packWheelUpdate(x, y, slotMachine.getWheelValue(x, y)));
+        				icrafting.sendWindowProperty(this, CMD_UPDATE_WHEEL, packWheelUpdate(x, y, slotMachine.getWheelValue(x, y), slotMachine.isWinningSlot(x, y)));
         			}
         		}
         		
@@ -107,8 +107,8 @@ public class ContainerSlotMachine extends BaseContainer{
     	}
 	}
 	
-	public static int packWheelUpdate(int wheelIdx, int pos, int value) {
-		return ((wheelIdx & 255) << 24) | ((pos & 255) << 16) | (value & 65535);
+	public static int packWheelUpdate(int wheelIdx, int pos, int value, boolean winning) {
+		return ((wheelIdx & 255) << 24) | ((pos & 255) << 16) | ((winning?1:0) << 15) | (value & 32767);
 	}
 	
 	public static int unpackWheelIndex(int packed) {
@@ -120,7 +120,11 @@ public class ContainerSlotMachine extends BaseContainer{
 	}
 	
 	public static int unpackValue(int packed) {
-		return packed & 65535;
+		return packed & 32767;
+	}
+	
+	public static boolean unpackWinning(int packed) {
+		return ((packed >> 15) & 1) == 1;
 	}
 
 }
