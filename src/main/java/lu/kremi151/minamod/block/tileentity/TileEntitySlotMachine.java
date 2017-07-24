@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.Nonnull;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockSlotMachine;
@@ -25,6 +27,7 @@ import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.slotmachine.Icon;
+import lu.kremi151.minamod.util.slotmachine.SlotMachineEconomyHandler;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
@@ -64,6 +67,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private int coinTray = 0;
 
 	private SerializableFunction<? extends NBTBase> customRowPriceFunction = null;
+	private SlotMachineEconomyHandler economyHandler = new DefaultEconomyHandler();
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -77,6 +81,17 @@ public class TileEntitySlotMachine extends TileEntity{
 		for(SpinMode mode : SpinMode.values()) {
 			prices[mode.ordinal()] = mode.getDefaultPrice();
 		}
+	}
+	
+	public void setEconomyHandler(@Nonnull SlotMachineEconomyHandler handler) {
+		if(handler == null) {
+			throw new NullPointerException();
+		}
+		this.economyHandler = handler;
+	}
+	
+	public SlotMachineEconomyHandler getEconomyHandler() {
+		return this.economyHandler;
 	}
 	
 	public void setRowPriceFunction(SerializableFunction<? extends NBTBase> func) {
@@ -179,17 +194,14 @@ public class TileEntitySlotMachine extends TileEntity{
 	
 	private void rewardPlayer(int coins, boolean won) {
 		EntityPlayer playing = getPlaying();
-		if(playing != null && playing.hasCapability(ICoinHandler.CAPABILITY, null)) {
-			if(((ICoinHandler)playing.getCapability(ICoinHandler.CAPABILITY, null)).depositCoins(coins)) {
-				TextHelper.sendTranslateableChatMessage(playing, TextFormatting.GREEN, won?"gui.slot_machine.won_coins":"gui.slot_machine.found_coins", coins);
-				currentSession.currentWin += coins;
-				needs_sync = true;
-			}else {
-				coinTray += coins;
-			}
+		if(economyHandler.rewardPlayer(playing, coins)) {
+			TextHelper.sendTranslateableChatMessage(playing, TextFormatting.GREEN, won?"gui.slot_machine.won_coins":"gui.slot_machine.found_coins", coins);
+			currentSession.currentWin += coins;
+			needs_sync = true;
 		}else {
 			coinTray += coins;
 		}
+		
 		awardedForLastSpin = coins;
 	}
 	
@@ -303,10 +315,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private int getCredits(EntityPlayer player) {
-		if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
-			return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).getAmountCoins();
-		}
-		return 0;
+		return economyHandler.getCredits(player);
 	}
 	
 	public int getPlayingCredits() {
@@ -323,11 +332,9 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private boolean withdrawCoins(EntityPlayer player, int amount) {
-		if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
-			if(((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).withdrawCoins(amount)) {
-				needs_sync = true;
-				return true;
-			}
+		if(economyHandler.withdrawCoins(player, amount)) {
+			needs_sync = true;
+			return true;
 		}
 		return false;
 	}
@@ -587,6 +594,35 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		
 	};
+	
+	private class DefaultEconomyHandler implements SlotMachineEconomyHandler{
+
+		@Override
+		public boolean rewardPlayer(EntityPlayer player, int amount) {
+			if(player != null && player.hasCapability(ICoinHandler.CAPABILITY, null)) {
+				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).depositCoins(amount);
+			}else {
+				return false;
+			}
+		}
+
+		@Override
+		public boolean withdrawCoins(EntityPlayer player, int amount) {
+			if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
+				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).withdrawCoins(amount);
+			}
+			return false;
+		}
+
+		@Override
+		public int getCredits(EntityPlayer player) {
+			if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
+				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).getAmountCoins();
+			}
+			return 0;
+		}
+		
+	}
 	
 	
 	
