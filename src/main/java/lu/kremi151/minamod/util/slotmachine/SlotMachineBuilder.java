@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
+import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 public class SlotMachineBuilder {
 	
 	private final LinkedList<Object[]> icons = new LinkedList<>();
-	private SerializableFunction rowPriceFunction = null, cherryRowPriceFunction = null;
+	private SerializableFunctionBase rowPriceFunction = null, cherryRowPriceFunction = null;
 	private int prices[] = null;
 	private String customName = null;
 	private double maxWin = -1.0, cherryWin = -1.0;
@@ -35,12 +35,12 @@ public class SlotMachineBuilder {
 		return this;
 	}
 	
-	public SlotMachineBuilder setRowPriceFunction(SerializableFunction<? extends NBTBase> function) {
+	public SlotMachineBuilder setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> function) {
 		this.rowPriceFunction = function;
 		return this;
 	}
 	
-	public SlotMachineBuilder setCherryRowPriceFunction(SerializableFunction<? extends NBTBase> function) {
+	public SlotMachineBuilder setCherryRowPriceFunction(SerializableFunctionBase<? extends NBTBase> function) {
 		this.cherryRowPriceFunction = function;
 		return this;
 	}

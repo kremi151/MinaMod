@@ -4,12 +4,12 @@ import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class SerializableBinaryOperation extends SerializableFunction<NBTTagCompound>{
+public class SerializableBinaryOperation extends SerializableFunctionBase<NBTTagCompound>{
 	
-	private final SerializableFunction<? extends NBTBase> a, b;
+	private final SerializableFunctionBase<? extends NBTBase> a, b;
 	private final SerializableOperator operation;
 	
-	public SerializableBinaryOperation(SerializableFunction<? extends NBTBase> a, SerializableFunction<? extends NBTBase> b, SerializableOperator operation) {
+	public SerializableBinaryOperation(SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b, SerializableOperator operation) {
 		super(Context.DEFAULT);
 		this.a = a;
 		this.b = b;
@@ -17,7 +17,7 @@ public class SerializableBinaryOperation extends SerializableFunction<NBTTagComp
 	}
 
 	@Override
-	public Number apply(Number t) {
+	public Number apply(Number t, Context c) {
 		return operation.apply(a.apply(t), b.apply(t));
 	}
 

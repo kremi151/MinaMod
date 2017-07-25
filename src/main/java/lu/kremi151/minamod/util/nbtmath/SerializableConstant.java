@@ -4,7 +4,7 @@ import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagDouble;
 
-public class SerializableConstant extends SerializableFunction<NBTPrimitive>{
+public class SerializableConstant extends SerializableFunctionBase<NBTPrimitive>{
 	
 	private final Number primitive;
 	
@@ -14,7 +14,7 @@ public class SerializableConstant extends SerializableFunction<NBTPrimitive>{
 	}
 
 	@Override
-	public Number apply(Number t) {
+	public Number apply(Number t, Context c) {
 		return primitive;
 	}
 

@@ -22,8 +22,8 @@ import lu.kremi151.minamod.util.nbtmath.MathParseException;
 import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
 import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
+import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.slotmachine.Icon;
@@ -66,14 +66,14 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
 
-	private SerializableFunction<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
+	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
 	private SlotMachineEconomyHandler economyHandler = new DefaultEconomyHandler();
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
 	private int awardedForLastSpin = 0;
 	
-	private final SerializableFunction<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0);
+	private final SerializableFunctionBase<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0);
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
@@ -94,12 +94,12 @@ public class TileEntitySlotMachine extends TileEntity{
 		return this.economyHandler;
 	}
 	
-	public void setRowPriceFunction(SerializableFunction<? extends NBTBase> func) {
+	public void setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> func) {
 		this.customRowPriceFunction = func;
 		this.markDirty();
 	}
 	
-	public SerializableFunction<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
+	public SerializableFunctionBase<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
 		return NBTMathHelper.parseFunction(nbt, context);
 	}
 	
@@ -383,18 +383,18 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 	}
 	
-	private SerializableFunction<? extends NBTBase> generateDefaultRowPriceFunction(double maxWin) {
-		return new SerializableNamedFunction.Max(
+	private SerializableFunctionBase<? extends NBTBase> generateDefaultRowPriceFunction(double maxWin) {
+		return new SerializableFunction.Max(
 				new SerializableBinaryOperation(
 						new SerializableBinaryOperation(
 								new SerializableConstant(1.0),
 								new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
 										new SerializableBinaryOperation(
-												new SerializableNamedMapper(id -> (double)icons[id.intValue()].weight, "iconWeight"),
+												SerializableNamedMapper.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
 												new SerializableConstant(1.0),
 												NBTMathHelper.DIFFERENCE
 												),
-										new SerializableNamedMapper(id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)), "maxWeight"),
+										SerializableNamedMapper.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
 										NBTMathHelper.DIVISION
 										),
 								NBTMathHelper.DIFFERENCE
@@ -613,12 +613,12 @@ public class TileEntitySlotMachine extends TileEntity{
 	private class SlotMachineContext implements Context{
 
 		@Override
-		public Number getConstant(String name) {
+		public Number resolveConstant(String name) {
 			return null;
 		}
 
 		@Override
-		public UnaryOperator<Number> getVariable(String name) {
+		public UnaryOperator<Number> resolveVariable(String name) {
 			if(name.equalsIgnoreCase("iconWeight")) {
 				return id -> icons[id.intValue()].weight;
 			}else if(name.equalsIgnoreCase("iconCount")) {

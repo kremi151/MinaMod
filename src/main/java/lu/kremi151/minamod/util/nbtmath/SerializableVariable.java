@@ -3,14 +3,14 @@ package lu.kremi151.minamod.util.nbtmath;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTTagString;
 
-public class SerializableVariable extends SerializableFunction<NBTTagString>{
+public class SerializableVariable extends SerializableFunctionBase<NBTTagString>{
 
 	SerializableVariable() {
 		super(Context.DEFAULT);
 	}
 
 	@Override
-	public Number apply(Number t) {
+	public Number apply(Number t, Context c) {
 		return t;
 	}
 

@@ -22,15 +22,15 @@ import net.minecraft.nbt.NBTTagString;
  */
 public class NBTMathHelper {
 	
-	private static final HashMap<String, INBTFunctionDeserializer<? extends SerializableNamedFunction>> mathFunctionDeserializers = new HashMap<>();
+	private static final HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
 
 	static {
-		mathFunctionDeserializers.put("abs", args -> new SerializableNamedFunction.Absolute(args[0]));
-		mathFunctionDeserializers.put("neg", args -> new SerializableNamedFunction.Negate(args[0]));
-		mathFunctionDeserializers.put("max", args -> new SerializableNamedFunction.Max(args));
-		mathFunctionDeserializers.put("min", args -> new SerializableNamedFunction.Min(args));
-		mathFunctionDeserializers.put("sum", args -> new SerializableNamedFunction.Sum(args));
-		mathFunctionDeserializers.put("product", args -> new SerializableNamedFunction.Product(args));
+		mathFunctionDeserializers.put("abs", args -> new SerializableFunction.Absolute(args[0]));
+		mathFunctionDeserializers.put("neg", args -> new SerializableFunction.Negate(args[0]));
+		mathFunctionDeserializers.put("max", args -> new SerializableFunction.Max(args));
+		mathFunctionDeserializers.put("min", args -> new SerializableFunction.Min(args));
+		mathFunctionDeserializers.put("sum", args -> new SerializableFunction.Sum(args));
+		mathFunctionDeserializers.put("product", args -> new SerializableFunction.Product(args));
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class NBTMathHelper {
 			throw new MathParseException("Invalid operation format");
 		}
 		
-		final SerializableFunction parsedA, parsedB;
+		final SerializableFunctionBase parsedA, parsedB;
 		parsedA = parseFunction(a, context);
 		parsedB = parseFunction(b, context);
 		
@@ -90,23 +90,23 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
 	 */
-	private static SerializableNamedFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
+	private static SerializableFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
 		NBTTagList args = nbt.getTagList("Arguments", 10);
 		String functionName = nbt.getString("Function");
 		if(args.tagCount() == 0) {
 			throw new MathParseException("No arguments parsed for function " + functionName);
 		}
 		
-		ArrayList<SerializableFunction<? extends NBTBase>> parsedArgs = new ArrayList<>();
+		ArrayList<SerializableFunctionBase<? extends NBTBase>> parsedArgs = new ArrayList<>();
 		for(int i = 0 ; i < args.tagCount() ; i++) {
 			NBTTagCompound anbt = args.getCompoundTagAt(i);
 			if(anbt.hasKey("Arg")) {
 				parsedArgs.add(parseFunction(anbt.getTag("Arg"), context));
 			}
 		}
-		SerializableFunction<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunction[parsedArgs.size()]);
+		SerializableFunctionBase<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunctionBase[parsedArgs.size()]);
 		
-		INBTFunctionDeserializer<? extends SerializableNamedFunction> deserializer = mathFunctionDeserializers.get(functionName);
+		INBTFunctionDeserializer<? extends SerializableFunction> deserializer = mathFunctionDeserializers.get(functionName);
 		if(deserializer != null) {
 			return deserializer.deserialize(parsedArgsArray);
 		}else {
@@ -169,7 +169,7 @@ public class NBTMathHelper {
 	private static SerializableConditional parseConditional(NBTTagCompound nbt, Context context) throws MathParseException{
 		try {
 			SerializableLogic cond = parseLogic(nbt.getCompoundTag("If"), context);
-			SerializableFunction<? extends NBTBase> t, e;
+			SerializableFunctionBase<? extends NBTBase> t, e;
 			t = parseFunction(nbt.getTag("Then"), context);
 			e = parseFunction(nbt.getTag("Else"), context);
 			return new SerializableConditional(cond, t, e);
@@ -184,7 +184,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunction parseFunction(NBTBase nbt) throws MathParseException{
+	public static SerializableFunctionBase parseFunction(NBTBase nbt) throws MathParseException{
 		return parseFunction(nbt, Context.DEFAULT);
 	}
 	
@@ -195,7 +195,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunction parseFunction(NBTBase nbt, Context context) throws MathParseException{
+	public static SerializableFunctionBase parseFunction(NBTBase nbt, Context context) throws MathParseException{
 		if(nbt instanceof NBTTagCompound) {
 			NBTTagCompound raw_nbt = (NBTTagCompound)nbt;
 			if(raw_nbt.hasKey("Operation", 8)) {
@@ -237,15 +237,15 @@ public class NBTMathHelper {
 			if(varName.equals("x")) {
 				return new SerializableVariable();
 			}else {
-				Number constant = context.getConstant(varName);
+				Number constant = context.resolveConstant(varName);
 				if(constant != null) {
-					return new SerializableNamedConstant(constant, varName);
+					return SerializableNamedConstant.createAndProvide(varName, constant);
 				}else {
-					var = context.getVariable(varName);
+					var = context.resolveVariable(varName);
 				}
 			}
 			if(var != null) {
-				return new SerializableNamedMapper(var, varName);
+				return SerializableNamedMapper.createAndProvide(varName, var);
 			}else {
 				throw new MathParseException("Unknown variable: " + varName);
 			}

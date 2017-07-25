@@ -18,7 +18,7 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTTagString;
 
-public class SerializableNashornFunction extends SerializableFunction<NBTTagString>{
+public class SerializableNashornFunction extends SerializableFunctionBase<NBTTagString>{
 
 	private static final HashMap<String, ScriptEngine> ENGINE_CACHE = new HashMap<>();
 	private static final HashMap<String, String> SCRIPT_CACHE = new HashMap<>();
@@ -56,7 +56,7 @@ public class SerializableNashornFunction extends SerializableFunction<NBTTagStri
 	}
 
 	@Override
-	public Number apply(Number arg0) {
+	public Number apply(Number arg0, Context c) {
 		Bindings newBindings = engine.createBindings();
 		getContext().applyMappings((name, val) -> newBindings.put(name, val));
 		engine.setBindings(newBindings, ScriptContext.ENGINE_SCOPE);

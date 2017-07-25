@@ -4,7 +4,7 @@ import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public abstract class SerializableLogic extends SerializableFunction<NBTTagCompound>{
+public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagCompound>{
 	
 	protected final String name;
 
@@ -14,7 +14,7 @@ public abstract class SerializableLogic extends SerializableFunction<NBTTagCompo
 	}
 
 	@Override
-	public final Number apply(Number t) {
+	public final Number apply(Number t, Context c) {
 		return evaluate(t) ? 1 : 0;
 	}
 	
@@ -22,9 +22,9 @@ public abstract class SerializableLogic extends SerializableFunction<NBTTagCompo
 	
 	public static class Equals extends SerializableLogic{
 		
-		protected final SerializableFunction<? extends NBTBase> a, b;
+		protected final SerializableFunctionBase<? extends NBTBase> a, b;
 
-		public Equals(SerializableFunction a, SerializableFunction b) {
+		public Equals(SerializableFunctionBase a, SerializableFunctionBase b) {
 			super("Equals");
 			this.a = a;
 			this.b = b;

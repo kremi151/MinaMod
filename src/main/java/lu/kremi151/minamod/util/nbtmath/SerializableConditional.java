@@ -4,12 +4,12 @@ import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class SerializableConditional extends SerializableFunction<NBTTagCompound>{
+public class SerializableConditional extends SerializableFunctionBase<NBTTagCompound>{
 	
 	private final SerializableLogic cond;
-	private final SerializableFunction<? extends NBTBase> _then, _else;
+	private final SerializableFunctionBase<? extends NBTBase> _then, _else;
 
-	public SerializableConditional(SerializableLogic condition, SerializableFunction _then, SerializableFunction _else) {
+	public SerializableConditional(SerializableLogic condition, SerializableFunctionBase _then, SerializableFunctionBase _else) {
 		super(Context.DEFAULT);
 		this.cond = condition;
 		this._then = _then;
@@ -26,7 +26,7 @@ public class SerializableConditional extends SerializableFunction<NBTTagCompound
 	}
 
 	@Override
-	public Number apply(Number t) {
+	public Number apply(Number t, Context c) {
 		if(cond.evaluate(t)) {
 			return _then.apply(t);
 		}else {

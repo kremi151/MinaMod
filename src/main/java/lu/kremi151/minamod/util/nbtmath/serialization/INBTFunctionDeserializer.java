@@ -1,12 +1,12 @@
 package lu.kremi151.minamod.util.nbtmath.serialization;
 
 import lu.kremi151.minamod.util.nbtmath.MathFunctionException;
+import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import net.minecraft.nbt.NBTBase;
 
-public interface INBTFunctionDeserializer<FunctionName extends SerializableNamedFunction> {
+public interface INBTFunctionDeserializer<FunctionName extends SerializableFunction> {
 
-	FunctionName deserialize(SerializableFunction<? extends NBTBase> args[]) throws MathFunctionException;
+	FunctionName deserialize(SerializableFunctionBase<? extends NBTBase> args[]) throws MathFunctionException;
 	
 }
