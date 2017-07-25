@@ -25,7 +25,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		protected final SerializableFunctionBase<? extends NBTBase> a, b;
 
 		public Equals(SerializableFunctionBase a, SerializableFunctionBase b) {
-			super("Equals");
+			super("equals");
 			this.a = a;
 			this.b = b;
 		}
@@ -99,6 +99,19 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
+	public static class NAnd extends Binary{
+
+		public NAnd(SerializableLogic a, SerializableLogic b) {
+			super("nand", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return !(a.evaluate(t, c) && b.evaluate(t, c));
+		}
+		
+	}
+	
 	public static class Or extends Binary{
 
 		public Or(SerializableLogic a, SerializableLogic b) {
@@ -112,6 +125,19 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
+	public static class NOr extends Binary{
+
+		public NOr(SerializableLogic a, SerializableLogic b) {
+			super("nor", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return !(a.evaluate(t, c) || b.evaluate(t, c));
+		}
+		
+	}
+	
 	public static class XOr extends Binary{
 
 		public XOr(SerializableLogic a, SerializableLogic b) {
@@ -121,6 +147,19 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		@Override
 		public boolean evaluate(Number t, Context c) {
 			return a.evaluate(t, c) ^ b.evaluate(t, c);
+		}
+		
+	}
+	
+	public static class XNOr extends Binary{
+
+		public XNOr(SerializableLogic a, SerializableLogic b) {
+			super("xnor", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return !(a.evaluate(t, c) ^ b.evaluate(t, c));
 		}
 		
 	}

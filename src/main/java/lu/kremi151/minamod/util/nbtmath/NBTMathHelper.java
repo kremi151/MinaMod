@@ -153,10 +153,16 @@ public class NBTMathHelper {
 		String logic = nbt.getString("Logic");
 		if(logic.equalsIgnoreCase("and")) {
 			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+		}else if(logic.equalsIgnoreCase("nand")) {
+			return new SerializableLogic.NAnd(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("or")) {
 			return new SerializableLogic.Or(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+		}else if(logic.equalsIgnoreCase("nor")) {
+			return new SerializableLogic.NOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("xor")) {
 			return new SerializableLogic.XOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+		}else if(logic.equalsIgnoreCase("xnor")) {
+			return new SerializableLogic.XNOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
 		}else if(logic.equalsIgnoreCase("not")) {
 			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A"), context));
 		}else if(logic.equalsIgnoreCase("equals")) {
