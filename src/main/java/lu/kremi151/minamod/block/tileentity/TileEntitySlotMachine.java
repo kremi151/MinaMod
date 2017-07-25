@@ -48,6 +48,8 @@ import net.minecraft.util.text.TextFormatting;
 
 public class TileEntitySlotMachine extends TileEntity{
 	
+	private static final NBTMathHelper nbtmath = NBTMathHelper.getDefaultInstance();
+	
 	private String customName = null;
 	private Session currentSession = Session.empty();
 	//field_191525_da => IRON_NUGGET -.-
@@ -100,7 +102,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public SerializableFunctionBase<? extends NBTBase> parseFunction(NBTBase nbt) throws MathParseException{
-		return NBTMathHelper.parseFunction(nbt, context);
+		return nbtmath.parseFunction(nbt, context);
 	}
 	
 	public EntityPlayer getPlaying() {
@@ -250,7 +252,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		if(nbt.hasKey("RowPriceFunction")) {
 			try {
-				customRowPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("RowPriceFunction"), context);
+				customRowPriceFunction = nbtmath.parseFunction(nbt.getTag("RowPriceFunction"), context);
 			} catch (MathParseException e) {
 				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();
@@ -260,7 +262,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		if(nbt.hasKey("CherryRowPriceFunction")) {
 			try {
-				customCherryPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("CherryRowPriceFunction"), context);
+				customCherryPriceFunction = nbtmath.parseFunction(nbt.getTag("CherryRowPriceFunction"), context);
 			} catch (MathParseException e) {
 				MinaMod.println("Could not parse cherry row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();

@@ -22,9 +22,11 @@ import net.minecraft.nbt.NBTTagString;
  */
 public class NBTMathHelper {
 	
-	private static final HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
+	private static ImmutableNBTMathHelper defaultInstance = null;
+	
+	private final HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
 
-	static {
+	public NBTMathHelper() {//TODO
 		mathFunctionDeserializers.put("abs", args -> new SerializableFunction.Absolute(args[0]));
 		mathFunctionDeserializers.put("neg", args -> new SerializableFunction.Negate(args[0]));
 		mathFunctionDeserializers.put("max", args -> new SerializableFunction.Max(args));
@@ -34,12 +36,27 @@ public class NBTMathHelper {
 	}
 	
 	/**
+	 * Registers a new function to be available for this NBT math instance
+	 * @param functionName The name of the function. Should be lowercase and not having any whitespaces.
+	 * @param mapper The functional interface which creates a new instance of the function given by a variable amount of runtime arguments.
+	 * @return true if no other mapper for the same function name has been registered. Otherwise, false is returned.
+	 */
+	public boolean registerFunctionMapper(String functionName, INBTFunctionDeserializer<? extends SerializableFunction> mapper) {
+		if(!mathFunctionDeserializers.containsKey(functionName)) {
+			mathFunctionDeserializers.put(functionName, mapper);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Parses a mathematical operation from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
+	public SerializableBinaryOperation parseOperation(NBTTagCompound nbt) throws MathParseException{
 		return parseOperation(nbt, Context.DEFAULT);
 	}
 
@@ -50,7 +67,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableBinaryOperation parseOperation(NBTTagCompound nbt, Context context) throws MathParseException{
+	public SerializableBinaryOperation parseOperation(NBTTagCompound nbt, Context context) throws MathParseException{
 		NBTBase a = nbt.getTag("A");
 		NBTBase b = nbt.getTag("B");
 		String operation = nbt.getString("Operation");
@@ -90,7 +107,7 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
 	 */
-	private static SerializableFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
+	private SerializableFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
 		NBTTagList args = nbt.getTagList("Arguments", 10);
 		String functionName = nbt.getString("Function");
 		if(args.tagCount() == 0) {
@@ -121,7 +138,7 @@ public class NBTMathHelper {
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
 	 */
-	private static SerializableLogic parseLogic(NBTTagCompound nbt) throws MathParseException, MathFunctionException{
+	private SerializableLogic parseLogic(NBTTagCompound nbt) throws MathParseException, MathFunctionException{
 		return parseLogic(nbt, Context.DEFAULT);
 	}
 	
@@ -132,7 +149,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	private static SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
+	private SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
 		String logic = nbt.getString("Logic");
 		if(logic.equalsIgnoreCase("and")) {
 			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
@@ -155,7 +172,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	private static SerializableConditional parseConditional(NBTTagCompound nbt) throws MathParseException{
+	private SerializableConditional parseConditional(NBTTagCompound nbt) throws MathParseException{
 		return parseConditional(nbt, Context.DEFAULT);
 	}
 	
@@ -166,7 +183,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	private static SerializableConditional parseConditional(NBTTagCompound nbt, Context context) throws MathParseException{
+	private SerializableConditional parseConditional(NBTTagCompound nbt, Context context) throws MathParseException{
 		try {
 			SerializableLogic cond = parseLogic(nbt.getCompoundTag("If"), context);
 			SerializableFunctionBase<? extends NBTBase> t, e;
@@ -184,7 +201,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunctionBase parseFunction(NBTBase nbt) throws MathParseException{
+	public SerializableFunctionBase parseFunction(NBTBase nbt) throws MathParseException{
 		return parseFunction(nbt, Context.DEFAULT);
 	}
 	
@@ -195,7 +212,7 @@ public class NBTMathHelper {
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 */
-	public static SerializableFunctionBase parseFunction(NBTBase nbt, Context context) throws MathParseException{
+	public SerializableFunctionBase parseFunction(NBTBase nbt, Context context) throws MathParseException{
 		if(nbt instanceof NBTTagCompound) {
 			NBTTagCompound raw_nbt = (NBTTagCompound)nbt;
 			if(raw_nbt.hasKey("Operation", 8)) {
@@ -288,4 +305,19 @@ public class NBTMathHelper {
 			return Math.pow(a.doubleValue(), b.doubleValue());
 		}
 	};
+	
+	public static NBTMathHelper getDefaultInstance() {
+		if(defaultInstance == null) {
+			defaultInstance = new ImmutableNBTMathHelper();
+		}
+		return defaultInstance;
+	}
+	
+	private static class ImmutableNBTMathHelper extends NBTMathHelper{
+		
+		@Override
+		public boolean registerFunctionMapper(String functionName, INBTFunctionDeserializer<? extends SerializableFunction> mapper) {
+			throw new UnsupportedOperationException("Modifications of the default instance of NBTMathHelper are not allowed. Please create your own, separate instance for this.");
+		}
+	}
 }
