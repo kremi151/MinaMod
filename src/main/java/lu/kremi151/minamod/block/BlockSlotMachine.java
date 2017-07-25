@@ -1,19 +1,16 @@
 package lu.kremi151.minamod.block;
 
+import java.util.List;
+
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
-import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.IDRegistry;
 import lu.kremi151.minamod.util.TextHelper;
-import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
-import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.slotmachine.SlotMachineBuilder;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.block.SoundType;
@@ -28,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,6 +33,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -151,6 +150,20 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 		}
 		return true;
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
+		NBTTagCompound nbt = stack.getSubCompound("BlockEntityTag");
+		if(nbt != null) {
+			if(nbt.hasKey("CustomName", 8)) {
+				tooltip.add(nbt.getString("CustomName"));
+			}
+		}else {
+			tooltip.add(I18n.translateToLocal("gui.slot_machine.info.original"));
+		}
+    }
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){

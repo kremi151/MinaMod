@@ -111,7 +111,7 @@ public class SlotMachineBuilder {
         
         if(customName != null) {
         	teTag.setString("CustomName", customName);
-        	MinaUtils.applyLoresToItemStack(stack, new String[] {customName});
+        	//MinaUtils.applyLoresToItemStack(stack, new String[] {customName});
         }
         
         return stack;

@@ -416,6 +416,7 @@ gui.slot_machine.not_enough_coins=Du hast nicht genügend Münzen
 gui.slot_machine.won_coins=Du hast %d Münzen gewonnen
 gui.slot_machine.found_coins=Du hast %d Münzen gefunden
 gui.slot_machine.current_win=Momentaner Umsatz: %s Münzen
+gui.slot_machine.info.original=Originales Spiel
 minastats.attack=Attacke
 minastats.defense=Verteidigung
 minastats.speed=Geschwindigkeit
