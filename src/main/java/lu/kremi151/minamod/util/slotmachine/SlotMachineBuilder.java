@@ -1,11 +1,11 @@
-package lu.kremi151.minamod.util;
+package lu.kremi151.minamod.util.slotmachine;
 
 import java.util.LinkedList;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
-import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,10 +17,10 @@ import net.minecraft.nbt.NBTTagList;
 public class SlotMachineBuilder {
 	
 	private final LinkedList<Object[]> icons = new LinkedList<>();
-	private SerializableFunction rowPriceFunction = null;
+	private SerializableFunction rowPriceFunction = null, cherryRowPriceFunction = null;
 	private int prices[] = null;
 	private String customName = null;
-	private double maxWin = -1.0;
+	private double maxWin = -1.0, cherryWin = -1.0;
 
 	public SlotMachineBuilder() {
 	}
@@ -40,8 +40,18 @@ public class SlotMachineBuilder {
 		return this;
 	}
 	
+	public SlotMachineBuilder setCherryRowPriceFunction(SerializableFunction<? extends NBTBase> function) {
+		this.cherryRowPriceFunction = function;
+		return this;
+	}
+	
 	public SlotMachineBuilder setMaxWin(double maxWin) {
 		this.maxWin = maxWin;
+		return this;
+	}
+	
+	public SlotMachineBuilder setCherryWin(double cherryWin) {
+		this.cherryWin = cherryWin;
 		return this;
 	}
 	
@@ -83,6 +93,12 @@ public class SlotMachineBuilder {
         	teTag.setTag("RowPriceFunction", rowPriceFunction.serialize());
         }else if(maxWin > 0.0) {
         	teTag.setDouble("MaxWin", maxWin);
+        }
+        
+        if(cherryRowPriceFunction != null) {
+        	teTag.setTag("CherryRowPriceFunction", cherryRowPriceFunction.serialize());
+        }else if(cherryWin > 0.0) {
+        	teTag.setDouble("CherryWin", maxWin);
         }
         
         if(prices != null) {

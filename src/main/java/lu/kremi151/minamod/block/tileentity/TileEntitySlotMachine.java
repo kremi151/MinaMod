@@ -66,7 +66,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
 
-	private SerializableFunction<? extends NBTBase> customRowPriceFunction = null;
+	private SerializableFunction<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
 	private SlotMachineEconomyHandler economyHandler = new DefaultEconomyHandler();
 	
 	//Log data for reports:
@@ -258,6 +258,16 @@ public class TileEntitySlotMachine extends TileEntity{
 		}else if(nbt.hasKey("MaxWin", 99)) {
 			customRowPriceFunction = generateDefaultRowPriceFunction(nbt.getDouble("MaxWin"));
 		}
+		if(nbt.hasKey("CherryRowPriceFunction")) {
+			try {
+				customCherryPriceFunction = NBTMathHelper.parseFunction(nbt.getTag("CherryRowPriceFunction"), context);
+			} catch (MathParseException e) {
+				MinaMod.println("Could not parse cherry row price function for slot machine at %s", pos.toString());
+				e.printStackTrace();
+			}
+		}else if(nbt.hasKey("CherryWin", 99)) {
+			customCherryPriceFunction = generateDefaultRowPriceFunction(nbt.getDouble("CherryWin"));
+		}
 		if(nbt.hasKey("CustomName", 8)) {
 			this.customName = nbt.getString("CustomName");
 		}
@@ -277,6 +287,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setTag("Prices", pnbt);
 		nbt.setInteger("CoinTray", coinTray);
 		if(customRowPriceFunction != null)nbt.setTag("RowPriceFunction", customRowPriceFunction.serialize());
+		if(customCherryPriceFunction != null)nbt.setTag("CherryRowPriceFunction", customCherryPriceFunction.serialize());
 		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
 		
 		return nbt;
@@ -493,6 +504,10 @@ public class TileEntitySlotMachine extends TileEntity{
 			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId).intValue();
 		}
 		
+		private int cherryRowPrice(int cherryIconId) {
+			return customCherryPriceFunction != null ? customCherryPriceFunction.apply(cherryIconId).intValue() : 1000;//TODO: Adjust
+		}
+		
 		private void markEverythingWinning() {
 			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
 				for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
@@ -520,7 +535,7 @@ public class TileEntitySlotMachine extends TileEntity{
 			int eval = checkHLine(1);
 			if(eval == -2) {//Cherry
 				markEverythingWinning();
-				return 1000;//TODO:Adjust
+				return cherryRowPrice(wheels.getWheelValue(0, 1));
 			}else if(eval >= 0) {
 				win += rowPrice(eval);
 				markHLineWinning(1);
@@ -531,7 +546,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkHLine(i);
 					if(eval == -2) {//Cherry
 						markEverythingWinning();
-						return 1000;//TODO:Adjust
+						return cherryRowPrice(wheels.getWheelValue(0, i));
 					}else if(eval >= 0) {
 						win += rowPrice(eval);
 						markHLineWinning(i);
@@ -544,7 +559,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkVLine(i == 1);
 					if(eval == -2) {//Cherry
 						markEverythingWinning();
-						return 1000;//TODO:Adjust
+						return cherryRowPrice(wheels.getWheelValue(1, 1));
 					}else if(eval >= 0) {
 						win += rowPrice(eval);
 						markVLineWinning(i == 1);
