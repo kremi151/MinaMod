@@ -142,7 +142,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 				if(te.setCurrentPlayer(player).isPresent()) {
 					player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdSlotMachine, world, pos.getX(), pos.getY(), pos.getZ());
 				}else {
-					TextHelper.sendChatMessage(player, "This slot machine is currently in use");
+					TextHelper.sendTranslateableErrorMessage(player, "gui.slot_machine.msg.inuse");
 				}
 			}else {
 				TextHelper.sendTranslateableErrorMessage(player, "msg.gambling.not_allowed");

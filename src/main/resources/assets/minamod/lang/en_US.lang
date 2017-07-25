@@ -418,6 +418,7 @@ gui.slot_machine.won_coins=You won %d coins
 gui.slot_machine.found_coins=You found %d coins
 gui.slot_machine.current_win=Current revenue: %s coins
 gui.slot_machine.info.original=Original game
+gui.slot_machine.msg.inuse=This slot machine is currently in use
 minastats.attack=Attack
 minastats.defense=Defense
 minastats.speed=Speed
