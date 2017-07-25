@@ -503,11 +503,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		
 		private int rowPrice(int iconId) {
-			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId).intValue();
+			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId, context).intValue();
 		}
 		
 		private int cherryRowPrice(int cherryIconId) {
-			return customCherryPriceFunction != null ? customCherryPriceFunction.apply(cherryIconId).intValue() : 1000;//TODO: Adjust
+			return customCherryPriceFunction != null ? customCherryPriceFunction.apply(cherryIconId, context).intValue() : 1000;//TODO: Adjust
 		}
 		
 		private void markEverythingWinning() {
