@@ -18,7 +18,7 @@ public class SerializableBinaryOperation extends SerializableFunctionBase<NBTTag
 
 	@Override
 	public Number apply(Number t, Context c) {
-		return operation.apply(a.apply(t), b.apply(t));
+		return operation.apply(a.apply(t, c), b.apply(t, c));
 	}
 
 	@Override

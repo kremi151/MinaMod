@@ -28,9 +28,9 @@ public class SerializableConditional extends SerializableFunctionBase<NBTTagComp
 	@Override
 	public Number apply(Number t, Context c) {
 		if(cond.evaluate(t)) {
-			return _then.apply(t);
+			return _then.apply(t, c);
 		}else {
-			return _else.apply(t);
+			return _else.apply(t, c);
 		}
 	}
 

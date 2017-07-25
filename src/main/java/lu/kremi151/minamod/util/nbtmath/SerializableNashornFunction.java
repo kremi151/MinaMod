@@ -56,13 +56,13 @@ public class SerializableNashornFunction extends SerializableFunctionBase<NBTTag
 	}
 
 	@Override
-	public Number apply(Number arg0, Context c) {
+	public Number apply(Number t, Context c) {
 		Bindings newBindings = engine.createBindings();
-		getContext().applyMappings((name, val) -> newBindings.put(name, val));
+		c.applyMappings((name, val) -> newBindings.put(name, val));
 		engine.setBindings(newBindings, ScriptContext.ENGINE_SCOPE);
 		try {
 			engine.eval(script);
-			return ((Number)((Invocable) engine).invokeFunction("calculate", arg0.doubleValue())).doubleValue();
+			return ((Number)((Invocable) engine).invokeFunction("calculate", t.doubleValue())).doubleValue();
 		} catch (NoSuchMethodException e) {
 			System.err.println("Script \"" + scriptName + "\" has no method called \"calculate\"");
 			e.printStackTrace();

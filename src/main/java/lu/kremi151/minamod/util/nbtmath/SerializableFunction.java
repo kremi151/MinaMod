@@ -38,7 +38,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 
 		@Override
 		public Number apply(Number t, Context c) {
-			return Math.abs(args[0].apply(t).doubleValue());
+			return Math.abs(args[0].apply(t, c).doubleValue());
 		}
 		
 	}
@@ -51,7 +51,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 
 		@Override
 		public Number apply(Number t, Context c) {
-			return -args[0].apply(t).doubleValue();
+			return -args[0].apply(t, c).doubleValue();
 		}
 		
 	}
@@ -67,9 +67,9 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 
 		@Override
 		public Number apply(Number t, Context c) {
-			double max = args[0].apply(t).doubleValue();
+			double max = args[0].apply(t, c).doubleValue();
 			for(int i = 1 ; i < args.length ; i++) {
-				double tmp = args[i].apply(t).doubleValue();
+				double tmp = args[i].apply(t, c).doubleValue();
 				if(tmp > max)max = tmp;
 			}
 			return max;
@@ -88,9 +88,9 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 
 		@Override
 		public Number apply(Number t, Context c) {
-			double min = args[0].apply(t).doubleValue();
+			double min = args[0].apply(t, c).doubleValue();
 			for(int i = 1 ; i < args.length ; i++) {
-				double tmp = args[i].apply(t).doubleValue();
+				double tmp = args[i].apply(t, c).doubleValue();
 				if(tmp < min)min = tmp;
 			}
 			return min;
@@ -108,7 +108,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 		public Number apply(Number t, Context c) {
 			double sum = 0.0;
 			for(SerializableFunctionBase<? extends NBTBase> f : args) {
-				sum += f.apply(t).doubleValue();
+				sum += f.apply(t, c).doubleValue();
 			}
 			return sum;
 		}
@@ -126,7 +126,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 			if(args.length > 0) {
 				double sum = 1.0;
 				for(SerializableFunctionBase<? extends NBTBase> f : args) {
-					sum *= f.apply(t).doubleValue();
+					sum *= f.apply(t, c).doubleValue();
 				}
 				return sum;
 			}else {

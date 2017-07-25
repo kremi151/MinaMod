@@ -10,18 +10,17 @@ public abstract class SerializableFunctionBase<NBTType extends NBTBase> implemen
 	private final Context context;
 	
 	SerializableFunctionBase(Context context){
+		if(context == null) {
+			throw new NullPointerException();
+		}
 		this.context = context;
-	}
-	
-	protected final Context getContext() {
-		return context;
 	}
 
 	public abstract NBTType serialize();
 	
 	@Override
 	public final Number apply(Number t) {
-		return apply(t, Context.DEFAULT);
+		return apply(t, context);
 	}
 	
 	public abstract Number apply(Number t, Context c);

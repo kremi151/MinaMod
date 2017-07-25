@@ -15,10 +15,10 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 
 	@Override
 	public final Number apply(Number t, Context c) {
-		return evaluate(t) ? 1 : 0;
+		return evaluate(t, c) ? 1 : 0;
 	}
 	
-	public abstract boolean evaluate(Number t);
+	public abstract boolean evaluate(Number t, Context c);
 	
 	public static class Equals extends SerializableLogic{
 		
@@ -40,8 +40,8 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		}
 
 		@Override
-		public boolean evaluate(Number t) {
-			return a.apply(t).doubleValue() == b.apply(t).doubleValue();
+		public boolean evaluate(Number t, Context c) {
+			return a.apply(t, c).doubleValue() == b.apply(t, c).doubleValue();
 		}
 		
 	}
@@ -93,8 +93,8 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		}
 
 		@Override
-		public boolean evaluate(Number t) {
-			return a.evaluate(t) && b.evaluate(t);
+		public boolean evaluate(Number t, Context c) {
+			return a.evaluate(t, c) && b.evaluate(t, c);
 		}
 		
 	}
@@ -106,8 +106,8 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		}
 
 		@Override
-		public boolean evaluate(Number t) {
-			return a.evaluate(t) || b.evaluate(t);
+		public boolean evaluate(Number t, Context c) {
+			return a.evaluate(t, c) || b.evaluate(t, c);
 		}
 		
 	}
@@ -119,8 +119,8 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		}
 
 		@Override
-		public boolean evaluate(Number t) {
-			return a.evaluate(t) ^ b.evaluate(t);
+		public boolean evaluate(Number t, Context c) {
+			return a.evaluate(t, c) ^ b.evaluate(t, c);
 		}
 		
 	}
@@ -132,8 +132,8 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		}
 
 		@Override
-		public boolean evaluate(Number t) {
-			return !a.evaluate(t);
+		public boolean evaluate(Number t, Context c) {
+			return !a.evaluate(t, c);
 		}
 		
 	}
