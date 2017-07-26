@@ -167,6 +167,14 @@ public class NBTMathHelper {
 			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A"), context));
 		}else if(logic.equalsIgnoreCase("equals")) {
 			return new SerializableLogic.Equals(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
+		}else if(logic.equalsIgnoreCase("bigger")) {
+			return new SerializableLogic.BiggerThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
+		}else if(logic.equalsIgnoreCase("biggereq")) {
+			return new SerializableLogic.BiggerOrEqualThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
+		}else if(logic.equalsIgnoreCase("lower")) {
+			return new SerializableLogic.LowerThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
+		}else if(logic.equalsIgnoreCase("lowereq")) {
+			return new SerializableLogic.LowerOrEqualThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
 		}else {
 			throw new MathParseException("Unknown logical function: " + logic);
 		}

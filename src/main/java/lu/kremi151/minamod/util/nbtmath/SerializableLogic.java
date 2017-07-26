@@ -20,12 +20,12 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public abstract boolean evaluate(Number t, Context c);
 	
-	public static class Equals extends SerializableLogic{
+	public abstract static class Comparision extends SerializableLogic{
 		
 		protected final SerializableFunctionBase<? extends NBTBase> a, b;
 
-		public Equals(SerializableFunctionBase a, SerializableFunctionBase b) {
-			super("equals");
+		Comparision(String name, SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b) {
+			super(name);
 			this.a = a;
 			this.b = b;
 		}
@@ -38,10 +38,70 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 			nbt.setTag("B", b.serialize());
 			return nbt;
 		}
+		
+	}
+	
+	public static class Equals extends Comparision{
+
+		public Equals(SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b) {
+			super("equals", a, b);
+		}
 
 		@Override
 		public boolean evaluate(Number t, Context c) {
 			return a.apply(t, c).doubleValue() == b.apply(t, c).doubleValue();
+		}
+		
+	}
+	
+	public static class BiggerThan extends Comparision{
+
+		public BiggerThan(SerializableFunctionBase a, SerializableFunctionBase b) {
+			super("bigger", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return a.apply(t, c).doubleValue() > b.apply(t, c).doubleValue();
+		}
+		
+	}
+	
+	public static class BiggerOrEqualThan extends Comparision{
+
+		public BiggerOrEqualThan(SerializableFunctionBase a, SerializableFunctionBase b) {
+			super("biggereq", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return a.apply(t, c).doubleValue() >= b.apply(t, c).doubleValue();
+		}
+		
+	}
+	
+	public static class LowerThan extends Comparision{
+
+		public LowerThan(SerializableFunctionBase a, SerializableFunctionBase b) {
+			super("lower", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return a.apply(t, c).doubleValue() < b.apply(t, c).doubleValue();
+		}
+		
+	}
+	
+	public static class LowerOrEqualThan extends Comparision{
+
+		public LowerOrEqualThan(SerializableFunctionBase a, SerializableFunctionBase b) {
+			super("lowereq", a, b);
+		}
+
+		@Override
+		public boolean evaluate(Number t, Context c) {
+			return a.apply(t, c).doubleValue() <= b.apply(t, c).doubleValue();
 		}
 		
 	}
