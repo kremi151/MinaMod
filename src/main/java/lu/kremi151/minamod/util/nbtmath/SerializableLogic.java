@@ -20,11 +20,11 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public abstract boolean evaluate(Number t, Context c);
 	
-	public abstract static class Comparision extends SerializableLogic{
+	public abstract static class Comparison extends SerializableLogic{
 		
 		protected final SerializableFunctionBase<? extends NBTBase> a, b;
 
-		Comparision(String name, SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b) {
+		Comparison(String name, SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b) {
 			super(name);
 			this.a = a;
 			this.b = b;
@@ -41,7 +41,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
-	public static class Equals extends Comparision{
+	public static class Equals extends Comparison{
 
 		public Equals(SerializableFunctionBase<? extends NBTBase> a, SerializableFunctionBase<? extends NBTBase> b) {
 			super("equals", a, b);
@@ -54,7 +54,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
-	public static class BiggerThan extends Comparision{
+	public static class BiggerThan extends Comparison{
 
 		public BiggerThan(SerializableFunctionBase a, SerializableFunctionBase b) {
 			super("bigger", a, b);
@@ -67,7 +67,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
-	public static class BiggerOrEqualThan extends Comparision{
+	public static class BiggerOrEqualThan extends Comparison{
 
 		public BiggerOrEqualThan(SerializableFunctionBase a, SerializableFunctionBase b) {
 			super("biggereq", a, b);
@@ -80,7 +80,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
-	public static class LowerThan extends Comparision{
+	public static class LowerThan extends Comparison{
 
 		public LowerThan(SerializableFunctionBase a, SerializableFunctionBase b) {
 			super("lower", a, b);
@@ -93,7 +93,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 		
 	}
 	
-	public static class LowerOrEqualThan extends Comparision{
+	public static class LowerOrEqualThan extends Comparison{
 
 		public LowerOrEqualThan(SerializableFunctionBase a, SerializableFunctionBase b) {
 			super("lowereq", a, b);
