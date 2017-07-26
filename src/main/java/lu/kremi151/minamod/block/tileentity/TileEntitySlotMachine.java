@@ -76,6 +76,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private int awardedForLastSpin = 0;
 	
 	private final SerializableFunctionBase<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0);
+	private final SerializableFunctionBase<? extends NBTBase> defaultCherryRowPriceFunction = generateDefaultCherryRowPriceFunction(1000.0);//TODO: Adjust
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
@@ -268,7 +269,7 @@ public class TileEntitySlotMachine extends TileEntity{
 				e.printStackTrace();
 			}
 		}else if(nbt.hasKey("CherryWin", 99)) {
-			customCherryPriceFunction = generateDefaultRowPriceFunction(nbt.getDouble("CherryWin"));
+			customCherryPriceFunction = generateDefaultCherryRowPriceFunction(nbt.getDouble("CherryWin"));
 		}
 		if(nbt.hasKey("CustomName", 8)) {
 			this.customName = nbt.getString("CustomName");
@@ -408,6 +409,10 @@ public class TileEntitySlotMachine extends TileEntity{
 				);
 	}
 	
+	private SerializableFunctionBase<? extends NBTBase> generateDefaultCherryRowPriceFunction(double defaultWin) {
+		return new SerializableConstant(defaultWin);
+	}
+	
 	public class TaskTurnSlots implements ITaskRunnable{
 		
 		private final int spacings[] = new int[wheels.getWheelCount()];
@@ -507,7 +512,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 		
 		private int cherryRowPrice(int cherryIconId) {
-			return customCherryPriceFunction != null ? customCherryPriceFunction.apply(cherryIconId, context).intValue() : 1000;//TODO: Adjust
+			return (customCherryPriceFunction != null ? customCherryPriceFunction : defaultCherryRowPriceFunction).apply(cherryIconId, context).intValue();
 		}
 		
 		private void markEverythingWinning() {
