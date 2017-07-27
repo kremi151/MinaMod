@@ -3,6 +3,7 @@ package lu.kremi151.minamod.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -26,6 +27,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -426,6 +429,16 @@ public class MinaUtils {
 	
 	public static UUID convertNBTToUUID(NBTTagCompound nbt) {
 		return new UUID(nbt.getLong("most"), nbt.getLong("least"));
+	}
+	
+	public static Optional<RayTraceResult> rayTrace(EntityLivingBase entity) {
+		final float partialTicks = 1.0f;
+		final double blockReachDistance = 10.0;
+		
+		Vec3d vec3d = entity.getPositionEyes(partialTicks);
+        Vec3d vec3d1 = entity.getLook(partialTicks);
+        Vec3d vec3d2 = vec3d.addVector(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
+        return Optional.ofNullable(entity.world.rayTraceBlocks(vec3d, vec3d2, false, false, true));
 	}
 
 }

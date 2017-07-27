@@ -46,6 +46,9 @@ public class MinaPermissions {
 	@MinaPermission(desc = "Allows to reset player stats", lvl = DefaultPermissionLevel.OP)
 	public static final String CMD_STATS_RESET = "minamod.admin.stats.reset";
 	
+	@MinaPermission(desc = "Allows to repair a mulfunctioning slot machine", lvl = DefaultPermissionLevel.OP)
+	public static final String CMD_RESET_SLOT_MACHINE = "minamod.admin.slotmachine.reset";
+	
 
 	@MinaPermission(desc = "Allows to use elevators", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_ELEVATOR_USE = "minamod.all.elevator.use";

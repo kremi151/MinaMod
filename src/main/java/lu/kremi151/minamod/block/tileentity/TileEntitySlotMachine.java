@@ -63,7 +63,8 @@ public class TileEntitySlotMachine extends TileEntity{
 	};
 	private final int prices[] = new int[SpinMode.values().length];
 	private WeightedList<Integer> weightedIconIds;
-	private boolean isTurning;
+	private boolean isTurning = false;
+	private TaskRepeat currentTask = null;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
@@ -111,7 +112,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	public boolean isTurning() {
-		return isTurning;
+		return isTurning || currentTask != null;
 	}
 	
 	public boolean isInUse() {
@@ -362,9 +363,20 @@ public class TileEntitySlotMachine extends TileEntity{
 		world.notifyBlockUpdate(getPos(), oldState, oldState/*.withProperty(BlockSlotMachine.IS_TURNING, state)*/, 3);
 	}
 	
+	public void resetState() {
+		this.isTurning = false;
+		if(this.currentTask != null) {
+			this.currentTask.setCanExecuteAgain(false);
+			this.currentTask = null;
+		}
+		this.needs_sync = true;
+		IBlockState state = this.world.getBlockState(pos);
+		this.world.notifyBlockUpdate(pos, state, state, 3);
+	}
+	
 	public void turnSlots(SpinMode mode, Random rand) {
 		if(!world.isRemote) {
-			if(isTurning) {
+			if(isTurning()) {
 				throw new IllegalStateException("Slot machine is already turning");
 			}else {
 				int price = getPriceForSpinMode(mode);
@@ -377,7 +389,8 @@ public class TileEntitySlotMachine extends TileEntity{
 						currentSession.currentWin -= price;
 						wheels.clearWinnings();
 						needs_sync = true;
-						new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand)).enqueueServerTask();
+						this.currentTask = new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand));
+						this.currentTask.enqueueServerTask();
 					}else {
 						TextHelper.sendTranslateableErrorMessage(playing, "gui.slot_machine.not_enough_coins");
 					}
@@ -461,6 +474,7 @@ public class TileEntitySlotMachine extends TileEntity{
 					rewardPlayer(win, true);
 				}
 				isTurning = false;
+				currentTask = null;
 				notifyClientTurnState(false);
 				needs_sync = true;
 			}

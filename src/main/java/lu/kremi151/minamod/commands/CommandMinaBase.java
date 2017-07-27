@@ -15,6 +15,7 @@ public class CommandMinaBase extends CommandTreeBase{
 		this.addSubcommand(new CommandListPermissions());
 		this.addSubcommand(new CommandCoins());
 		this.addSubcommand(new CommandStats());
+		this.addSubcommand(new CommandResetSlotMachine());
 	}
 	
 	@Override
