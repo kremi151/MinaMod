@@ -107,24 +107,24 @@ public class ContainerSlotMachine extends BaseContainer{
     	}
 	}
 	
-	public static int packWheelUpdate(int wheelIdx, int pos, int value, boolean winning) {
-		return ((wheelIdx & 255) << 24) | ((pos & 255) << 16) | ((winning?1:0) << 15) | (value & 32767);
+	public static int packWheelUpdate(int wheelIdx, int slot, int value, boolean winning) {
+		return ((wheelIdx & 7) << 13) | ((slot & 3) << 11) | ((winning?1:0) << 10) | (value & 1023);
 	}
 	
 	public static int unpackWheelIndex(int packed) {
-		return (packed >> 24) & 255;
+		return (packed >> 13) & 7;
 	}
 	
 	public static int unpackWheelPosition(int packed) {
-		return (packed >> 16) & 255;
+		return (packed >> 11) & 3;
 	}
 	
 	public static int unpackValue(int packed) {
-		return packed & 32767;
+		return packed & 1023;
 	}
 	
 	public static boolean unpackWinning(int packed) {
-		return ((packed >> 15) & 1) == 1;
+		return ((packed >> 10) & 1) == 1;
 	}
 
 }
