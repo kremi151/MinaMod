@@ -91,9 +91,8 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			this.isTurning = (data & 1) == 1;
 			break;
 		case CMD_UPDATE_PRICE:
-			prices[0] = (data >> 16) & 255;
-			prices[1] = (data >> 8) & 255;
-			prices[2] = data & 255;
+			int pos = (data >> 8) & 255;
+			prices[pos] = data & 255;
 			break;
 		case CMD_UPDATE_CREDITS:
 			credits = data;

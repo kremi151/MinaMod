@@ -99,7 +99,9 @@ public class ContainerSlotMachine extends BaseContainer{
         		}
         		
         		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, ((slotMachine.getPriceFor1Spin() & 255) << 16) | ((slotMachine.getPriceFor3Spins() & 255) << 8) | (slotMachine.getPriceFor5Spins() & 255));
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, slotMachine.getPriceFor1Spin() & 255);
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 256 | (slotMachine.getPriceFor3Spins() & 255));
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 512 | (slotMachine.getPriceFor3Spins() & 255));
         		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS, slotMachine.getPlayingCredits());
         		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN, slotMachine.getSessionWin());
             }
