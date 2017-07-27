@@ -5,6 +5,10 @@ import lu.kremi151.minamod.block.abstracts.BlockCustomCrops;
 import net.minecraft.item.Item;
 
 public class BlockChiliCrop extends BlockCustomCrops{
+	
+	public BlockChiliCrop() {
+		this.honeycombRegenerationChance = 0.0f;
+	}
 
 	@Override
     protected Item getSeed()

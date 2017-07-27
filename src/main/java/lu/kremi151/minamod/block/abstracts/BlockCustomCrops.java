@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.util.HoneycombUtils;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -15,6 +16,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public abstract class BlockCustomCrops extends BlockCrops {
+	
+	protected float honeycombRegenerationChance = 0.1f;
 
 	@Override
 	public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -30,7 +33,7 @@ public abstract class BlockCustomCrops extends BlockCrops {
 			}
 		}
 
-		int age = ((Integer) state.getValue(AGE)).intValue();
+		int age = getAge(state);
 
 		if (age >= getMaxAge()) {
 			int k = 3 + fortune;
@@ -116,11 +119,9 @@ public abstract class BlockCustomCrops extends BlockCrops {
     {
 		try{
 			int age = getAge(state);
-			
+			HoneycombUtils.tickHoneycombRegeneration(worldIn, pos, rand, ((float)age / (float)getMaxAge()) * honeycombRegenerationChance);
 			super.updateTick(worldIn, pos, state, rand);
-			
 			state = worldIn.getBlockState(pos);
-			
 			if(age < getAge(state)){
 				onGrown(worldIn, pos, state, rand);
 			}
