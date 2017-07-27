@@ -3,8 +3,7 @@ package lu.kremi151.minamod.inventory.container;
 import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
-import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
-import lu.kremi151.minamod.util.Task;
+import lu.kremi151.minamod.util.ValueObserver;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -15,17 +14,30 @@ public class ContainerSlotMachine extends BaseContainer{
 	protected static final int CMD_UPDATE_WHEEL = 0;
 	protected static final int CMD_UPDATE_TURN_STATE = 1;
 	protected static final int CMD_UPDATE_PRICE = 2;
-	protected static final int CMD_UPDATE_CREDITS = 3;
-	protected static final int CMD_UPDATE_SESSION_WIN = 4;
+	protected static final int CMD_UPDATE_CREDITS_LEAST = 3;
+	protected static final int CMD_UPDATE_CREDITS_MOST = 4;
+	protected static final int CMD_UPDATE_SESSION_WIN_LEAST = 5;
+	protected static final int CMD_UPDATE_SESSION_WIN_MOST = 6;
 	
 	private final EntityPlayer player;
 	protected final TileEntitySlotMachine slotMachine;
 	
 	private boolean firstSync = true;
 	
+	private final ValueObserver<Integer> observerCredits, observerSessionWin, observerPriceA, observerPriceB, observerPriceC;
+	private final ValueObserver<Boolean> observerTurning;
+	
 	public ContainerSlotMachine(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		this.player = player;
 		this.slotMachine = slotMachine;
+
+		this.observerCredits = new ValueObserver<>(() -> slotMachine.getPlayingCredits());
+		this.observerSessionWin = new ValueObserver<>(() -> slotMachine.getSessionWin());
+		this.observerPriceA = new ValueObserver<>(() -> slotMachine.getPriceFor1Spin());
+		this.observerPriceB = new ValueObserver<>(() -> slotMachine.getPriceFor3Spins());
+		this.observerPriceC = new ValueObserver<>(() -> slotMachine.getPriceFor5Spins());
+		
+		this.observerTurning = new ValueObserver<>(() -> slotMachine.isTurning());
 	}
 	
 	@Override
@@ -88,6 +100,11 @@ public class ContainerSlotMachine extends BaseContainer{
         
     	if(firstSync || slotMachine.needsSync()) {
     		firstSync = false;
+    		
+            boolean syncCredits = observerCredits.hasChangedSinceLastCheck();
+            boolean syncSessionWin = observerSessionWin.hasChangedSinceLastCheck();
+            boolean syncTurning = observerTurning.hasChangedSinceLastCheck();
+    		
     		for (int i = 0; i < this.listeners.size(); ++i)
             {
         		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
@@ -98,12 +115,29 @@ public class ContainerSlotMachine extends BaseContainer{
         			}
         		}
         		
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, slotMachine.getPriceFor1Spin() & 255);
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 256 | (slotMachine.getPriceFor3Spins() & 255));
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 512 | (slotMachine.getPriceFor3Spins() & 255));
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS, slotMachine.getPlayingCredits());
-        		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN, slotMachine.getSessionWin());
+        		if(syncTurning) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_TURN_STATE, slotMachine.isTurning()?1:0);
+        		}
+        		
+        		if(observerPriceA.hasChangedSinceLastCheck()) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, slotMachine.getPriceFor1Spin() & 255);
+        		}
+        		if(observerPriceB.hasChangedSinceLastCheck()) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 256 | (slotMachine.getPriceFor3Spins() & 255));
+        		}
+        		if(observerPriceC.hasChangedSinceLastCheck()) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_PRICE, 512 | (slotMachine.getPriceFor5Spins() & 255));
+        		}
+        		
+        		if(syncCredits) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_LEAST, (slotMachine.getPlayingCredits() >> 16) & 0xFFFF);
+            		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_MOST, slotMachine.getPlayingCredits() & 0xFFFF);
+        		}
+        		
+        		if(syncSessionWin) {
+        			icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_LEAST, (slotMachine.getSessionWin() >> 16) & 0xFFFF);
+            		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_MOST, slotMachine.getSessionWin() & 0xFFFF);
+        		}
             }
     		slotMachine.notifySynced();
     	}

@@ -17,7 +17,7 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	private boolean isTurning = false;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private final int prices[] = new int[3];
-	private int credits = 0, sessionWin = 0;
+	private int credits = 0, sessionWin = 0, creditsBuffer = 0, sessionWinBuffer = 0;
 
 	public ContainerSlotMachineClient(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		super(player, slotMachine);
@@ -94,11 +94,17 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			int pos = (data >> 8) & 255;
 			prices[pos] = data & 255;
 			break;
-		case CMD_UPDATE_CREDITS:
-			credits = data;
+		case CMD_UPDATE_CREDITS_LEAST:
+			creditsBuffer = (data & 0xFFFF) << 16;
 			break;
-		case CMD_UPDATE_SESSION_WIN:
-			sessionWin = data;
+		case CMD_UPDATE_CREDITS_MOST:
+			credits = creditsBuffer | (data & 0xFFFF);
+			break;
+		case CMD_UPDATE_SESSION_WIN_LEAST:
+			sessionWinBuffer = (data & 0xFFFF) << 16;
+			break;
+		case CMD_UPDATE_SESSION_WIN_MOST:
+			sessionWin = sessionWinBuffer | (data & 0xFFFF);
 			break;
 		}
     }
