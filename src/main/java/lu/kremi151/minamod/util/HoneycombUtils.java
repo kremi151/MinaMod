@@ -27,9 +27,10 @@ public class HoneycombUtils {
 				int z = origin.getZ() + rand.nextInt(8) - 4;
 				BlockPos pos = new BlockPos(x, y, z);
 				if(isHonecombCompatible(world.getBlockState(pos).getBlock())) {
-					EnumFacing face = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
-					if(world.isAirBlock(pos.offset(face))) {
-						world.setBlockState(pos.offset(face), MinaBlocks.HONEYCOMB.getDefaultState().withProperty(BlockHoneycomb.FACING, face).withProperty(BlockHoneycomb.HAS_BEES, true));
+					EnumFacing face = EnumFacing.getFacingFromVector(origin.getX() - pos.getX(), 0, origin.getZ() - pos.getZ());
+					BlockPos fpos = pos.offset(face);
+					if(world.isAirBlock(fpos)) {
+						world.setBlockState(fpos, MinaBlocks.HONEYCOMB.getDefaultState().withProperty(BlockHoneycomb.FACING, face).withProperty(BlockHoneycomb.HAS_BEES, true));
 						break;
 					}
 				}
@@ -38,6 +39,6 @@ public class HoneycombUtils {
 	}
 	
 	private static boolean isHonecombCompatible(Block target) {
-		return target instanceof BlockLog;
+		return target instanceof BlockLog || target instanceof lu.kremi151.minamod.block.BlockStandaloneLog;
 	}
 }
