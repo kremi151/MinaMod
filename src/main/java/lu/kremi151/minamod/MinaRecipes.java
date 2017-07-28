@@ -122,7 +122,7 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.POULET_SPECIAL_PIQUANT), MinaItems.SWEET_SOUR,
 				Items.COOKED_CHICKEN);
 
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 1), "GG", "GG", 'G', Items.GOLD_NUGGET);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 1), Items.GOLD_NUGGET);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.NAMIE_SEEDS, 4), MinaItems.NAMIE_FRUIT);
 
