@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.BlockHoneycomb;
+import lu.kremi151.minamod.interfaces.ILog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.util.EnumFacing;
@@ -18,10 +19,11 @@ public class HoneycombUtils {
 	 * @param origin The origin position
 	 * @param rand The random number generator
 	 * @param chance The chance to actually try to generate a new honeycomb. The value is expected to be between 0 and 1 inclusive.
+	 * @param tries The amount of tries
 	 */
-	public static void tickHoneycombRegeneration(World world, BlockPos origin, Random rand, float chance) {
+	public static void tickHoneycombRegeneration(World world, BlockPos origin, Random rand, float chance, int tries) {
 		if(chance > 0.0f && rand.nextFloat() < chance) {
-			for(int n = 0 ; n <3 ; n++) {
+			for(int i = 0 ; i < tries ; i++) {
 				int x = origin.getX() + rand.nextInt(8) - 4;
 				int y = origin.getY() + rand.nextInt(4);
 				int z = origin.getZ() + rand.nextInt(8) - 4;
@@ -38,7 +40,18 @@ public class HoneycombUtils {
 		}
 	}
 	
+	/**
+	 * Tries to regenerate a honeycomb around the origin position
+	 * @param world The world
+	 * @param origin The origin position
+	 * @param rand The random number generator
+	 * @param chance The chance to actually try to generate a new honeycomb. The value is expected to be between 0 and 1 inclusive.
+	 */
+	public static void tickHoneycombRegeneration(World world, BlockPos origin, Random rand, float chance) {
+		tickHoneycombRegeneration(world, origin, rand, chance, 3);
+	}
+	
 	private static boolean isHonecombCompatible(Block target) {
-		return target instanceof BlockLog || target instanceof lu.kremi151.minamod.block.BlockStandaloneLog;
+		return target instanceof BlockLog || target instanceof ILog;
 	}
 }

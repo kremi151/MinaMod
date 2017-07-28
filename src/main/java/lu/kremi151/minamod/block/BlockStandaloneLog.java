@@ -2,6 +2,7 @@ package lu.kremi151.minamod.block;
 
 import java.util.HashMap;
 
+import lu.kremi151.minamod.interfaces.ILog;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.SoundType;
@@ -19,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockStandaloneLog extends BlockRotatedPillar{
+public class BlockStandaloneLog extends BlockRotatedPillar implements ILog{
 	
 	public static final PropertyEnum<BlockLog.EnumAxis> LOG_AXIS = PropertyEnum.<BlockLog.EnumAxis>create("axis", BlockLog.EnumAxis.class);
 
