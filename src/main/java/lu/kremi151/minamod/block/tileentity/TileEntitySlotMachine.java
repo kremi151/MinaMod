@@ -7,12 +7,10 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
-import javax.annotation.Nonnull;
-
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.block.BlockSlotMachine;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.events.SlotMachineEvent;
 import lu.kremi151.minamod.util.Task;
 import lu.kremi151.minamod.util.Task.ITaskRunnable;
 import lu.kremi151.minamod.util.Task.ProgressDispatcher;
@@ -22,8 +20,8 @@ import lu.kremi151.minamod.util.nbtmath.MathParseException;
 import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
 import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
-import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
+import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.slotmachine.Icon;
@@ -45,6 +43,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.MinecraftForge;
 
 public class TileEntitySlotMachine extends TileEntity{
 	
@@ -70,7 +69,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private int coinTray = 0;
 
 	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
-	private SlotMachineEconomyHandler economyHandler = new DefaultEconomyHandler();
+	private final SlotMachineEconomyHandler economyHandler;
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -85,17 +84,10 @@ public class TileEntitySlotMachine extends TileEntity{
 		for(SpinMode mode : SpinMode.values()) {
 			prices[mode.ordinal()] = mode.getDefaultPrice();
 		}
-	}
-	
-	public void setEconomyHandler(@Nonnull SlotMachineEconomyHandler handler) {
-		if(handler == null) {
-			throw new NullPointerException();
-		}
-		this.economyHandler = handler;
-	}
-	
-	public SlotMachineEconomyHandler getEconomyHandler() {
-		return this.economyHandler;
+		
+		SlotMachineEvent.SetEconomyHandler event = new SlotMachineEvent.SetEconomyHandler(new DefaultEconomyHandler());
+		MinecraftForge.EVENT_BUS.post(event);
+		this.economyHandler = event.getNewHandler();
 	}
 	
 	public void setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> func) {
