@@ -31,7 +31,7 @@ public class HoneycombUtils {
 				if(isHonecombCompatible(world.getBlockState(pos).getBlock())) {
 					EnumFacing face = EnumFacing.getFacingFromVector(origin.getX() - pos.getX(), 0, origin.getZ() - pos.getZ());
 					BlockPos fpos = pos.offset(face);
-					if(world.isAirBlock(fpos)) {
+					if(world.isAirBlock(fpos) && world.canSeeSky(fpos)) {
 						world.setBlockState(fpos, MinaBlocks.HONEYCOMB.getDefaultState().withProperty(BlockHoneycomb.FACING, face).withProperty(BlockHoneycomb.HAS_BEES, true));
 						break;
 					}
