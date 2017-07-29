@@ -22,7 +22,7 @@ public class HoneycombUtils {
 	 * @param tries The amount of tries
 	 */
 	public static void tickHoneycombRegeneration(World world, BlockPos origin, Random rand, float chance, int tries) {
-		if(chance > 0.0f && rand.nextFloat() < chance) {
+		if(tries > 0 && chance > 0.0f && rand.nextFloat() < chance) {
 			for(int i = 0 ; i < tries ; i++) {
 				int x = origin.getX() + rand.nextInt(8) - 4;
 				int y = origin.getY() + rand.nextInt(4);

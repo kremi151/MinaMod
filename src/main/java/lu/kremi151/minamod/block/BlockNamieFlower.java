@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 public class BlockNamieFlower extends BlockCustomCrops{
 	
 	public BlockNamieFlower() {
-		this.honeycombRegenerationChance = 0.2f;
+		this.honeycombRegenerationChance = 0.05f;
 	}
 
 	@Override

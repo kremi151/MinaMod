@@ -17,7 +17,8 @@ import net.minecraft.world.World;
 
 public abstract class BlockCustomCrops extends BlockCrops {
 	
-	protected float honeycombRegenerationChance = 0.1f;
+	protected float honeycombRegenerationChance = 0.025f;
+	protected int honeycombRegenerationTries = 1;
 
 	@Override
 	public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -119,7 +120,7 @@ public abstract class BlockCustomCrops extends BlockCrops {
     {
 		try{
 			int age = getAge(state);
-			HoneycombUtils.tickHoneycombRegeneration(worldIn, pos, rand, ((float)age / (float)getMaxAge()) * honeycombRegenerationChance);
+			HoneycombUtils.tickHoneycombRegeneration(worldIn, pos, rand, ((float)age / (float)getMaxAge()) * honeycombRegenerationChance, honeycombRegenerationTries);
 			super.updateTick(worldIn, pos, state, rand);
 			state = worldIn.getBlockState(pos);
 			if(age < getAge(state)){

@@ -8,6 +8,7 @@ public class BlockChiliCrop extends BlockCustomCrops{
 	
 	public BlockChiliCrop() {
 		this.honeycombRegenerationChance = 0.0f;
+		this.honeycombRegenerationTries = 0;
 	}
 
 	@Override
