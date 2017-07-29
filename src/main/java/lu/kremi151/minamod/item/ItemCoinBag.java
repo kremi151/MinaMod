@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,7 +42,8 @@ public class ItemCoinBag extends Item{
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		tooltip.add(I18n.translateToLocalFormatted("gui.coin_bag.amount", stack.getMetadata()));
+		tooltip.add(TextFormatting.AQUA + I18n.translateToLocalFormatted("gui.coin_bag.amount", stack.getMetadata()));
+		tooltip.add(I18n.translateToLocal("item.coin_bag.lore.rightclick"));
     }
 	
     @Override
