@@ -22,6 +22,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import static lu.kremi151.minamod.client.GuiUtils.isHovering;
+
 @SideOnly(Side.CLIENT)
 public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.Listener{
 
@@ -122,8 +124,15 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 			b.enabled = true;
 			b.drawButton(this.mc, mouseX, mouseY);
 		}
+		
         RenderHelper.enableGUIStandardItemLighting();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		if(matchesWithdrawButton(mouseX, mouseY)) {
+			this.drawHoveringText(I18n.translateToLocal("gui.coin_bag.withdraw"), mouseX, mouseY);
+		}else if(matchesDepositButton(mouseX, mouseY)) {
+			this.drawHoveringText(I18n.translateToLocal("gui.coin_bag.deposit"), mouseX, mouseY);
+		}
 	}
 
 	private boolean matchesWithdrawButton(int mouseX, int mouseY) {
@@ -229,7 +238,16 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 		fontRenderer.drawString("" + withdrawAmount, 37, 46, MinaUtils.COLOR_WHITE);
 		fontRenderer.drawString("" + depositAmount, 37, 66, MinaUtils.COLOR_WHITE);
 
+		GlStateManager.translate(0.0F, 0.0F, 1.0F);
+
+		drawItemStack(COIN_MODEL, 13, 22, "");
+		drawItemStack(COIN_BAG_MODEL, 13, 42, "");
+		drawItemStack(COIN_BAG_MODEL, 13, 62, "");
+		
+		GlStateManager.translate(0.0F, 0.0F, 400.0F);
+		
 		this.mc.renderEngine.bindTexture(guiTextures);
+		RenderHelper.disableStandardItemLighting();
 
 		this.drawTexturedModalRect(23, 46, 0, 177, 5, 5);// Green arrow
 		this.drawTexturedModalRect(23, 66, 5, 177, 5, 5);// Red arrow
@@ -250,11 +268,11 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 			this.drawTexturedModalRect(x + 12, y + 61, 0, 182, 18, 18);
 		}
 
-		GlStateManager.translate(0.0F, 0.0F, 1.0F);
+		/*GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
 		drawItemStack(COIN_MODEL, x + 13, y + 22, "");
 		drawItemStack(COIN_BAG_MODEL, x + 13, y + 42, "");
-		drawItemStack(COIN_BAG_MODEL, x + 13, y + 62, "");
+		drawItemStack(COIN_BAG_MODEL, x + 13, y + 62, "");*/
 
 	}
 
