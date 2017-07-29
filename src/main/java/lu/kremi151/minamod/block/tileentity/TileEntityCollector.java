@@ -68,7 +68,7 @@ public class TileEntityCollector extends TileEntitySidedInventory implements ITi
         		return ItemStack.EMPTY;
         	}else if(MinaUtils.areItemsStackable(itemstack, stack, true)){//TODO: too much overhead
         		//this.setInventorySlotContents(i, MinaUtils.mergeItemStack(stack, itemstack, stack.getCount()));
-        		return MinaUtils.addItemStackToInventory(itemstack, this);
+        		return MinaUtils.addItemStackToInventory(stack, this);
         		//return stack;
         	}
         }
