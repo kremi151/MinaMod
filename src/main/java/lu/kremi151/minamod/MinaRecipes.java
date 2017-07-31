@@ -126,6 +126,7 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 1, 1), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), 
 				new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), 
 				new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0));
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 5, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 1));
 
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.NAMIE_SEEDS, 4), MinaItems.NAMIE_FRUIT);
 
