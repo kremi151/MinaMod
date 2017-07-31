@@ -256,6 +256,7 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		// draw your Gui here, only thing you need to change is the path
+		RenderHelper.disableStandardItemLighting();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;
