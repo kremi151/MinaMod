@@ -6,6 +6,7 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaPotions;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,12 @@ public class ItemHoneyPot extends ItemFood{
 			list.add(I18n.translateToLocal(i));
 		}
 	}
+	
+	@Override
+	public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.DRINK;
+    }
 	
 	@Override
 	public void onFoodEaten(ItemStack is, World w, EntityPlayer p){
