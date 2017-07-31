@@ -271,10 +271,9 @@ public class TileEntitySlotMachine extends TileEntity{
 			this.expandCherryItems = nbt.getBoolean("ExpandCherryIcon");
 		}
 	}
-
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
-		nbt = writeSharedToNBT(super.writeToNBT(nbt));
+	
+	public NBTTagCompound writeSlotMachineToNBT(NBTTagCompound nbt) {
+		nbt = writeSharedToNBT(nbt);
 
 		NBTTagCompound pnbt = new NBTTagCompound();
 		for(SpinMode mode : SpinMode.values()) {
@@ -287,6 +286,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
 		
 		return nbt;
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
+		return writeSlotMachineToNBT(super.writeToNBT(nbt));
 	}
 	
 	private NBTTagCompound writeSharedToNBT(NBTTagCompound nbt) {

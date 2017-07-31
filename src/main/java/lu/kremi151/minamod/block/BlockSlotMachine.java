@@ -27,6 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -150,6 +151,24 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 		}
 		return true;
 	}
+	
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
+	
+	@Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if(te != null && te instanceof TileEntitySlotMachine) {
+			TileEntitySlotMachine sm = (TileEntitySlotMachine) te;
+			
+			ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
+            sm.writeSlotMachineToNBT(stack.getOrCreateSubCompound("BlockEntityTag"));
+            
+            spawnAsEntity(worldIn, pos, stack);
+		}
+		super.breakBlock(worldIn, pos, state);
+    }
 	
 	@SideOnly(Side.CLIENT)
 	@Override
