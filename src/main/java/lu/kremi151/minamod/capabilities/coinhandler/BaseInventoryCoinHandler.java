@@ -48,6 +48,8 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 				return 1;
 			}else if(!(b.getItem() instanceof IUnitEconomyValuable)) {
 				return -1;
+			}else if(!(a.getItem() instanceof IUnitEconomyValuable || b.getItem() instanceof IUnitEconomyValuable)) {
+				return 0;
 			}else {
 				return ((IUnitEconomyValuable)b.getItem()).getUnitEconomyValue(b) - ((IUnitEconomyValuable)a.getItem()).getUnitEconomyValue(a);
 			}
