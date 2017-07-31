@@ -660,16 +660,17 @@ public class TileEntitySlotMachine extends TileEntity{
 		@Override
 		public boolean rewardPlayer(EntityPlayer player, int amount) {
 			if(player != null && player.hasCapability(ICoinHandler.CAPABILITY, null)) {
-				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).depositCoins(amount);
-			}else {
-				return false;
+				ICoinHandler coinHandler = (ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null);
+				return coinHandler.depositCoins(amount);
 			}
+			return false;
 		}
 
 		@Override
 		public boolean withdrawCoins(EntityPlayer player, int amount) {
 			if(player.hasCapability(ICoinHandler.CAPABILITY, null)) {
-				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).withdrawCoins(amount);
+				ICoinHandler coinHandler = (ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null);
+				return coinHandler.withdrawCoins(amount);
 			}
 			return false;
 		}

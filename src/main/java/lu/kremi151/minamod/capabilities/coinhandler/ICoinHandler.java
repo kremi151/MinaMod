@@ -10,7 +10,25 @@ public interface ICoinHandler {
 	
 	int getAmountCoins();
 	boolean hasCoins(int amount);
-	boolean withdrawCoins(int amount);
-	boolean depositCoins(int amount);
+	boolean withdrawCoins(int amount, boolean simulate);
+	boolean depositCoins(int amount, boolean simulate);
+	
+	@Deprecated
+	default boolean withdrawCoins(int amount) {
+		if(withdrawCoins(amount, true)) {
+			return withdrawCoins(amount, false);
+		}else {
+			return false;
+		}
+	}
+	
+	@Deprecated
+	default boolean depositCoins(int amount) {
+		if(depositCoins(amount, true)) {
+			return depositCoins(amount, false);
+		}else {
+			return false;
+		}
+	}
 	
 }

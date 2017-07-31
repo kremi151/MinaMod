@@ -26,6 +26,7 @@ import lu.kremi151.minamod.item.ItemCustomShovel;
 import lu.kremi151.minamod.item.ItemCustomSword;
 import lu.kremi151.minamod.item.ItemEmptyPot;
 import lu.kremi151.minamod.item.ItemFoodContainer;
+import lu.kremi151.minamod.item.ItemGoldenCoin;
 import lu.kremi151.minamod.item.ItemHerb;
 import lu.kremi151.minamod.item.ItemHerbGuide;
 import lu.kremi151.minamod.item.ItemHerbMixture;
@@ -150,7 +151,7 @@ public class MinaItems {
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item SWEET_SOUR = new Item().setUnlocalizedName("sweet_sour")
 			.setCreativeTab(CreativeTabs.MATERIALS);
-	public static final Item GOLDEN_COIN = new Item().setUnlocalizedName("golden_coin")
+	public static final ItemGoldenCoin GOLDEN_COIN = (ItemGoldenCoin) new ItemGoldenCoin().setUnlocalizedName("golden_coin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	@AutoArmorRecipe(value="platinum", useOreName=true)
 	public static final Item PLATINUM_INGOT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
@@ -257,7 +258,7 @@ public class MinaItems {
 		proxy.registerItemWithOre(CHILI, "chili");
 		proxy.registerItem(CHILI_POWDER, "chili_powder");
 		proxy.registerItem(SWEET_SOUR, "sweet_sour");
-		proxy.registerItem(GOLDEN_COIN, "golden_coin");
+		proxy.registerItem(GOLDEN_COIN, "golden_coin", "golden_coin", "five_golden_coins");
 		proxy.registerItemWithOre(PLATINUM_INGOT, "platinum_ingot", "ingotPlatinum");
 		if(FeatureList.enable_soul_pearls)proxy.registerItem(SOUL_PEARL, "soul_pearl");
 		proxy.registerItem(PLATINUM_HELMET, "platinum_helmet");

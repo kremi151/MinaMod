@@ -52,7 +52,8 @@ public class ContainerCoinBag extends BaseContainer{
 				stack = _slot.getStack();
 				if(!stack.isEmpty() && stack.getItem() == MinaItems.GOLDEN_COIN){
 					ItemStack copy = stack.copy();
-					int amount = stack.getCount();
+					final int amount = MinaItems.GOLDEN_COIN.getCoinValue(stack);
+					final int unit = MinaItems.GOLDEN_COIN.getUnitCoinValue(stack);
 					ItemStack coinBag = getStack();
 					int maxMeta = coinBag.getMetadata() + amount;
 					int newMeta = (maxMeta <= Short.MAX_VALUE)?maxMeta:Short.MAX_VALUE;
@@ -62,7 +63,8 @@ public class ContainerCoinBag extends BaseContainer{
 						return ItemStack.EMPTY;
 					}
 					coinBag.setItemDamage(newMeta);
-					stack.setCount(rest);
+					final int unitsRest = (rest / unit) + ((rest % unit > 0) ? 1 : 0);
+					stack.setCount(unitsRest);
 					_slot.onSlotChange(stack, copy);
 					_slot.onTake(player, stack);
 					
