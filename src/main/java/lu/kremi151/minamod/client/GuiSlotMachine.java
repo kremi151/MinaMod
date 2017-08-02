@@ -47,18 +47,16 @@ public class GuiSlotMachine extends GuiContainer{
 		spin5LButton = new GuiButton(2, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 5));
 		reportButton = new GuiButton(999, 0, 0, 20, 20, "!");
 	}
+	
+	private String getDisplayName() {
+		return (container.getCustomName() != null) ? container.getCustomName() : I18n.translateToLocal("tile.slot_machine.name");
+	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		if(container.getCustomName() != null) {
-			fontRenderer.drawString(
-					container.getCustomName(), 8, 10,
-					4210752);
-		}else {
-			fontRenderer.drawString(
-					I18n.translateToLocal("tile.slot_machine.name") + " (BETA)", 8, 10,
-					4210752);
-		}
+		fontRenderer.drawString(
+				getDisplayName() + TextFormatting.RESET + " (BETA)", 8, 10,
+				4210752);
 		
 		fontRenderer.drawString(
 				I18n.translateToLocalFormatted("gui.slot_machine.credit", container.getCredits()), 10,
