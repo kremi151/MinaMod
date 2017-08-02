@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
@@ -70,6 +72,7 @@ public class TileEntitySlotMachine extends TileEntity{
 
 	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
 	private final SlotMachineEconomyHandler economyHandler;
+	private final SlotMachineCoinHandler coinHandler;
 	
 	//Log data for reports:
 	private SpinMode lastSpinMode = null;
@@ -88,6 +91,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		SlotMachineEvent.SetEconomyHandler event = new SlotMachineEvent.SetEconomyHandler(new DefaultEconomyHandler());
 		MinecraftForge.EVENT_BUS.post(event);
 		this.economyHandler = event.getNewHandler();
+		this.coinHandler = new SlotMachineCoinHandler();
 	}
 	
 	public void setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> func) {
@@ -309,6 +313,19 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	@Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+        return capability == ICoinHandler.CAPABILITY || super.hasCapability(capability, facing);
+    }
+
+    @Override
+    @Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+        return capability == ICoinHandler.CAPABILITY ? (T) coinHandler : super.getCapability(capability, facing);
+    }
+	
+	@Override
 	public NBTTagCompound getUpdateTag()
     {
 		return writeSharedToNBT(super.getUpdateTag());
@@ -379,6 +396,7 @@ public class TileEntitySlotMachine extends TileEntity{
 				EntityPlayer playing = getPlaying();
 				if(playing != null) {
 					if(withdrawCoins(playing, price)){
+						coinHandler.depositCoins(price);
 						isTurning = true;
 						notifyClientTurnState(true);
 						awardedForLastSpin = 0;
@@ -467,7 +485,11 @@ public class TileEntitySlotMachine extends TileEntity{
 				task.setCanExecuteAgain(false);
 				int win = evaluateResult();
 				if(win > 0) {
-					rewardPlayer(win, true);
+					if(coinHandler.canPayCoins(win) && coinHandler.withdrawCoins(win)) {
+						rewardPlayer(win, true);
+					}else {
+						//TODO: error message
+					}
 				}
 				isTurning = false;
 				currentTask = null;
@@ -685,6 +707,30 @@ public class TileEntitySlotMachine extends TileEntity{
 				return ((ICoinHandler)player.getCapability(ICoinHandler.CAPABILITY, null)).getAmountCoins();
 			}
 			return 0;
+		}
+		
+	}
+	
+	private class SlotMachineCoinHandler implements ICoinHandler{
+
+		@Override
+		public int getAmountCoins() {
+			return 0;//TODO: Implement
+		}
+
+		@Override
+		public boolean canPayCoins(int amount) {
+			return true;//TODO: Implement
+		}
+
+		@Override
+		public boolean withdrawCoins(int amount, boolean simulate) {
+			return true;//TODO: Implement
+		}
+
+		@Override
+		public boolean depositCoins(int amount, boolean simulate) {
+			return true;//TODO: Implement
 		}
 		
 	}

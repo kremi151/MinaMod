@@ -37,7 +37,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 	}
 
 	@Override
-	public boolean hasCoins(int amount) {
+	public boolean canPayCoins(int amount) {
 		return getAmountCoins() >= amount;
 	}
 	

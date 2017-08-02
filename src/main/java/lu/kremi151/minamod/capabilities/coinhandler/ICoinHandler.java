@@ -9,7 +9,7 @@ public interface ICoinHandler {
 	public static final Capability<ICoinHandler> CAPABILITY = null;
 	
 	int getAmountCoins();
-	boolean hasCoins(int amount);
+	boolean canPayCoins(int amount);
 	boolean withdrawCoins(int amount, boolean simulate);
 	boolean depositCoins(int amount, boolean simulate);
 	
