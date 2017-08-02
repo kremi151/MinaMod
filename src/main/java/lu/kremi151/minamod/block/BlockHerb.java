@@ -19,7 +19,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -74,25 +73,15 @@ public class BlockHerb extends BlockCustomCrops{
     {
         return new BlockStateContainer(this, new IProperty[] {AGE, TYPE});
     }
-	
+
 	@Override
-	protected Item getSeed(IBlockState state, IBlockAccess world, BlockPos pos, Random rand, int fortune) {
-		return MinaItems.HERB;
+	public ItemStack getCrop(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		return new ItemStack(MinaItems.HERB, 1, ((TileEntityHerbCrop)world.getTileEntity(pos)).getType().getHerbId());
 	}
 
 	@Override
-	protected Item getCrop(IBlockState state, IBlockAccess world, BlockPos pos, Random rand, int fortune) {
-		return MinaItems.HERB;
-	}
-
-	@Override
-	protected int getCropMetadata(IBlockState state, IBlockAccess world, BlockPos pos, Random rand, int fortune) {
-		return ((TileEntityHerbCrop)world.getTileEntity(pos)).getType().getHerbId();
-	}
-
-	@Override
-	protected int getSeedMetadata(IBlockState state, IBlockAccess world, BlockPos pos, Random rand, int fortune) {
-		return ((TileEntityHerbCrop)world.getTileEntity(pos)).getType().getHerbId();
+	public ItemStack getSeed(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		return getCrop(world, pos, state, fortune);
 	}
 	
 	@Override

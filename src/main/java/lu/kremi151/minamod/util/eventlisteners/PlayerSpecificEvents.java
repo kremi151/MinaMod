@@ -9,11 +9,9 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
-import lu.kremi151.minamod.interfaces.IFertilizable;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.worlddata.MinaWorld;
 import lu.kremi151.minamod.worlddata.data.FrostTemplePosition;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.passive.EntityCow;
@@ -30,12 +28,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerSpecificEvents {
@@ -94,19 +90,6 @@ public class PlayerSpecificEvents {
 			}
 		}
 	}
-	
-	@SubscribeEvent
-    public void bonemealUsed(BonemealEvent event) // NO_UCD (unused code)
-    {
-		if(event.getWorld().isRemote)return;
-		Block b = event.getWorld().getBlockState(event.getPos()).getBlock();
-		if(b == null)return;
-		if(b instanceof IFertilizable){
-			IFertilizable c = (IFertilizable)b;
-			boolean r=c.onFertilize(event.getWorld(), event.getPos(), event.getWorld().rand);
-			if(r)event.setResult(Result.ALLOW);
-		}
-    }
 	
 	@SubscribeEvent
 	public void onEntityInteract(PlayerInteractEvent.EntityInteract event){ // NO_UCD (unused code)
