@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import lu.kremi151.minamod.interfaces.ICallback;
+import java.util.function.Supplier;
 
 public final class MutableWeightedList<T> implements WeightedList<T>{
 	
 	private final List<WeightedItem<T>> items;
 	private double totalWeight = 0;
 	
-	MutableWeightedList(ICallback<List<WeightedItem<T>>> listFactory){
-		this.items = listFactory.callback();
+	MutableWeightedList(Supplier<List<WeightedItem<T>>> listFactory){
+		this.items = listFactory.get();
 	}
 	
 	MutableWeightedList(){
