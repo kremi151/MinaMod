@@ -268,7 +268,7 @@ public class NBTMathHelper {
 				} catch (MathFunctionException e) {
 					throw new MathParseException("Could not parse logic named " + raw_nbt.getString("Logic"), e);
 				}
-			}else if(raw_nbt.hasKey("If", 10)) {
+			}else if(raw_nbt.hasKey("If")) {
 				try {
 					return parseConditional((NBTTagCompound)nbt, context);
 				} catch (MathFunctionException e) {
