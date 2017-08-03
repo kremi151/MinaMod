@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.util.nbtmath.util;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
@@ -9,7 +11,8 @@ public interface Context {
 	
 	@Nullable Number resolveConstant(String name);
 	@Nullable UnaryOperator<Number> resolveVariable(String name);
-	void applyMappings(BiConsumer<String,Object> consumer);
+	Set<String> constantNameSet();
+	Set<String> variableNameSet();
 
 	final static Context DEFAULT = new Context() {
 
@@ -24,7 +27,14 @@ public interface Context {
 		}
 
 		@Override
-		public void applyMappings(BiConsumer<String, Object> consumer) {}
+		public Set<String> constantNameSet() {
+			return Collections.emptySet();
+		}
+
+		@Override
+		public Set<String> variableNameSet() {
+			return Collections.emptySet();
+		}
 	
 	};
 }

@@ -2,9 +2,10 @@ package lu.kremi151.minamod.block.tileentity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.BiConsumer;
+import java.util.Set;
 import java.util.function.UnaryOperator;
 
 import javax.annotation.Nullable;
@@ -666,32 +667,34 @@ public class TileEntitySlotMachine extends TileEntity{
 	
 	private class SlotMachineContext implements Context{
 
+		private final HashMap<String, Number> constants = new HashMap<>();
+		private final HashMap<String, UnaryOperator<Number>> variables = new HashMap<>();
+		
+		private SlotMachineContext() {
+			variables.put("iconWeight", id -> icons[id.intValue()].weight);
+			variables.put("iconCount", id -> icons.length);
+			variables.put("totalWeight", id -> ((Double)weightedIconIds.totalWeight()).intValue());
+			variables.put("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)));
+		}
+
 		@Override
 		public Number resolveConstant(String name) {
-			return null;
+			return constants.get(name);
 		}
 
 		@Override
 		public UnaryOperator<Number> resolveVariable(String name) {
-			if(name.equalsIgnoreCase("iconWeight")) {
-				return id -> icons[id.intValue()].weight;
-			}else if(name.equalsIgnoreCase("iconCount")) {
-				return id -> icons.length;
-			}else if(name.equalsIgnoreCase("totalWeight")) {
-				return id -> ((Double)weightedIconIds.totalWeight()).intValue();
-			}else if(name.equalsIgnoreCase("maxWeight")) {
-				return id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b));
-			}else {
-				return null;
-			}
+			return variables.get(name);
 		}
 
 		@Override
-		public void applyMappings(BiConsumer<String, Object> consumer) {
-			consumer.accept("iconWeight", (UnaryOperator<Number>)id -> icons[id.intValue()].weight);
-			consumer.accept("iconCount", icons.length);
-			consumer.accept("totalWeight", (UnaryOperator<Number>)id -> ((Double)weightedIconIds.totalWeight()).intValue());
-			consumer.accept("maxWeight", (UnaryOperator<Number>)id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)));
+		public Set<String> constantNameSet() {
+			return constants.keySet();
+		}
+
+		@Override
+		public Set<String> variableNameSet() {
+			return variables.keySet();
 		}
 		
 	};

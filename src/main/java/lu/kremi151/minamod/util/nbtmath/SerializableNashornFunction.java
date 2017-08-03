@@ -58,7 +58,12 @@ public class SerializableNashornFunction extends SerializableFunctionBase<NBTTag
 	@Override
 	public Number apply(Number t, Context c) {
 		Bindings newBindings = engine.createBindings();
-		c.applyMappings((name, val) -> newBindings.put(name, val));
+		for(String var : c.variableNameSet()) {
+			newBindings.put(var, (FunctionalInterface)c.resolveVariable(var));
+		}
+		for(String constant : c.constantNameSet()) {
+			newBindings.put(constant, c.resolveConstant(constant).doubleValue());
+		}
 		engine.setBindings(newBindings, ScriptContext.ENGINE_SCOPE);
 		try {
 			engine.eval(script);
