@@ -74,7 +74,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 
-    compile 'org.spongepowered:spongeapi:6.0.0'
+    //compile 'org.spongepowered:spongeapi:6.0.0'
 }
 
 processResources {

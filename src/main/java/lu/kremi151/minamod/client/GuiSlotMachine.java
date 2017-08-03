@@ -197,7 +197,7 @@ public class GuiSlotMachine extends GuiContainer{
 			}
 		}
 		hoveringDisplayInfo = isHovering(mouseX, mouseY, guiLeft + infoBtnLeft, guiTop + infoBtnTop, guiLeft + infoBtnRight, guiTop + infoBtnBottom);
-		hoveringInstantMode = isHovering(mouseX, mouseY, guiLeft + instantBtnLeft, guiTop + instantBtnTop, guiLeft + instantBtnRight, guiTop + instantBtnBottom);
+		hoveringInstantMode = !displayInfoPage && isHovering(mouseX, mouseY, guiLeft + instantBtnLeft, guiTop + instantBtnTop, guiLeft + instantBtnRight, guiTop + instantBtnBottom);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		
