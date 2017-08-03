@@ -3,9 +3,10 @@ package lu.kremi151.minamod.util.nbtmath;
 import java.util.function.UnaryOperator;
 
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.nbtmath.util.ISerializable;
 import net.minecraft.nbt.NBTBase;
 
-public abstract class SerializableFunctionBase<NBTType extends NBTBase> implements UnaryOperator<Number>{
+public abstract class SerializableFunctionBase<NBTType extends NBTBase> implements UnaryOperator<Number>, ISerializable<NBTType>{
 	
 	private final Context context;
 	
@@ -15,8 +16,6 @@ public abstract class SerializableFunctionBase<NBTType extends NBTBase> implemen
 		}
 		this.context = context;
 	}
-
-	public abstract NBTType serialize();
 	
 	@Override
 	@Deprecated

@@ -1,10 +1,11 @@
 package lu.kremi151.minamod.util.nbtmath;
 
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.nbtmath.util.ILogical;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagCompound>{
+public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagCompound> implements ILogical<NBTTagCompound>{
 	
 	protected final String name;
 
@@ -17,8 +18,6 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	public final Number apply(Number t, Context c) {
 		return evaluate(t, c) ? 1 : 0;
 	}
-	
-	public abstract boolean evaluate(Number t, Context c);
 	
 	public abstract static class Comparison extends SerializableLogic{
 		
@@ -108,9 +107,9 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public abstract static class Binary extends SerializableLogic{
 		
-		protected final SerializableLogic a, b;
+		protected final ILogical a, b;
 
-		Binary(String name, SerializableLogic a, SerializableLogic b) {
+		Binary(String name, ILogical a, ILogical b) {
 			super(name);
 			this.a = a;
 			this.b = b;
@@ -129,9 +128,9 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public abstract static class Unary extends SerializableLogic{
 		
-		protected final SerializableLogic a;
+		protected final ILogical a;
 
-		Unary(String name, SerializableLogic a) {
+		Unary(String name, ILogical a) {
 			super(name);
 			this.a = a;
 		}
@@ -148,7 +147,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class And extends Binary{
 
-		public And(SerializableLogic a, SerializableLogic b) {
+		public And(ILogical a, ILogical b) {
 			super("and", a, b);
 		}
 
@@ -161,7 +160,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class NAnd extends Binary{
 
-		public NAnd(SerializableLogic a, SerializableLogic b) {
+		public NAnd(ILogical a, ILogical b) {
 			super("nand", a, b);
 		}
 
@@ -174,7 +173,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class Or extends Binary{
 
-		public Or(SerializableLogic a, SerializableLogic b) {
+		public Or(ILogical a, ILogical b) {
 			super("or", a, b);
 		}
 
@@ -187,7 +186,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class NOr extends Binary{
 
-		public NOr(SerializableLogic a, SerializableLogic b) {
+		public NOr(ILogical a, ILogical b) {
 			super("nor", a, b);
 		}
 
@@ -200,7 +199,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class XOr extends Binary{
 
-		public XOr(SerializableLogic a, SerializableLogic b) {
+		public XOr(ILogical a, ILogical b) {
 			super("xor", a, b);
 		}
 
@@ -213,7 +212,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class XNOr extends Binary{
 
-		public XNOr(SerializableLogic a, SerializableLogic b) {
+		public XNOr(ILogical a, ILogical b) {
 			super("xnor", a, b);
 		}
 
@@ -226,7 +225,7 @@ public abstract class SerializableLogic extends SerializableFunctionBase<NBTTagC
 	
 	public static class Not extends Unary{
 
-		public Not(SerializableLogic a) {
+		public Not(ILogical a) {
 			super("not", a);
 		}
 

@@ -25,8 +25,9 @@ import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedMapper;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedVariable;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
 import lu.kremi151.minamod.util.slotmachine.Icon;
 import lu.kremi151.minamod.util.slotmachine.SlotMachineEconomyHandler;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
@@ -440,11 +441,11 @@ public class TileEntitySlotMachine extends TileEntity{
 								new SerializableConstant(1.0),
 								new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
 										new SerializableBinaryOperation(
-												SerializableNamedMapper.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
+												SerializableNamedVariable.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
 												new SerializableConstant(1.0),
 												NBTMathHelper.DIFFERENCE
 												),
-										SerializableNamedMapper.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
+										SerializableNamedVariable.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
 										NBTMathHelper.DIVISION
 										),
 								NBTMathHelper.DIFFERENCE
@@ -669,12 +670,15 @@ public class TileEntitySlotMachine extends TileEntity{
 
 		private final HashMap<String, Number> constants = new HashMap<>();
 		private final HashMap<String, UnaryOperator<Number>> variables = new HashMap<>();
+		private final HashMap<String, ToBooleanFunction<Number>> logicals = new HashMap<>();
 		
 		private SlotMachineContext() {
 			variables.put("iconWeight", id -> icons[id.intValue()].weight);
 			variables.put("iconCount", id -> icons.length);
 			variables.put("totalWeight", id -> ((Double)weightedIconIds.totalWeight()).intValue());
 			variables.put("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b)));
+			
+			logicals.put("isCherry", id -> icons[id.intValue()].cherry);
 		}
 
 		@Override
@@ -688,6 +692,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 
 		@Override
+		public ToBooleanFunction<Number> resolveLogic(String name) {
+			return logicals.get(name);
+		}
+
+		@Override
 		public Set<String> constantNameSet() {
 			return constants.keySet();
 		}
@@ -695,6 +704,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		@Override
 		public Set<String> variableNameSet() {
 			return variables.keySet();
+		}
+
+		@Override
+		public Set<String> logicNameSet() {
+			return logicals.keySet();
 		}
 		
 	};

@@ -9,6 +9,8 @@ import javax.script.ScriptException;
 
 import lu.kremi151.minamod.util.nbtmath.serialization.INBTFunctionDeserializer;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.nbtmath.util.ILogical;
+import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
@@ -134,6 +136,29 @@ public class NBTMathHelper {
 	/**
 	 * Parses a logical function from NBT data
 	 * @param nbt The NBT data structure holding the function
+	 * @param context Context data
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	private ILogical parseLogic(NBTBase nbt, Context context) throws MathParseException{
+		if(nbt instanceof NBTTagCompound) {
+			return parseLogic((NBTTagCompound) nbt, context);
+		}else if(nbt instanceof NBTTagString) {
+			String name = ((NBTTagString)nbt).getString();
+			ToBooleanFunction<Number> logic = context.resolveLogic(name);
+			if(name != null) {
+				return SerializableNamedLogical.createAndProvide(name, logic);
+			}else {
+				return SerializableNamedLogical.createByName(name);
+			}
+		}else {
+			throw new MathParseException("Unknown logical data structure: " + nbt);
+		}
+	}
+	
+	/**
+	 * Parses a logical function from NBT data
+	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
 	 * @throws MathParseException Thrown if the function could not be parsed
 	 * @throws MathFunctionException Thrown if the function could not be created
@@ -152,19 +177,19 @@ public class NBTMathHelper {
 	private SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
 		String logic = nbt.getString("Logic");
 		if(logic.equalsIgnoreCase("and")) {
-			return new SerializableLogic.And(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.And(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("nand")) {
-			return new SerializableLogic.NAnd(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.NAnd(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("or")) {
-			return new SerializableLogic.Or(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.Or(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("nor")) {
-			return new SerializableLogic.NOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.NOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("xor")) {
-			return new SerializableLogic.XOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.XOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("xnor")) {
-			return new SerializableLogic.XNOr(parseLogic(nbt.getCompoundTag("A"), context), parseLogic(nbt.getCompoundTag("B"), context));
+			return new SerializableLogic.XNOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("not")) {
-			return new SerializableLogic.Not(parseLogic(nbt.getCompoundTag("A"), context));
+			return new SerializableLogic.Not(parseLogic(nbt.getTag("A"), context));
 		}else if(logic.equalsIgnoreCase("equals")) {
 			return new SerializableLogic.Equals(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
 		}else if(logic.equalsIgnoreCase("bigger")) {
@@ -199,7 +224,7 @@ public class NBTMathHelper {
 	 */
 	private SerializableConditional parseConditional(NBTTagCompound nbt, Context context) throws MathParseException{
 		try {
-			SerializableLogic cond = parseLogic(nbt.getCompoundTag("If"), context);
+			ILogical cond = parseLogic(nbt.getTag("If"), context);
 			SerializableFunctionBase<? extends NBTBase> t, e;
 			t = parseFunction(nbt.getTag("Then"), context);
 			e = parseFunction(nbt.getTag("Else"), context);
@@ -266,7 +291,7 @@ public class NBTMathHelper {
 			}
 			UnaryOperator<Number> var;
 			if(varName.equals("x")) {
-				return new SerializableVariable();
+				return new SerializableParameter();
 			}else {
 				Number constant = context.resolveConstant(varName);
 				if(constant != null) {
@@ -276,7 +301,7 @@ public class NBTMathHelper {
 				}
 			}
 			if(var != null) {
-				return SerializableNamedMapper.createAndProvide(varName, var);
+				return SerializableNamedVariable.createAndProvide(varName, var);
 			}else {
 				throw new MathParseException("Unknown variable: " + varName);
 			}

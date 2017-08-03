@@ -11,8 +11,10 @@ public interface Context {
 	
 	@Nullable Number resolveConstant(String name);
 	@Nullable UnaryOperator<Number> resolveVariable(String name);
+	@Nullable ToBooleanFunction<Number> resolveLogic(String name);
 	Set<String> constantNameSet();
 	Set<String> variableNameSet();
+	Set<String> logicNameSet();
 
 	final static Context DEFAULT = new Context() {
 
@@ -27,12 +29,22 @@ public interface Context {
 		}
 
 		@Override
+		public ToBooleanFunction<Number> resolveLogic(String name) {
+			return null;
+		}
+
+		@Override
 		public Set<String> constantNameSet() {
 			return Collections.emptySet();
 		}
 
 		@Override
 		public Set<String> variableNameSet() {
+			return Collections.emptySet();
+		}
+
+		@Override
+		public Set<String> logicNameSet() {
 			return Collections.emptySet();
 		}
 	

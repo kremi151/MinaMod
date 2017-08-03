@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 import javax.script.Bindings;
@@ -60,6 +59,9 @@ public class SerializableNashornFunction extends SerializableFunctionBase<NBTTag
 		Bindings newBindings = engine.createBindings();
 		for(String var : c.variableNameSet()) {
 			newBindings.put(var, (FunctionalInterface)c.resolveVariable(var));
+		}
+		for(String logical : c.logicNameSet()) {
+			newBindings.put(logical, (FunctionalInterface)c.resolveLogic(logical));
 		}
 		for(String constant : c.constantNameSet()) {
 			newBindings.put(constant, c.resolveConstant(constant).doubleValue());

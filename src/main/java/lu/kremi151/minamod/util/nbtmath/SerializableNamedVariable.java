@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import net.minecraft.nbt.NBTTagString;
 
-public abstract class SerializableNamedMapper extends SerializableFunctionBase<NBTTagString>{
+public abstract class SerializableNamedVariable extends SerializableFunctionBase<NBTTagString>{
 	
 	protected final String functionName;
 	
-	private SerializableNamedMapper(String functionName) {
+	private SerializableNamedVariable(String functionName) {
 		super(Context.DEFAULT);
 		this.functionName = functionName;
 	}
@@ -21,18 +21,18 @@ public abstract class SerializableNamedMapper extends SerializableFunctionBase<N
 		return new NBTTagString(functionName);
 	}
 	
-	public static SerializableNamedMapper createByName(String name) {
+	public static SerializableNamedVariable createByName(String name) {
 		return new Unprovided(name);
 	}
 	
-	public static SerializableNamedMapper createAndProvide(String name, @Nonnull UnaryOperator<Number> function) {
+	public static SerializableNamedVariable createAndProvide(String name, @Nonnull UnaryOperator<Number> function) {
 		if(function == null) {
 			throw new NullPointerException();
 		}
 		return new Provided(function, name);
 	}
 	
-	private static class Provided extends SerializableNamedMapper{
+	private static class Provided extends SerializableNamedVariable{
 		
 		private final UnaryOperator<Number> function;
 		
@@ -47,7 +47,7 @@ public abstract class SerializableNamedMapper extends SerializableFunctionBase<N
 		}
 	}
 	
-	private static class Unprovided extends SerializableNamedMapper{
+	private static class Unprovided extends SerializableNamedVariable{
 		
 		private Unprovided(String name) {
 			super(name);

@@ -1,15 +1,16 @@
 package lu.kremi151.minamod.util.nbtmath;
 
 import lu.kremi151.minamod.util.nbtmath.util.Context;
+import lu.kremi151.minamod.util.nbtmath.util.ILogical;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class SerializableConditional extends SerializableFunctionBase<NBTTagCompound>{
 	
-	private final SerializableLogic cond;
+	private final ILogical cond;
 	private final SerializableFunctionBase<? extends NBTBase> _then, _else;
 
-	public SerializableConditional(SerializableLogic condition, SerializableFunctionBase _then, SerializableFunctionBase _else) {
+	public SerializableConditional(ILogical condition, SerializableFunctionBase _then, SerializableFunctionBase _else) {
 		super(Context.DEFAULT);
 		this.cond = condition;
 		this._then = _then;
