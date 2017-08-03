@@ -152,12 +152,7 @@ public class ContainerSlotMachine extends BaseContainer{
         		if(firstSync) {
         			for(int j = 0 ; j < slotMachine.getIconCount() ; j++) {
         				Icon icon = slotMachine.getIcon(j);
-        				int rowValue;
-        				if(icon.cherry) {
-        					rowValue = slotMachine.evaluateCherryRowPrice(j);
-        				}else {
-        					rowValue = slotMachine.evaluateRowPrice(j);
-        				}
+        				int rowValue  = slotMachine.evaluateRowPrice(j);
             			icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_LEAST, (rowValue >> 16) & 0xFFFF);
                 		icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_MOST, rowValue & 0xFFFF);
         			}

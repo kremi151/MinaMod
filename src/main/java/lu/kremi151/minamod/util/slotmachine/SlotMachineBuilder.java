@@ -17,7 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 public class SlotMachineBuilder {
 	
 	private final LinkedList<Object[]> icons = new LinkedList<>();
-	private SerializableFunctionBase rowPriceFunction = null, cherryRowPriceFunction = null;
+	private SerializableFunctionBase rowPriceFunction = null;
 	private int prices[] = null;
 	private String customName = null;
 	private double maxWin = -1.0, cherryWin = -1.0;
@@ -37,11 +37,6 @@ public class SlotMachineBuilder {
 	
 	public SlotMachineBuilder setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> function) {
 		this.rowPriceFunction = function;
-		return this;
-	}
-	
-	public SlotMachineBuilder setCherryRowPriceFunction(SerializableFunctionBase<? extends NBTBase> function) {
-		this.cherryRowPriceFunction = function;
 		return this;
 	}
 	
@@ -91,14 +86,13 @@ public class SlotMachineBuilder {
         
         if(rowPriceFunction != null) {
         	teTag.setTag("RowPriceFunction", rowPriceFunction.serialize());
-        }else if(maxWin > 0.0) {
-        	teTag.setDouble("MaxWin", maxWin);
-        }
-        
-        if(cherryRowPriceFunction != null) {
-        	teTag.setTag("CherryRowPriceFunction", cherryRowPriceFunction.serialize());
-        }else if(cherryWin > 0.0) {
-        	teTag.setDouble("CherryWin", maxWin);
+        }else {
+        	if(maxWin > 0.0) {
+            	teTag.setDouble("MaxWin", maxWin);
+            }
+        	if(cherryWin > 0.0) {
+            	teTag.setDouble("CherryWin", cherryWin);
+            }
         }
         
         if(prices != null) {

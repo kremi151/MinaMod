@@ -22,9 +22,12 @@ import lu.kremi151.minamod.util.TextHelper;
 import lu.kremi151.minamod.util.nbtmath.MathParseException;
 import lu.kremi151.minamod.util.nbtmath.NBTMathHelper;
 import lu.kremi151.minamod.util.nbtmath.SerializableBinaryOperation;
+import lu.kremi151.minamod.util.nbtmath.SerializableConditional;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
+import lu.kremi151.minamod.util.nbtmath.SerializableLogic;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedLogical;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedVariable;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
@@ -72,7 +75,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
 
-	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null, customCherryPriceFunction = null;
+	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null;
 	private final SlotMachineEconomyHandler economyHandler;
 	private final SlotMachineCoinHandler coinHandler;
 	
@@ -80,8 +83,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private SpinMode lastSpinMode = null;
 	private int awardedForLastSpin = 0;
 	
-	private final SerializableFunctionBase<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0);
-	private final SerializableFunctionBase<? extends NBTBase> defaultCherryRowPriceFunction = generateDefaultCherryRowPriceFunction(1000.0);//TODO: Adjust
+	private final SerializableFunctionBase<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0, 200.0);
 
 	public TileEntitySlotMachine() {
 		fillWeigtedIcons();
@@ -261,18 +263,10 @@ public class TileEntitySlotMachine extends TileEntity{
 				MinaMod.println("Could not parse row price function for slot machine at %s", pos.toString());
 				e.printStackTrace();
 			}
-		}else if(nbt.hasKey("MaxWin", 99)) {
-			customRowPriceFunction = generateDefaultRowPriceFunction(nbt.getDouble("MaxWin"));
-		}
-		if(nbt.hasKey("CherryRowPriceFunction")) {
-			try {
-				customCherryPriceFunction = nbtmath.parseFunction(nbt.getTag("CherryRowPriceFunction"), context);
-			} catch (MathParseException e) {
-				MinaMod.println("Could not parse cherry row price function for slot machine at %s", pos.toString());
-				e.printStackTrace();
-			}
-		}else if(nbt.hasKey("CherryWin", 99)) {
-			customCherryPriceFunction = generateDefaultCherryRowPriceFunction(nbt.getDouble("CherryWin"));
+		}else if(nbt.hasKey("MaxWin", 99) || nbt.hasKey("CherryWin", 99)) {
+			double maxWin = nbt.hasKey("MaxWin", 99) ? nbt.getDouble("MaxWin") : 200.0;
+			double cherryWin = nbt.hasKey("CherryWin", 99) ? nbt.getDouble("CherryWin") : 200.0;
+			customRowPriceFunction = generateDefaultRowPriceFunction(maxWin, cherryWin);
 		}
 		if(nbt.hasKey("CustomName", 8)) {
 			this.customName = nbt.getString("CustomName");
@@ -292,7 +286,6 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setTag("Prices", pnbt);
 		nbt.setInteger("CoinTray", coinTray);
 		if(customRowPriceFunction != null)nbt.setTag("RowPriceFunction", customRowPriceFunction.serialize());
-		if(customCherryPriceFunction != null)nbt.setTag("CherryRowPriceFunction", customCherryPriceFunction.serialize());
 		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
 		
 		return nbt;
@@ -397,10 +390,6 @@ public class TileEntitySlotMachine extends TileEntity{
 		return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId, context).intValue();
 	}
 	
-	public int evaluateCherryRowPrice(int cherryIconId) {
-		return (customCherryPriceFunction != null ? customCherryPriceFunction : defaultCherryRowPriceFunction).apply(cherryIconId, context).intValue();
-	}
-	
 	public void turnSlots(SpinMode mode, Random rand, boolean instant) {
 		if(!world.isRemote) {
 			if(isTurning()) {
@@ -434,31 +423,31 @@ public class TileEntitySlotMachine extends TileEntity{
 		}
 	}
 	
-	private SerializableFunctionBase<? extends NBTBase> generateDefaultRowPriceFunction(double maxWin) {
-		return new SerializableFunction.Max(
-				new SerializableBinaryOperation(
+	private SerializableFunctionBase<? extends NBTBase> generateDefaultRowPriceFunction(double maxWin, double cherryWin) {
+		return new SerializableConditional(
+				SerializableNamedLogical.createAndProvide("isCherry", id -> icons[id.intValue()].cherry),
+				new SerializableConstant(cherryWin),//Individual line. End result is multiplied by 5.
+				new SerializableFunction.Max(
 						new SerializableBinaryOperation(
-								new SerializableConstant(1.0),
-								new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
-										new SerializableBinaryOperation(
-												SerializableNamedVariable.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
-												new SerializableConstant(1.0),
-												NBTMathHelper.DIFFERENCE
+								new SerializableBinaryOperation(
+										new SerializableConstant(1.0),
+										new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
+												new SerializableBinaryOperation(
+														SerializableNamedVariable.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
+														new SerializableConstant(1.0),
+														NBTMathHelper.DIFFERENCE
+														),
+												SerializableNamedVariable.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
+												NBTMathHelper.DIVISION
 												),
-										SerializableNamedVariable.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
-										NBTMathHelper.DIVISION
+										NBTMathHelper.DIFFERENCE
 										),
-								NBTMathHelper.DIFFERENCE
+								new SerializableConstant(maxWin),
+								NBTMathHelper.MULTIPLICATION
 								),
-						new SerializableConstant(maxWin),
-						NBTMathHelper.MULTIPLICATION
-						),
-				new SerializableConstant(1.0)
+						new SerializableConstant(1.0)
+						)
 				);
-	}
-	
-	private SerializableFunctionBase<? extends NBTBase> generateDefaultCherryRowPriceFunction(double defaultWin) {
-		return new SerializableConstant(defaultWin);
 	}
 	
 	public class TaskTurnSlots implements ITaskRunnable{
@@ -603,8 +592,8 @@ public class TileEntitySlotMachine extends TileEntity{
 		
 		int eval = checkHLine(1);
 		if(eval == -2) {//Cherry
-			markEverythingWinning();
-			return evaluateCherryRowPrice(wheels.getWheelValue(0, 1));
+			win += evaluateRowPrice(wheels.getWheelValue(0, 1));
+			markHLineWinning(1);
 		}else if(eval >= 0) {
 			win += evaluateRowPrice(eval);
 			markHLineWinning(1);
@@ -614,8 +603,8 @@ public class TileEntitySlotMachine extends TileEntity{
 			for(int i = 0 ; i < 3 ; i += 2) {
 				eval = checkHLine(i);
 				if(eval == -2) {//Cherry
-					markEverythingWinning();
-					return evaluateCherryRowPrice(wheels.getWheelValue(0, i));
+					win += evaluateRowPrice(wheels.getWheelValue(0, i));
+					markHLineWinning(i);
 				}else if(eval >= 0) {
 					win += evaluateRowPrice(eval);
 					markHLineWinning(i);
@@ -627,8 +616,8 @@ public class TileEntitySlotMachine extends TileEntity{
 			for(int i = 0 ; i < 2 ; i ++) {
 				eval = checkVLine(i == 1);
 				if(eval == -2) {//Cherry
-					markEverythingWinning();
-					return evaluateCherryRowPrice(wheels.getWheelValue(1, 1));
+					win += evaluateRowPrice(wheels.getWheelValue(1, 1));
+					markVLineWinning(i == 1);
 				}else if(eval >= 0) {
 					win += evaluateRowPrice(eval);
 					markVLineWinning(i == 1);
