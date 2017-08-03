@@ -33,8 +33,8 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	}
 	
 	@Override
-	public void spin(SpinMode mode) {
-		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageSpinSlotMachine(mode, slotMachine.getPos()));
+	public void spin(SpinMode mode, boolean instant) {
+		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageSpinSlotMachine(mode, slotMachine.getPos(), instant));
 	}
 
 	@Override

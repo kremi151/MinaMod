@@ -70,8 +70,8 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getPlayingCredits();
 	}
 	
-	public void spin(SpinMode mode) {
-		slotMachine.turnSlots(mode, new Random(System.currentTimeMillis()));
+	public void spin(SpinMode mode, boolean instant) {
+		slotMachine.turnSlots(mode, new Random(System.currentTimeMillis()), instant);
 	}
 	
 	public Item getIcon(int wheelIdx, int wheelPos) {

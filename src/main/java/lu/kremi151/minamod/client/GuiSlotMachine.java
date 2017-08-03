@@ -37,9 +37,10 @@ public class GuiSlotMachine extends GuiContainer{
 	
 	private final ContainerSlotMachineClient container;
 	private final GuiButton spin1LButton, spin3LButton, spin5LButton, reportButton, nextPageButton, previousPageButton;
-	
+
 	private final static int infoBtnLeft = 14, infoBtnTop = 52, infoBtnRight = 28, infoBtnBottom = 66;
-	private boolean displayInfoPage = false;
+	private final static int instantBtnLeft = 14, instantBtnTop = 70, instantBtnRight = 28, instantBtnBottom = 84;
+	private boolean displayInfoPage = false, instantMode = false, hoveringDisplayInfo = false, hoveringInstantMode = false;
 	private int infoPage = 0, totalInfoPages = 0;
 
 	public GuiSlotMachine(ContainerSlotMachineClient container) {
@@ -83,14 +84,26 @@ public class GuiSlotMachine extends GuiContainer{
 		if(displayInfoPage) {
 			this.drawTexturedModalRect(infoBtnLeft, infoBtnTop, 30, 186, 14, 14);
 		}else {
-			if(isHovering(mouseX, mouseY, guiLeft + infoBtnLeft, guiTop + infoBtnTop, guiLeft + infoBtnRight, guiTop + infoBtnBottom)) {
+			if(hoveringDisplayInfo) {
 				this.drawTexturedModalRect(infoBtnLeft, infoBtnTop, 44, 186, 14, 14);
 			}else {
 				this.drawTexturedModalRect(infoBtnLeft, infoBtnTop, 16, 186, 14, 14);
 			}
 		}
-		
+
+		this.mc.renderEngine.bindTexture(guiTextures);
 		if(!displayInfoPage) {
+			if(instantMode) {
+				this.drawTexturedModalRect(instantBtnLeft, instantBtnTop, 72, 186, 14, 14);
+			}else {
+				if(hoveringInstantMode) {
+					this.drawTexturedModalRect(instantBtnLeft, instantBtnTop, 86, 186, 14, 14);
+				}else {
+					this.drawTexturedModalRect(instantBtnLeft, instantBtnTop, 58, 186, 14, 14);
+				}
+			}
+
+			this.mc.renderEngine.bindTexture(guiTextures);
 			for(int i = 0 ; i < container.getWheelCount() ; i++) {
 				for(int j = 0 ; j < container.getDisplayWheelSize() ; j++) {
 					if(container.isWinning(i, j)) {
@@ -154,7 +167,7 @@ public class GuiSlotMachine extends GuiContainer{
 				}
 				
 				this.fontRenderer.drawStringWithShadow(valueCaption, 80, y + 5, MinaUtils.COLOR_WHITE);
-				this.fontRenderer.drawStringWithShadow(I18n.translateToLocalFormatted("gui.herb_guide.page", infoPage + 1, totalInfoPages), 95, 146, MinaUtils.COLOR_WHITE);//TODO: Use generic translation key
+				this.fontRenderer.drawStringWithShadow(I18n.translateToLocalFormatted("gui.generic.page", infoPage + 1, totalInfoPages), 95, 146, MinaUtils.COLOR_WHITE);
 				
 				RenderHelper.enableStandardItemLighting();
 				RenderHelper.enableGUIStandardItemLighting();
@@ -183,8 +196,21 @@ public class GuiSlotMachine extends GuiContainer{
 				infoPage = 0;
 			}
 		}
+		hoveringDisplayInfo = isHovering(mouseX, mouseY, guiLeft + infoBtnLeft, guiTop + infoBtnTop, guiLeft + infoBtnRight, guiTop + infoBtnBottom);
+		hoveringInstantMode = isHovering(mouseX, mouseY, guiLeft + instantBtnLeft, guiTop + instantBtnTop, guiLeft + instantBtnRight, guiTop + instantBtnBottom);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		if(hoveringDisplayInfo) {
+			this.drawHoveringText(I18n.translateToLocal("gui.slot_machine.info_page"), mouseX, mouseY);
+		}
+		if(hoveringInstantMode) {
+			if(instantMode) {
+				this.drawHoveringText(I18n.translateToLocal("gui.slot_machine.disable_instant_mode"), mouseX, mouseY);
+			}else {
+				this.drawHoveringText(I18n.translateToLocal("gui.slot_machine.enable_instant_mode"), mouseX, mouseY);
+			}
+		}
 
 		if(!displayInfoPage && isHovering(mouseX, mouseY, reportButton)) {
 			drawHoveringText(TextFormatting.RED + "Report in case the slot machine does not reward money when at least one row is a winning line", mouseX, mouseY);
@@ -227,9 +253,14 @@ public class GuiSlotMachine extends GuiContainer{
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		if(mouseButton == 0 && isHovering(mouseX, mouseY, guiLeft + infoBtnLeft, guiTop + infoBtnTop, guiLeft + infoBtnRight, guiTop + infoBtnBottom)) {
-			displayInfoPage = !displayInfoPage;
-			playClickSound();
+		if(mouseButton == 0) {
+			if(hoveringDisplayInfo) {
+				displayInfoPage = !displayInfoPage;
+				playClickSound();
+			}else if(hoveringInstantMode) {
+				instantMode = !instantMode;
+				playClickSound();
+			}
 		}
     }
 	
@@ -238,13 +269,13 @@ public class GuiSlotMachine extends GuiContainer{
 		if(guibutton.id < 100 && !displayInfoPage) {
 			switch(guibutton.id){
 			case 0:
-				container.spin(SpinMode.ONE);
+				container.spin(SpinMode.ONE, instantMode);
 				break;
 			case 1:
-				container.spin(SpinMode.THREE);
+				container.spin(SpinMode.THREE, instantMode);
 				break;
 			case 2:
-				container.spin(SpinMode.FIVE);
+				container.spin(SpinMode.FIVE, instantMode);
 				break;
 			case 99:
 				container.report();

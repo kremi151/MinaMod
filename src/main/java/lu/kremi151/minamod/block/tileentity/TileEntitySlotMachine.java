@@ -399,7 +399,7 @@ public class TileEntitySlotMachine extends TileEntity{
 		return (customCherryPriceFunction != null ? customCherryPriceFunction : defaultCherryRowPriceFunction).apply(cherryIconId, context).intValue();
 	}
 	
-	public void turnSlots(SpinMode mode, Random rand) {
+	public void turnSlots(SpinMode mode, Random rand, boolean instant) {
 		if(!world.isRemote) {
 			if(isTurning()) {
 				throw new IllegalStateException("Slot machine is already turning");
@@ -409,14 +409,21 @@ public class TileEntitySlotMachine extends TileEntity{
 				if(playing != null) {
 					if(withdrawCoins(playing, price)){
 						coinHandler.depositCoins(price);
-						isTurning = true;
-						notifyClientTurnState(true);
 						awardedForLastSpin = 0;
 						currentSession.currentWin -= price;
 						wheels.clearWinnings();
 						needs_sync = true;
 						this.currentTask = new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand));
-						this.currentTask.enqueueServerTask();
+						if(instant) {
+							while(this.currentTask != null && this.currentTask.canExecuteAgain()) {
+								this.currentTask.run(currentTask);//Simulate spinning
+							}
+						}else {
+							isTurning = true;
+							notifyClientTurnState(true);
+							this.currentTask.enqueueServerTask();
+						}
+						
 					}else {
 						TextHelper.sendTranslateableErrorMessage(playing, "gui.slot_machine.not_enough_coins");
 					}
@@ -495,122 +502,12 @@ public class TileEntitySlotMachine extends TileEntity{
 			turns--;
 			if(!cont) {
 				task.setCanExecuteAgain(false);
-				int win = evaluateResult();
-				if(win > 0) {
-					if(coinHandler.canPayCoins(win) && coinHandler.withdrawCoins(win)) {
-						rewardPlayer(win, true);
-					}else {
-						//TODO: error message
-					}
-				}
+				handleWinForPlayer(mode);
 				isTurning = false;
 				currentTask = null;
 				notifyClientTurnState(false);
 				needs_sync = true;
 			}
-		}
-		
-		private int checkHLine(int pos) {
-			int prev = -1;
-			int cherryId = -1;
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-				int a = wheels.getWheelValue(i, pos);
-				if(prev == -1 && !isCherryIcon(a)){
-					prev = a;
-				}else if(prev != a && !isCherryIcon(a)) {
-					return -1;
-				}else if(isCherryIcon(a)) {
-					if(cherryId == -1) {
-						cherryId = a;
-					}else if(cherryId != a){
-						return -1;
-					}
-				}
-			}
-			return (prev == -1 && cherryId != -1) ? -2 : prev;
-		}
-		
-		private int checkVLine(boolean invert) {
-			int prev = -1;
-			int cherryId = -1;
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
-				int a = wheels.getWheelValue(i, pos);
-				if(prev == -1 && !isCherryIcon(a)){
-					prev = a;
-				}else if(prev != a && !isCherryIcon(a)) {
-					return -1;
-				}else if(isCherryIcon(a)) {
-					if(cherryId == -1) {
-						cherryId = a;
-					}else if(cherryId != a){
-						return -1;
-					}
-				}
-			}
-			return (prev == -1 && cherryId != -1) ? -2 : prev;
-		}
-		
-		private void markEverythingWinning() {
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-				for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
-					wheels.setWheelWinning(i, j, true);
-				}
-			}
-		}
-		
-		private void markHLineWinning(int line) {
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-				wheels.setWheelWinning(i, line, true);
-			}
-		}
-		
-		private void markVLineWinning(boolean invert) {
-			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
-				int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
-				wheels.setWheelWinning(i, pos, true);
-			}
-		}
-		
-		private int evaluateResult() {
-			int win = 0;
-			
-			int eval = checkHLine(1);
-			if(eval == -2) {//Cherry
-				markEverythingWinning();
-				return evaluateCherryRowPrice(wheels.getWheelValue(0, 1));
-			}else if(eval >= 0) {
-				win += evaluateRowPrice(eval);
-				markHLineWinning(1);
-			}
-			
-			if(mode == SpinMode.THREE || mode == SpinMode.FIVE) {
-				for(int i = 0 ; i < 3 ; i += 2) {
-					eval = checkHLine(i);
-					if(eval == -2) {//Cherry
-						markEverythingWinning();
-						return evaluateCherryRowPrice(wheels.getWheelValue(0, i));
-					}else if(eval >= 0) {
-						win += evaluateRowPrice(eval);
-						markHLineWinning(i);
-					}
-				}
-			}
-			
-			if(mode == SpinMode.FIVE) {
-				for(int i = 0 ; i < 2 ; i ++) {
-					eval = checkVLine(i == 1);
-					if(eval == -2) {//Cherry
-						markEverythingWinning();
-						return evaluateCherryRowPrice(wheels.getWheelValue(1, 1));
-					}else if(eval >= 0) {
-						win += evaluateRowPrice(eval);
-						markVLineWinning(i == 1);
-					}
-				}
-			}
-			
-			return win;
 		}
 		
 		private void turnWheel(int wheelIdx) {
@@ -624,6 +521,120 @@ public class TileEntitySlotMachine extends TileEntity{
 			wheels.setWheelContent(wheelIdx, wheelPos, icon);
 		}
 		
+	}
+	
+	private void handleWinForPlayer(SpinMode mode) {
+		int win = evaluateResult(mode);
+		if(win > 0) {
+			if(coinHandler.canPayCoins(win) && coinHandler.withdrawCoins(win)) {
+				rewardPlayer(win, true);
+			}else {
+				//TODO: error message
+			}
+		}
+	}
+	
+	private int checkHLine(int pos) {
+		int prev = -1;
+		int cherryId = -1;
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			int a = wheels.getWheelValue(i, pos);
+			if(prev == -1 && !isCherryIcon(a)){
+				prev = a;
+			}else if(prev != a && !isCherryIcon(a)) {
+				return -1;
+			}else if(isCherryIcon(a)) {
+				if(cherryId == -1) {
+					cherryId = a;
+				}else if(cherryId != a){
+					return -1;
+				}
+			}
+		}
+		return (prev == -1 && cherryId != -1) ? -2 : prev;
+	}
+	
+	private int checkVLine(boolean invert) {
+		int prev = -1;
+		int cherryId = -1;
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
+			int a = wheels.getWheelValue(i, pos);
+			if(prev == -1 && !isCherryIcon(a)){
+				prev = a;
+			}else if(prev != a && !isCherryIcon(a)) {
+				return -1;
+			}else if(isCherryIcon(a)) {
+				if(cherryId == -1) {
+					cherryId = a;
+				}else if(cherryId != a){
+					return -1;
+				}
+			}
+		}
+		return (prev == -1 && cherryId != -1) ? -2 : prev;
+	}
+	
+	private void markEverythingWinning() {
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
+				wheels.setWheelWinning(i, j, true);
+			}
+		}
+	}
+	
+	private void markHLineWinning(int line) {
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			wheels.setWheelWinning(i, line, true);
+		}
+	}
+	
+	private void markVLineWinning(boolean invert) {
+		for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
+			int pos = invert ? (2 - Math.abs(i - 2)) : Math.abs(i - 2);
+			wheels.setWheelWinning(i, pos, true);
+		}
+	}
+	
+	private int evaluateResult(SpinMode mode) {
+		int win = 0;
+		
+		int eval = checkHLine(1);
+		if(eval == -2) {//Cherry
+			markEverythingWinning();
+			return evaluateCherryRowPrice(wheels.getWheelValue(0, 1));
+		}else if(eval >= 0) {
+			win += evaluateRowPrice(eval);
+			markHLineWinning(1);
+		}
+		
+		if(mode == SpinMode.THREE || mode == SpinMode.FIVE) {
+			for(int i = 0 ; i < 3 ; i += 2) {
+				eval = checkHLine(i);
+				if(eval == -2) {//Cherry
+					markEverythingWinning();
+					return evaluateCherryRowPrice(wheels.getWheelValue(0, i));
+				}else if(eval >= 0) {
+					win += evaluateRowPrice(eval);
+					markHLineWinning(i);
+				}
+			}
+		}
+		
+		if(mode == SpinMode.FIVE) {
+			for(int i = 0 ; i < 2 ; i ++) {
+				eval = checkVLine(i == 1);
+				if(eval == -2) {//Cherry
+					markEverythingWinning();
+					return evaluateCherryRowPrice(wheels.getWheelValue(1, 1));
+				}else if(eval >= 0) {
+					win += evaluateRowPrice(eval);
+					markVLineWinning(i == 1);
+				}
+			}
+		}
+		
+		return win;
 	}
 	
 	public static class Session{

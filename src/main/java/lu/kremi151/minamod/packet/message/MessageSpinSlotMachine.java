@@ -10,12 +10,14 @@ public class MessageSpinSlotMachine implements IMessage{
 	
 	private BlockPos pos;
 	private SpinMode mode;
+	private boolean instant;
 	
 	public MessageSpinSlotMachine() {}
 	
-	public MessageSpinSlotMachine(SpinMode mode, BlockPos pos) {
+	public MessageSpinSlotMachine(SpinMode mode, BlockPos pos, boolean instant) {
 		this.mode = mode;
 		this.pos = pos;
+		this.instant = instant;
 	}
 
 	@Override
@@ -26,6 +28,7 @@ public class MessageSpinSlotMachine implements IMessage{
 				ByteBufUtils.readVarInt(buf, 5),
 				ByteBufUtils.readVarInt(buf, 5)
 				);
+		instant = buf.readBoolean();
 	}
 
 	@Override
@@ -34,6 +37,7 @@ public class MessageSpinSlotMachine implements IMessage{
 		ByteBufUtils.writeVarInt(buf, pos.getX(), 5);
 		ByteBufUtils.writeVarInt(buf, pos.getY(), 5);
 		ByteBufUtils.writeVarInt(buf, pos.getZ(), 5);
+		buf.writeBoolean(instant);
 	}
 	
 	public BlockPos getPos() {
@@ -42,6 +46,10 @@ public class MessageSpinSlotMachine implements IMessage{
 	
 	public SpinMode getSpinMode(){
 		return mode;
+	}
+	
+	public boolean isInstant() {
+		return instant;
 	}
 
 }

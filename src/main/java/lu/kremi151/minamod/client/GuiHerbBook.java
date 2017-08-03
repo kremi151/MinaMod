@@ -197,7 +197,7 @@ public class GuiHerbBook extends GuiNoInventory{
 				}
 			}
 		}
-		this.fontRenderer.drawString(I18n.translateToLocalFormatted("gui.herb_guide.page", page_index + 1, pageCount()), 45, ySize - 28, MinaUtils.COLOR_BLACK);
+		this.fontRenderer.drawString(I18n.translateToLocalFormatted("gui.generic.page", page_index + 1, pageCount()), 45, ySize - 28, MinaUtils.COLOR_BLACK);
 
 		this.drawCenteredString(this.fontRenderer, "I", bookmAAAP.getX() + 10 - guiLeft, bookmAAAP.getY() + 6 - guiTop, MinaUtils.COLOR_GRAY);
 		this.drawCenteredString(this.fontRenderer, "II", bookmBBBP.getX() + 10 - guiLeft, bookmBBBP.getY() + 6 - guiTop, MinaUtils.COLOR_GRAY);

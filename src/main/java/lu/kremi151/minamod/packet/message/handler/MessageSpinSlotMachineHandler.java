@@ -15,7 +15,7 @@ public class MessageSpinSlotMachineHandler extends AbstractServerMessageHandler<
 	public IMessage handleServerMessage(EntityPlayer player, MessageSpinSlotMachine message, MessageContext ctx) {
 		TileEntitySlotMachine te = (TileEntitySlotMachine) player.world.getTileEntity(message.getPos());
 		try {
-			te.turnSlots(message.getSpinMode(), new Random(System.currentTimeMillis()));
+			te.turnSlots(message.getSpinMode(), new Random(System.currentTimeMillis()), message.isInstant());
 		}catch(IllegalStateException e) {}
 		return null;
 	}
