@@ -3,8 +3,11 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.util.Point;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.SoundEvents;
 
 public class GuiUtils {
 
@@ -45,5 +48,9 @@ public class GuiUtils {
 
 	    GL11.glDepthMask(true);
 	    GL11.glPopAttrib();
+	}
+
+	static void playClickSound(){
+		Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 	}
 }

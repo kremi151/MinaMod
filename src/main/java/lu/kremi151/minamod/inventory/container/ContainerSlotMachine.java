@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.util.ValueObserver;
+import lu.kremi151.minamod.util.slotmachine.Icon;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -18,6 +19,8 @@ public class ContainerSlotMachine extends BaseContainer{
 	protected static final int CMD_UPDATE_CREDITS_MOST = 4;
 	protected static final int CMD_UPDATE_SESSION_WIN_LEAST = 5;
 	protected static final int CMD_UPDATE_SESSION_WIN_MOST = 6;
+	protected static final int CMD_UPDATE_ICON_ROW_VALUE_LEAST = 7;
+	protected static final int CMD_UPDATE_ICON_ROW_VALUE_MOST = 8;
 	
 	private final EntityPlayer player;
 	protected final TileEntitySlotMachine slotMachine;
@@ -92,6 +95,14 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getSessionWin();
 	}
 	
+	public int getIconCount() {
+		return slotMachine.getIconCount();
+	}
+	
+	public Icon getIcon(int i) {
+		return slotMachine.getIcon(i);
+	}
+	
 	public void report() {}//TODO: Remove when out of beta
 	
 	@Override
@@ -99,7 +110,6 @@ public class ContainerSlotMachine extends BaseContainer{
         super.detectAndSendChanges();
         
     	if(firstSync || slotMachine.needsSync()) {
-    		firstSync = false;
     		
             boolean syncCredits = observerCredits.hasChangedSinceLastCheck();
             boolean syncSessionWin = observerSessionWin.hasChangedSinceLastCheck();
@@ -138,8 +148,23 @@ public class ContainerSlotMachine extends BaseContainer{
         			icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_LEAST, (slotMachine.getSessionWin() >> 16) & 0xFFFF);
             		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_MOST, slotMachine.getSessionWin() & 0xFFFF);
         		}
+        		
+        		if(firstSync) {
+        			for(int j = 0 ; j < slotMachine.getIconCount() ; j++) {
+        				Icon icon = slotMachine.getIcon(j);
+        				int rowValue;
+        				if(icon.cherry) {
+        					rowValue = slotMachine.evaluateCherryRowPrice(j);
+        				}else {
+        					rowValue = slotMachine.evaluateRowPrice(j);
+        				}
+            			icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_LEAST, (rowValue >> 16) & 0xFFFF);
+                		icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_MOST, rowValue & 0xFFFF);
+        			}
+        		}
             }
     		slotMachine.notifySynced();
+    		firstSync = false;
     	}
 	}
 	

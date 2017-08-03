@@ -149,6 +149,10 @@ public class TileEntitySlotMachine extends TileEntity{
 		return this.icons[i].icon;
 	}
 	
+	public Icon getIcon(int i) {
+		return this.icons[i];
+	}
+	
 	public int getWheelValue(int wheelIdx, int wheelPos) {
 		return this.wheels.getWheelValue(wheelIdx, wheelPos);
 	}
@@ -387,6 +391,14 @@ public class TileEntitySlotMachine extends TileEntity{
 		this.world.notifyBlockUpdate(pos, state, state, 3);
 	}
 	
+	public int evaluateRowPrice(int iconId) {
+		return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId, context).intValue();
+	}
+	
+	public int evaluateCherryRowPrice(int cherryIconId) {
+		return (customCherryPriceFunction != null ? customCherryPriceFunction : defaultCherryRowPriceFunction).apply(cherryIconId, context).intValue();
+	}
+	
 	public void turnSlots(SpinMode mode, Random rand) {
 		if(!world.isRemote) {
 			if(isTurning()) {
@@ -539,14 +551,6 @@ public class TileEntitySlotMachine extends TileEntity{
 			return (prev == -1 && cherryId != -1) ? -2 : prev;
 		}
 		
-		private int rowPrice(int iconId) {
-			return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId, context).intValue();
-		}
-		
-		private int cherryRowPrice(int cherryIconId) {
-			return (customCherryPriceFunction != null ? customCherryPriceFunction : defaultCherryRowPriceFunction).apply(cherryIconId, context).intValue();
-		}
-		
 		private void markEverythingWinning() {
 			for(int i = 0 ; i < wheels.getWheelCount() ; i++) {
 				for(int j = 0 ; j < wheels.getDisplayWheelSize() ; j++) {
@@ -574,9 +578,9 @@ public class TileEntitySlotMachine extends TileEntity{
 			int eval = checkHLine(1);
 			if(eval == -2) {//Cherry
 				markEverythingWinning();
-				return cherryRowPrice(wheels.getWheelValue(0, 1));
+				return evaluateCherryRowPrice(wheels.getWheelValue(0, 1));
 			}else if(eval >= 0) {
-				win += rowPrice(eval);
+				win += evaluateRowPrice(eval);
 				markHLineWinning(1);
 			}
 			
@@ -585,9 +589,9 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkHLine(i);
 					if(eval == -2) {//Cherry
 						markEverythingWinning();
-						return cherryRowPrice(wheels.getWheelValue(0, i));
+						return evaluateCherryRowPrice(wheels.getWheelValue(0, i));
 					}else if(eval >= 0) {
-						win += rowPrice(eval);
+						win += evaluateRowPrice(eval);
 						markHLineWinning(i);
 					}
 				}
@@ -598,9 +602,9 @@ public class TileEntitySlotMachine extends TileEntity{
 					eval = checkVLine(i == 1);
 					if(eval == -2) {//Cherry
 						markEverythingWinning();
-						return cherryRowPrice(wheels.getWheelValue(1, 1));
+						return evaluateCherryRowPrice(wheels.getWheelValue(1, 1));
 					}else if(eval >= 0) {
-						win += rowPrice(eval);
+						win += evaluateRowPrice(eval);
 						markVLineWinning(i == 1);
 					}
 				}

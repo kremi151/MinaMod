@@ -64,10 +64,10 @@ public class GuiNoInventory extends GuiScreen{
         return false;
     }
 	
-	protected final void playClickSound(){
-		Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-	}
-	
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {}
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {}
+	
+	protected final void playClickSound() {
+		GuiUtils.playClickSound();
+	}
 }

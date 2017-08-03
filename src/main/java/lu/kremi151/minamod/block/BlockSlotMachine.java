@@ -114,6 +114,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
         			.setPriceForSpinMode(SpinMode.THREE, 0)
         			.setPriceForSpinMode(SpinMode.FIVE, 0)
         			.setRowPriceFunction(new SerializableConstant(0.0))
+        			.setCherryRowPriceFunction(new SerializableConstant(0.0))
         			.setCustomName("Free Spins")
         			.buildItemStack();
         }

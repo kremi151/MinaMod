@@ -17,10 +17,14 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	private boolean isTurning = false;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private final int prices[] = new int[3];
-	private int credits = 0, sessionWin = 0, creditsBuffer = 0, sessionWinBuffer = 0;
+	private int credits = 0, sessionWin = 0, creditsBuffer = 0, sessionWinBuffer = 0, rowValueBuffer = 0, rowValueIdx = 0;
+	
+	private final int iconRowValues[];
 
 	public ContainerSlotMachineClient(EntityPlayer player, TileEntitySlotMachine slotMachine) {
 		super(player, slotMachine);
+		
+		this.iconRowValues = new int[slotMachine.getIconCount()];
 	}
 	
 	@Override
@@ -76,6 +80,10 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 		return wheels.isWinning(wheelIdx, wheelPos);
 	}
 	
+	public int getIconRowValue(int i) {
+		return iconRowValues[i];
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
@@ -105,6 +113,12 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			break;
 		case CMD_UPDATE_SESSION_WIN_MOST:
 			sessionWin = sessionWinBuffer | (data & 0xFFFF);
+			break;
+		case CMD_UPDATE_ICON_ROW_VALUE_LEAST:
+			rowValueBuffer = (data & 0xFFFF) << 16;
+			break;
+		case CMD_UPDATE_ICON_ROW_VALUE_MOST:
+			iconRowValues[rowValueIdx++] = rowValueBuffer | (data & 0xFFFF);
 			break;
 		}
     }
