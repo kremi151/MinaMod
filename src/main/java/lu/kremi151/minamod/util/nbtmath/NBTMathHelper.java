@@ -43,30 +43,20 @@ public class NBTMathHelper {
 	}
 
 	public NBTMathHelper() {//TODO
-		HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
-		registerDefaultMathFunctions(mathFunctionDeserializers);
-
-		HashMap<String, INBTLogicDeserializer<? extends SerializableLogic>> mathLogicDeserializers = new HashMap<>();
-		registerDefaultMathLogics(mathLogicDeserializers);
-
-		HashMap<Character, SerializableOperator> operatorDeserializers = new HashMap<>();
-		registerDefaultOperators(operatorDeserializers);
-		
-		this.mathFunctionDeserializers = Collections.unmodifiableMap(mathFunctionDeserializers);
-		this.mathLogicDeserializers = Collections.unmodifiableMap(mathLogicDeserializers);
-		this.operatorDeserializers = Collections.unmodifiableMap(operatorDeserializers);
+		this(registerDefaultMathFunctions(new HashMap<>()), registerDefaultMathLogics(new HashMap<>()), registerDefaultOperators(new HashMap<>()));
 	}
 	
-	private static void registerDefaultMathFunctions(Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> map) {
+	private static Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> registerDefaultMathFunctions(Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> map) {
 		map.put("abs", args -> new SerializableFunction.Absolute(args[0]));
 		map.put("neg", args -> new SerializableFunction.Negate(args[0]));
 		map.put("max", args -> new SerializableFunction.Max(args));
 		map.put("min", args -> new SerializableFunction.Min(args));
 		map.put("sum", args -> new SerializableFunction.Sum(args));
 		map.put("product", args -> new SerializableFunction.Product(args));
+		return map;
 	}
 	
-	private static void registerDefaultMathLogics(Map<String, INBTLogicDeserializer<? extends SerializableLogic>> map) {
+	private static Map<String, INBTLogicDeserializer<? extends SerializableLogic>> registerDefaultMathLogics(Map<String, INBTLogicDeserializer<? extends SerializableLogic>> map) {
 		map.put("and", (a, b, c) -> new SerializableLogic.And(c.parseLogic(a), c.parseLogic(b)));
 		map.put("nand", (a, b, c) -> new SerializableLogic.NAnd(c.parseLogic(a), c.parseLogic(b)));
 		map.put("or", (a, b, c) -> new SerializableLogic.Or(c.parseLogic(a), c.parseLogic(b)));
@@ -79,14 +69,16 @@ public class NBTMathHelper {
 		map.put("biggereq", (a, b, c) -> new SerializableLogic.BiggerOrEqualThan(c.parse(a), c.parse(b)));
 		map.put("lower", (a, b, c) -> new SerializableLogic.LowerThan(c.parse(a), c.parse(b)));
 		map.put("lowereq", (a, b, c) -> new SerializableLogic.LowerOrEqualThan(c.parse(a), c.parse(b)));
+		return map;
 	}
 	
-	private static void registerDefaultOperators(Map<Character, SerializableOperator> map) {
+	private static Map<Character, SerializableOperator> registerDefaultOperators(Map<Character, SerializableOperator> map) {
 		map.put('+', ADDITION);
 		map.put('-', DIFFERENCE);
 		map.put('*', MULTIPLICATION);
 		map.put('/', DIVISION);
 		map.put('^', POWER);
+		return map;
 	}
 	
 	/**
