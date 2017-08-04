@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.block;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
@@ -32,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockCampbench extends Block{
 	
 	public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 3);
-	public static final PropertyEnum WOOD = PropertyEnum.create("wood", BlockPlanks.EnumType.class, BlockPlanks.EnumType.ACACIA, BlockPlanks.EnumType.BIRCH, BlockPlanks.EnumType.DARK_OAK, BlockPlanks.EnumType.SPRUCE);
+	public static final PropertyEnum<BlockPlanks.EnumType> WOOD = PropertyEnum.create("wood", BlockPlanks.EnumType.class, BlockPlanks.EnumType.ACACIA, BlockPlanks.EnumType.BIRCH, BlockPlanks.EnumType.DARK_OAK, BlockPlanks.EnumType.SPRUCE);
 
 	protected static final AxisAlignedBB rot_norm_aabb = new AxisAlignedBB(0.125d, 0d, 0.375d, 0.875d, 0.3125d, 0.625d);
 	protected static final AxisAlignedBB rot_orth_aabb = new AxisAlignedBB(0.375d, 0d, 0.125d, 0.625d, 0.3125d, 0.875d);
@@ -54,6 +56,17 @@ public class BlockCampbench extends Block{
     }
 	
 	@Override
+	public int damageDropped(IBlockState state)
+    {
+        switch(state.getValue(WOOD)) {
+        case BIRCH: return 1;
+        case DARK_OAK: return 2;
+        case SPRUCE: return 3;
+        default: return 0;
+        }
+    }
+	
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
 		switch(state.getValue(ROTATION)){
 		case 1:
@@ -62,6 +75,13 @@ public class BlockCampbench extends Block{
 		default: return rot_norm_aabb;
 		}
 	}
+	
+    @Nullable
+	@Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+    {
+        return NULL_AABB;
+    }
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
@@ -73,6 +93,12 @@ public class BlockCampbench extends Block{
 	public boolean isOpaqueCube(IBlockState ibs){
 		return false;
 	}
+
+	@Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 	
     @Override
     public IBlockState getStateFromMeta(int meta)
