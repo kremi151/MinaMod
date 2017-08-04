@@ -2,14 +2,18 @@ package lu.kremi151.minamod.util.nbtmath;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.UnaryOperator;
 
 import javax.script.ScriptException;
 
 import lu.kremi151.minamod.util.nbtmath.serialization.INBTFunctionDeserializer;
+import lu.kremi151.minamod.util.nbtmath.serialization.INBTLogicDeserializer;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.nbtmath.util.ILogical;
+import lu.kremi151.minamod.util.nbtmath.util.ParserContext;
 import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
@@ -24,32 +28,65 @@ import net.minecraft.nbt.NBTTagString;
  */
 public class NBTMathHelper {
 	
-	private static ImmutableNBTMathHelper defaultInstance = null;
+	private static NBTMathHelper defaultInstance = null;
+
+	private final Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers;
+	private final Map<String, INBTLogicDeserializer<? extends SerializableLogic>> mathLogicDeserializers;
+	private final Map<Character, SerializableOperator> operatorDeserializers;
 	
-	private final HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
+	private NBTMathHelper(Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers,
+			Map<String, INBTLogicDeserializer<? extends SerializableLogic>> mathLogicDeserializers,
+			Map<Character, SerializableOperator> operatorDeserializers) {
+		this.mathFunctionDeserializers = Collections.unmodifiableMap(mathFunctionDeserializers);
+		this.mathLogicDeserializers = Collections.unmodifiableMap(mathLogicDeserializers);
+		this.operatorDeserializers = Collections.unmodifiableMap(operatorDeserializers);
+	}
 
 	public NBTMathHelper() {//TODO
-		mathFunctionDeserializers.put("abs", args -> new SerializableFunction.Absolute(args[0]));
-		mathFunctionDeserializers.put("neg", args -> new SerializableFunction.Negate(args[0]));
-		mathFunctionDeserializers.put("max", args -> new SerializableFunction.Max(args));
-		mathFunctionDeserializers.put("min", args -> new SerializableFunction.Min(args));
-		mathFunctionDeserializers.put("sum", args -> new SerializableFunction.Sum(args));
-		mathFunctionDeserializers.put("product", args -> new SerializableFunction.Product(args));
+		HashMap<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
+		registerDefaultMathFunctions(mathFunctionDeserializers);
+
+		HashMap<String, INBTLogicDeserializer<? extends SerializableLogic>> mathLogicDeserializers = new HashMap<>();
+		registerDefaultMathLogics(mathLogicDeserializers);
+
+		HashMap<Character, SerializableOperator> operatorDeserializers = new HashMap<>();
+		registerDefaultOperators(operatorDeserializers);
+		
+		this.mathFunctionDeserializers = Collections.unmodifiableMap(mathFunctionDeserializers);
+		this.mathLogicDeserializers = Collections.unmodifiableMap(mathLogicDeserializers);
+		this.operatorDeserializers = Collections.unmodifiableMap(operatorDeserializers);
 	}
 	
-	/**
-	 * Registers a new function to be available for this NBT math instance
-	 * @param functionName The name of the function. Should be lowercase and not having any whitespaces.
-	 * @param mapper The functional interface which creates a new instance of the function given by a variable amount of runtime arguments.
-	 * @return true if no other mapper for the same function name has been registered. Otherwise, false is returned.
-	 */
-	public boolean registerFunctionMapper(String functionName, INBTFunctionDeserializer<? extends SerializableFunction> mapper) {
-		if(!mathFunctionDeserializers.containsKey(functionName)) {
-			mathFunctionDeserializers.put(functionName, mapper);
-			return true;
-		}else {
-			return false;
-		}
+	private static void registerDefaultMathFunctions(Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> map) {
+		map.put("abs", args -> new SerializableFunction.Absolute(args[0]));
+		map.put("neg", args -> new SerializableFunction.Negate(args[0]));
+		map.put("max", args -> new SerializableFunction.Max(args));
+		map.put("min", args -> new SerializableFunction.Min(args));
+		map.put("sum", args -> new SerializableFunction.Sum(args));
+		map.put("product", args -> new SerializableFunction.Product(args));
+	}
+	
+	private static void registerDefaultMathLogics(Map<String, INBTLogicDeserializer<? extends SerializableLogic>> map) {
+		map.put("and", (a, b, c) -> new SerializableLogic.And(c.parseLogic(a), c.parseLogic(b)));
+		map.put("nand", (a, b, c) -> new SerializableLogic.NAnd(c.parseLogic(a), c.parseLogic(b)));
+		map.put("or", (a, b, c) -> new SerializableLogic.Or(c.parseLogic(a), c.parseLogic(b)));
+		map.put("nor", (a, b, c) -> new SerializableLogic.NOr(c.parseLogic(a), c.parseLogic(b)));
+		map.put("xor", (a, b, c) -> new SerializableLogic.XOr(c.parseLogic(a), c.parseLogic(b)));
+		map.put("xnor", (a, b, c) -> new SerializableLogic.XNOr(c.parseLogic(a), c.parseLogic(b)));
+		map.put("not", (a, b, c) -> new SerializableLogic.Not(c.parseLogic(a)));
+		map.put("equals", (a, b, c) -> new SerializableLogic.Equals(c.parse(a), c.parse(b)));
+		map.put("bigger", (a, b, c) -> new SerializableLogic.BiggerThan(c.parse(a), c.parse(b)));
+		map.put("biggereq", (a, b, c) -> new SerializableLogic.BiggerOrEqualThan(c.parse(a), c.parse(b)));
+		map.put("lower", (a, b, c) -> new SerializableLogic.LowerThan(c.parse(a), c.parse(b)));
+		map.put("lowereq", (a, b, c) -> new SerializableLogic.LowerOrEqualThan(c.parse(a), c.parse(b)));
+	}
+	
+	private static void registerDefaultOperators(Map<Character, SerializableOperator> map) {
+		map.put('+', ADDITION);
+		map.put('-', DIFFERENCE);
+		map.put('*', MULTIPLICATION);
+		map.put('/', DIVISION);
+		map.put('^', POWER);
 	}
 	
 	/**
@@ -81,22 +118,13 @@ public class NBTMathHelper {
 			throw new MathParseException("Invalid operation format");
 		}
 		
-		final SerializableFunctionBase parsedA, parsedB;
-		parsedA = parseFunction(a, context);
-		parsedB = parseFunction(b, context);
-		
-		switch(operation.charAt(0)) {
-		case '+':
-			return new SerializableBinaryOperation(parsedA, parsedB, ADDITION);
-		case '-':
-			return new SerializableBinaryOperation(parsedA, parsedB, DIFFERENCE);
-		case '*':
-			return new SerializableBinaryOperation(parsedA, parsedB, MULTIPLICATION);
-		case '/':
-			return new SerializableBinaryOperation(parsedA, parsedB, DIVISION);
-		case '^':
-			return new SerializableBinaryOperation(parsedA, parsedB, POWER);
-		default:
+		SerializableOperator operator = operatorDeserializers.get(operation.charAt(0));
+		if(operator != null) {
+			final SerializableFunctionBase parsedA, parsedB;
+			parsedA = parseFunction(a, context);
+			parsedB = parseFunction(b, context);
+			return new SerializableBinaryOperation(parsedA, parsedB, operator);
+		}else {
 			throw new MathParseException("Unknown operation: " + operation);
 		}
 	}
@@ -176,32 +204,17 @@ public class NBTMathHelper {
 	 */
 	private SerializableLogic parseLogic(NBTTagCompound nbt, Context context) throws MathParseException{
 		String logic = nbt.getString("Logic");
-		if(logic.equalsIgnoreCase("and")) {
-			return new SerializableLogic.And(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("nand")) {
-			return new SerializableLogic.NAnd(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("or")) {
-			return new SerializableLogic.Or(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("nor")) {
-			return new SerializableLogic.NOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("xor")) {
-			return new SerializableLogic.XOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("xnor")) {
-			return new SerializableLogic.XNOr(parseLogic(nbt.getTag("A"), context), parseLogic(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("not")) {
-			return new SerializableLogic.Not(parseLogic(nbt.getTag("A"), context));
-		}else if(logic.equalsIgnoreCase("equals")) {
-			return new SerializableLogic.Equals(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("bigger")) {
-			return new SerializableLogic.BiggerThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("biggereq")) {
-			return new SerializableLogic.BiggerOrEqualThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("lower")) {
-			return new SerializableLogic.LowerThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
-		}else if(logic.equalsIgnoreCase("lowereq")) {
-			return new SerializableLogic.LowerOrEqualThan(parseFunction(nbt.getTag("A"), context), parseFunction(nbt.getTag("B"), context));
+		if(nbt.hasKey("A")) {
+			NBTBase _a = nbt.getTag("A");
+			NBTBase _b = nbt.getTag("B");
+			INBTLogicDeserializer<? extends SerializableLogic> deserializer = mathLogicDeserializers.get(logic);
+			if(deserializer != null) {
+				return deserializer.deserialize(_a, _b, parserContext);
+			}else {
+				throw new MathParseException("Unknown logical function: " + logic);
+			}
 		}else {
-			throw new MathParseException("Unknown logical function: " + logic);
+			throw new MathParseException("The logical structure is missing an \"A\" parameter: " + nbt);
 		}
 	}
 	
@@ -310,6 +323,29 @@ public class NBTMathHelper {
 		}
 	}
 	
+	private ParserContext parserContext = new ParserContext() {
+
+		@Override
+		public ILogical parseLogic(NBTBase nbt) throws MathParseException {
+			return NBTMathHelper.this.parseLogic(nbt, Context.DEFAULT);
+		}
+
+		@Override
+		public SerializableConditional parseConditional(NBTBase nbt) throws MathParseException {
+			if(nbt instanceof NBTTagCompound) {
+				return NBTMathHelper.this.parseConditional((NBTTagCompound) nbt);
+			}else {
+				throw new MathParseException("The tag should be a tag compound");
+			}
+		}
+
+		@Override
+		public SerializableFunctionBase<? extends NBTBase> parse(NBTBase nbt) throws MathParseException {
+			return NBTMathHelper.this.parseFunction(nbt);
+		}
+		
+	};
+	
 	public static final SerializableOperator ADDITION = new SerializableOperator('+') {
 		@Override
 		public Number apply(Number a, Number b) {
@@ -347,16 +383,68 @@ public class NBTMathHelper {
 	
 	public static NBTMathHelper getDefaultInstance() {
 		if(defaultInstance == null) {
-			defaultInstance = new ImmutableNBTMathHelper();
+			defaultInstance = new NBTMathHelper();
 		}
 		return defaultInstance;
 	}
 	
-	private static class ImmutableNBTMathHelper extends NBTMathHelper{
+	public static class Builder{
+		private final Map<String, INBTFunctionDeserializer<? extends SerializableFunction>> mathFunctionDeserializers = new HashMap<>();
+		private final Map<String, INBTLogicDeserializer<? extends SerializableLogic>> mathLogicDeserializers = new HashMap<>();
+		private final Map<Character, SerializableOperator> operatorDeserializers = new HashMap<>();
 		
-		@Override
-		public boolean registerFunctionMapper(String functionName, INBTFunctionDeserializer<? extends SerializableFunction> mapper) {
-			throw new UnsupportedOperationException("Modifications of the default instance of NBTMathHelper are not allowed. Please create your own, separate instance for this.");
+		public Builder(boolean initDefaults) {
+			if(initDefaults) {
+				registerDefaultMathFunctions(mathFunctionDeserializers);
+				registerDefaultMathLogics(mathLogicDeserializers);
+				registerDefaultOperators(operatorDeserializers);
+			}
+		}
+		
+		public Builder clearFunctions() {
+			mathFunctionDeserializers.clear();
+			return this;
+		}
+		
+		public Builder clearLogics() {
+			mathLogicDeserializers.clear();
+			return this;
+		}
+		
+		public Builder clearOperators() {
+			operatorDeserializers.clear();
+			return this;
+		}
+		
+		public Builder registerFunctionDeserializer(String name, INBTFunctionDeserializer<? extends SerializableFunction> deserializer) {
+			if(!mathFunctionDeserializers.containsKey(name)) {
+				mathFunctionDeserializers.put(name, deserializer);
+			}else {
+				throw new IllegalArgumentException("A deserializer for the function named " + name + " is already registered");
+			}
+			return this;
+		}
+		
+		public Builder registerLogicDeserializer(String name, INBTLogicDeserializer<? extends SerializableLogic> deserializer) {
+			if(!mathLogicDeserializers.containsKey(name)) {
+				mathLogicDeserializers.put(name, deserializer);
+			}else {
+				throw new IllegalArgumentException("A deserializer for the logical function named " + name + " is already registered");
+			}
+			return this;
+		}
+		
+		public Builder registerOperator(char id, SerializableOperator operator) {
+			if(!operatorDeserializers.containsKey(id)) {
+				operatorDeserializers.put(id, operator);
+			}else {
+				throw new IllegalArgumentException("An operator " + id + " is already registered");
+			}
+			return this;
+		}
+		
+		public NBTMathHelper build() {
+			return new NBTMathHelper(mathFunctionDeserializers, mathLogicDeserializers, operatorDeserializers);
 		}
 	}
 }
