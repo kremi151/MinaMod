@@ -64,6 +64,18 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 		}
 	}
 	
+	private NonNullList<ItemStack> listUnitariesSorted(IItemHandler handler, ToIntFunction<ItemStack> priorityFunction){
+		NonNullList<ItemStack> list = listValuablesSorted(handler, priorityFunction);
+		list.sort((a, b) -> {
+			if(a.getItem() instanceof IUnitEconomyValuable && b.getItem() instanceof IUnitEconomyValuable) {
+				return ((IUnitEconomyValuable)b.getItem()).getUnitEconomyValue(b) - ((IUnitEconomyValuable)a.getItem()).getUnitEconomyValue(a);
+			}else {
+				return 0;
+			}
+		});
+		return list;
+	}
+	
 	private NonNullList<ItemStack> listValuablesSorted(IItemHandler handler, ToIntFunction<ItemStack> priorityFunction){
 		NonNullList<ItemStack> list = listValuables(handler);
 		list.sort((a,b) -> {
@@ -88,7 +100,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 		if(provider.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
 			IItemHandler handler = provider.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if(countCoins(handler) >= amount){
-				NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::withdrawItemPriority);
+				NonNullList<ItemStack> valuables = listUnitariesSorted(handler, this::withdrawItemPriority);
 				boolean changed = false;
 				while(valuables.size() > 0) {
 					changed = false;
@@ -117,7 +129,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 	}
 	
 	private boolean withdrawCoinsWithChange(IItemHandler handler, int amount, boolean simulate) {
-		NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::withdrawItemPriority);
+		NonNullList<ItemStack> valuables = listUnitariesSorted(handler, this::withdrawItemPriority);
 		Iterator<ItemStack> it = valuables.iterator();
 		while(it.hasNext()) {
 			ItemStack stack = it.next();
@@ -152,7 +164,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 	public boolean depositCoins(int amount, boolean simulate) {
 		if(provider.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
 			IItemHandler handler = provider.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::depositItemPriority);
+			NonNullList<ItemStack> valuables = listUnitariesSorted(handler, this::depositItemPriority);
 			/*boolean changed = false;
 			while(valuables.size() > 0) {
 				changed = false;*/
