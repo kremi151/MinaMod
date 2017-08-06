@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.capabilities.coinhandler;
 
 import java.util.Iterator;
+import java.util.function.ToIntFunction;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.interfaces.IEconomyValuable;
@@ -41,18 +42,32 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 		return getAmountCoins() >= amount;
 	}
 	
-	private NonNullList<ItemStack> listValuablesSorted(IItemHandler handler){
+	private int withdrawItemPriority(ItemStack stack) {
+		IEconomyValuable ev = (IEconomyValuable) stack.getItem();
+		/*if(ev.isVoucher(stack)) {
+			return 2;
+		}else */if(ev instanceof IUnitEconomyValuable) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	private int depositItemPriority(ItemStack stack) {
+		IEconomyValuable ev = (IEconomyValuable) stack.getItem();
+		/*if(ev.isVoucher(stack)) {
+			return 0;
+		}else */if(ev instanceof IUnitEconomyValuable) {
+			return 1;
+		}else {
+			return 2;
+		}
+	}
+	
+	private NonNullList<ItemStack> listValuablesSorted(IItemHandler handler, ToIntFunction<ItemStack> priorityFunction){
 		NonNullList<ItemStack> list = listValuables(handler);
 		list.sort((a,b) -> {
-			if(!(a.getItem() instanceof IUnitEconomyValuable)) {
-				return 1;
-			}else if(!(b.getItem() instanceof IUnitEconomyValuable)) {
-				return -1;
-			}else if(!(a.getItem() instanceof IUnitEconomyValuable || b.getItem() instanceof IUnitEconomyValuable)) {
-				return 0;
-			}else {
-				return ((IUnitEconomyValuable)b.getItem()).getUnitEconomyValue(b) - ((IUnitEconomyValuable)a.getItem()).getUnitEconomyValue(a);
-			}
+			return priorityFunction.applyAsInt(b) - priorityFunction.applyAsInt(a);
 		});
 		return list;
 	}
@@ -73,7 +88,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 		if(provider.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
 			IItemHandler handler = provider.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if(countCoins(handler) >= amount){
-				NonNullList<ItemStack> valuables = listValuablesSorted(handler);
+				NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::withdrawItemPriority);
 				boolean changed = false;
 				while(valuables.size() > 0) {
 					changed = false;
@@ -102,7 +117,7 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 	}
 	
 	private boolean withdrawCoinsWithChange(IItemHandler handler, int amount, boolean simulate) {
-		NonNullList<ItemStack> valuables = listValuablesSorted(handler);
+		NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::withdrawItemPriority);
 		Iterator<ItemStack> it = valuables.iterator();
 		while(it.hasNext()) {
 			ItemStack stack = it.next();
@@ -137,10 +152,10 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 	public boolean depositCoins(int amount, boolean simulate) {
 		if(provider.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
 			IItemHandler handler = provider.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			NonNullList<ItemStack> valuables = listValuables(handler);
-			boolean changed = false;
+			NonNullList<ItemStack> valuables = listValuablesSorted(handler, this::depositItemPriority);
+			/*boolean changed = false;
 			while(valuables.size() > 0) {
-				changed = false;
+				changed = false;*/
 				Iterator<ItemStack> it = valuables.iterator();
 				while(it.hasNext()) {
 					ItemStack stack = it.next();
@@ -152,13 +167,13 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 						return true;
 					}else if(oldStackValue < res.newValue) {
 						it.remove();
-						changed = true;
+						//changed = true;
 					}
 				}
-				if(!changed) {
+				/*if(!changed) {
 					return false;
 				}
-			}
+			}*/
 			if(amount > 0 && !simulate) {
 				giveCoins(amount);
 			}

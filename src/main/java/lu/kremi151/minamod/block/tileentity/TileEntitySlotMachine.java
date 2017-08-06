@@ -200,7 +200,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	}
 	
 	private void rewardPlayer(int coins, boolean won) {
-		EntityPlayer playing = getPlaying();
+		EntityPlayer playing = getPlaying();//
 		if(economyHandler.rewardPlayer(playing, coins)) {
 			TextHelper.sendTranslateableChatMessage(playing, TextFormatting.GREEN, won?"gui.slot_machine.won_coins":"gui.slot_machine.found_coins", coins);
 			currentSession.currentWin += coins;

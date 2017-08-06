@@ -88,6 +88,9 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
     public void updateProgressBar(int id, int data)
     {
 		switch(id) {
+		case 999:
+			rowValueIdx = 0;
+			break;
 		case CMD_UPDATE_WHEEL:
 			int wheelIdx = unpackWheelIndex(data);
 			int wheelPos = unpackWheelPosition(data);

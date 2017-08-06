@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.inventory.container;
 
+import static lu.kremi151.minamod.inventory.container.ContainerUtils.transmitInteger;
+
 import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
@@ -116,6 +118,7 @@ public class ContainerSlotMachine extends BaseContainer{
     		for (int i = 0; i < this.listeners.size(); ++i)
             {
         		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
+        		icrafting.sendWindowProperty(this, 999, 0);
                 
         		for(int x = 0 ; x < slotMachine.getWheelCount() ; x++) {
         			for(int y = 0 ; y < slotMachine.getDisplayWheelSize() ; y++) {
@@ -138,23 +141,26 @@ public class ContainerSlotMachine extends BaseContainer{
         		}
         		
         		if(syncCredits) {
-        			icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_LEAST, (slotMachine.getPlayingCredits() >> 16) & 0xFFFF);
-            		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_MOST, slotMachine.getPlayingCredits() & 0xFFFF);
+        			transmitInteger(this, icrafting, CMD_UPDATE_CREDITS_LEAST, slotMachine.getPlayingCredits());
+        			/*icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_LEAST, (slotMachine.getPlayingCredits() >> 16) & 0xFFFF);
+            		icrafting.sendWindowProperty(this, CMD_UPDATE_CREDITS_MOST, slotMachine.getPlayingCredits() & 0xFFFF);*/
         		}
         		
         		if(syncSessionWin) {
-        			icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_LEAST, (slotMachine.getSessionWin() >> 16) & 0xFFFF);
-            		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_MOST, slotMachine.getSessionWin() & 0xFFFF);
+        			transmitInteger(this, icrafting, CMD_UPDATE_SESSION_WIN_LEAST, slotMachine.getSessionWin());
+        			/*icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_LEAST, (slotMachine.getSessionWin() >> 16) & 0xFFFF);
+            		icrafting.sendWindowProperty(this, CMD_UPDATE_SESSION_WIN_MOST, slotMachine.getSessionWin() & 0xFFFF);*/
         		}
         		
-        		if(firstSync) {
+        		//if(firstSync) {
         			for(int j = 0 ; j < slotMachine.getIconCount() ; j++) {
         				Icon icon = slotMachine.getIcon(j);
         				int rowValue  = slotMachine.evaluateRowPrice(j);
-            			icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_LEAST, (rowValue >> 16) & 0xFFFF);
-                		icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_MOST, rowValue & 0xFFFF);
+            			transmitInteger(this, icrafting, CMD_UPDATE_ICON_ROW_VALUE_LEAST, rowValue);
+            			/*icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_LEAST, (rowValue >> 16) & 0xFFFF);
+                		icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_MOST, rowValue & 0xFFFF);*/
         			}
-        		}
+        		//}
             }
     		slotMachine.notifySynced();
     		firstSync = false;
