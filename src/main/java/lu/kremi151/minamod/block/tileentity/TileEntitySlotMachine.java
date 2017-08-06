@@ -26,9 +26,8 @@ import lu.kremi151.minamod.util.nbtmath.SerializableConditional;
 import lu.kremi151.minamod.util.nbtmath.SerializableConstant;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
-import lu.kremi151.minamod.util.nbtmath.SerializableLogic;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedLogical;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedLogical;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
 import lu.kremi151.minamod.util.slotmachine.Icon;
@@ -78,10 +77,6 @@ public class TileEntitySlotMachine extends TileEntity{
 	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null;
 	private final SlotMachineEconomyHandler economyHandler;
 	private final SlotMachineCoinHandler coinHandler;
-	
-	//Log data for reports:
-	private SpinMode lastSpinMode = null;
-	private int awardedForLastSpin = 0;
 	
 	private final SerializableFunctionBase<? extends NBTBase> defaultRowPriceFunction = generateDefaultRowPriceFunction(200.0, 200.0);
 
@@ -213,8 +208,6 @@ public class TileEntitySlotMachine extends TileEntity{
 		}else {
 			coinTray += coins;
 		}
-		
-		awardedForLastSpin = coins;
 	}
 	
 	@Override
@@ -400,7 +393,6 @@ public class TileEntitySlotMachine extends TileEntity{
 				if(playing != null) {
 					if(withdrawCoins(playing, price)){
 						coinHandler.depositCoins(price);
-						awardedForLastSpin = 0;
 						currentSession.currentWin -= price;
 						wheels.clearWinnings();
 						needs_sync = true;
@@ -754,29 +746,5 @@ public class TileEntitySlotMachine extends TileEntity{
 			return true;//TODO: Implement
 		}
 		
-	}
-	
-	
-	
-	//TODO: Remove when out of beta
-	public StateSnapshot createStateSnapshot() {
-		return new StateSnapshot(lastSpinMode, wheels.createRawWheelSnapshot(), awardedForLastSpin);
-	}
-	
-	public static class StateSnapshot{
-		public final SpinMode lastSpinMode;
-		public final int wheelData[][];
-		public final int awardedForLastSpin;
-		
-		private StateSnapshot(SpinMode lastSpinMode, int wheelData[][], int awardedForLastSpin) {
-			this.lastSpinMode = lastSpinMode;
-			this.wheelData = new int[wheelData.length][wheelData[0].length];
-			this.awardedForLastSpin = awardedForLastSpin;
-			for(int i = 0 ; i < wheelData.length ; i++) {
-				for(int j = 0 ; j < wheelData[0].length ; j++) {
-					this.wheelData[i][j] = wheelData[i][j];
-				}
-			}
-		}
 	}
 }

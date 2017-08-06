@@ -103,8 +103,6 @@ public class ContainerSlotMachine extends BaseContainer{
 		return slotMachine.getIcon(i);
 	}
 	
-	public void report() {}//TODO: Remove when out of beta
-	
 	@Override
 	public void detectAndSendChanges(){
         super.detectAndSendChanges();

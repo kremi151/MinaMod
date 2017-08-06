@@ -34,7 +34,6 @@ import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.packet.message.MessageCoinBag;
 import lu.kremi151.minamod.packet.message.MessageJetpack;
 import lu.kremi151.minamod.packet.message.MessageOpenGui;
-import lu.kremi151.minamod.packet.message.MessageReportSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
@@ -45,7 +44,6 @@ import lu.kremi151.minamod.packet.message.MessageUseElevator;
 import lu.kremi151.minamod.packet.message.handler.MessageCoinBagHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageJetpackHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageOpenGuiHandler;
-import lu.kremi151.minamod.packet.message.handler.MessageReportSlotMachineHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSetScreenLayerHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageShowOverlayHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpawnParticleEffectHandler;
@@ -385,8 +383,6 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageUpdateTileEntityHandler.class, MessageUpdateTileEntity.class, 8, Side.CLIENT);
 		networkWrapper.registerMessage(MessageUseAmuletHandler.class, MessageUseAmulet.class, 9, Side.SERVER);
 		networkWrapper.registerMessage(MessageSpawnParticleEffectHandler.class, MessageSpawnParticleEffect.class, 10, Side.CLIENT);
-		
-		networkWrapper.registerMessage(MessageReportSlotMachineHandler.class, MessageReportSlotMachine.class, 90, Side.SERVER);
 	}
 	
 	public static String createDottedIdentifier(String name){

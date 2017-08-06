@@ -2,7 +2,6 @@ package lu.kremi151.minamod.inventory.container;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
-import lu.kremi151.minamod.packet.message.MessageReportSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import lu.kremi151.minamod.util.slotmachine.WheelManager;
@@ -122,10 +121,5 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			break;
 		}
     }
-	
-	@Override
-	public void report() {
-		MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageReportSlotMachine(slotMachine.getPos()));
-	}
 
 }

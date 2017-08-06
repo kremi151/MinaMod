@@ -36,7 +36,7 @@ public class GuiSlotMachine extends GuiContainer{
 	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/slot_machine.png");
 	
 	private final ContainerSlotMachineClient container;
-	private final GuiButton spin1LButton, spin3LButton, spin5LButton, reportButton, nextPageButton, previousPageButton;
+	private final GuiButton spin1LButton, spin3LButton, spin5LButton, nextPageButton, previousPageButton;
 
 	private final static int infoBtnLeft = 14, infoBtnTop = 52, infoBtnRight = 28, infoBtnBottom = 66;
 	private final static int instantBtnLeft = 14, instantBtnTop = 70, instantBtnRight = 28, instantBtnBottom = 84;
@@ -53,7 +53,6 @@ public class GuiSlotMachine extends GuiContainer{
 		spin1LButton = new GuiButton(0, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 1));
 		spin3LButton = new GuiButton(1, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 3));
 		spin5LButton = new GuiButton(2, 0, 0, 100, 20, I18n.translateToLocalFormatted("gui.slot_machine.spin", 5));
-		reportButton = new GuiButton(99, 0, 0, 20, 20, "!");
 		previousPageButton = new GuiButton(100, 0, 0, 20, 20, "<");
 		nextPageButton = new GuiButton(101, 0, 0, 20, 20, ">");
 	}
@@ -73,7 +72,7 @@ public class GuiSlotMachine extends GuiContainer{
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		fontRenderer.drawString(
-				getDisplayName() + TextFormatting.RESET + " (BETA)", 8, 10,
+				getDisplayName(), 8, 10,
 				4210752);
 		
 		fontRenderer.drawString(
@@ -211,10 +210,6 @@ public class GuiSlotMachine extends GuiContainer{
 				this.drawHoveringText(I18n.translateToLocal("gui.slot_machine.enable_instant_mode"), mouseX, mouseY);
 			}
 		}
-
-		if(!displayInfoPage && isHovering(mouseX, mouseY, reportButton)) {
-			drawHoveringText(TextFormatting.RED + "Report in case the slot machine does not reward money when at least one row is a winning line", mouseX, mouseY);
-		}
 		
 		if(isHovering(mouseX, mouseY, guiLeft + 8, guiTop + 166, guiLeft + 170, guiTop + 179)) {
 			drawHoveringText(I18n.translateToLocalFormatted("gui.slot_machine.current_win", container.getSessionWin()>0?(TextFormatting.GREEN + "+" + container.getSessionWin()):(container.getSessionWin()==0?("" + container.getSessionWin()):(TextFormatting.RED + "" + container.getSessionWin()))), mouseX, mouseY);
@@ -277,11 +272,6 @@ public class GuiSlotMachine extends GuiContainer{
 			case 2:
 				container.spin(SpinMode.FIVE, instantMode);
 				break;
-			case 99:
-				container.report();
-				Minecraft.getMinecraft().player.closeScreen();
-				Minecraft.getMinecraft().player.sendChatMessage("A report has been send. Please wait until the administrator contacts you.");
-				break;
 			}
 		}else if(displayInfoPage) {
 			switch(guibutton.id){
@@ -306,7 +296,6 @@ public class GuiSlotMachine extends GuiContainer{
 		this.spin1LButton.enabled = !container.isTurning();
 		this.spin3LButton.enabled = !container.isTurning();
 		this.spin5LButton.enabled = !container.isTurning();
-		this.reportButton.enabled = !container.isTurning();
 		this.nextPageButton.enabled = infoPage < totalInfoPages - 1;
 		this.previousPageButton.enabled = infoPage > 0;
     }
@@ -317,7 +306,6 @@ public class GuiSlotMachine extends GuiContainer{
 		this.buttonList.add(spin1LButton);
 		this.buttonList.add(spin3LButton);
 		this.buttonList.add(spin5LButton);
-		this.buttonList.add(reportButton);
 		this.buttonList.add(previousPageButton);
 		this.buttonList.add(nextPageButton);
 		
@@ -340,9 +328,6 @@ public class GuiSlotMachine extends GuiContainer{
 		
 		spin5LButton.x = guiLeft + ((xSize - spin5LButton.width) / 2);
 		spin5LButton.y = spin3LButton.y + spin3LButton.height + 5;
-		
-		reportButton.x = guiLeft + 142;
-		reportButton.y = guiTop + 50;
 		
 		previousPageButton.x = guiLeft + 35;
 		previousPageButton.y = guiTop + 140;
