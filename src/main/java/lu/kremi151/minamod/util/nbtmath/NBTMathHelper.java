@@ -341,7 +341,7 @@ public class NBTMathHelper {
 				}
 			}
 			if(var != null) {
-				return SerializableNamedVariable.createAndProvide(varName, var);
+				return SerializableNamedFunction.createAndProvide(varName, var);
 			}else {
 				throw new MathParseException("Unknown variable: " + varName);
 			}

@@ -28,7 +28,7 @@ import lu.kremi151.minamod.util.nbtmath.SerializableFunction;
 import lu.kremi151.minamod.util.nbtmath.SerializableFunctionBase;
 import lu.kremi151.minamod.util.nbtmath.SerializableLogic;
 import lu.kremi151.minamod.util.nbtmath.SerializableNamedLogical;
-import lu.kremi151.minamod.util.nbtmath.SerializableNamedVariable;
+import lu.kremi151.minamod.util.nbtmath.SerializableNamedFunction;
 import lu.kremi151.minamod.util.nbtmath.util.Context;
 import lu.kremi151.minamod.util.nbtmath.util.ToBooleanFunction;
 import lu.kremi151.minamod.util.slotmachine.Icon;
@@ -433,11 +433,11 @@ public class TileEntitySlotMachine extends TileEntity{
 										new SerializableConstant(1.0),
 										new SerializableBinaryOperation(//TODO: Find a way to not have to manually program these lambdas here
 												new SerializableBinaryOperation(
-														SerializableNamedVariable.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
+														SerializableNamedFunction.createAndProvide("iconWeight", id -> (double)icons[id.intValue()].weight),
 														new SerializableConstant(1.0),
 														NBTMathHelper.DIFFERENCE
 														),
-												SerializableNamedVariable.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
+												SerializableNamedFunction.createAndProvide("maxWeight", id -> weightedIconIds.reduceWeight(0, (a, b) -> Math.max(a, b))),
 												NBTMathHelper.DIVISION
 												),
 										NBTMathHelper.DIFFERENCE
