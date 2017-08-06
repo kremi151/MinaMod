@@ -244,6 +244,35 @@ public class NBTMathHelper {
 	}
 	
 	/**
+	 * Parses a parametrized function wrapper from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	public SerializableParametrized parseParametrized(NBTTagCompound nbt) throws MathParseException{
+		return parseParametrized(nbt, Context.DEFAULT);
+	}
+	
+	/**
+	 * Parses a parametrized function wrapper from NBT data
+	 * @param nbt The NBT data structure holding the function
+	 * @param context Context data
+	 * @return Returns the parsed mathematical function if successful
+	 * @throws MathParseException Thrown if the function could not be parsed
+	 */
+	public SerializableParametrized parseParametrized(NBTTagCompound nbt, Context context) throws MathParseException{
+		NBTBase function = nbt.getTag("Function");
+		NBTBase param = nbt.getTag("Parameter");
+		if(function == null) {
+			throw new MathParseException("The tag is missing a Function attribute");
+		}
+		if(param == null) {
+			throw new MathParseException("The tag is missing a Parameter attribute");
+		}
+		return new SerializableParametrized(parseFunction(function, context), parseFunction(param, context));
+	}
+	
+	/**
 	 * Parses a mathematical functional structure from NBT data
 	 * @param nbt The NBT data structure holding the function
 	 * @return Returns the parsed mathematical function if successful
@@ -265,6 +294,8 @@ public class NBTMathHelper {
 			NBTTagCompound raw_nbt = (NBTTagCompound)nbt;
 			if(raw_nbt.hasKey("Operation", 8)) {
 				return parseOperation((NBTTagCompound)nbt, context);
+			}else if(raw_nbt.hasKey("Parameter")) {
+				return parseParametrized((NBTTagCompound)nbt, context);
 			}else if(raw_nbt.hasKey("Function", 8)) {
 				try {
 					return parseMathFunction((NBTTagCompound)nbt, context);
