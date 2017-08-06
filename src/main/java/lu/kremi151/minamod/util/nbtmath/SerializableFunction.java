@@ -100,7 +100,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 	
 	public static class Sum extends SerializableFunction{
 
-		public Sum(SerializableFunctionBase<? extends NBTBase>[] args) throws MathFunctionException {
+		public Sum(SerializableFunctionBase<? extends NBTBase>... args) throws MathFunctionException {
 			super("sum", args);
 		}
 
@@ -117,7 +117,7 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 	
 	public static class Product extends SerializableFunction{
 
-		public Product(SerializableFunctionBase<? extends NBTBase>[] args) throws MathFunctionException {
+		public Product(SerializableFunctionBase<? extends NBTBase>... args) throws MathFunctionException {
 			super("product", args);
 		}
 
@@ -132,6 +132,19 @@ public abstract class SerializableFunction extends SerializableFunctionBase<NBTT
 			}else {
 				return 0.0;
 			}
+		}
+		
+	}
+	
+	public static class Random extends SerializableFunction{
+
+		public Random(SerializableFunctionBase<? extends NBTBase> arg) throws MathFunctionException{
+			super("rand", new SerializableFunctionBase[] {arg});
+		}
+
+		@Override
+		public Number apply(Number t, Context c) {
+			return Math.random() * args[0].apply(t, c).doubleValue();
 		}
 		
 	}

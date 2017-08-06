@@ -53,6 +53,7 @@ public class NBTMathHelper {
 		map.put("min", args -> new SerializableFunction.Min(args));
 		map.put("sum", args -> new SerializableFunction.Sum(args));
 		map.put("product", args -> new SerializableFunction.Product(args));
+		map.put("rand", args -> new SerializableFunction.Random(args[0]));
 		return map;
 	}
 	
