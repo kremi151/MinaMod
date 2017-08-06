@@ -131,18 +131,21 @@ public class NBTMathHelper {
 	 * @throws MathFunctionException Thrown if the function could not be created
 	 */
 	private SerializableFunction parseMathFunction(NBTTagCompound nbt, Context context) throws MathParseException, MathFunctionException{
-		NBTTagList args = nbt.getTagList("Arguments", 10);
-		String functionName = nbt.getString("Function");
-		if(args.tagCount() == 0) {
-			throw new MathParseException("No arguments parsed for function " + functionName);
-		}
-		
 		ArrayList<SerializableFunctionBase<? extends NBTBase>> parsedArgs = new ArrayList<>();
-		for(int i = 0 ; i < args.tagCount() ; i++) {
-			NBTTagCompound anbt = args.getCompoundTagAt(i);
-			if(anbt.hasKey("Arg")) {
-				parsedArgs.add(parseFunction(anbt.getTag("Arg"), context));
+		String functionName = nbt.getString("Function");
+		if(nbt.getTagId("Arguments") == 9) {
+			NBTTagList args = nbt.getTagList("Arguments", 10);
+			for(int i = 0 ; i < args.tagCount() ; i++) {
+				NBTTagCompound anbt = args.getCompoundTagAt(i);
+				if(anbt.hasKey("Arg")) {
+					parsedArgs.add(parseFunction(anbt.getTag("Arg"), context));
+				}
 			}
+		}else {
+			parsedArgs.add(parseFunction(nbt.getTag("Arguments")));
+		}
+		if(parsedArgs.size() == 0) {
+			throw new MathParseException("No arguments parsed for function " + functionName);
 		}
 		SerializableFunctionBase<? extends NBTBase> parsedArgsArray[] = parsedArgs.toArray(new SerializableFunctionBase[parsedArgs.size()]);
 		
