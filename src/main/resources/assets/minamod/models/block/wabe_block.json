@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "minamod:blocks/wabe_front",
+    "side": "minamod:blocks/wabe_side"
+  }
+}

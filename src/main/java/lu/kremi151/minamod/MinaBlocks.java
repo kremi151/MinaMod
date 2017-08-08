@@ -16,6 +16,7 @@ import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
 import lu.kremi151.minamod.block.BlockCustomCake;
 import lu.kremi151.minamod.block.BlockCustomOre;
+import lu.kremi151.minamod.block.BlockCustomRotatedPillar;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
 import lu.kremi151.minamod.block.BlockCustomStairs;
 import lu.kremi151.minamod.block.BlockDimmableLight;
@@ -51,6 +52,7 @@ import lu.kremi151.minamod.block.BlockTable;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -213,7 +215,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockQuicksand QUICKSAND = (BlockQuicksand) new BlockQuicksand().setUnlocalizedName("quicksand");
 	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
 	public static final BlockDimmableLight DIMMABLE_LIGHT = (BlockDimmableLight) new BlockDimmableLight().setUnlocalizedName("dimmable_lamp");
-	//public static final BlockFluidClassic WATER_CLEAR = new BlockFluidClassic(MinaFluids.CLEAR_WATER, Material.WATER);
+	public static final BlockRotatedPillar WABE_BLOCK = (BlockRotatedPillar) new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setUnlocalizedName("wabe_block").setCreativeTab(CreativeTabs.DECORATIONS);
 
 	private static boolean init = false, initOres = false;
 
@@ -317,6 +319,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
 		proxy.registerBlockWithOre(COCONUT, "coconut");
 		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
+		proxy.registerBlock(WABE_BLOCK, "wabe_block");
 		
 		init = true;
 	}

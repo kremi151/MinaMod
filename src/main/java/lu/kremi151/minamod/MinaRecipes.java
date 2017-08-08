@@ -196,6 +196,9 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.FLOUR, 1), Items.WHEAT);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHICKEN_NUGGETS, 1), Items.COOKED_CHICKEN, MinaItems.FLOUR);
+		
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.WABE_BLOCK), "WWW", "WWW", "WWW", 'W', MinaItems.HONEYWABE);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.HONEYWABE, 9), MinaBlocks.WABE_BLOCK);
 	}
 	
 	private static void initColoredRecipes(){
