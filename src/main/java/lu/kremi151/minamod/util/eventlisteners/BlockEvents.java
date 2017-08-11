@@ -104,12 +104,6 @@ public class BlockEvents {
 				return;
 			}
 			
-			//TODO: Remove
-			else if(e.getWorld().getBlockState(e.getPos().up()).getBlock() == Blocks.AIR && e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.CITRIN){
-				WorldGenPalm.generatePalm(e.getPos().up(), e.getWorld(), e.getEntityPlayer().getRNG());
-			}
-			//
-			
 			if(e.getEntityPlayer().getHeldItemMainhand().getItem() == Items.BLAZE_ROD && PermissionAPI.hasPermission(e.getEntityPlayer(), MinaPermissions.TICK_BLOCK_MANUALLY)){
 				IBlockState ibs = e.getWorld().getBlockState(e.getPos());
 				Block btu = ibs.getBlock();
