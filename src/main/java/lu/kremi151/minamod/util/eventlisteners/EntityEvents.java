@@ -115,7 +115,7 @@ public class EntityEvents {
 			living.setPositionAndUpdate(living.posX, living.posY, living.posZ);
 			living.setJumping(false);
 		}
-		if(isPlayer && getPotionDuration(living, MinaPotions.DOGE) > 0){
+		if(isPlayer && living instanceof EntityPlayerMP && getPotionDuration(living, MinaPotions.DOGE) > 0){
 			MinaMod.getMinaMod().getPacketDispatcher().sendTo(MessageAddScreenLayer.removeLayer(), (EntityPlayerMP) living);
 		}
 	}
