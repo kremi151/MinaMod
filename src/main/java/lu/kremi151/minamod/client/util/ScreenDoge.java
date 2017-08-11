@@ -76,7 +76,7 @@ public class ScreenDoge extends ScreenLayer{
 			fontRenderer.FONT_HEIGHT = 24;
 		}*/
 		if(!infinite && !Minecraft.getMinecraft().player.isPotionActive(MinaPotions.DOGE)){
-			getParent().resetLayer();
+			getParent().resetLayers(ScreenDoge.class);
 			return;
 		}
 		

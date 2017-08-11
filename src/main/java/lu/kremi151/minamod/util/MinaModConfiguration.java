@@ -1,10 +1,6 @@
 package lu.kremi151.minamod.util;
 
-import lu.kremi151.minamod.MinaMod;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MinaModConfiguration {
 	
@@ -23,13 +19,6 @@ public class MinaModConfiguration {
     private boolean use_fancy_elevator_movement;
     private boolean use_new_honeycomb_generation;
     private boolean disable_zombie_aid_summons;
-
-    @SideOnly(Side.CLIENT)
-    private int overlay_x;
-    @SideOnly(Side.CLIENT)
-    private int overlay_y;
-    @SideOnly(Side.CLIENT)
-    private boolean enable_overlay;
 	
 	public MinaModConfiguration(Configuration config){
 		this.config = config;
@@ -56,12 +45,6 @@ public class MinaModConfiguration {
 		use_new_honeycomb_generation = config.getBoolean("new_honeycomb_generation", CATEGORY_TERRAIN, true, "Defines if the new method to generate honeycombs in the world should be used");
 		use_fancy_elevator_movement = config.getBoolean("use_fancy_elevator_movement", CATEGORY_FEATURES, false, "Defines is elevators should use the fancy but slow transport between levels. Set to false to teleport instantly.");
 		disable_zombie_aid_summons = config.getBoolean("prevent_zombie_summon_aid", CATEGORY_FEATURES, false, "Prevents that zombies can summon aid");
-		
-		if(!MinaMod.getProxy().isServerSide()){
-			enable_overlay = config.getBoolean("enable_overlay", Configuration.CATEGORY_CLIENT, true, "Enables or disables overlay elements");
-			overlay_x = config.getInt("overlay_x", Configuration.CATEGORY_CLIENT, 2, 0, 1900, "The starting x position for the overlay elements");
-			overlay_y = config.getInt("overlay_y", Configuration.CATEGORY_CLIENT, 2, 0, 1900, "The starting y position for the overlay elements");
-		}
 		
 		if(config.hasChanged()){
 			config.save();
@@ -117,21 +100,6 @@ public class MinaModConfiguration {
 		}
 		return def;
 	}
-
-    @SideOnly(Side.CLIENT)
-    public int getOverlayX(){
-    	return overlay_x;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getOverlayY(){
-    	return overlay_y;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean isOverlayEnabled(){
-    	return enable_overlay;
-    }
 	
 //	public NBTTagCompound getImportantPropertiesAsNBT(){
 //		NBTTagCompound tag = new NBTTagCompound();

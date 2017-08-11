@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.util.Stat;
-import lu.kremi151.minamod.packet.message.MessageShowOverlay;
+import lu.kremi151.minamod.packet.message.MessageShowCustomAchievement;
 import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -112,7 +114,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		final int points = BlissHelper.getBliss(entity).chanceOneIn(10) ? 5 : 3;
 		int mods = distribute(entity.getRNG(), points);
 		if(mods > 0 && entity instanceof EntityPlayerMP){
-			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowOverlay(0, 1000), (EntityPlayerMP) entity);
+			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowCustomAchievement("Your stats have changed", "", 2000l, new ItemStack(MinaItems.BATTERY)), (EntityPlayerMP)entity);
 		}
 		return mods > 0;
 	}

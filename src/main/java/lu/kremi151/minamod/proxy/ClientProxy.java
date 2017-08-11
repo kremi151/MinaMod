@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import org.lwjgl.input.Keyboard;
 
+import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
@@ -24,14 +25,10 @@ import lu.kremi151.minamod.block.BlockStandaloneLeaf;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.client.GiftColorHandler;
 import lu.kremi151.minamod.client.GuiMinaOverlay;
-import lu.kremi151.minamod.client.GuiPlayerStats;
 import lu.kremi151.minamod.client.HerbColorHandler;
 import lu.kremi151.minamod.client.ItemColorHandler;
 import lu.kremi151.minamod.client.LeafColorHandler;
 import lu.kremi151.minamod.client.fx.EntityFXSpore;
-import lu.kremi151.minamod.client.overlay.Overlayable;
-import lu.kremi151.minamod.client.overlay.OverlayableString;
-import lu.kremi151.minamod.client.overlay.OverlayableTexture;
 import lu.kremi151.minamod.client.render.RenderBee;
 import lu.kremi151.minamod.client.render.RenderFish;
 import lu.kremi151.minamod.client.render.RenderIceGolhem;
@@ -52,10 +49,11 @@ import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.item.ItemHerbGuide;
-import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
+import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
@@ -73,6 +71,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -231,38 +230,22 @@ public class ClientProxy extends CommonProxy {
 			entity.getRenderData().checked_water_state = true;
 		}
 	}
-
+	
 	@Override
-	public void registerOverlays() {
-		/*if (MinaMod.getMinaConfig().isDebugging()) {
-			this.addOverlay(new OverlayableString(1, "MinaMod version " + MinaMod.VERSION).forever());
-			this.addOverlay(new OverlayableString(2, "This mod is still under development").forever());
-		}*/
-	}
-
-	@Override
-	public void addStringOverlay(String txt, long duration) {
-		OverlayableString os = new OverlayableString(System.currentTimeMillis(), txt);
-		os.setExpiration(System.currentTimeMillis() + 5 + duration);
-		addOverlay(os);
+	public void setAchievementsCustomStringFormatters() {
+		MinaAchievements.OPEN_STATS.setStatStringFormatter(str -> String.format(str, KEY_PLAYER_STATS.getDisplayName()));
+		MinaAchievements.OPEN_AMULET_INV.setStatStringFormatter(str -> String.format(str, KEY_AMULETS.getDisplayName()));
 	}
 	
 	@Override
-	public void addOverlay(int id, long duration){
-		switch(id){
-		case 0:
-			addOverlay(new OverlayableTexture(System.currentTimeMillis(), GuiPlayerStats.guiTextures, 176, 0, 24, 24).setExpiration(System.currentTimeMillis() + 5 + duration));
-			break;
+	public void showAchievementOverlay(String title, String desc, long duration, ItemStack icon) {
+		try {
+			Achievement ach = new Achievement(title, "", 0, 0, icon, null);
+			boolean permanent = duration < 0;
+			ReflectionLoader.GuiAchievement_postCustomAchievement(Minecraft.getMinecraft().guiAchievement, title, desc, Minecraft.getSystemTime() + duration, ach, permanent);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
 		}
-	}
-
-	public void addOverlay(Overlayable o) {
-		overlayHandler.addOverlayable(o);
-	}
-
-	@Override
-	public void clearOverlays() {
-		overlayHandler.clearOverlayables();
 	}
 	
 	@Override
@@ -271,20 +254,20 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
-	public void setScreenLayer(int id, boolean forced){
+	public void addScreenLayer(int id, boolean forced){
 		switch(id){
-		case MessageSetScreenLayer.DOGE:
+		case MessageAddScreenLayer.DOGE:
 			if(forced || !overlayHandler.isLayerActive(ScreenDoge.class)){
-				overlayHandler.setLayer(new ScreenDoge(overlayHandler, false));
+				overlayHandler.addLayer(new ScreenDoge(overlayHandler, false));
 			}
 			break;
-		case MessageSetScreenLayer.DOGE_INFINITE:
+		case MessageAddScreenLayer.DOGE_INFINITE:
 			if(forced || !overlayHandler.isLayerActive(ScreenDoge.class)){
-				overlayHandler.setLayer(new ScreenDoge(overlayHandler, true));
+				overlayHandler.addLayer(new ScreenDoge(overlayHandler, true));
 			}
 			break;
 		default:
-			overlayHandler.resetLayer();
+			//overlayHandler.resetLayer();
 			break;
 		}
 	}

@@ -6,7 +6,6 @@ import java.lang.reflect.Field;
 import org.apache.logging.log4j.Logger;
 
 import lu.kremi151.minamod.annotations.MinaPermission;
-import lu.kremi151.minamod.api.MinaModAPI;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
@@ -31,22 +30,22 @@ import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.entity.EntitySoulPearl;
 import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
+import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
 import lu.kremi151.minamod.packet.message.MessageCoinBag;
 import lu.kremi151.minamod.packet.message.MessageJetpack;
 import lu.kremi151.minamod.packet.message.MessageOpenGui;
-import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
-import lu.kremi151.minamod.packet.message.MessageShowOverlay;
+import lu.kremi151.minamod.packet.message.MessageShowCustomAchievement;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
 import lu.kremi151.minamod.packet.message.MessageTriggerOpenStatsAchievement;
 import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
+import lu.kremi151.minamod.packet.message.handler.MessageAddScreenLayerHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageCoinBagHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageJetpackHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageOpenGuiHandler;
-import lu.kremi151.minamod.packet.message.handler.MessageSetScreenLayerHandler;
-import lu.kremi151.minamod.packet.message.handler.MessageShowOverlayHandler;
+import lu.kremi151.minamod.packet.message.handler.MessageShowCustomAchievementHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpawnParticleEffectHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpinSlotMachineHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageTriggerOpenStatsAchievementHandler;
@@ -209,7 +208,6 @@ public class MinaMod {
 		MinecraftForge.EVENT_BUS.register(tickHandler);
 
 		proxy.registerBuildInBlocks();
-		proxy.registerOverlays();
 		
 		Field fields[] = MinaPermissions.class.getDeclaredFields();
 		for(Field f : fields){
@@ -330,10 +328,6 @@ public class MinaMod {
 		return instance;
 	}
 
-	public static MinaModAPI getAPI() { // NO_UCD (unused code)
-		return proxy;
-	}
-
 	public static CommonProxy getProxy() {
 		return proxy;
 	}
@@ -377,9 +371,9 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageSpinSlotMachineHandler.class, MessageSpinSlotMachine.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(MessageOpenGuiHandler.class, MessageOpenGui.class, 2, Side.CLIENT);
-		networkWrapper.registerMessage(MessageShowOverlayHandler.class, MessageShowOverlay.class, 3, Side.CLIENT);
+		networkWrapper.registerMessage(MessageShowCustomAchievementHandler.class, MessageShowCustomAchievement.class, 3, Side.CLIENT);
 		networkWrapper.registerMessage(MessageUseElevatorHandler.class, MessageUseElevator.class, 4, Side.SERVER);
-		networkWrapper.registerMessage(MessageSetScreenLayerHandler.class, MessageSetScreenLayer.class, 5, Side.CLIENT);
+		networkWrapper.registerMessage(MessageAddScreenLayerHandler.class, MessageAddScreenLayer.class, 5, Side.CLIENT);
 		networkWrapper.registerMessage(MessageJetpackHandler.class, MessageJetpack.class, 6, Side.SERVER);
 		networkWrapper.registerMessage(MessageCoinBagHandler.class, MessageCoinBag.class, 7, Side.SERVER);
 		networkWrapper.registerMessage(MessageCoinBagHandler.class, MessageCoinBag.class, 7, Side.CLIENT);

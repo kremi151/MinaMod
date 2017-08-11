@@ -15,7 +15,6 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -83,10 +82,10 @@ public class ClientEventListeners {
 //		}
 //	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onEntitySpawn(ClientDisconnectionFromServerEvent event) { // NO_UCD (unused code)
 		MinaMod.getProxy().clearOverlays();
-	}
+	}*/
 	
 	@SubscribeEvent
 	public void onPreRenderEntity(RenderLivingEvent.Pre event){

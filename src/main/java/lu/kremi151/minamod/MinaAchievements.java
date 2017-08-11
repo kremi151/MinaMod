@@ -35,5 +35,7 @@ public class MinaAchievements {
 						TRAIN_STATS, 
 						OPEN_AMULET_INV 
 						}));
+		
+		MinaMod.getProxy().setAchievementsCustomStringFormatters();
 	}
 }

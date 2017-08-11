@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.potion;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
+import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -21,7 +21,7 @@ public class PotionDoge extends CustomPotion{
     public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier)
     {
 		if(entityLivingBaseIn instanceof EntityPlayerMP){
-			MinaMod.getMinaMod().getPacketDispatcher().sendTo(MessageSetScreenLayer.fromId(MessageSetScreenLayer.DOGE), (EntityPlayerMP)entityLivingBaseIn);
+			MinaMod.getMinaMod().getPacketDispatcher().sendTo(MessageAddScreenLayer.fromId(MessageAddScreenLayer.DOGE), (EntityPlayerMP)entityLivingBaseIn);
 		}
     }
 }

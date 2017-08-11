@@ -12,6 +12,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
@@ -31,6 +32,17 @@ public class ReflectionLoader {
 	private static final Method CONTAINER_MERGE_ITEMSTACK;
 	
 	@SideOnly(Side.CLIENT)
+	private static Field GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE;
+	@SideOnly(Side.CLIENT)
+	private static Field GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION;
+	@SideOnly(Side.CLIENT)
+	private static Field GUI_ACHIEVEMENT_NOTIFICATION_TIME;
+	@SideOnly(Side.CLIENT)
+	private static Field GUI_ACHIEVEMENT_ACHIEVEMENT;
+	@SideOnly(Side.CLIENT)
+	private static Field GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION;
+	
+	@SideOnly(Side.CLIENT)
 	private static Method GUI_CONTAINER_DRAW_ITEMSTACK;
 	
 	static{
@@ -44,6 +56,12 @@ public class ReflectionLoader {
 			
 			try {
 				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
+
+				GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "achievementTitle", "field_146268_i");
+				GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "achievementDescription", "field_146265_j");
+				GUI_ACHIEVEMENT_NOTIFICATION_TIME = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "notificationTime", "field_146263_l");
+				GUI_ACHIEVEMENT_ACHIEVEMENT = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "achievement", "field_146266_k");
+				GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "permanentNotification", "field_146262_n");
 			}catch(NoSuchFieldError | NoSuchMethodError | NoClassDefFoundError e) {}//TODO: Find a better way to handle this}
 		} catch (NoSuchFieldException e) {
 			throw new IllegalStateException("At least one needed reflection field does not exists", e);
@@ -57,6 +75,11 @@ public class ReflectionLoader {
 	@SideOnly(Side.CLIENT)
 	private static Method findClientMethod(@Nonnull Class<?> clazz, @Nonnull String methodName, @Nullable String methodObfName, Class<?>... parameterTypes) {
 		return ReflectionHelper.findMethod(clazz, methodName, methodObfName, parameterTypes);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private static Field findClientField(@Nonnull Class<?> clazz, @Nonnull String... fieldNames) {
+		return ReflectionHelper.findField(clazz, fieldNames);
 	}
 	
 	public static void MissingMapping_setAction(MissingMapping mapping, FMLMissingMappingsEvent.Action action) throws IllegalAccessException{
@@ -99,5 +122,19 @@ public class ReflectionLoader {
 	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
 		GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void GuiAchievement_postCustomAchievement(net.minecraft.client.gui.achievement.GuiAchievement gui, String title, String description, long notificationTime, Achievement ach, boolean permanentNotification) throws IllegalArgumentException, IllegalAccessException {
+		GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE.setAccessible(true);
+		GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE.set(gui, title);
+		GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION.setAccessible(true);
+		GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION.set(gui, description);
+		GUI_ACHIEVEMENT_NOTIFICATION_TIME.setAccessible(true);
+		GUI_ACHIEVEMENT_NOTIFICATION_TIME.set(gui, notificationTime);
+		GUI_ACHIEVEMENT_ACHIEVEMENT.setAccessible(true);
+		GUI_ACHIEVEMENT_ACHIEVEMENT.set(gui, ach);
+		GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION.setAccessible(true);
+		GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION.set(gui, permanentNotification);
 	}
 }

@@ -6,14 +6,11 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.api.MinaModAPI;
 import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
-import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -24,25 +21,23 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class CommonProxy implements MinaModAPI{
+public class CommonProxy{
 
 	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
 	public void registerStateMappings() {}
 	public void registerCustomMeshDefinitions() {}
 	public void registerKeyBindings(){}
-	public void registerOverlays() {}
 	public void registerVariantNames() {}
 	public void registerFluidModels() {}
 	public void registerItemAndBlockColors() {}
-	public void clearOverlays() {}
 	public void executeClientSide(Runnable r){}
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
+	public void setAchievementsCustomStringFormatters() {}
+	public void showAchievementOverlay(String title, String desc, long duration, ItemStack icon) {}
 	
-	public void addOverlay(int id, long duration){}
-	public void addStringOverlay(String message, long duration){}
-	public void setScreenLayer(int id, boolean force){}
+	public void addScreenLayer(int id, boolean force){}
 	
 	public <T> Optional<T> tryGetClientSideResult(Supplier<T> clientCode){
 		return Optional.empty();
@@ -106,17 +101,6 @@ public class CommonProxy implements MinaModAPI{
     public void registerBlockOnly(Block block, String name){
     	GameRegistry.register(block.setRegistryName(new ResourceLocation(MinaMod.MODID, name)));
     }
-    
-	@Override
-	public boolean postOverlayMessage(String player, String text, long duration) {
-		EntityPlayerMP p = MinaMod.getMinaMod().getMinecraftServer().getPlayerList().getPlayerByUsername(player);
-		if(p != null){
-			MessageShowOverlay msg = new MessageShowOverlay(text, duration);
-			MinaMod.getMinaMod().getPacketDispatcher().sendTo(msg, p);
-			return true;
-		}
-		return false;
-	}
 	
 	private HashMap<UUID, Long> getCooldownCategory(String category){
 		HashMap<UUID, Long> res = cooldown_map.get(category);
