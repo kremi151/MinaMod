@@ -5,6 +5,7 @@ import lu.kremi151.minamod.client.GuiAmuletInventory;
 import lu.kremi151.minamod.client.GuiPlayerStats;
 import lu.kremi151.minamod.packet.message.MessageJetpack;
 import lu.kremi151.minamod.packet.message.MessageOpenGui;
+import lu.kremi151.minamod.packet.message.MessageTriggerOpenStatsAchievement;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
@@ -37,6 +38,7 @@ public class ClientEventListeners {
 			}
 		}
 		if(ClientProxy.KEY_PLAYER_STATS.isKeyDown() && !FMLClientHandler.instance().isGUIOpen(GuiPlayerStats.class)){
+			MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageTriggerOpenStatsAchievement());
 			FMLClientHandler.instance().displayGuiScreen(Minecraft.getMinecraft().player, new GuiPlayerStats());
 		}
 		if(ClientProxy.KEY_AMULETS.isKeyDown() && !FMLClientHandler.instance().isGUIOpen(GuiAmuletInventory.class)){

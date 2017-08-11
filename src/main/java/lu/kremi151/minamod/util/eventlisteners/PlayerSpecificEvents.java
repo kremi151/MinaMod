@@ -2,6 +2,7 @@ package lu.kremi151.minamod.util.eventlisteners;
 
 import java.util.List;
 
+import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaEnchantments;
 import lu.kremi151.minamod.MinaItems;
@@ -28,6 +29,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -145,6 +147,15 @@ public class PlayerSpecificEvents {
 		if(event.isWasDeath()){
 			event.getEntityPlayer().getCapability(ICapabilityStats.CAPABILITY, null)
 				.applyFrom(event.getOriginal().getCapability(ICapabilityStats.CAPABILITY, null));
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPickupItem(EntityItemPickupEvent event) {
+		if(!event.getItem().getItem().isEmpty()) {
+			if(event.getItem().getItem().getItem() == MinaItems.CITRIN) {
+				event.getEntityPlayer().addStat(MinaAchievements.CITRINICIOUS, 1);
+			}
 		}
 	}
 	

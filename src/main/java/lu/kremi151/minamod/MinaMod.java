@@ -38,6 +38,7 @@ import lu.kremi151.minamod.packet.message.MessageSetScreenLayer;
 import lu.kremi151.minamod.packet.message.MessageShowOverlay;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
+import lu.kremi151.minamod.packet.message.MessageTriggerOpenStatsAchievement;
 import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
 import lu.kremi151.minamod.packet.message.MessageUseElevator;
@@ -48,6 +49,7 @@ import lu.kremi151.minamod.packet.message.handler.MessageSetScreenLayerHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageShowOverlayHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpawnParticleEffectHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageSpinSlotMachineHandler;
+import lu.kremi151.minamod.packet.message.handler.MessageTriggerOpenStatsAchievementHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUpdateTileEntityHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseAmuletHandler;
 import lu.kremi151.minamod.packet.message.handler.MessageUseElevatorHandler;
@@ -135,6 +137,7 @@ public class MinaMod {
 		TerrainEventListeners terrainEventListener = new TerrainEventListeners(this);
 
 		MinaBlocks.setFireInfos();
+		MinaAchievements.register();
 
 		if(FeatureList.enable_plate){
 			GameRegistry.registerTileEntity(TileEntityPlate.class, createDottedIdentifier("plate"));
@@ -383,6 +386,7 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageUpdateTileEntityHandler.class, MessageUpdateTileEntity.class, 8, Side.CLIENT);
 		networkWrapper.registerMessage(MessageUseAmuletHandler.class, MessageUseAmulet.class, 9, Side.SERVER);
 		networkWrapper.registerMessage(MessageSpawnParticleEffectHandler.class, MessageSpawnParticleEffect.class, 10, Side.CLIENT);
+		networkWrapper.registerMessage(MessageTriggerOpenStatsAchievementHandler.class, MessageTriggerOpenStatsAchievement.class, 11, Side.SERVER);
 	}
 	
 	public static String createDottedIdentifier(String name){
