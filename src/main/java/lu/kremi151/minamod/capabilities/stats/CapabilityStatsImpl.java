@@ -114,7 +114,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		final int points = BlissHelper.getBliss(entity).chanceOneIn(10) ? 5 : 3;
 		int mods = distribute(entity.getRNG(), points);
 		if(mods > 0 && entity instanceof EntityPlayerMP){
-			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowCustomAchievement("Your stats have changed", "", 2000l, new ItemStack(MinaItems.BATTERY)), (EntityPlayerMP)entity);
+			MinaMod.getProxy().showAchievementOverlay((EntityPlayerMP)entity, "Your stats have changed", "", 2000l, new ItemStack(MinaItems.BATTERY));
 		}
 		return mods > 0;
 	}

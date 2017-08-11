@@ -130,11 +130,13 @@ public class ReflectionLoader {
 		GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE.set(gui, title);
 		GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION.setAccessible(true);
 		GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION.set(gui, description);
-		GUI_ACHIEVEMENT_NOTIFICATION_TIME.setAccessible(true);
-		GUI_ACHIEVEMENT_NOTIFICATION_TIME.set(gui, notificationTime);
 		GUI_ACHIEVEMENT_ACHIEVEMENT.setAccessible(true);
 		GUI_ACHIEVEMENT_ACHIEVEMENT.set(gui, ach);
 		GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION.setAccessible(true);
-		GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION.set(gui, permanentNotification);
+		GUI_ACHIEVEMENT_PERMANENT_NOTIFICATION.setBoolean(gui, permanentNotification);
+		GUI_ACHIEVEMENT_NOTIFICATION_TIME.setAccessible(true);
+		//System.out.println("Duration: " + notificationTime);
+		GUI_ACHIEVEMENT_NOTIFICATION_TIME.setLong(gui, notificationTime);
+		//System.out.println("New val: " + GUI_ACHIEVEMENT_NOTIFICATION_TIME.getLong(gui));
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.input.Keyboard;
 
 import lu.kremi151.minamod.MinaAchievements;
@@ -238,9 +240,9 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
-	public void showAchievementOverlay(String title, String desc, long duration, ItemStack icon) {
+	public void showAchievementOverlay(@Nullable EntityPlayer player, String title, String desc, long duration, ItemStack icon) {
 		try {
-			Achievement ach = new Achievement(title, "", 0, 0, icon, null);
+			Achievement ach = new Achievement("dummy", title, 0, 0, icon, null);
 			boolean permanent = duration < 0;
 			ReflectionLoader.GuiAchievement_postCustomAchievement(Minecraft.getMinecraft().guiAchievement, title, desc, Minecraft.getSystemTime() + duration, ach, permanent);
 		} catch (IllegalArgumentException | IllegalAccessException e) {

@@ -8,9 +8,11 @@ import java.util.function.Supplier;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
+import lu.kremi151.minamod.packet.message.MessageShowCustomAchievement;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -35,7 +37,12 @@ public class CommonProxy{
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
 	public void setAchievementsCustomStringFormatters() {}
-	public void showAchievementOverlay(String title, String desc, long duration, ItemStack icon) {}
+	
+	public void showAchievementOverlay(EntityPlayer player, String title, String desc, long duration, ItemStack icon) {
+		if(player instanceof EntityPlayerMP) {
+			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowCustomAchievement(title, desc, duration, icon), (EntityPlayerMP)player);
+		}
+	}
 	
 	public void addScreenLayer(int id, boolean force){}
 	

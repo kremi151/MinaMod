@@ -22,17 +22,17 @@ public class MessageShowCustomAchievement implements IMessage{
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		duration = buf.readLong();
 		title = ByteBufUtils.readUTF8String(buf);
 		desc = ByteBufUtils.readUTF8String(buf);
-		duration = buf.readLong();
 		icon = ByteBufUtils.readItemStack(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		buf.writeLong(duration);
 		ByteBufUtils.writeUTF8String(buf, title);
 		ByteBufUtils.writeUTF8String(buf, desc);
-		buf.writeLong(duration);
 		ByteBufUtils.writeItemStack(buf, icon);
 	}
 	

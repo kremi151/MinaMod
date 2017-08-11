@@ -11,7 +11,7 @@ public class MessageShowCustomAchievementHandler extends AbstractClientMessageHa
 
 	@Override
 	public IMessage handleClientMessage(EntityPlayer player, MessageShowCustomAchievement msg, MessageContext ctx) {
-		MinaMod.getProxy().showAchievementOverlay(msg.getTitle(), msg.getDescription(), msg.getDuration(), msg.getIcon());
+		MinaMod.getProxy().showAchievementOverlay(null, msg.getTitle(), msg.getDescription(), msg.getDuration(), msg.getIcon());
 		return null;
 	}
 
