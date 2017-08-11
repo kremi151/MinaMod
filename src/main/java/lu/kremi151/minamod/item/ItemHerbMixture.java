@@ -2,6 +2,7 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.util.Stat;
@@ -32,6 +33,8 @@ public class ItemHerbMixture extends ItemFood{
 		super.onFoodEaten(stack, worldIn, player);
         if (!worldIn.isRemote)
         {
+        	player.addStat(MinaAchievements.MODIFY_STATS, 1);
+        	
     		NBTTagCompound nbt = stack.getOrCreateSubCompound("mixture");
         	ICapabilityStats<EntityPlayer> stats = player.getCapability(ICapabilityStats.CAPABILITY, null);
         	

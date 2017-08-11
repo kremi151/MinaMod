@@ -108,11 +108,13 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		statMap.values().forEach(stat -> stat.initialize());
 	}
 	
-	private void onLevelUp(){
+	protected boolean onLevelUp(){
 		final int points = BlissHelper.getBliss(entity).chanceOneIn(10) ? 5 : 3;
-		if(distribute(entity.getRNG(), points) > 0 && entity instanceof EntityPlayerMP){
+		int mods = distribute(entity.getRNG(), points);
+		if(mods > 0 && entity instanceof EntityPlayerMP){
 			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowOverlay(0, 1000), (EntityPlayerMP) entity);
 		}
+		return mods > 0;
 	}
 
 	@Override
