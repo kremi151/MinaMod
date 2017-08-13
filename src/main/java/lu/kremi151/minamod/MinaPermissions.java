@@ -49,6 +49,9 @@ public class MinaPermissions {
 	@MinaPermission(desc = "Allows to repair a mulfunctioning slot machine", lvl = DefaultPermissionLevel.OP)
 	public static final String CMD_RESET_SLOT_MACHINE = "minamod.admin.slotmachine.reset";
 	
+	@MinaPermission(desc = "Allows to set the world time to the next blood moon", lvl = DefaultPermissionLevel.OP)
+	public static final String CMD_BLOOD_MOON = "minamod.admin.time.blood_moon";
+	
 
 	@MinaPermission(desc = "Allows to use elevators", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_ELEVATOR_USE = "minamod.all.elevator.use";

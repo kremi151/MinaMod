@@ -25,10 +25,26 @@ public class WorldProviderOverworldHook extends WorldProviderSurface{
         return color;
     }
 	
-	private int getBloodMoonPhase(long worldTime)
+	private static int getBloodMoonPhase(long worldTime)
     {
         return (int)(worldTime / 24000L % 24L + 8L) % 24;
     }
+	
+	private int getBloodMoonPhase()
+    {
+		return getBloodMoonPhase(world.getWorldTime());
+    }
+	
+	public void setToNextBloodMoon() {
+		long nextDayStart = world.getWorldTime() + (24000L - (world.getWorldTime() % 24000L));
+		while(true) {
+			if(getBloodMoonPhase(nextDayStart) == 0) {
+				break;
+			}
+			nextDayStart += 24000L;
+		}
+		world.setWorldTime(nextDayStart);
+	}
 	
 	public static boolean isBloodMoon(World world){
 		return world.provider instanceof WorldProviderOverworldHook && world.getDifficulty() != EnumDifficulty.PEACEFUL && ((WorldProviderOverworldHook)world.provider).getBloodMoonPhase(world.getWorldTime()) == 0;
