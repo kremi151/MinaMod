@@ -1,9 +1,14 @@
 package lu.kremi151.minamod.commands;
 
+import java.util.Optional;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.server.command.CommandTreeBase;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public abstract class MinaCommandTreeBase extends CommandTreeBase implements IMinaCommand{
 	
@@ -25,6 +30,12 @@ public abstract class MinaCommandTreeBase extends CommandTreeBase implements IMi
 		}else {
 			return parent.getName() + " " + this.getName();
 		}
+	}
+	
+	@Override
+	public boolean checkPermission(MinecraftServer server, ICommandSender sender){
+		Optional<String> perm = getPermissionNode();
+		return (!perm.isPresent() || PermissionAPI.hasPermission((EntityPlayer)sender, perm.get()));
 	}
 
 }
