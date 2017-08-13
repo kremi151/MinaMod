@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.util.TextHelper;
-import lu.kremi151.minamod.worlddata.MinaWorld;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
@@ -25,7 +25,8 @@ public class CommandEnableMobs extends MinaPlayerCommandBase{
 
 	@Override
 	public void execute(MinecraftServer server, EntityPlayer player, String[] arg) throws CommandException {
-		MinaWorld.forWorld(player.world).setMobsEnabled(enable);
+		player.world.getGameRules().setOrCreateGameRule("doMobSpawning", String.valueOf(enable));
+		player.world.getEntities(EntityLivingBase.class, en -> !(en instanceof EntityPlayer)).forEach(en -> en.setDead());
 		if(enable){
 			TextHelper.sendTranslateableChatMessage(player, TextFormatting.GREEN, "msg.cmd.mobs_enabled");
 		}else{

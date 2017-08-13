@@ -20,7 +20,6 @@ import lu.kremi151.minamod.entity.EntityIceGolhem;
 import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
-import lu.kremi151.minamod.worlddata.MinaWorld;
 import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -56,9 +55,9 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -74,10 +73,6 @@ public class EntityEvents {
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) { // NO_UCD (unused code)
 		EntityLivingBase living = event.getEntityLiving();
-		if(!(living instanceof EntityPlayer) &! MinaWorld.forWorld(living.world).hasMobsEnabled()){
-			living.setDead();
-			return;
-		}
 		iteratePotionEffects(living);
 
 		IBlockState beneath = living.world.getBlockState(living.getPosition().down());
