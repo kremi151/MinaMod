@@ -5,8 +5,8 @@ import java.util.Optional;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.util.TextHelper;
 import lu.kremi151.minamod.worlddata.MinaWorld;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
@@ -18,7 +18,8 @@ public class CommandEnableMobs extends MinaPlayerCommandBase{
 	
 	private boolean enable;
 	
-	CommandEnableMobs(boolean enable){
+	CommandEnableMobs(CommandBase parent, boolean enable){
+		super(parent);
 		this.enable = enable;
 	}
 
@@ -43,8 +44,8 @@ public class CommandEnableMobs extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina " + getName() + " - " + (enable?"Temporary enable mobs":"Temporary disable mobs");
+	public String getDescription() {
+		return enable?"Temporary enable mobs":"Temporary disable mobs";
 	}
 
 }

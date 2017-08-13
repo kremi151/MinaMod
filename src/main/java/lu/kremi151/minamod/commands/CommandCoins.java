@@ -5,14 +5,16 @@ import java.util.Optional;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.util.TextHelper;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandCoins extends MinaPlayerCommandBase{
-	
-	CommandCoins(){}
+
+	CommandCoins(CommandBase parent) {
+		super(parent);
+	}
 
 	@Override
 	public String getName() {
@@ -35,8 +37,8 @@ public class CommandCoins extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina coins - Shows the amount of coins you have";
+	public String getDescription() {
+		return "Shows the amount of coins you have";
 	}
 
 }

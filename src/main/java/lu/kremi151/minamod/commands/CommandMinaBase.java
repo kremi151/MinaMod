@@ -8,15 +8,15 @@ public class CommandMinaBase extends CommandTreeBase{
 	
 	public CommandMinaBase(){
 		if(MinaMod.getMinaConfig().isDebugging()){
-			this.addSubcommand(new CommandEnableMobs(true));
-			this.addSubcommand(new CommandEnableMobs(false));
+			this.addSubcommand(new CommandEnableMobs(this, true));
+			this.addSubcommand(new CommandEnableMobs(this, false));
 		}
-		this.addSubcommand(new CommandItemToNBT());
-		this.addSubcommand(new CommandListPermissions());
-		this.addSubcommand(new CommandCoins());
-		this.addSubcommand(new CommandStats());
-		this.addSubcommand(new CommandResetSlotMachine());
-		this.addSubcommand(new CommandBloodMoon());
+		this.addSubcommand(new CommandItemToNBT(this));
+		this.addSubcommand(new CommandListPermissions(this));
+		this.addSubcommand(new CommandCoins(this));
+		this.addSubcommand(new CommandStats(this));
+		this.addSubcommand(new CommandResetSlotMachine(this));
+		this.addSubcommand(new CommandBloodMoon(this));
 	}
 	
 	@Override

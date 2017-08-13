@@ -5,13 +5,17 @@ import java.util.Optional;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.util.TextHelper;
 import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 
 public class CommandBloodMoon extends MinaPlayerCommandBase{
+
+	CommandBloodMoon(CommandBase parent) {
+		super(parent);
+	}
 
 	@Override
 	public String getName() {
@@ -19,8 +23,8 @@ public class CommandBloodMoon extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina blood-moon - Sets the time to the next beginning blood moon";
+	public String getDescription() {
+		return "Sets the time to the next beginning blood moon";
 	}
 
 	@Override

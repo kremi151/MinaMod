@@ -8,8 +8,8 @@ import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +17,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 
 public class CommandResetSlotMachine extends MinaPlayerCommandBase{
-	
-	CommandResetSlotMachine() {}
+
+	CommandResetSlotMachine(CommandBase parent) {
+		super(parent);
+	}
 
 	@Override
 	public String getName() {
@@ -26,8 +28,8 @@ public class CommandResetSlotMachine extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina reset-slot-machine - Repairs a mulfunctioning slot machine";
+	public String getDescription() {
+		return "Repairs a mulfunctioning slot machine";
 	}
 
 	@Override

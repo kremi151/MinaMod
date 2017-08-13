@@ -1,12 +1,14 @@
 package lu.kremi151.minamod.commands;
 
-import net.minecraft.command.ICommandSender;
-import net.minecraftforge.server.command.CommandTreeBase;
+import java.util.Optional;
 
-public class CommandStats extends CommandTreeBase{
+import net.minecraft.command.CommandBase;
+
+public class CommandStats extends MinaCommandTreeBase{
 	
-	public CommandStats(){
-		this.addSubcommand(new CommandResetStats());
+	CommandStats(CommandBase parent){
+		super(parent);
+		this.addSubcommand(new CommandResetStats(this));
 	}
 
 	@Override
@@ -15,8 +17,13 @@ public class CommandStats extends CommandTreeBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina stats";
+	public String getDescription() {
+		return "Tree command to handle player stats";
+	}
+
+	@Override
+	public Optional<String> getPermissionNode() {
+		return Optional.empty();
 	}
 
 }

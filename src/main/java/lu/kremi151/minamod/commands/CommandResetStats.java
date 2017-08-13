@@ -4,12 +4,16 @@ import java.util.Optional;
 
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandResetStats extends MinaPlayerCommandBase{
+
+	CommandResetStats(CommandBase parent) {
+		super(parent);
+	}
 
 	@Override
 	public String getName() {
@@ -17,8 +21,8 @@ public class CommandResetStats extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina stats reset";
+	public String getDescription() {
+		return "Resets player stats to default values";
 	}
 
 	@Override

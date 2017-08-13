@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.util.TextHelper;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -17,8 +17,11 @@ import net.minecraft.util.text.TextFormatting;
 
 public class CommandItemToNBT extends MinaPlayerCommandBase{
 	
-	CommandItemToNBT(){}
-	
+	CommandItemToNBT(CommandBase parent) {
+		super(parent);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String getName() {
 		return "item-to-nbt";
@@ -52,8 +55,13 @@ public class CommandItemToNBT extends MinaPlayerCommandBase{
 	}
 
 	@Override
-	public String getUsage(ICommandSender sender) {
-		return "/mina item-to-nbt [<file>] - Writes the NBT data structure of the current held item to disk";
+	public String getDescription() {
+		return "Writes the NBT data structure of the current held item to disk";
+	}
+	
+	@Override
+	public String[] getArguments() {
+		return new String[] {"[<file>]"};
 	}
 
 }
