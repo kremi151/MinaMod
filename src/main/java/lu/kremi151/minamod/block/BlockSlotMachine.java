@@ -159,14 +159,16 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	@Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-		TileEntity te = worldIn.getTileEntity(pos);
-		if(te != null && te instanceof TileEntitySlotMachine) {
-			TileEntitySlotMachine sm = (TileEntitySlotMachine) te;
-			
-			ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
-            sm.writeSlotMachineToNBT(stack.getOrCreateSubCompound("BlockEntityTag"));
-            
-            spawnAsEntity(worldIn, pos, stack);
+		if(!worldIn.isRemote) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if(te != null && te instanceof TileEntitySlotMachine) {
+				TileEntitySlotMachine sm = (TileEntitySlotMachine) te;
+				
+				ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
+	            sm.writeSlotMachineToNBT(stack.getOrCreateSubCompound("BlockEntityTag"));
+	            
+	            spawnAsEntity(worldIn, pos, stack);
+			}
 		}
 		super.breakBlock(worldIn, pos, state);
     }
