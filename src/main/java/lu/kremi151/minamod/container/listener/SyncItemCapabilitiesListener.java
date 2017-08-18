@@ -38,8 +38,8 @@ public class SyncItemCapabilitiesListener implements IContainerListener{
 		}
 	}
 	
-	public static boolean isSyncable(ItemStack stack) {
-		return !stack.isEmpty() && stack.getItem() instanceof ISyncCapabilitiesToClient;
+	private boolean isSyncable(ItemStack stack) {
+		return !stack.isEmpty() && stack.getItem() instanceof ISyncCapabilitiesToClient && ((ISyncCapabilitiesToClient)stack.getItem()).canSyncCapabilitiesToClient(stack);
 	}
 
 	@Override
