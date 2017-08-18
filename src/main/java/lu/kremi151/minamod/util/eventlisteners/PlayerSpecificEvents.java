@@ -10,14 +10,18 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.container.listener.SyncItemCapabilitiesListener;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.worlddata.MinaWorld;
 import lu.kremi151.minamod.worlddata.data.FrostTemplePosition;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemHoe;
@@ -30,11 +34,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class PlayerSpecificEvents {
 
@@ -59,8 +65,6 @@ public class PlayerSpecificEvents {
 					}else{
 						te.decrementLevel(0.05f);
 					}
-					//world.setBlockState(e.getPos(), state.getActualState(world, e.getPos()));//TODO: optimize & fix
-					//world.notifyBlockUpdate(e.getPos(), state, state.getActualState(world, e.getPos()), 3);
 
 					BlockSieve.MaterialType material = te.getMaterial();
 					if(te.getLevel() == 0.0f && material.getLootTable() != null){
@@ -143,11 +147,35 @@ public class PlayerSpecificEvents {
 	}
 	
 	@SubscribeEvent
+	public void onPlayerLogin(PlayerLoggedInEvent event) {
+		if (event.player instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) event.player;
+			registerItemSyncListeners(player, player.inventoryContainer);
+		}
+	}
+	
+	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){
+		if (event.getEntityPlayer() instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
+			registerItemSyncListeners(player, player.inventoryContainer);
+		}
 		if(event.isWasDeath()){
 			event.getEntityPlayer().getCapability(ICapabilityStats.CAPABILITY, null)
 				.applyFrom(event.getOriginal().getCapability(ICapabilityStats.CAPABILITY, null));
 		}
+	}
+	
+	@SubscribeEvent
+	public void onOpenPlayerContainer(PlayerContainerEvent.Open event) {
+		if (event.getEntityPlayer() instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
+			registerItemSyncListeners(player, event.getContainer());
+		}
+	}
+	
+	private void registerItemSyncListeners(EntityPlayerMP player, Container container) {
+		container.addListener(new SyncItemCapabilitiesListener(player));
 	}
 	
 	@SubscribeEvent
@@ -158,27 +186,5 @@ public class PlayerSpecificEvents {
 			}
 		}
 	}
-	
-	//TODO: Oil
-//	@SubscribeEvent
-//    public void onBucketFill(FillBucketEvent event) {
-//		MovingObjectPosition t = event.target;
-//		IBlockState bs = event.world.getBlockState(t.getBlockPos());
-//		Block b = bs.getBlock();
-//		if(b == null)return;
-//		if(!(b instanceof BlockLiquid))return;
-//		int level = (Integer)bs.getValue(BlockLiquid.LEVEL);
-//		ItemStack res = null;
-//		if(level == 0){
-//			if(b == MinaBlocks.blockOil){
-//				event.world.setBlockToAir(t.getBlockPos());
-//				res = new ItemStack(MinaItems.itemOilBucket, 1);
-//			}
-//		}
-//		if(res != null){
-//			event.result = res;
-//            event.setResult(Result.ALLOW);
-//		}
-//    }
 
 }

@@ -37,6 +37,7 @@ import lu.kremi151.minamod.packet.message.MessageOpenGui;
 import lu.kremi151.minamod.packet.message.MessageShowCustomAchievement;
 import lu.kremi151.minamod.packet.message.MessageSpawnParticleEffect;
 import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
+import lu.kremi151.minamod.packet.message.MessageSyncItemCapabilities;
 import lu.kremi151.minamod.packet.message.MessageTriggerOpenStatsAchievement;
 import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
 import lu.kremi151.minamod.packet.message.MessageUseAmulet;
@@ -381,6 +382,7 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageUseAmuletHandler.class, MessageUseAmulet.class, 9, Side.SERVER);
 		networkWrapper.registerMessage(MessageSpawnParticleEffectHandler.class, MessageSpawnParticleEffect.class, 10, Side.CLIENT);
 		networkWrapper.registerMessage(MessageTriggerOpenStatsAchievementHandler.class, MessageTriggerOpenStatsAchievement.class, 11, Side.SERVER);
+		networkWrapper.registerMessage(MessageSyncItemCapabilities.Handler.class, MessageSyncItemCapabilities.class, 12, Side.CLIENT);
 	}
 	
 	public static String createDottedIdentifier(String name){
