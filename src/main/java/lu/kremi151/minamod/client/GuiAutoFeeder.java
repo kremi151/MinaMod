@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
-import lu.kremi151.minamod.inventory.container.ContainerAutoFeeder;
+import lu.kremi151.minamod.container.ContainerAutoFeeder;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;

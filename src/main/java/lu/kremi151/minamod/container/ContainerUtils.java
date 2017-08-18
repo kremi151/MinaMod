@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.inventory.container;
+package lu.kremi151.minamod.container;
 
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;

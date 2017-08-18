@@ -1,6 +1,6 @@
-package lu.kremi151.minamod.inventory.container;
+package lu.kremi151.minamod.container;
 
-import static lu.kremi151.minamod.inventory.container.ContainerUtils.transmitInteger;
+import static lu.kremi151.minamod.container.ContainerUtils.transmitInteger;
 
 import java.util.Random;
 

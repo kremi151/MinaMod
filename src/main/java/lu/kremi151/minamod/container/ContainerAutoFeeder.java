@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.inventory.container;
+package lu.kremi151.minamod.container;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.util.ShiftClickManager;

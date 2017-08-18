@@ -4,12 +4,12 @@ import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
-import lu.kremi151.minamod.inventory.container.ContainerAmuletInventory;
-import lu.kremi151.minamod.inventory.container.ContainerAutoFeeder;
-import lu.kremi151.minamod.inventory.container.ContainerCoinBag;
-import lu.kremi151.minamod.inventory.container.ContainerCollector;
-import lu.kremi151.minamod.inventory.container.ContainerLetterbox;
-import lu.kremi151.minamod.inventory.container.ContainerSlotMachine;
+import lu.kremi151.minamod.container.ContainerAmuletInventory;
+import lu.kremi151.minamod.container.ContainerAutoFeeder;
+import lu.kremi151.minamod.container.ContainerCoinBag;
+import lu.kremi151.minamod.container.ContainerCollector;
+import lu.kremi151.minamod.container.ContainerLetterbox;
+import lu.kremi151.minamod.container.ContainerSlotMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -55,7 +55,7 @@ public class MinaGuiHandler implements IGuiHandler{
 		case IDRegistry.guiIdAmulets:
 			return new lu.kremi151.minamod.client.GuiAmuletInventory(new ContainerAmuletInventory(player));
 		case IDRegistry.guiIdSlotMachine:
-			return new lu.kremi151.minamod.client.GuiSlotMachine(new lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient(player, (TileEntitySlotMachine) world.getTileEntity(new BlockPos(x,y,z))));
+			return new lu.kremi151.minamod.client.GuiSlotMachine(new lu.kremi151.minamod.container.ContainerSlotMachineClient(player, (TileEntitySlotMachine) world.getTileEntity(new BlockPos(x,y,z))));
 		}
 		return null;
 	}

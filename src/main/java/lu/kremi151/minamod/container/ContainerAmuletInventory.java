@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.inventory.container;
+package lu.kremi151.minamod.container;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.inventory.container.ContainerSlotMachineClient;
+import lu.kremi151.minamod.container.ContainerSlotMachineClient;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Point;
 import lu.kremi151.minamod.util.ReflectionLoader;

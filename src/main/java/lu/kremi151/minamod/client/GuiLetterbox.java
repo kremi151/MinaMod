@@ -3,7 +3,7 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.inventory.container.ContainerLetterbox;
+import lu.kremi151.minamod.container.ContainerLetterbox;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
