@@ -10,6 +10,7 @@ import java.util.UUID;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
+import lu.kremi151.minamod.exceptions.InvalidFormatException;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -427,7 +428,10 @@ public class MinaUtils {
 		return nbt;
 	}
 	
-	public static UUID convertNBTToUUID(NBTTagCompound nbt) {
+	public static UUID convertNBTToUUID(NBTTagCompound nbt) throws InvalidFormatException{
+		if(!nbt.hasKey("most",  99) || !nbt.hasKey("least", 99)) {
+			throw new InvalidFormatException("The tag is not representing a valid UUID as it is missing either a most or a least attribute or both: " + nbt);
+		}
 		return new UUID(nbt.getLong("most"), nbt.getLong("least"));
 	}
 	

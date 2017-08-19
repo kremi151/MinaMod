@@ -1,13 +1,13 @@
 package lu.kremi151.minamod.recipe;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.capabilities.IKey;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class RecipeColoredKey extends RecipeBase{
@@ -67,17 +67,9 @@ public class RecipeColoredKey extends RecipeBase{
 		int fgreen = Math.min(greens / hcount, 255);
 		int fblue = Math.min(blues / hcount, 255);
 		
-//		NBTTagCompound nbt = new NBTTagCompound();
-//		nbt.setInteger(ItemCard._COLOR, MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
-//		if(old_card.stackTagCompound != null){
-//			nbt.setString(ItemCard._UUID, old_card.stackTagCompound.getString(ItemCard._UUID));
-//		}else{
-//			nbt.setString(ItemCard._UUID, UUID.randomUUID().toString());
-//		}
-//		res.setTagCompound(nbt);
-		ItemKey.KeyData data = ItemKey.getData(res);
-		data.apply(ItemKey.getData(old_key));
-		data.setTint(MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
+		ItemKey.ExtendedKeyCapability cap = (ItemKey.ExtendedKeyCapability)res.getCapability(IKey.CAPABILITY_KEY, null);
+		cap.applyFrom((ItemKey.ExtendedKeyCapability)old_key.getCapability(IKey.CAPABILITY_KEY, null));
+		cap.setTint(MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
 		
 		return res;
 	}

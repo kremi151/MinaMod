@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.recipe;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.capabilities.IKey;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemKey.State;
 import net.minecraft.inventory.InventoryCrafting;
@@ -15,9 +16,9 @@ public class RecipeCopyKey implements IRecipe{
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		boolean raw_key = false, key = false;
 		for(int i = 0 ; i < inv.getSizeInventory() ; i++){
-			ItemStack is = inv.getStackInSlot(i);
-			if(is.getItem() == MinaItems.KEY){
-				ItemKey.State state = ItemKey.getState(is);
+			ItemStack stack = inv.getStackInSlot(i);
+			if(stack.getItem() == MinaItems.KEY){
+				ItemKey.State state = ItemKey.getState(stack);
 				switch(state){
 				case RAW:
 					if(raw_key){
@@ -28,6 +29,7 @@ public class RecipeCopyKey implements IRecipe{
 					break;
 				case UNKNOWN:
 				case DUPLICATE:
+				case MASTER:
 					return false;
 				case NORMAL:
 					if(key){
@@ -46,13 +48,13 @@ public class RecipeCopyKey implements IRecipe{
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		ItemStack raw_key = ItemStack.EMPTY, key = ItemStack.EMPTY;
 		for(int i = 0 ; i < inv.getSizeInventory() ; i++){
-			ItemStack is = inv.getStackInSlot(i);
-			if(is.getItem() == MinaItems.KEY){
-				ItemKey.State state = ItemKey.getState(is);
+			ItemStack stack = inv.getStackInSlot(i);
+			if(stack.getItem() == MinaItems.KEY){
+				ItemKey.State state = ItemKey.getState(stack);
 				if(state == ItemKey.State.RAW){
-					raw_key = is;
+					raw_key = stack;
 				}else{
-					key = is;
+					key = stack;
 				}
 			}
 		}
@@ -60,10 +62,10 @@ public class RecipeCopyKey implements IRecipe{
 			return ItemStack.EMPTY;
 		}
 		ItemStack res = raw_key.copy();
-		ItemKey.KeyData capRes = ItemKey.getData(res);
-		ItemKey.KeyData capSrc = ItemKey.getData(key);
+		ItemKey.ExtendedKeyCapability capRes = ((ItemKey.ExtendedKeyCapability)res.getCapability(IKey.CAPABILITY_KEY, null));
+		ItemKey.ExtendedKeyCapability capSrc = ((ItemKey.ExtendedKeyCapability)key.getCapability(IKey.CAPABILITY_KEY, null));
 		
-		capRes.apply(capSrc);
+		capRes.applyFrom(capSrc);
 		capRes.setState(State.DUPLICATE);
 		
 		return res;
@@ -83,10 +85,10 @@ public class RecipeCopyKey implements IRecipe{
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
 		NonNullList<ItemStack> aitemstack = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 		for(int i = 0 ; i < inv.getSizeInventory() ; i++){
-			ItemStack is = inv.getStackInSlot(i);
-			if(is.getItem() == MinaItems.KEY){
-				if(ItemKey.getState(is) == ItemKey.State.NORMAL){
-					aitemstack.set(i, is.copy());
+			ItemStack stack = inv.getStackInSlot(i);
+			if(stack.getItem() == MinaItems.KEY){
+				if(ItemKey.getState(stack) == ItemKey.State.NORMAL){
+					aitemstack.set(i, stack.copy());
 					break;
 				}
 			}

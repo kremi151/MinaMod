@@ -355,6 +355,7 @@ item.honey_pot.info.saturation=Gibt für einen bestimmten Zeitraum Sättigung
 item.key.info.duplicate=Duplikat
 item.key.info.no_raw=Imprägniert
 item.key.info.raw=Noch nicht imprägniert. Zum Imprägnieren muss der Schlüssel in eine Werkbank gelegt werden.
+item.key.info.master=Universalschlüssel
 item.key.info.unknown=Dieser Schlüssel ist in einem unbekanntem Zustand
 item.chip.info.0=Typ A
 item.chip.info.1=Typ B

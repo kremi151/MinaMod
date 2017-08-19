@@ -1,9 +1,10 @@
 package lu.kremi151.minamod.capabilities;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -13,14 +14,15 @@ import net.minecraft.item.ItemStack;
 public class CapabilityItemKey implements IKey{
 	
 	protected final ItemStack stack;
-	private final LinkedList<UUID> uuids = new LinkedList<>();
+	protected final Set<UUID> uuids = new HashSet<>();
 	
 	public CapabilityItemKey(ItemStack stack){
 		this.stack = stack;
 	}
-	
-	public List<UUID> getUnlockableUUIDs(){
-		return Collections.unmodifiableList(uuids);
+
+	@Override
+	public Set<UUID> getKeyIds() {
+		return Collections.unmodifiableSet(uuids);
 	}
 	
 	public void clearUnlockables() {
@@ -43,19 +45,20 @@ public class CapabilityItemKey implements IKey{
 			uuids.add(uuid);
 		}
 	}
+	
+	@Override
+	public void registerUnlockables(Collection<UUID> list) {
+		uuids.addAll(list);
+	}
+	
+	@Override
+	public void registerUnlockables(UUID... uuids) {
+		this.uuids.addAll(Arrays.asList(uuids));
+	}
 
 	@Override
 	public boolean empty() {
 		return uuids.size() == 0;
-	}
-
-	@Override
-	public Optional<UUID> getPrimaryKey() {
-		if(!empty()){
-			return Optional.of(uuids.getFirst());
-		}else{
-			return Optional.empty();
-		}
 	}
 
 }

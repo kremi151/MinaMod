@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.capabilities;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import net.minecraftforge.common.capabilities.Capability;
@@ -24,5 +24,5 @@ public interface IKey {
 	}
 	
 	boolean empty();
-	Optional<UUID> getPrimaryKey();
+	Set<UUID> getKeyIds();
 }

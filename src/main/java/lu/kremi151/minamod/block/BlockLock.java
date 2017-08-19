@@ -1,18 +1,14 @@
 package lu.kremi151.minamod.block;
 
 import java.util.Iterator;
-import java.util.Optional;
-import java.util.UUID;
 
-import lu.kremi151.minamod.MinaCreativeTabs;
-import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.capabilities.IKey;
-import lu.kremi151.minamod.item.ItemKey;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +30,7 @@ import net.minecraft.world.World;
 public class BlockLock extends Block
 {
     public static final PropertyEnum FACING = PropertyEnum.create("facing", BlockLock.EnumOrientation.class);
+    public static final PropertyBool POWERED = PropertyBool.create("powered");
 
     public BlockLock()
     {
@@ -196,7 +193,7 @@ public class BlockLock extends Block
         	if(!is.isEmpty() && is.hasCapability(IKey.CAPABILITY_KEY, null)){
         		IKey cap = is.getCapability(IKey.CAPABILITY_KEY, null);
             	TileEntityLock te = (TileEntityLock) worldIn.getTileEntity(pos);
-            	if(te.isRegistred()){
+            	/*if(te.isRegistred()){
             		if(te.isPowered()){
             			if(te.checkUUID(cap))te.setPowered(false);
             		}else{
@@ -208,6 +205,9 @@ public class BlockLock extends Block
                 		te.setUUID(pkey.get());
                 		te.setPowered(true);
             		}
+            	}*/
+            	if(te.tryUnlock(cap)) {
+            		te.setPowered(!te.isPowered());
             	}
     	        worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.PLAYERS, 0.3F, te.isPowered() ? 0.6F : 0.5F, false);
     	        worldIn.notifyNeighborsOfStateChange(pos, this, true);
@@ -251,6 +251,17 @@ public class BlockLock extends Block
     {
         return true;
     }
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof TileEntityLock) {
+			TileEntityLock tel = (TileEntityLock) te;
+			return state.withProperty(POWERED, tel.isPowered());
+		}else {
+			return state.withProperty(POWERED, false);
+		}
+	}
 
     @Override
     public IBlockState getStateFromMeta(int meta)
@@ -275,7 +286,7 @@ public class BlockLock extends Block
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
+        return new BlockStateContainer(this, new IProperty[] {FACING, POWERED});
     }
 
     public static enum EnumOrientation implements IStringSerializable

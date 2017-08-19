@@ -356,6 +356,7 @@ item.honey_pot.info.saturation=Gives saturation for a specific timespan
 item.key.info.duplicate=Duplicate
 item.key.info.no_raw=Encoded
 item.key.info.raw=Not encoded yet. To encode, please put this key in a crafting table.
+item.key.info.master=Master key
 item.key.info.unknown=This key is in an unknown state
 item.chip.info.0=Type A
 item.chip.info.1=Type B
