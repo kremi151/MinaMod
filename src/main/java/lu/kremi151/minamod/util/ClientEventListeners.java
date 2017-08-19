@@ -10,7 +10,9 @@ import lu.kremi151.minamod.network.MessageUseAmulet;
 import lu.kremi151.minamod.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -90,13 +92,17 @@ public class ClientEventListeners {
 	@SubscribeEvent
 	public void onPreRenderEntity(RenderLivingEvent.Pre event){
 		if(!(event.getEntity() instanceof EntityPlayer)){
-			int lvl = MinaUtils.getSuperMobLevel(event.getEntity());
+			EntityLivingBase entity = event.getEntity();
+			int lvl = MinaUtils.getSuperMobLevel(entity);
 			if(lvl == 1){
 				GlStateManager.color(0.35f, 0.5f, 0.35f);
 			}else if(lvl == 2){
 				GlStateManager.color(0.35f, 0.35f, 0.5f);
 			}else if(lvl >= 3){
 				GlStateManager.color(0.5f, 0.35f, 0.35f);
+			}
+			if(entity.getRNG().nextFloat() < 0.05f) {
+				entity.world.spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.getRNG().nextDouble() - 0.5, entity.posY + (entity.getRNG().nextDouble() * entity.height), entity.posZ + entity.getRNG().nextDouble() - 0.5, 0.0, 0.02, 0.0);
 			}
 		}
 	}
