@@ -8,7 +8,7 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.client.element.GuiButtonHoldable;
 import lu.kremi151.minamod.container.ContainerCoinBag;
-import lu.kremi151.minamod.packet.message.MessageCoinBag;
+import lu.kremi151.minamod.network.MessageCoinBag;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;

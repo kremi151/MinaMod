@@ -2,7 +2,7 @@ package lu.kremi151.minamod.container.listener;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
-import lu.kremi151.minamod.packet.message.MessageSyncItemCapabilities;
+import lu.kremi151.minamod.network.MessageSyncItemCapabilities;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;

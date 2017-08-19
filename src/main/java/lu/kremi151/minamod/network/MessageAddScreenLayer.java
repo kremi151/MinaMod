@@ -1,7 +1,11 @@
-package lu.kremi151.minamod.packet.message;
+package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
+import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.network.abstracts.AbstractClientMessageHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageAddScreenLayer implements IMessage{
 
@@ -48,6 +52,16 @@ public class MessageAddScreenLayer implements IMessage{
 	
 	public static MessageAddScreenLayer removeLayer(){
 		return new MessageAddScreenLayer((byte)-1);
+	}
+	
+	public static class Handler extends AbstractClientMessageHandler<MessageAddScreenLayer>{
+
+		@Override
+		public IMessage handleClientMessage(EntityPlayer player, MessageAddScreenLayer message, MessageContext ctx) {
+			MinaMod.getProxy().addScreenLayer(message.getScreenId(), message.isForced());
+			return null;
+		}
+
 	}
 
 }

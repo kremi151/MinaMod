@@ -52,7 +52,7 @@ import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.item.ItemHerbGuide;
-import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
+import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;

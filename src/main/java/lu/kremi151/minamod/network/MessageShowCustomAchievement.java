@@ -1,9 +1,13 @@
-package lu.kremi151.minamod.packet.message;
+package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
+import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.network.abstracts.AbstractClientMessageHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageShowCustomAchievement implements IMessage{
 	
@@ -50,6 +54,16 @@ public class MessageShowCustomAchievement implements IMessage{
 	
 	public ItemStack getIcon() {
 		return icon;
+	}
+	
+	public static class Handler extends AbstractClientMessageHandler<MessageShowCustomAchievement>{
+
+		@Override
+		public IMessage handleClientMessage(EntityPlayer player, MessageShowCustomAchievement msg, MessageContext ctx) {
+			MinaMod.getProxy().showAchievementOverlay(null, msg.getTitle(), msg.getDescription(), msg.getDuration(), msg.getIcon());
+			return null;
+		}
+
 	}
 
 }

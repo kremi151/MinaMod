@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.potion;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
+import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 

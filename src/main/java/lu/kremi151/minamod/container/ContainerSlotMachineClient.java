@@ -2,7 +2,7 @@ package lu.kremi151.minamod.container;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
-import lu.kremi151.minamod.packet.message.MessageSpinSlotMachine;
+import lu.kremi151.minamod.network.MessageSpinSlotMachine;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import net.minecraft.entity.player.EntityPlayer;

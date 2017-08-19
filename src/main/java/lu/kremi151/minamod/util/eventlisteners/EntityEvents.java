@@ -17,7 +17,7 @@ import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.entity.EntityIceGolhem;
-import lu.kremi151.minamod.packet.message.MessageAddScreenLayer;
+import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import lu.kremi151.minamod.worldprovider.WorldProviderOverworldHook;

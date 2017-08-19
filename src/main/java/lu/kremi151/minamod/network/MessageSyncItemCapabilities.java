@@ -1,9 +1,9 @@
-package lu.kremi151.minamod.packet.message;
+package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
-import lu.kremi151.minamod.packet.message.handler.abstracts.AbstractClientMessageHandler;
+import lu.kremi151.minamod.network.abstracts.AbstractClientMessageHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;

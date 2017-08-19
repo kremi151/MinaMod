@@ -3,7 +3,7 @@ package lu.kremi151.minamod.container;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.inventory.SlotReadOnly;
-import lu.kremi151.minamod.packet.message.MessageCoinBag;
+import lu.kremi151.minamod.network.MessageCoinBag;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

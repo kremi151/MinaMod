@@ -1,10 +1,16 @@
-package lu.kremi151.minamod.packet.message;
+package lu.kremi151.minamod.network;
+
+import java.util.Random;
 
 import io.netty.buffer.ByteBuf;
+import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
 import lu.kremi151.minamod.util.slotmachine.SpinMode;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpinSlotMachine implements IMessage{
 	
@@ -50,6 +56,19 @@ public class MessageSpinSlotMachine implements IMessage{
 	
 	public boolean isInstant() {
 		return instant;
+	}
+	
+	public static class Handler extends AbstractServerMessageHandler<MessageSpinSlotMachine>{
+
+		@Override
+		public IMessage handleServerMessage(EntityPlayer player, MessageSpinSlotMachine message, MessageContext ctx) {
+			TileEntitySlotMachine te = (TileEntitySlotMachine) player.world.getTileEntity(message.getPos());
+			try {
+				te.turnSlots(message.getSpinMode(), new Random(System.currentTimeMillis()), message.isInstant());
+			}catch(IllegalStateException e) {}
+			return null;
+		}
+
 	}
 
 }

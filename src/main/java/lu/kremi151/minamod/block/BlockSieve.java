@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import lu.kremi151.minamod.MinaLootTableList;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
-import lu.kremi151.minamod.packet.message.MessageUpdateTileEntity;
+import lu.kremi151.minamod.network.MessageUpdateTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
