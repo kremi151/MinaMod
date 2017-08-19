@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.packet.message;
 
 import io.netty.buffer.ByteBuf;
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import lu.kremi151.minamod.packet.message.handler.abstracts.AbstractClientMessageHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,18 +55,22 @@ public class MessageSyncItemCapabilities implements IMessage{
 
 		@Override
 		public IMessage handleClientMessage(EntityPlayer player, MessageSyncItemCapabilities message, MessageContext ctx) {
-			final Container container;
-			if (message.getWindowId() == 0) {
-				container = player.inventoryContainer;
-			} else if (message.getWindowId() == player.openContainer.windowId) {
-				container = player.openContainer;
-			} else {
-				return null;
-			}
-			final ItemStack stack = container.getSlot(message.getSlot()).getStack();
-			if(!stack.isEmpty() && stack.getItem() instanceof ISyncCapabilitiesToClient) {
-				((ISyncCapabilitiesToClient)stack.getItem()).readSyncableData(stack, message.getTag());
-			}
+			MinaMod.getProxy().getThreadListener(ctx).addScheduledTask(() -> {
+				final Container container;
+				System.out.format("Msg-Id: %d\tOpen-Id:%d\n", message.getWindowId(), player.openContainer.windowId);
+				System.out.println("Same? -> " + (message.getWindowId() == player.openContainer.windowId));
+				if (message.getWindowId() == 0) {
+					container = player.inventoryContainer;
+				} else if (message.getWindowId() == player.openContainer.windowId) {
+					container = player.openContainer;
+				} else {
+					return;
+				}
+				final ItemStack stack = container.getSlot(message.getSlot()).getStack();
+				if(!stack.isEmpty() && stack.getItem() instanceof ISyncCapabilitiesToClient) {
+					((ISyncCapabilitiesToClient)stack.getItem()).readSyncableData(stack, message.getTag());
+				}
+			});
 			return null;
 		}
 		

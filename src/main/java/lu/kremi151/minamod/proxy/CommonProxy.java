@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -37,6 +38,14 @@ public class CommonProxy{
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
 	public void setAchievementsCustomStringFormatters() {}
+	
+	public IThreadListener getThreadListener(MessageContext context) {
+		if(context.side.isServer()) {
+			return context.getServerHandler().player.mcServer;
+		}else{
+			throw new RuntimeException("Cannot get a thread listener from a client context on a dedicated server");
+		}
+	}
 	
 	public void showAchievementOverlay(EntityPlayer player, String title, String desc, long duration, ItemStack icon) {
 		if(player instanceof EntityPlayerMP) {

@@ -19,6 +19,7 @@ import lu.kremi151.minamod.block.BlockDimmableLight;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
 import lu.kremi151.minamod.block.BlockIceAltar;
+import lu.kremi151.minamod.block.BlockLock;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
@@ -75,6 +76,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -104,6 +106,15 @@ public class ClientProxy extends CommonProxy {
 	public static final KeyBinding KEY_AMULET_1 = new KeyBinding("gui.key.amulets.1.desc", Keyboard.KEY_I, "gui.key.category.minamod");
 	public static final KeyBinding KEY_AMULET_2 = new KeyBinding("gui.key.amulets.2.desc", Keyboard.KEY_O, "gui.key.category.minamod");
 	public static final KeyBinding KEY_AMULET_3 = new KeyBinding("gui.key.amulets.3.desc", Keyboard.KEY_P, "gui.key.category.minamod");
+	
+	@Override
+	public IThreadListener getThreadListener(MessageContext context) {
+		if(context.side.isClient()) {
+			return Minecraft.getMinecraft();
+		}else {
+			return super.getThreadListener(context);
+		}
+	}
 	
 	@Override
 	public void registerRenderers() {
@@ -202,6 +213,7 @@ public class ClientProxy extends CommonProxy {
 				new StateMap.Builder().ignore(BlockCoconut.AGE).build());
 		
 		ModelLoader.setCustomStateMapper(MinaBlocks.DIMMABLE_LIGHT, new StateMap.Builder().ignore(BlockDimmableLight.LIGHT).build());
+		ModelLoader.setCustomStateMapper(MinaBlocks.KEY_LOCK, new StateMap.Builder().ignore(BlockLock.POWERED).build());
 	}
 	
 	@Override
