@@ -57,8 +57,6 @@ public class MessageSyncItemCapabilities implements IMessage{
 		public IMessage handleClientMessage(EntityPlayer player, MessageSyncItemCapabilities message, MessageContext ctx) {
 			MinaMod.getProxy().getThreadListener(ctx).addScheduledTask(() -> {
 				final Container container;
-				System.out.format("Msg-Id: %d\tOpen-Id:%d\n", message.getWindowId(), player.openContainer.windowId);
-				System.out.println("Same? -> " + (message.getWindowId() == player.openContainer.windowId));
 				if (message.getWindowId() == 0) {
 					container = player.inventoryContainer;
 				} else if (message.getWindowId() == player.openContainer.windowId) {
