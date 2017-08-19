@@ -389,7 +389,8 @@ public class MinaUtils {
 			ee.setInvisible(true);
 			ee.setSilent(true);
 			ee.setNoGravity(true);
-			ee.addTag(BlockStool.DUMMY_TAG);
+			ee.setCustomNameTag(BlockStool.DUMMY_MOUNTED_NAME);
+			ee.setAlwaysRenderNameTag(false);
 			ee.setPosition(x, y - 2.0, z);
 			world.spawnEntity(ee);
 			player.startRiding(ee, true);

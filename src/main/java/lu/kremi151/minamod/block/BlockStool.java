@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockStool extends BlockColored{
 	
 	protected static final AxisAlignedBB blockBounds = new AxisAlignedBB(0.125d, 0d, 0.125d, 0.875d, 0.6875d, 0.875d);
-	public static final String DUMMY_TAG = "stool_dummy";
+	public static final String DUMMY_MOUNTED_NAME = "___mounted-entity";
 	
 	private static final ArrayList<BlockStool> stool_blocks = new ArrayList<BlockStool>();
 	

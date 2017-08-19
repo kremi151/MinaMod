@@ -258,7 +258,7 @@ public class EntityEvents {
 	@SubscribeEvent
 	public void onEntityMount(EntityMountEvent event){
 		if(event.isDismounting() && event.getEntityBeingMounted() instanceof EntityArmorStand){
-			if(MinaUtils.checkHasTag(event.getEntityBeingMounted(), BlockStool.DUMMY_TAG)){
+			if(event.getEntityBeingMounted().hasCustomName() && event.getEntityBeingMounted().getCustomNameTag().equals(BlockStool.DUMMY_MOUNTED_NAME)){
 				event.getEntityBeingMounted().setDead();
 			}
 		}
