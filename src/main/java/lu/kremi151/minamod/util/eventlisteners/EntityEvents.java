@@ -269,7 +269,7 @@ public class EntityEvents {
 	
 	private float getLocalDifficulty(World world, BlockPos pos){
 		if(localDifficultyRecalc-- <= 0){
-			localDifficulty = world.getDifficultyForLocation(pos).getAdditionalDifficulty();
+			localDifficulty = world.getDifficultyForLocation(pos).getClampedAdditionalDifficulty();
 			localDifficultyRecalc = 100;
 		}
 		return localDifficulty;
