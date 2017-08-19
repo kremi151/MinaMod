@@ -94,15 +94,17 @@ public class ClientEventListeners {
 		if(!(event.getEntity() instanceof EntityPlayer)){
 			EntityLivingBase entity = event.getEntity();
 			int lvl = MinaUtils.getSuperMobLevel(entity);
-			if(lvl == 1){
-				GlStateManager.color(0.35f, 0.5f, 0.35f);
-			}else if(lvl == 2){
-				GlStateManager.color(0.35f, 0.35f, 0.5f);
-			}else if(lvl >= 3){
-				GlStateManager.color(0.5f, 0.35f, 0.35f);
-			}
-			if(entity.getRNG().nextFloat() < 0.05f) {
-				entity.world.spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.getRNG().nextDouble() - 0.5, entity.posY + (entity.getRNG().nextDouble() * entity.height), entity.posZ + entity.getRNG().nextDouble() - 0.5, 0.0, 0.02, 0.0);
+			if(lvl > 0) {
+				if(lvl == 1){
+					GlStateManager.color(0.35f, 0.5f, 0.35f);
+				}else if(lvl == 2){
+					GlStateManager.color(0.35f, 0.35f, 0.5f);
+				}else if(lvl >= 3){
+					GlStateManager.color(0.5f, 0.35f, 0.35f);
+				}
+				if(entity.getRNG().nextFloat() < 0.05f) {
+					entity.world.spawnParticle(EnumParticleTypes.FLAME, entity.posX + entity.getRNG().nextDouble() - 0.5, entity.posY + (entity.getRNG().nextDouble() * entity.height), entity.posZ + entity.getRNG().nextDouble() - 0.5, 0.0, 0.02, 0.0);
+				}
 			}
 		}
 	}

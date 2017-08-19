@@ -18,7 +18,7 @@ def mcVersion         = "1.11.2"
 def majorModVersion   = "1"
 def apiModVersion     = "0"
 def minorModVersion   = "6"
-def minamodPatchVersion = "11"
+def minamodPatchVersion = "12"
 def minamodVersion = majorModVersion+"."+apiModVersion+"."+minorModVersion+"."+minamodPatchVersion
 version = mcVersion+"-"+minamodVersion
 
