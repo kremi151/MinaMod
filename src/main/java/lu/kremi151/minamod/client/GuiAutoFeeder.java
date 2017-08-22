@@ -22,7 +22,7 @@ public class GuiAutoFeeder extends GuiContainer {
 	private static final int GUI_ENERGY_CAPTION_GREEN = MinaUtils.convertRGBToDecimal(20, 190, 40);
 	private static final int GUI_ENERGY_CAPTION_RED = MinaUtils.convertRGBToDecimal(190, 20, 40);
 
-	ContainerAutoFeeder ct;
+	private final ContainerAutoFeeder ct;
 
 	public GuiAutoFeeder(ContainerAutoFeeder container) {
 		super(container);
@@ -32,14 +32,10 @@ public class GuiAutoFeeder extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		// draw text and stuff here
-		// the parameters for drawString are: string, x, y, color
-		
 		fontRenderer.drawString(
 				I18n.translateToLocal(ct.getAutoFeeder().getName()), 8, 10,
 				4210752);
 		fontRenderer.drawString(I18n.translateToLocalFormatted("gui.energy.display", ct.getEnergy()), 8, 20, (ct.getEnergy() >= TileEntityAutoFeeder.POWER_TO_EXTRACT)?GUI_ENERGY_CAPTION_GREEN:GUI_ENERGY_CAPTION_RED);
-		// draws "Inventory" or your regional equivalent
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
 				ySize - 96 + 2, 4210752);
@@ -48,7 +44,6 @@ public class GuiAutoFeeder extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
 			int mouseY) {
-		// draw your Gui here, only thing you need to change is the path
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;

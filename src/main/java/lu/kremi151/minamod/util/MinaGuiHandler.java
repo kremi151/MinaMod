@@ -2,12 +2,14 @@ package lu.kremi151.minamod.util;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
+import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
 import lu.kremi151.minamod.container.ContainerAutoFeeder;
 import lu.kremi151.minamod.container.ContainerCoinBag;
 import lu.kremi151.minamod.container.ContainerCollector;
+import lu.kremi151.minamod.container.ContainerFilter;
 import lu.kremi151.minamod.container.ContainerLetterbox;
 import lu.kremi151.minamod.container.ContainerSlotMachine;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +35,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerAmuletInventory(player);
 		case IDRegistry.guiIdSlotMachine:
 			return new ContainerSlotMachine(player, (TileEntitySlotMachine) world.getTileEntity(new BlockPos(x,y,z)));
+		case IDRegistry.guiIdFilter:
+			return new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z)));
 		}
 		return null;
 	}
@@ -56,6 +60,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiAmuletInventory(new ContainerAmuletInventory(player));
 		case IDRegistry.guiIdSlotMachine:
 			return new lu.kremi151.minamod.client.GuiSlotMachine(new lu.kremi151.minamod.container.ContainerSlotMachineClient(player, (TileEntitySlotMachine) world.getTileEntity(new BlockPos(x,y,z))));
+		case IDRegistry.guiIdFilter:
+			return new lu.kremi151.minamod.client.GuiFilter(new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z))));
 		}
 		return null;
 	}

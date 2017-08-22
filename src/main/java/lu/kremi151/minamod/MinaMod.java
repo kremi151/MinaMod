@@ -12,6 +12,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
 import lu.kremi151.minamod.block.tileentity.TileEntityEnergySource;
+import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
@@ -145,6 +146,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createDottedIdentifier("elevator_control"));
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, createDottedIdentifier("camp_fire"));
 		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createDottedIdentifier("slot_machine"));
+		GameRegistry.registerTileEntity(TileEntityFilter.class, createDottedIdentifier("filter"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),

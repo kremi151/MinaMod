@@ -24,6 +24,7 @@ import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockElevatorControl;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockEnergySource;
+import lu.kremi151.minamod.block.BlockFilter;
 import lu.kremi151.minamod.block.BlockGiftBox;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
@@ -216,7 +217,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
 	public static final BlockDimmableLight DIMMABLE_LIGHT = (BlockDimmableLight) new BlockDimmableLight().setUnlocalizedName("dimmable_lamp");
 	public static final BlockRotatedPillar WABE_BLOCK = (BlockRotatedPillar) new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setUnlocalizedName("wabe_block").setCreativeTab(CreativeTabs.DECORATIONS);
-
+	public static final BlockFilter FILTER = (BlockFilter) new BlockFilter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("filter");
+	
 	private static boolean init = false, initOres = false;
 
 	static void registerBlocks() {
@@ -320,6 +322,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlockWithOre(COCONUT, "coconut");
 		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
 		proxy.registerBlock(WABE_BLOCK, "wabe_block");
+		proxy.registerBlock(FILTER, "filter");
 		
 		init = true;
 	}
