@@ -27,7 +27,7 @@ import net.minecraftforge.items.VanillaInventoryCodeHooks;
 
 public class TileEntityFilter extends TileEntity implements IHopper, ITickable
 {
-    private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
     private int transferCooldown = -1;
     private long tickedGameTime;
     private String customName = null;
@@ -36,10 +36,11 @@ public class TileEntityFilter extends TileEntity implements IHopper, ITickable
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        this.inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         if (compound.hasKey("Item", 10)) {
-        	this.inventory.add(new ItemStack(compound.getCompoundTag("Item")));
+        	this.inventory.set(0, new ItemStack(compound.getCompoundTag("Item")));
+        }else {
+            this.inventory.set(0, ItemStack.EMPTY);
         }
 
         if (compound.hasKey("CustomName", 8))
