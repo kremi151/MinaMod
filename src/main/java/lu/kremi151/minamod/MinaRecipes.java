@@ -202,6 +202,7 @@ public class MinaRecipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.FILTER), " H ", "PSP", " P ", 'H', Blocks.HOPPER, 'P', MinaItems.PLATINUM_INGOT, 'S', Items.STRING);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, 0));
+		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "ICG", "NNN", 'N', Items.field_191525_da, 'I', Items.IRON_INGOT, 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
 	}
 	
 	private static void initColoredRecipes(){
