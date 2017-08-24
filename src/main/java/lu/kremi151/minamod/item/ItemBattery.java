@@ -3,20 +3,21 @@ package lu.kremi151.minamod.item;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
+import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class ItemBattery extends Item{
+public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 
 	public ItemBattery(){
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
-		this.setMaxDamage(500);
 	}
 	
 	@Override
@@ -25,12 +26,44 @@ public class ItemBattery extends Item{
         return new EnergyProvider(stack);
     }
 	
-	private static class EnergyProvider implements ICapabilityProvider{
+	@Override
+	public double getDurabilityForDisplay(ItemStack stack)
+    {
+		IEnergyStorage cap = (IEnergyStorage) stack.getCapability(CapabilityEnergy.ENERGY, null);
+        if(cap != null) {
+        	return 1.0 - ((double)cap.getEnergyStored() / (double)cap.getMaxEnergyStored());
+        }else {
+        	return 1.0;
+        }
+    }
+
+	@Override
+	public NBTTagCompound writeSyncableData(ItemStack stack, NBTTagCompound nbt) {
+		IEnergyStorage cap = (IEnergyStorage) stack.getCapability(CapabilityEnergy.ENERGY, null);
+		if(cap != null) {
+			nbt.setInteger("Cap", cap.getEnergyStored());
+			nbt.setInteger("Max", cap.getMaxEnergyStored());
+		}
+		return nbt;
+	}
+
+	@Override
+	public void readSyncableData(ItemStack stack, NBTTagCompound nbt) {
+		IEnergyStorage cap = (IEnergyStorage) stack.getCapability(CapabilityEnergy.ENERGY, null);
+		if(cap != null && cap instanceof BatteryStorage) {
+			if(nbt.hasKey("Cap", 99) && nbt.hasKey("Max", 99)) {
+				((BatteryStorage)cap).setCapacity(nbt.getInteger("Cap"));
+				((BatteryStorage)cap).setMaxCapacity(nbt.getInteger("Max"));
+			}
+		}
+	}
+	
+	private static class EnergyProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 		
 		private final BatteryStorage cap;
 		
 		private EnergyProvider(ItemStack stack){
-			this.cap = new BatteryStorage(stack);
+			this.cap = new BatteryStorage(500);//TODO: Adjust
 		}
 
 		@Override
@@ -42,33 +75,56 @@ public class ItemBattery extends Item{
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 			return (capability == CapabilityEnergy.ENERGY)?((T) cap):null;
 		}
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setInteger("Capacity", cap.getCapacity());
+			nbt.setInteger("MaxCapacity", cap.getMaxCapacity());
+			return nbt;
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+			cap.setCapacity(nbt.getInteger("Capacity"));
+			cap.setMaxCapacity(Math.max(1, nbt.getInteger("MaxCapacity")));
+		}
 		
 	}
 	
 	private static class BatteryStorage implements IEnergyStorage{
 		
-		private ItemStack stack;
+		private int capacity = 0;
+		private int maxCapacity;
 		
-		private BatteryStorage(ItemStack stack){
-			this.stack = stack;
+		private BatteryStorage(int maxCapacity){
+			this.maxCapacity = maxCapacity;
 		}
 		
-		private short getMaxCapacity(){
-			return (short) stack.getMaxDamage();
+		private int getMaxCapacity(){
+			return maxCapacity;
 		}
 		
-		private short getCapacity(){
-			return (short) (getMaxCapacity() - stack.getItemDamage());
+		private int getCapacity(){
+			return capacity;
 		}
 		
 		private void setCapacity(int cap){
 			if(cap < 0){
-				cap = 0;
-			}else if(cap > getMaxCapacity()){
-				cap = getMaxCapacity();
+				this.capacity = 0;
+			}else if(cap > maxCapacity){
+				this.capacity = maxCapacity;
+			}else {
+				this.capacity = cap;
 			}
-			
-			stack.setItemDamage(getMaxCapacity() - cap);
+		}
+		
+		private void setMaxCapacity(int max) {
+			if(max > 0) {
+				this.maxCapacity = max;
+			}else {
+				throw new IllegalArgumentException("Maximal capacity should be above zero");
+			}
 		}
 
 		@Override
