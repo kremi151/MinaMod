@@ -1,11 +1,5 @@
 package lu.kremi151.minamod.block;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.google.common.base.Predicate;
-
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.util.IDRegistry;
@@ -20,13 +14,11 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -43,19 +35,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFilter extends BlockContainer
 {
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
-    {
-        public boolean apply(@Nullable EnumFacing p_apply_1_)
-        {
-            return p_apply_1_ != EnumFacing.UP;
-        }
-    });
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", facing -> facing != EnumFacing.UP);
     public static final PropertyBool ENABLED = PropertyBool.create("enabled");
-    protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
-    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
-    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB DOWN_AABB = new AxisAlignedBB(0.25d, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
+    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.0D, 0.75D, 1.0D, 0.75D);
+    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
+    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 1.0D, 1.0D, 0.75D);
 
     public BlockFilter()
     {
@@ -68,19 +54,14 @@ public class BlockFilter extends BlockContainer
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return FULL_BLOCK_AABB;
+        switch(state.getValue(FACING)) {
+        	case NORTH: return NORTH_AABB;
+        	case EAST: return EAST_AABB;
+        	case SOUTH: return SOUTH_AABB;
+        	case WEST: return WEST_AABB;
+        	default: return DOWN_AABB;
+        }
     }
-
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
-    }
-
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {

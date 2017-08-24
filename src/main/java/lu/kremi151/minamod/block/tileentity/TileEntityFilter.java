@@ -1,11 +1,11 @@
 package lu.kremi151.minamod.block.tileentity;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Pair;
 
 import lu.kremi151.minamod.block.BlockFilter;
+import lu.kremi151.minamod.util.ItemHandlerInvWrapper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,6 +22,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.VanillaInventoryCodeHooks;
 
 public class TileEntityFilter extends TileEntity implements IHopper, ITickable
 {
@@ -159,6 +161,12 @@ public class TileEntityFilter extends TileEntity implements IHopper, ITickable
     private boolean transferItemsOut()//Modified
     {
         IInventory iinventory = this.getInventoryForFilterTransfer();
+        if(iinventory == null) {
+        	IItemHandler ihandler = getItemHandlerForFilterTransfer();
+        	if(ihandler != null) {
+        		iinventory = new ItemHandlerInvWrapper(ihandler);//TODO: Find a more efficient hybrid solution
+        	}
+        }
 
         if (iinventory == null)
         {
@@ -242,7 +250,7 @@ public class TileEntityFilter extends TileEntity implements IHopper, ITickable
     }
 
     @Override
-    @javax.annotation.Nullable
+    @Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
         if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
@@ -254,6 +262,17 @@ public class TileEntityFilter extends TileEntity implements IHopper, ITickable
     {
         EnumFacing enumfacing = BlockFilter.getFacing(this.getBlockMetadata());
         return TileEntityHopper.getInventoryAtPosition(this.getWorld(), this.getXPos() + (double)enumfacing.getFrontOffsetX(), this.getYPos() + (double)enumfacing.getFrontOffsetY(), this.getZPos() + (double)enumfacing.getFrontOffsetZ());
+    }
+
+    private IItemHandler getItemHandlerForFilterTransfer()
+    {
+        EnumFacing enumfacing = BlockFilter.getFacing(this.getBlockMetadata());
+        Pair<IItemHandler, Object> res = VanillaInventoryCodeHooks.getItemHandler(this.getWorld(), this.getXPos() + (double)enumfacing.getFrontOffsetX(), this.getYPos() + (double)enumfacing.getFrontOffsetY(), this.getZPos() + (double)enumfacing.getFrontOffsetZ(), enumfacing.getOpposite());
+        if(res != null) {
+        	return res.getKey();
+        }else {
+        	return null;
+        }
     }
 
     @Override

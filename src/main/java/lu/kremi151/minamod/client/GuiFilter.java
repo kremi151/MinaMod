@@ -19,7 +19,7 @@ public class GuiFilter extends GuiContainer {
 
 	public GuiFilter(ContainerFilter container) {
 		super(container);
-		this.ySize = 149;
+		this.ySize = 133;
 		this.ct = container;
 	}
 

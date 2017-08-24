@@ -23,9 +23,9 @@ public class ContainerFilter extends BaseContainer{
 		this.pl = player;
 		this.te = te;
 		
-		addSlotToContainer(new Slot(te, 0, 80, 32));
+		addSlotToContainer(new Slot(te, 0, 80, 20));
 		
-		bindPlayerInventory(pl.inventory, 8, 67);
+		bindPlayerInventory(pl.inventory, 8, 51);
 	}
 
 	@Override
