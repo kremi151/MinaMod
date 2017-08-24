@@ -5,7 +5,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import lu.kremi151.minamod.inventory.BaseInventoryImpl;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -25,7 +27,7 @@ public class TileEntityAutoFeeder extends TileEntitySidedInventory implements IT
 	
 	private AxisAlignedBB checkRange;
 	
-	private int ticksLeft = 0;
+	private int ticksLeft = 0, energyTicksLeft = 0;
 	private int maxTicks = 1000;
 
 	private final IEnergyStorage nrj;
@@ -59,6 +61,10 @@ public class TileEntityAutoFeeder extends TileEntitySidedInventory implements IT
 			NBTTagCompound inbt = nbt.getCompoundTag("foodItem");
 			setInventorySlotContents(0, new ItemStack(inbt));
 		}
+		if(nbt.hasKey("batteryItem", 10)){
+			NBTTagCompound inbt = nbt.getCompoundTag("batteryItem");
+			batteryInv.setInventorySlotContents(0, new ItemStack(inbt));
+		}
 		if(nbt.hasKey("ticksLeft", 99)){
 			this.ticksLeft = nbt.getInteger("ticksLeft");
 		}
@@ -82,9 +88,11 @@ public class TileEntityAutoFeeder extends TileEntitySidedInventory implements IT
 		if(!update){
 			ItemStack item = getStackInSlot(0);
 			if(!item.isEmpty()){
-				NBTTagCompound inbt = new NBTTagCompound();
-				item.writeToNBT(inbt);
-				nbt.setTag("foodItem", inbt);
+				nbt.setTag("foodItem", item.writeToNBT(new NBTTagCompound()));
+			}
+			item = batteryInv.getStackInSlot(0);
+			if(!item.isEmpty()){
+				nbt.setTag("batteryItem", item.writeToNBT(new NBTTagCompound()));
 			}
 		}
 		nbt.setInteger("ticksLeft", ticksLeft);
@@ -129,7 +137,19 @@ public class TileEntityAutoFeeder extends TileEntitySidedInventory implements IT
 
 	@Override
 	public void update() {
-		if(world.isRemote || !hasEnoughPower())return;
+		if(world.isRemote)return;
+		if(this.energyTicksLeft-- <= 0 && !batteryInv.getStackInSlot(0).isEmpty() && batteryInv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)) {
+			IEnergyStorage cap = batteryInv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
+			int extracted = cap.extractEnergy(20, false);
+			if(nrj.canReceive()) {
+				extracted -= nrj.receiveEnergy(extracted, false);
+			}
+			if(extracted > 0) {
+				cap.receiveEnergy(extracted, false);
+			}
+			this.energyTicksLeft = 10;
+		}
+		if(!hasEnoughPower())return;
 		
 		if(checkRange == null){
 			this.checkRange = new AxisAlignedBB((double)this.pos.getX() - 2.0, (double)this.pos.getY() - 2.0, (double)this.pos.getZ() - 2.0, (double)this.pos.getX() + 2.0, (double)this.pos.getY() + 2.0, (double)this.pos.getZ() + 2.0);
@@ -170,6 +190,17 @@ public class TileEntityAutoFeeder extends TileEntitySidedInventory implements IT
     {
         return (capability == CapabilityEnergy.ENERGY) || super.hasCapability(capability, facing);
     }
+	
+	private final BaseInventoryImpl batteryInv = new BaseInventoryImpl("energy", 1) {
+		@Override
+		public boolean isItemValidForSlot(int index, ItemStack stack) {
+			return stack.hasCapability(CapabilityEnergy.ENERGY, null);
+		}
+	};
+	
+	public IInventory getBatteryInventory() {
+		return batteryInv;
+	}
 
     @Override
     @Nullable

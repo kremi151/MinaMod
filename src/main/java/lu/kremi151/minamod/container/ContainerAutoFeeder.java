@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.container;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
+import lu.kremi151.minamod.inventory.SlotSpecific;
 import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerAutoFeeder extends BaseContainer{
 	
 	private static final int FOOD_INV_START = 0;
-	private static final int PLAYER_INV_START = FOOD_INV_START + 1;
+	private static final int PLAYER_INV_START = FOOD_INV_START + 2;
 
 	public static final int PB_TICKS_LEFT = 0;
 	public static final int PB_MAX_TICKS = 1;
@@ -38,8 +39,9 @@ public class ContainerAutoFeeder extends BaseContainer{
 	public ContainerAutoFeeder(EntityPlayer player, TileEntityAutoFeeder te) {
 		this.pl = player;
 		this.te = te;
-		
+
 		addSlotToContainer(new Slot(te, 0, 80, 32));
+		addSlotToContainer(new SlotSpecific(te.getBatteryInventory(), 0, 26, 32));
 		
 		bindPlayerInventory(pl.inventory, 8, 67);
 	}
@@ -76,8 +78,8 @@ public class ContainerAutoFeeder extends BaseContainer{
 	    
         super.detectAndSendChanges();
 
-        if(lastTicksLeft != te.getTicksLeft()){
-        	lastTicksLeft = te.getTicksLeft();
+        /*if(lastTicksLeft != te.getTicksLeft()){
+        	lastTicksLeft = te.getTicksLeft();*/
         	int l = this.listeners.size();
         	for (int i = 0; i < l; ++i)
             {
@@ -86,7 +88,7 @@ public class ContainerAutoFeeder extends BaseContainer{
                 icrafting.sendWindowProperty(this, PB_MAX_TICKS, te.getMaxTicks());
                 icrafting.sendWindowProperty(this, PB_ENERGY, te.getEnergy());
             }
-        }
+        //}
         
 	}
 	
