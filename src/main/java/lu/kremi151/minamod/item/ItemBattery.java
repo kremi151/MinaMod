@@ -18,12 +18,19 @@ public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 
 	public ItemBattery(){
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		this.setMaxStackSize(1);
 	}
 	
 	@Override
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
     {
         return new EnergyProvider(stack);
+    }
+	
+	@Override
+	public boolean showDurabilityBar(ItemStack stack)
+    {
+		return true;
     }
 	
 	@Override
@@ -98,6 +105,7 @@ public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 		private int maxCapacity;
 		
 		private BatteryStorage(int maxCapacity){
+			this.capacity = maxCapacity;
 			this.maxCapacity = maxCapacity;
 		}
 		
