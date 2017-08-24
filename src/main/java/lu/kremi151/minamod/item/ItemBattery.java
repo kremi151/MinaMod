@@ -63,7 +63,7 @@ public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 		private final BatteryStorage cap;
 		
 		private EnergyProvider(ItemStack stack){
-			this.cap = new BatteryStorage(500);//TODO: Adjust
+			this.cap = new BatteryStorage(2000);//TODO: Adjust
 		}
 
 		@Override
