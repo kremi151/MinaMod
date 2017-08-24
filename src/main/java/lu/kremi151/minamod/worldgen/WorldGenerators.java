@@ -28,7 +28,7 @@ public class WorldGenerators {
 	public static final WorldGenNewOre CITRIN_ORE = new WorldGenNewOre(MinaBlocks.CITRIN_ORE.getDefaultState(), 5, 2).setRange(6, 12);
 	
 	@OreInjector(chunkVersion = 1)
-	public static final WorldGenNewOre PLATINUM_ORE = new WorldGenNewOre(MinaBlocks.PLATINUM_ORE.getDefaultState(), 3, 4).setRange(10, 18);
+	public static final WorldGenNewOre PLATINUM_ORE = new WorldGenNewOre(MinaBlocks.PLATINUM_ORE.getDefaultState(), 3, 4).setRange(10, 20);
 	
 	@OreInjector(chunkVersion = 1)
 	public static final WorldGenNewOre RUBY_ORE = new WorldGenNewOre(MinaBlocks.RUBY_ORE.getDefaultState(), 5, 2).setRange(6, 18);
