@@ -201,6 +201,7 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.HONEYWABE, 9), MinaBlocks.WABE_BLOCK);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.FILTER), " H ", "PSP", " P ", 'H', Blocks.HOPPER, 'P', MinaItems.PLATINUM_INGOT, 'S', Items.STRING);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, 0));
 	}
 	
 	private static void initColoredRecipes(){
