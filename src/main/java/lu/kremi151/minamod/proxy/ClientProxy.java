@@ -258,7 +258,7 @@ public class ClientProxy extends CommonProxy {
 		try {
 			Achievement ach = new Achievement("dummy", title, 0, 0, icon, null);
 			boolean permanent = duration < 0;
-			ReflectionLoader.GuiAchievement_postCustomAchievement(Minecraft.getMinecraft().guiAchievement, title, desc, Minecraft.getSystemTime() + duration, ach, permanent);
+			ReflectionLoader.GuiAchievement_postCustomAchievement(Minecraft.getMinecraft().guiAchievement, title, desc, Minecraft.getSystemTime() /*+ duration*/, ach, permanent);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
