@@ -9,7 +9,6 @@ import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemKey;
-import lu.kremi151.minamod.recipe.RecipeAddToGiftBox;
 import lu.kremi151.minamod.recipe.RecipeColoredBook;
 import lu.kremi151.minamod.recipe.RecipeColoredBookCloning;
 import lu.kremi151.minamod.recipe.RecipeColoredKey;
@@ -302,7 +301,6 @@ public class MinaRecipes {
 		if(FeatureList.enable_soul_pearls)GameRegistry.addRecipe(new RecipeDamagedSoulPearl());
 		GameRegistry.addRecipe(new RecipeColoredBook());
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
-		GameRegistry.addRecipe(new RecipeAddToGiftBox());
 		GameRegistry.addRecipe(new RecipeCopyKey());
 		GameRegistry.addRecipe(new RecipeEncodeKey());
 
@@ -319,8 +317,6 @@ public class MinaRecipes {
 		RecipeSorter.register(MinaMod.MODID + ":copy_key", RecipeCopyKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":encode_key", RecipeEncodeKey.class, RecipeSorter.Category.SHAPELESS,
-				"after:minecraft:shapeless");
-		RecipeSorter.register(MinaMod.MODID + ":gift_box_adding", RecipeAddToGiftBox.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		
 		/*RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,

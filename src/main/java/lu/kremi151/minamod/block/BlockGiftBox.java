@@ -3,7 +3,6 @@ package lu.kremi151.minamod.block;
 import java.util.Random;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
-import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -88,7 +87,7 @@ public class BlockGiftBox extends BlockColored{
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-		NBTTagCompound inbt = stack.getSubCompound(ItemBlockGiftBox.GIFT_ITEM_TAG);
+		NBTTagCompound inbt = stack.getSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
 		if(inbt != null){
 			((TileEntityGiftBox)worldIn.getTileEntity(pos)).setGiftItem(new ItemStack(inbt));
 		}

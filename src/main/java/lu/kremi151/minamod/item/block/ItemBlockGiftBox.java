@@ -2,6 +2,7 @@ package lu.kremi151.minamod.item.block;
 
 import java.util.List;
 
+import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
@@ -14,8 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockGiftBox extends ItemCloth{
 	
-	public static final String GIFT_ITEM_TAG = "giftItem";
-
 	public ItemBlockGiftBox(Block block) {
 		super(block);
 	}
@@ -24,7 +23,7 @@ public class ItemBlockGiftBox extends ItemCloth{
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-		NBTTagCompound inbt = stack.getSubCompound(GIFT_ITEM_TAG);
+		NBTTagCompound inbt = stack.getSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
 		if(inbt != null){
 			ItemStack stack2 = new ItemStack(inbt);
 			tooltip.add(I18n.translateToLocalFormatted("tile.gift_box.contains", stack2.getCount(), stack2.getDisplayName()));

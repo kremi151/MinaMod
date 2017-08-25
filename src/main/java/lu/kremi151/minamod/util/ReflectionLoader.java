@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.DimensionType;
@@ -44,6 +45,8 @@ public class ReflectionLoader {
 	
 	@SideOnly(Side.CLIENT)
 	private static Method GUI_CONTAINER_DRAW_ITEMSTACK;
+	@SideOnly(Side.CLIENT)
+	private static Method GUI_CONTAINER_GET_SLOT_AT_POSITION;
 	
 	static{
 		try {
@@ -56,6 +59,7 @@ public class ReflectionLoader {
 			
 			try {
 				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
+				GUI_CONTAINER_GET_SLOT_AT_POSITION = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "getSlotAtPosition", "func_146975_c", int.class, int.class);
 
 				GUI_ACHIEVEMENT_ACHIEVEMENT_TITLE = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "achievementTitle", "field_146268_i");
 				GUI_ACHIEVEMENT_ACHIEVEMENT_DESCRIPTION = findClientField(net.minecraft.client.gui.achievement.GuiAchievement.class, "achievementDescription", "field_146265_j");
@@ -122,6 +126,15 @@ public class ReflectionLoader {
 	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
 		GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static Slot GuiContainer_getSlotAtPosition(net.minecraft.client.gui.inventory.GuiContainer container, int x, int y) {
+		try {
+			return (Slot) GUI_CONTAINER_GET_SLOT_AT_POSITION.invoke(container, x, y);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException("This should not happen", e);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

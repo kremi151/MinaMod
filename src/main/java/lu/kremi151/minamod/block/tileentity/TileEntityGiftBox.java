@@ -2,7 +2,6 @@ package lu.kremi151.minamod.block.tileentity;
 
 import javax.annotation.Nullable;
 
-import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -14,6 +13,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityGiftBox extends TileEntity{
 	
 	private GiftItemHandler inv;
+	public static final String GIFT_ITEM_TAG = "giftItem";
 	
 	public TileEntityGiftBox(){
 		this.inv = new GiftItemHandler();
@@ -32,8 +32,8 @@ public class TileEntityGiftBox extends TileEntity{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		if(nbt.hasKey(ItemBlockGiftBox.GIFT_ITEM_TAG, 10)){
-			setGiftItem(new ItemStack(nbt.getCompoundTag(ItemBlockGiftBox.GIFT_ITEM_TAG)));
+		if(nbt.hasKey(TileEntityGiftBox.GIFT_ITEM_TAG, 10)){
+			setGiftItem(new ItemStack(nbt.getCompoundTag(TileEntityGiftBox.GIFT_ITEM_TAG)));
 		}
 		
 	}
@@ -45,7 +45,7 @@ public class TileEntityGiftBox extends TileEntity{
 		if(!gift.isEmpty()){
 			NBTTagCompound inbt = new NBTTagCompound();
 			gift.writeToNBT(inbt);
-			nbt.setTag(ItemBlockGiftBox.GIFT_ITEM_TAG, inbt);
+			nbt.setTag(TileEntityGiftBox.GIFT_ITEM_TAG, inbt);
 		}
 		return nbt;
 	}

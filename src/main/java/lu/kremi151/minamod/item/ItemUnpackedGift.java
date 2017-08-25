@@ -2,11 +2,16 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
+import lu.kremi151.minamod.container.ContainerSelectItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -42,6 +47,22 @@ public class ItemUnpackedGift extends Item{
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        return EnumActionResult.PASS;
+		if(hand == EnumHand.MAIN_HAND) {
+			final int heldPos = player.inventory.currentItem;
+			ContainerSelectItem.selectItem(player, heldPos, res -> {
+				ItemStack original = player.inventory.getCurrentItem();
+				ItemStack selected = player.inventory.getStackInSlot(res.selected);
+				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT) {
+					ItemStack gift = new ItemStack(MinaBlocks.GIFT_BOX, 1, original.getMetadata());
+					NBTTagCompound nbt = gift.getOrCreateSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
+					selected.writeToNBT(nbt);
+					player.inventory.setInventorySlotContents(res.selected, ItemStack.EMPTY);
+					player.inventory.setInventorySlotContents(player.inventory.currentItem, gift);
+				}
+			});
+	        return EnumActionResult.SUCCESS;
+		}else {
+			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+		}
     }
 }
