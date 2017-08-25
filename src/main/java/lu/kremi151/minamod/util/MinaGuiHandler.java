@@ -39,7 +39,7 @@ public class MinaGuiHandler implements IGuiHandler{
 		case IDRegistry.guiIdFilter:
 			return new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z)));
 		case IDRegistry.guiIdSelectItem:
-			return new ContainerSelectItem(player, x);
+			return new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x);
 		}
 		return null;
 	}
@@ -66,7 +66,7 @@ public class MinaGuiHandler implements IGuiHandler{
 		case IDRegistry.guiIdFilter:
 			return new lu.kremi151.minamod.client.GuiFilter(new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z))));
 		case IDRegistry.guiIdSelectItem:
-			return new lu.kremi151.minamod.client.GuiSelectItem(new ContainerSelectItem(player, x));
+			return new lu.kremi151.minamod.client.GuiSelectItem(new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x));
 		}
 		return null;
 	}

@@ -49,7 +49,7 @@ public class ItemUnpackedGift extends Item{
     {
 		if(hand == EnumHand.MAIN_HAND) {
 			final int heldPos = player.inventory.currentItem;
-			ContainerSelectItem.selectItem(player, heldPos, res -> {
+			ContainerSelectItem.selectItem(player, heldPos, ContainerSelectItem.TITLE_PACK_GIFT, res -> {
 				ItemStack original = player.inventory.getCurrentItem();
 				ItemStack selected = player.inventory.getStackInSlot(res.selected);
 				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT) {

@@ -39,7 +39,7 @@ public class GuiSelectItem extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		fontRenderer.drawString(
-				I18n.translateToLocal("#####CUSTOM TITLE#####"), 8, 10,
+				I18n.translateToLocal(ct.getTitle()), 8, 10,
 				4210752);
 	}
 
