@@ -5,15 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.interfaces.IMixtureIngredient;
+import lu.kremi151.minamod.item.ItemHerbMixture;
+import lu.kremi151.minamod.item.ItemHerbMixture.HerbMixtureSnack;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -72,9 +74,9 @@ public class RecipeHerbMixture implements IRecipe{
 			blue += MinaUtils.extractBlueFromColor(tint) / l;
 			ing.getMixtureProperties(is, appls);
 		}
-		ItemStack r = new ItemStack(MinaItems.MIXTURE,1);
-		NBTTagCompound nbt = r.getOrCreateSubCompound("mixture");
-		nbt.setInteger("color", MinaUtils.convertRGBToDecimal(red, green, blue));
+		ItemStack r = new ItemStack(MinaItems.MIXTURE);
+		ItemHerbMixture.HerbMixtureSnack cap = (HerbMixtureSnack) r.getCapability(ISnack.CAPABILITY, null);
+		cap.setColor(MinaUtils.convertRGBToDecimal(red, green, blue));
 		
 		final HashMap<StatType, Integer> pointsMap = new HashMap<>();
 		for(IMixtureApplicator appl : appls){
@@ -95,7 +97,7 @@ public class RecipeHerbMixture implements IRecipe{
 		}
 
 		pointsMap.entrySet().forEach(e -> {
-			nbt.setInteger(e.getKey().getId(), e.getValue());
+			cap.offer(e.getKey(), e.getValue());
 		});
 		
 		return r;
@@ -108,7 +110,7 @@ public class RecipeHerbMixture implements IRecipe{
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.MIXTURE,1);
+		return new ItemStack(MinaItems.MIXTURE);
 	}
 
 	@Override

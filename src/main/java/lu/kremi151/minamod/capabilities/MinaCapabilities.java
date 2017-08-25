@@ -12,6 +12,7 @@ import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsImpl;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
+import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,6 +37,7 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(IAmuletHolder.class, CapabilityAmuletHolder.STORAGE, CapabilityAmuletHolder::new);
 		CapabilityManager.INSTANCE.register(ICapabilityBliss.class, ICapabilityBliss.STORAGE, new NoImplFactory());
 		CapabilityManager.INSTANCE.register(ICapabilityStats.class, new CapabilityStatsImpl.Storage(), new NoImplFactory());
+		CapabilityManager.INSTANCE.register(ISnack.class, new EmptyStorage(), new NoImplFactory());
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{

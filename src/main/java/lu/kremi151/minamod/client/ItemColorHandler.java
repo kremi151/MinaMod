@@ -1,14 +1,15 @@
 package lu.kremi151.minamod.client;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemColoredWrittenBook;
+import lu.kremi151.minamod.item.ItemHerbMixture;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemSoulPearl;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -24,10 +25,7 @@ public class ItemColorHandler implements IItemColor{
 		if(stack.getItem() == MinaItems.HERB || stack.getItem() == MinaItems.POWDER){
 			return EnumHerb.isValidId((byte)stack.getMetadata()) ? EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.WHITE).getTint() : MinaUtils.COLOR_WHITE;
 		}else if(stack.getItem() == MinaItems.MIXTURE && tintIndex == 1){
-			NBTTagCompound nbt = stack.getOrCreateSubCompound("mixture");
-        	if(nbt.hasKey("color", 3)){
-        		return nbt.getInteger("color");
-        	}
+			return ((ItemHerbMixture.HerbMixtureSnack) stack.getCapability(ISnack.CAPABILITY, null)).getColor();
 		}else if(stack.getItem() == MinaItems.SOUL_PEARL){
 			if(ItemSoulPearl.checkIfTinted(stack)){
 	        	return stack.getTagCompound().getInteger("tint");
