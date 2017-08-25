@@ -16,7 +16,6 @@ import lu.kremi151.minamod.recipe.RecipeColoredKey;
 import lu.kremi151.minamod.recipe.RecipeCopyKey;
 import lu.kremi151.minamod.recipe.RecipeDamagedSoulPearl;
 import lu.kremi151.minamod.recipe.RecipeEncodeKey;
-import lu.kremi151.minamod.recipe.RecipeGiftBox;
 import lu.kremi151.minamod.recipe.RecipeHerbMixture;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -210,6 +209,7 @@ public class MinaRecipes {
 		for(int i = 0 ; i < EnumDyeColor.values().length ; i++){
 			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.MILKY_GLASS, 8, i), "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.STAINED_GLASS, 1, i), 'B', Items.MILK_BUCKET);
 			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.LIT_MILKY_GLASS, 8, i), "AAA", "ABA", "AAA", 'A', new ItemStack(MinaBlocks.MILKY_GLASS, 1, i), 'B', MinaBlocks.FROZEN_GLOWSTONE);
+			GameRegistry.addShapedRecipe(new ItemStack(MinaItems.UNPACKED_GIFT, 1, i), " W ", "W W", " W ", 'W', new ItemStack(Blocks.CARPET, 1, i));
 		}
 	}
 
@@ -302,7 +302,6 @@ public class MinaRecipes {
 		if(FeatureList.enable_soul_pearls)GameRegistry.addRecipe(new RecipeDamagedSoulPearl());
 		GameRegistry.addRecipe(new RecipeColoredBook());
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
-		GameRegistry.addRecipe(new RecipeGiftBox());
 		GameRegistry.addRecipe(new RecipeAddToGiftBox());
 		GameRegistry.addRecipe(new RecipeCopyKey());
 		GameRegistry.addRecipe(new RecipeEncodeKey());
@@ -324,8 +323,8 @@ public class MinaRecipes {
 		RecipeSorter.register(MinaMod.MODID + ":gift_box_adding", RecipeAddToGiftBox.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		
-		RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
-				"after:minecraft:shaped before:minecraft:shapeless");
+		/*RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
+				"after:minecraft:shaped before:minecraft:shapeless");*/
 		
 	}
 	

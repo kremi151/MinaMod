@@ -27,13 +27,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockGiftBox extends BlockColored{
 	
-	public static final String variantNames[];
-	
-	static{
-		variantNames = new String[EnumDyeColor.values().length];
+	public static String[] getVariantNames(String baseName) {
+		String variantNames[] = new String[EnumDyeColor.values().length];
 		for(int i = 0 ; i < variantNames.length ; i++){
-			variantNames[i] = "gift_box_" + EnumDyeColor.values()[i].getName();
+			variantNames[i] = baseName + "_" + EnumDyeColor.values()[i].getName();
 		}
+		return variantNames;
 	}
 	
 	protected static final AxisAlignedBB boundings = new AxisAlignedBB(0.125d, 0d, 0.125d, 0.875d, 0.75d, 0.875d);

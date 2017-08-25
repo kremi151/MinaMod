@@ -1,0 +1,36 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "inner": "minamod:blocks/unpacked_gift_inner",
+		"particle": "#side"
+    },
+    "elements": [
+        {
+            "name": "Base",
+            "from": [ 2.0, 0.0, 2.0 ], 
+            "to": [ 14.0, 10.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 0.0, 3.0, 16.0, 16.0 ] },
+                "east": { "texture": "#side", "uv": [ 0.0, 3.0, 16.0, 16.0 ] },
+                "south": { "texture": "#side", "uv": [ 0.0, 3.0, 16.0, 16.0 ] },
+                "west": { "texture": "#side", "uv": [ 0.0, 3.0, 16.0, 16.0 ] },
+                "up": { "texture": "#inner", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        },
+		{
+            "name": "Top",
+            "from": [ 2.0, 12.0, 1.0 ], 
+            "to": [ 14.0, 14.0, 13.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "x", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 3.0 ] },
+                "east": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 3.0 ] },
+                "south": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 3.0 ] },
+                "west": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 3.0 ] },
+                "up": { "texture": "#side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#inner", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        }
+    ]
+}

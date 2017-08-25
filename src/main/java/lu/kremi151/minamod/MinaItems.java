@@ -37,6 +37,7 @@ import lu.kremi151.minamod.item.ItemMilkBottle;
 import lu.kremi151.minamod.item.ItemPowder;
 import lu.kremi151.minamod.item.ItemSickle;
 import lu.kremi151.minamod.item.ItemSoulPearl;
+import lu.kremi151.minamod.item.ItemUnpackedGift;
 import lu.kremi151.minamod.item.amulet.AmuletRegistry;
 import lu.kremi151.minamod.item.block.ItemBlockCombined;
 import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
@@ -201,6 +202,7 @@ public class MinaItems {
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
 	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
 	public static final Item FLOUR = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("flour");
+	public static final ItemUnpackedGift UNPACKED_GIFT = (ItemUnpackedGift) new ItemUnpackedGift().setUnlocalizedName("unpacked_gift");
 	
 	private static boolean init = false, itemBInit = false;
 
@@ -293,6 +295,7 @@ public class MinaItems {
 		GameRegistry.register(HERB_GUIDE.setRegistryName(MinaMod.MODID, "herb_guide"));
 		proxy.registerItem(CHICKEN_NUGGETS, "chicken_nuggets");
 		proxy.registerItemWithOre(FLOUR, "flour", "flour");
+		proxy.registerItem(UNPACKED_GIFT, "unpacked_gift", BlockGiftBox.getVariantNames("unpacked_gift"));
 
 		init = true;
 	}
@@ -305,7 +308,7 @@ public class MinaItems {
 		proxy.registerItem(new ItemBlockMulti<BlockMinaSapling>(MinaBlocks.SAPLING, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.SAPLING.getRegistryName()), "mina_sapling", BlockMinaPlanks.EnumType.variantNamesSaplings);
 		proxy.registerItem(new ItemCloth(MinaBlocks.MILKY_GLASS).setRegistryName(MinaBlocks.MILKY_GLASS.getRegistryName()), "milky_glass", BlockCustomStainedGlass.milkyGlassVariantNames);
 		proxy.registerItem(new ItemCloth(MinaBlocks.LIT_MILKY_GLASS).setRegistryName(MinaBlocks.LIT_MILKY_GLASS.getRegistryName()), "lit_milky_glass", BlockCustomStainedGlass.litMilkyGlassVariantNames);
-		proxy.registerItem(new ItemBlockGiftBox(MinaBlocks.GIFT_BOX).setRegistryName(MinaBlocks.GIFT_BOX.getRegistryName()), "gift_box", BlockGiftBox.variantNames);
+		proxy.registerItem(new ItemBlockGiftBox(MinaBlocks.GIFT_BOX).setRegistryName(MinaBlocks.GIFT_BOX.getRegistryName()), "gift_box", BlockGiftBox.getVariantNames("gift_box"));
 		proxy.registerItem(new ItemBlockCombined(MinaBlocks.COBBLEBRICKS).setRegistryName(MinaBlocks.COBBLEBRICKS.getRegistryName()), "cobblebricks", "cobblebrick_stone", "cobblebrick_slab");
 		proxy.registerItem(new ItemBlockMulti<BlockElevatorFloor>(MinaBlocks.ELEVATOR_FLOOR, "default", "jumper").setRegistryName(MinaBlocks.ELEVATOR_FLOOR.getRegistryName()), "elevator_floor", "elevator_floor", "elevator_jumper");
 		proxy.registerItem(new ItemBlockMulti<BlockCampbench>(MinaBlocks.CAMPBENCH, "acacia", "birch", "dark_oak", "spruce").setRegistryName(MinaBlocks.CAMPBENCH.getRegistryName()), "campbench", "campbench_acacia", "campbench_birch", "campbench_dark_oak", "campbench_spruce");

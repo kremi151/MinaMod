@@ -9,6 +9,8 @@ import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockGiftBox extends ItemCloth{
 	
@@ -17,7 +19,8 @@ public class ItemBlockGiftBox extends ItemCloth{
 	public ItemBlockGiftBox(Block block) {
 		super(block);
 	}
-	
+
+    @SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
