@@ -5,6 +5,7 @@ import java.util.List;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
+import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.container.ContainerSelectItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,7 +57,8 @@ public class ItemUnpackedGift extends Item{
 				ItemStack selected = player.inventory.getStackInSlot(res.selected);
 				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT && original != selected) {
 					ItemStack gift = new ItemStack(MinaBlocks.GIFT_BOX, 1, original.getMetadata());
-					((IItemHandler)gift.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).insertItem(0, selected.copy(), false);
+					gift.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).insertItem(0, selected.copy(), false);
+					gift.getCapability(IOwner.CAPABILITY, null).setOwner(player.getUniqueID());
 					player.inventory.setInventorySlotContents(res.selected, ItemStack.EMPTY);
 					player.inventory.setInventorySlotContents(player.inventory.currentItem, gift);
 				}

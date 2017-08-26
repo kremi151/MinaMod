@@ -374,6 +374,7 @@ item.battery.charge=Charge: %d%%
 item.unpacked_gift.lore=Right click while holding in hand to put wrap an item in this gift box
 item.unpacked_gift.select_item=Select an item to be packed
 tile.gift_box.no_item=No gift inside
+tile.gift_box.has_item=Something is inside...
 tile.gift_box.contains=Contains %dx %s
 entity.minamod.ice_golhem.name=Ice golhem
 entity.minamod.ice_sentinel.name=Ice sentinel

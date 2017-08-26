@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox.GiftItemHandler;
+import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,13 @@ public class ItemBlockGiftBox extends ItemCloth implements ISyncCapabilitiesToCl
 		if(stack.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
 			ItemStack stack2 = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(0);
 			if(!stack2.isEmpty()) {
-				tooltip.add(I18n.translateToLocalFormatted("tile.gift_box.contains", stack2.getCount(), stack2.getDisplayName()));
+				IOwner owner = stack.getCapability(IOwner.CAPABILITY, null);
+				if(owner != null && owner.getOwner() != null && owner.getOwner().equals(player.getUniqueID())) {
+					tooltip.add(I18n.translateToLocalFormatted("tile.gift_box.contains", stack2.getCount(), stack2.getDisplayName()));
+				}else {
+					tooltip.add(I18n.translateToLocal("tile.gift_box.has_item"));
+				}
+				
 				has_item = true;
 			}
 		}
@@ -50,31 +57,37 @@ public class ItemBlockGiftBox extends ItemCloth implements ISyncCapabilitiesToCl
         return super.getUnlocalizedName();
     }
 	
-	private static NBTTagCompound serializeCapability(NBTTagCompound nbt, IItemHandler inv) {
+	private static NBTTagCompound serializeCapability(NBTTagCompound nbt, IItemHandler inv, IOwner owner) {
 		if(!inv.getStackInSlot(0).isEmpty()) {
 			NBTTagCompound inbt = new NBTTagCompound();
 			inv.getStackInSlot(0).writeToNBT(inbt);
 			nbt.setTag("Item", inbt);
 		}
+		if(owner.getOwner() != null) {
+			nbt.setTag("Owner", IOwner.CAPABILITY.writeNBT(owner, null));
+		}
 		return nbt;
 	}
 	
-	private static void deserializeCapability(NBTTagCompound nbt, GiftItemHandler inv) {
+	private static void deserializeCapability(NBTTagCompound nbt, GiftItemHandler inv, IOwner owner) {
 		inv.clear();
 		if(nbt.hasKey("Item", 10)) {
 			ItemStack stack = new ItemStack(nbt.getCompoundTag("Item"));
 			inv.insertItem(0, stack, false);
 		}
+		if(nbt.hasKey("Owner", 10)) {
+			IOwner.CAPABILITY.readNBT(owner, null, nbt.getTag("Owner"));
+		}
 	}
 
 	@Override
 	public NBTTagCompound writeSyncableData(ItemStack stack, NBTTagCompound nbt) {
-		return serializeCapability(nbt, stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
+		return serializeCapability(nbt, stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), stack.getCapability(IOwner.CAPABILITY, null));
 	}
 
 	@Override
 	public void readSyncableData(ItemStack stack, NBTTagCompound nbt) {
-		deserializeCapability(nbt, (GiftItemHandler) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
+		deserializeCapability(nbt, (GiftItemHandler) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), stack.getCapability(IOwner.CAPABILITY, null));
 	}
 	
 	@Override
@@ -86,25 +99,33 @@ public class ItemBlockGiftBox extends ItemCloth implements ISyncCapabilitiesToCl
 	private static class ItemBlockGiftBoxItemProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 
 		private final GiftItemHandler inv = new GiftItemHandler();
+		private final IOwner owner = IOwner.CAPABILITY.getDefaultInstance();
 		
 		@Override
 		public NBTTagCompound serializeNBT() {
-			return serializeCapability(new NBTTagCompound(), inv);
+			return serializeCapability(new NBTTagCompound(), inv, owner);
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			deserializeCapability(nbt, inv);
+			deserializeCapability(nbt, inv, owner);
 		}
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+			return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+					|| capability == IOwner.CAPABILITY;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			return (T) ((capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? inv : null);
+			if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+				return (T) inv;
+			}else if(capability == IOwner.CAPABILITY) {
+				return (T) owner;
+			}else {
+				return null;
+			}
 		}
 		
 	}

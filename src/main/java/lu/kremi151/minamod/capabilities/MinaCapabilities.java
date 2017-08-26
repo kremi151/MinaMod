@@ -9,6 +9,8 @@ import lu.kremi151.minamod.capabilities.bliss.EntityBlissImpl;
 import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.capabilities.owner.IOwner;
+import lu.kremi151.minamod.capabilities.owner.OwnerImpl;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsImpl;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
@@ -38,6 +40,7 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(ICapabilityBliss.class, ICapabilityBliss.STORAGE, new NoImplFactory());
 		CapabilityManager.INSTANCE.register(ICapabilityStats.class, new CapabilityStatsImpl.Storage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(ISnack.class, new EmptyStorage(), new NoImplFactory());
+		CapabilityManager.INSTANCE.register(IOwner.class, new OwnerImpl.Storage(), OwnerImpl::new);
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{
