@@ -13,7 +13,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityGiftBox extends TileEntity{
 	
 	private GiftItemHandler inv;
-	public static final String GIFT_ITEM_TAG = "giftItem";
+	private static final String GIFT_ITEM_TAG = "giftItem";
 	
 	public TileEntityGiftBox(){
 		this.inv = new GiftItemHandler();
@@ -75,9 +75,9 @@ public class TileEntityGiftBox extends TileEntity{
         return (T) ((capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? inv : super.getCapability(capability, facing));
     }
     
-    private static class GiftItemHandler extends ItemStackHandler{
+    public static class GiftItemHandler extends ItemStackHandler{
     	
-    	private GiftItemHandler(){
+    	public GiftItemHandler(){
     		super(1);
     	}
     	
@@ -86,6 +86,10 @@ public class TileEntityGiftBox extends TileEntity{
         {
     		return ItemStack.EMPTY;
         }
+    	
+    	public void clear() {
+    		this.stacks.set(0, ItemStack.EMPTY);
+    	}
     }
 	
 }

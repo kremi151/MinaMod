@@ -5,7 +5,6 @@ import java.util.Random;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,7 +13,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -23,6 +21,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class BlockGiftBox extends BlockColored{
 	
@@ -87,9 +86,11 @@ public class BlockGiftBox extends BlockColored{
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-		NBTTagCompound inbt = stack.getSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
-		if(inbt != null){
-			((TileEntityGiftBox)worldIn.getTileEntity(pos)).setGiftItem(new ItemStack(inbt));
+		if(stack.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
+			ItemStack gift = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(0);
+			if(!gift.isEmpty()) {
+				((TileEntityGiftBox)worldIn.getTileEntity(pos)).setGiftItem(gift.copy());
+			}
 		}
     }
 	

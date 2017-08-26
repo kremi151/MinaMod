@@ -21,6 +21,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class ItemUnpackedGift extends Item{
 
@@ -54,8 +56,7 @@ public class ItemUnpackedGift extends Item{
 				ItemStack selected = player.inventory.getStackInSlot(res.selected);
 				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT && original != selected) {
 					ItemStack gift = new ItemStack(MinaBlocks.GIFT_BOX, 1, original.getMetadata());
-					NBTTagCompound nbt = gift.getOrCreateSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
-					selected.writeToNBT(nbt);
+					((IItemHandler)gift.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).insertItem(0, selected.copy(), false);
 					player.inventory.setInventorySlotContents(res.selected, ItemStack.EMPTY);
 					player.inventory.setInventorySlotContents(player.inventory.currentItem, gift);
 				}
