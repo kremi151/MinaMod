@@ -106,6 +106,13 @@ public class GuiSelectItem extends GuiContainer {
 		setupPositions();
     }
 	
+	@Override
+	public void updateScreen()
+    {
+		super.updateScreen();
+		this.btnOk.enabled = selectedSlot > 0;
+    }
+	
 	private void setupPositions(){
 		btnOk.x = guiLeft + 26;
 		btnOk.y = guiTop + 99;
