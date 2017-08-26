@@ -52,7 +52,7 @@ public class ItemUnpackedGift extends Item{
 			ContainerSelectItem.selectItem(player, heldPos, ContainerSelectItem.TITLE_PACK_GIFT, res -> {
 				ItemStack original = player.inventory.getCurrentItem();
 				ItemStack selected = player.inventory.getStackInSlot(res.selected);
-				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT) {
+				if(!original.isEmpty() && original.getItem() == MinaItems.UNPACKED_GIFT && original != selected) {
 					ItemStack gift = new ItemStack(MinaBlocks.GIFT_BOX, 1, original.getMetadata());
 					NBTTagCompound nbt = gift.getOrCreateSubCompound(TileEntityGiftBox.GIFT_ITEM_TAG);
 					selected.writeToNBT(nbt);
