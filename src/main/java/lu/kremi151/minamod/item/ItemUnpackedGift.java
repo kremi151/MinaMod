@@ -4,7 +4,6 @@ import java.util.List;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
-import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.container.ContainerSelectItem;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,18 +11,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class ItemUnpackedGift extends Item{
 
@@ -47,8 +43,8 @@ public class ItemUnpackedGift extends Item{
 		tooltip.add(I18n.translateToLocal("item.unpacked_gift.lore"));
     }
 	
-	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
 		if(hand == EnumHand.MAIN_HAND) {
 			final int heldPos = player.inventory.currentItem;
@@ -63,9 +59,9 @@ public class ItemUnpackedGift extends Item{
 					player.inventory.setInventorySlotContents(player.inventory.currentItem, gift);
 				}
 			});
-	        return EnumActionResult.SUCCESS;
+			return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 		}else {
-			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+			return super.onItemRightClick(world, player, hand);
 		}
     }
 }
