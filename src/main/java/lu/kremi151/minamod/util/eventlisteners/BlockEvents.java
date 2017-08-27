@@ -12,6 +12,7 @@ import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.entity.EntityIceSentinel;
+import lu.kremi151.minamod.util.IDRegistry;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.worldgen.WorldGenPalm;
 import net.minecraft.block.Block;
@@ -74,7 +75,10 @@ public class BlockEvents {
 		if(e.getWorld().isRemote)return;
 		IBlockState bs = e.getWorld().getBlockState(e.getPos());
 		boolean creative = e.getEntityPlayer().capabilities.isCreativeMode;
-		if(!e.getEntityPlayer().getHeldItemMainhand().isEmpty()){
+		if(bs.getBlock() == Blocks.CRAFTING_TABLE) {
+			e.getEntityPlayer().openGui(MinaMod.getMinaMod(), IDRegistry.guiIdExtendedCrafting, e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
+			e.setCanceled(true);
+		}else if(!e.getEntityPlayer().getHeldItemMainhand().isEmpty()){
 			if(bs.getBlock() == MinaBlocks.ICE_ALTAR){
 				if(e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.BLACK_PEARL && !((Boolean)bs.getValue(BlockIceAltar.BLACK_PEARL))){
 					e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.BLACK_PEARL, true));

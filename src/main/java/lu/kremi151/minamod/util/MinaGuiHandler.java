@@ -15,6 +15,7 @@ import lu.kremi151.minamod.container.ContainerLetterbox;
 import lu.kremi151.minamod.container.ContainerSelectItem;
 import lu.kremi151.minamod.container.ContainerSlotMachine;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -43,6 +44,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x);
 		case IDRegistry.guiIdKeyChain:
 			return new ContainerKeyChain(player, x);
+		case IDRegistry.guiIdExtendedCrafting:
+			return new ContainerWorkbench(player.inventory, world, new BlockPos(x, y, z));
 		}
 		return null;
 	}
@@ -72,6 +75,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiSelectItem(new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x));
 		case IDRegistry.guiIdKeyChain:
 			return new lu.kremi151.minamod.client.GuiKeyChain(new ContainerKeyChain(player, x));
+		case IDRegistry.guiIdExtendedCrafting:
+			return new lu.kremi151.minamod.client.GuiExtendedCrafting(player.inventory, world, new BlockPos(x, y, z));
 		}
 		return null;
 	}

@@ -19,7 +19,7 @@ public class IDRegistry {
 	public static final int guiIdFilter = 187;
 	public static final int guiIdSelectItem = 188;
 	public static final int guiIdKeyChain = 189;
-	//TODO: public static final int guiIdTradesman = 190;
+	public static final int guiIdExtendedCrafting = 190;
 	public static final int guiIdLetterbox = 191;
 	public static final int guiIdElevator = 192;
 	public static final int guiIdAutoFeeder = 193;
