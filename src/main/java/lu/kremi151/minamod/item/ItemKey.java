@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemKey extends Item implements ISyncCapabilitiesToClient{
 
 	public ItemKey(){
-		this.setCreativeTab(CreativeTabs.MATERIALS);
+		this.setCreativeTab(CreativeTabs.TOOLS);
 	}
 	
 	@Override
