@@ -18,7 +18,7 @@ public class IDRegistry {
 	public static final int guiIdSlotMachine = 186;
 	public static final int guiIdFilter = 187;
 	public static final int guiIdSelectItem = 188;
-	//TODO: public static final int guiIdEnchantmentTransferer = 189;
+	public static final int guiIdKeyChain = 189;
 	//TODO: public static final int guiIdTradesman = 190;
 	public static final int guiIdLetterbox = 191;
 	public static final int guiIdElevator = 192;

@@ -32,10 +32,6 @@ public class GuiKeyChain extends GuiCustomContainer{
 		//fontRendererObj.drawString(I18n.translateToLocal("gui.coin_bag.name"), 8, 10, 4210752);
 		// draws "Inventory" or your regional equivalent
 		fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-
-		fontRenderer.drawString(
-				I18n.translateToLocalFormatted("gui.coin_bag.amount", container.getStack().getMetadata()), 37, 26,
-				MinaUtils.COLOR_WHITE);
 	}
 
 	@Override

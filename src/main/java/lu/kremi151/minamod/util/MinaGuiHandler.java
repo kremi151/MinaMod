@@ -10,6 +10,7 @@ import lu.kremi151.minamod.container.ContainerAutoFeeder;
 import lu.kremi151.minamod.container.ContainerCoinBag;
 import lu.kremi151.minamod.container.ContainerCollector;
 import lu.kremi151.minamod.container.ContainerFilter;
+import lu.kremi151.minamod.container.ContainerKeyChain;
 import lu.kremi151.minamod.container.ContainerLetterbox;
 import lu.kremi151.minamod.container.ContainerSelectItem;
 import lu.kremi151.minamod.container.ContainerSlotMachine;
@@ -40,6 +41,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z)));
 		case IDRegistry.guiIdSelectItem:
 			return new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x);
+		case IDRegistry.guiIdKeyChain:
+			return new ContainerKeyChain(player, x);
 		}
 		return null;
 	}
@@ -67,6 +70,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiFilter(new ContainerFilter(player, (TileEntityFilter) world.getTileEntity(new BlockPos(x,y,z))));
 		case IDRegistry.guiIdSelectItem:
 			return new lu.kremi151.minamod.client.GuiSelectItem(new ContainerSelectItem(player, ContainerSelectItem.titleForId(y), x));
+		case IDRegistry.guiIdKeyChain:
+			return new lu.kremi151.minamod.client.GuiKeyChain(new ContainerKeyChain(player, x));
 		}
 		return null;
 	}

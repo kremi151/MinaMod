@@ -33,6 +33,7 @@ import lu.kremi151.minamod.item.ItemHerbMixture;
 import lu.kremi151.minamod.item.ItemHoneyPot;
 import lu.kremi151.minamod.item.ItemKatana;
 import lu.kremi151.minamod.item.ItemKey;
+import lu.kremi151.minamod.item.ItemKeyChain;
 import lu.kremi151.minamod.item.ItemMilkBottle;
 import lu.kremi151.minamod.item.ItemPowder;
 import lu.kremi151.minamod.item.ItemSickle;
@@ -203,6 +204,7 @@ public class MinaItems {
 	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
 	public static final Item FLOUR = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("flour");
 	public static final ItemUnpackedGift UNPACKED_GIFT = (ItemUnpackedGift) new ItemUnpackedGift().setUnlocalizedName("unpacked_gift");
+	public static final ItemKeyChain KEY_CHAIN = (ItemKeyChain) new ItemKeyChain().setUnlocalizedName("key_chain");
 	
 	private static boolean init = false, itemBInit = false;
 
@@ -296,6 +298,7 @@ public class MinaItems {
 		proxy.registerItem(CHICKEN_NUGGETS, "chicken_nuggets");
 		proxy.registerItemWithOre(FLOUR, "flour", "flour");
 		proxy.registerItem(UNPACKED_GIFT, "unpacked_gift", BlockGiftBox.getVariantNames("unpacked_gift"));
+		proxy.registerItem(KEY_CHAIN, "key_chain");
 
 		init = true;
 	}
