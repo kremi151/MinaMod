@@ -341,6 +341,7 @@ item.chicken_nuggets.name=Chicken nuggets
 item.flour.name=Flour
 item.unpacked_gift.name=Unpacked gift box
 item.key_chain.name=Keychain
+item.sketch.name=Sketch
 enchantment.emergency=Emergency
 enchantment.beheader=Beheader
 enchantment.wood_backup=Wooden slayer

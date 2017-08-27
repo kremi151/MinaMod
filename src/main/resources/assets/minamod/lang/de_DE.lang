@@ -340,6 +340,7 @@ item.chicken_nuggets.name=Chicken Nuggets
 item.flour.name=Mehl
 item.unpacked_gift.name=Unverpackte Geschenkkiste
 item.key_chain.name=Schlüsselbund
+item.sketch.name=Bauplan
 enchantment.emergency=Notfall
 enchantment.beheader=Köpfer
 enchantment.wood_backup=Holzklopfer
