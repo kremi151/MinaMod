@@ -1,7 +1,9 @@
 package lu.kremi151.minamod.client;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.client.element.GuiButtonItem;
+import lu.kremi151.minamod.network.MessageCreateSketch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiCrafting;
@@ -30,7 +32,7 @@ public class GuiExtendedCrafting extends GuiCrafting{
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
 		if(guibutton.id == 0) {
-			System.out.println("It ain't me");
+			MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageCreateSketch());
 		}
 	}
 	

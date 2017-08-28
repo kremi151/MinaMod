@@ -33,6 +33,7 @@ import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.network.MessageCoinBag;
+import lu.kremi151.minamod.network.MessageCreateSketch;
 import lu.kremi151.minamod.network.MessageItemSelected;
 import lu.kremi151.minamod.network.MessageJetpack;
 import lu.kremi151.minamod.network.MessageOpenGui;
@@ -376,6 +377,7 @@ public class MinaMod {
 		networkWrapper.registerMessage(MessageTriggerOpenStatsAchievement.Handler.class, MessageTriggerOpenStatsAchievement.class, 11, Side.SERVER);
 		networkWrapper.registerMessage(MessageSyncItemCapabilities.Handler.class, MessageSyncItemCapabilities.class, 12, Side.CLIENT);
 		networkWrapper.registerMessage(MessageItemSelected.Handler.class, MessageItemSelected.class, 13, Side.SERVER);
+		networkWrapper.registerMessage(MessageCreateSketch.Handler.class, MessageCreateSketch.class, 14, Side.SERVER);
 	}
 	
 	public static String createDottedIdentifier(String name){
