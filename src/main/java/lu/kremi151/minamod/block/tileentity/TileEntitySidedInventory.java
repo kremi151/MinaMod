@@ -22,7 +22,7 @@ public abstract class TileEntitySidedInventory extends TileEntity implements ISi
 	private final NonNullList<ItemStack> inv;
 	private final int defaultSlots[], size;
 	private final String inventoryName;
-	private final IItemHandler itemHandler;
+	protected final IItemHandler itemHandler;
 	
 	protected TileEntitySidedInventory(int size, String inventoryName){
 		this.size = size;

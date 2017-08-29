@@ -27,4 +27,5 @@ public class IDRegistry {
 	public static final int guiIdCoinBag = 195;
 	public static final int guiIdHerbGuide = 196;
 	public static final int guiIdAmulets = 197;
+	public static final int guiIdAutoCrafter = 198;
 }

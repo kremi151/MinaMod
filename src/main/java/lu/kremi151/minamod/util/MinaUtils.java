@@ -1,7 +1,5 @@
 package lu.kremi151.minamod.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -17,7 +15,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MinaUtils {
 
@@ -223,6 +221,18 @@ public class MinaUtils {
 		}
 		return itemLeft;
 	}
+	
+	public static int countItemsInInventory(IInventory inventory, ItemStack stack) {
+		if(stack.isEmpty())return 0;
+		int cnt = 0;
+		for (int slot = 0; slot < inventory.getSizeInventory(); ++slot) {
+			ItemStack itemstack = inventory.getStackInSlot(slot);
+			if (!itemstack.isEmpty() && ItemHandlerHelper.canItemStacksStack(itemstack, stack)) {
+				cnt += itemstack.getCount();
+			}
+		}
+		return cnt;
+	}
 
 	public static int countItemsInInventory(IInventory inventory, Item item) { // NO_UCD (unused code)
 		int cnt = 0;
@@ -262,6 +272,33 @@ public class MinaUtils {
 			}
 		}
 		return flag;
+	}
+	
+	public static boolean consumeInventoryItems(IInventory inventory, ItemStack stack) {
+		ItemStack stack_ = stack.copy();
+		if(!stack.isEmpty() && countItemsInInventory(inventory, stack_) >= stack_.getCount()) {
+			for (int slot = 0; stack_.getCount() > 0 && slot < inventory.getSizeInventory(); ++slot) {
+				ItemStack itemstack = inventory.getStackInSlot(slot);
+				if (!itemstack.isEmpty() && ItemHandlerHelper.canItemStacksStack(itemstack, stack_)) {
+					if(itemstack.getCount() >= stack_.getCount()){
+						itemstack.shrink(stack_.getCount());
+						stack_.setCount(0);
+					}else{
+						stack_.shrink(itemstack.getCount());
+						inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
+					}
+				}
+			}
+		}
+		return stack_.isEmpty();
+	}
+	
+	public static NonNullList<ItemStack> cloneItemList(NonNullList<ItemStack> original){
+		NonNullList<ItemStack> clone = NonNullList.create();
+		for(int i = 0 ; i < original.size() ; i++) {
+			clone.add(original.get(i).copy());
+		}
+		return clone;
 	}
 	
 	public static int bitwiseOr(Integer... values){

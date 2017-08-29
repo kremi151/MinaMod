@@ -1,11 +1,13 @@
 package lu.kremi151.minamod.util;
 
+import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
+import lu.kremi151.minamod.container.ContainerAutoCrafter;
 import lu.kremi151.minamod.container.ContainerAutoFeeder;
 import lu.kremi151.minamod.container.ContainerCoinBag;
 import lu.kremi151.minamod.container.ContainerCollector;
@@ -46,6 +48,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerKeyChain(player, x);
 		case IDRegistry.guiIdExtendedCrafting:
 			return new ContainerWorkbench(player.inventory, world, new BlockPos(x, y, z));
+		case IDRegistry.guiIdAutoCrafter:
+			return new ContainerAutoCrafter(player, (TileEntityAutoCrafter) world.getTileEntity(new BlockPos(x,y,z)));
 		}
 		return null;
 	}
@@ -77,6 +81,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiKeyChain(new ContainerKeyChain(player, x));
 		case IDRegistry.guiIdExtendedCrafting:
 			return new lu.kremi151.minamod.client.GuiExtendedCrafting(player.inventory, world, new BlockPos(x, y, z));
+		case IDRegistry.guiIdAutoCrafter:
+			return new lu.kremi151.minamod.client.GuiAutoCrafter(new ContainerAutoCrafter(player, (TileEntityAutoCrafter) world.getTileEntity(new BlockPos(x,y,z))));
 		}
 		return null;
 	}

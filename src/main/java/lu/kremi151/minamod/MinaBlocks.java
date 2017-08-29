@@ -1,5 +1,6 @@
 package lu.kremi151.minamod;
 
+import lu.kremi151.minamod.block.BlockAutoCrafter;
 import lu.kremi151.minamod.block.BlockAutoFeeder;
 import lu.kremi151.minamod.block.BlockBambusCrop;
 import lu.kremi151.minamod.block.BlockBerryCrop;
@@ -218,6 +219,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockDimmableLight DIMMABLE_LIGHT = (BlockDimmableLight) new BlockDimmableLight().setUnlocalizedName("dimmable_lamp");
 	public static final BlockRotatedPillar WABE_BLOCK = (BlockRotatedPillar) new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setUnlocalizedName("wabe_block").setCreativeTab(CreativeTabs.DECORATIONS);
 	public static final BlockFilter FILTER = (BlockFilter) new BlockFilter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("filter");
+	public static final BlockAutoCrafter AUTO_CRAFTER = (BlockAutoCrafter) new BlockAutoCrafter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("auto_crafter");
 	
 	private static boolean init = false, initOres = false;
 
@@ -323,6 +325,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
 		proxy.registerBlock(WABE_BLOCK, "wabe_block");
 		proxy.registerBlock(FILTER, "filter");
+		proxy.registerBlock(AUTO_CRAFTER, "auto_crafter");
 		
 		init = true;
 	}
