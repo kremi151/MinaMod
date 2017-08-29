@@ -1,6 +1,8 @@
 package lu.kremi151.minamod.events;
 
+import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
@@ -9,9 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public abstract class EventMinaCancelable extends Event{
 
-	EntityPlayer p;
-	World world;
-	BlockPos pos;
+	private final EntityPlayer p;
+	private final World world;
+	private final BlockPos pos;
 	
 	public EventMinaCancelable(EntityPlayer p, World world, BlockPos pos){
 		this.p = p;

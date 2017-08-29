@@ -5,6 +5,7 @@ import java.util.Optional;
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
+import lu.kremi151.minamod.events.CreateSketchEvent;
 import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -46,21 +48,24 @@ public class MessageCreateSketch implements IMessage{
 			if(player.openContainer instanceof ContainerWorkbench) {
 				ContainerWorkbench crafting = (ContainerWorkbench) player.openContainer;
 				if(!crafting.craftResult.isEmpty() && player.inventory.hasItemStack(new ItemStack(Items.PAPER))) {
-					IRecipe recipe = findMatchingRecipe(crafting.craftMatrix, player.world).orElse(null);
-					if(recipe != null && MinaUtils.consumeInventoryItems(player.inventory, Items.PAPER, 1)) {
-						ItemStack sketch = new ItemStack(MinaItems.SKETCH);
-						ISketch cap = sketch.getCapability(ISketch.CAPABILITY, null);
-						
-						NonNullList<ItemStack> order = NonNullList.withSize(9, ItemStack.EMPTY);
-						for(int i = 0 ; i < crafting.craftMatrix.getSizeInventory() ; i++) {
-							order.set(i, crafting.craftMatrix.getStackInSlot(i));
-						}
-						cap.setOrder(order);
-						cap.setCachedRecipe(recipe);
-						
-						sketch = ItemHandlerHelper.insertItem(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), sketch, false);
-						if(!sketch.isEmpty()) {
-							player.dropItem(sketch, true);
+					CreateSketchEvent event = new CreateSketchEvent(player, player.world, new ItemStack(MinaItems.SKETCH));
+					if(!MinecraftForge.EVENT_BUS.post(event)) {
+						IRecipe recipe = findMatchingRecipe(crafting.craftMatrix, player.world).orElse(null);
+						if(recipe != null && MinaUtils.consumeInventoryItems(player.inventory, Items.PAPER, 1)) {
+							ItemStack sketch = event.getNewSketch();
+							ISketch cap = sketch.getCapability(ISketch.CAPABILITY, null);
+							
+							NonNullList<ItemStack> order = NonNullList.withSize(9, ItemStack.EMPTY);
+							for(int i = 0 ; i < crafting.craftMatrix.getSizeInventory() ; i++) {
+								order.set(i, crafting.craftMatrix.getStackInSlot(i));
+							}
+							cap.setOrder(order);
+							cap.setCachedRecipe(recipe);
+							
+							sketch = ItemHandlerHelper.insertItem(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), sketch, false);
+							if(!sketch.isEmpty()) {
+								player.dropItem(sketch, true);
+							}
 						}
 					}
 				}

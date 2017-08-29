@@ -62,13 +62,6 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 					copy.setCount(1);
 					for(ItemStack rstack : res) {
 						if(ItemHandlerHelper.canItemStacksStack(rstack, copy)) {
-							/*int rest = rstack.getMaxStackSize() - (copy.getCount() + rstack.getCount());
-							if(rest >= 0) {
-								rstack.grow(copy.getCount());
-							}else {
-								rstack.setCount(rstack.getMaxStackSize());
-								copy.setCount(-rest);
-							}*/
 							rstack.grow(1);
 							copy.setCount(0);
 						}
