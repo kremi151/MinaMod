@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.IKey;
+import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +34,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class ItemKeyChain extends Item{
+public class ItemKeyChain extends Item implements ISyncCapabilitiesToClient{
 	
 	public ItemKeyChain() {
 		this.setMaxStackSize(1);
@@ -73,6 +74,32 @@ public class ItemKeyChain extends Item{
     {
         return new KeyChainCapProvider(stack);
     }
+
+	@Override
+	public NBTTagCompound writeSyncableData(ItemStack stack, NBTTagCompound nbt) {
+		return serializeCapability((KeyChainItemHandler) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), nbt);
+	}
+
+	@Override
+	public void readSyncableData(ItemStack stack, NBTTagCompound nbt) {
+		deserializeCapability((KeyChainItemHandler) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
+				, (KeyChainCapability) stack.getCapability(IKey.CAPABILITY_KEY, null)
+				, nbt);
+	}
+	
+	private static NBTTagCompound serializeCapability(KeyChainItemHandler inv, NBTTagCompound nbt) {
+		nbt.setTag("Keys", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inv, null));
+		return nbt;
+	}
+	
+	private static void deserializeCapability(KeyChainItemHandler inv, KeyChainCapability key, NBTTagCompound nbt) {
+		if(nbt.hasKey("Keys")) {
+			CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inv, null, nbt.getTag("Keys"));
+		}else {
+			inv.clear();
+		}
+		key.rebuildKeys();
+	}
 	
 	private static class KeyChainCapProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 
@@ -103,19 +130,12 @@ public class ItemKeyChain extends Item{
 
 		@Override
 		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setTag("Keys", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inv, null));
-			return nbt;
+			return serializeCapability(inv, new NBTTagCompound());
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			if(nbt.hasKey("Keys")) {
-				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inv, null, nbt.getTag("Keys"));
-			}else {
-				inv.clear();
-			}
-			key.rebuildKeys();
+			deserializeCapability(inv, key, nbt);
 		}
 		
 	}

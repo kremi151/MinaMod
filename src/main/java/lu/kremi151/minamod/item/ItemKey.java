@@ -28,6 +28,7 @@ public class ItemKey extends Item implements ISyncCapabilitiesToClient{
 
 	public ItemKey(){
 		this.setCreativeTab(CreativeTabs.TOOLS);
+		this.setMaxStackSize(1);
 	}
 	
 	@Override
