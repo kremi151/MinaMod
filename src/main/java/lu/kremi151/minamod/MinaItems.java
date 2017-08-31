@@ -47,6 +47,9 @@ import lu.kremi151.minamod.item.block.ItemBlockLeaves;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
+import lu.kremi151.minamod.util.registration.CommonRegistrationHandler;
+import lu.kremi151.minamod.util.registration.IRegistrationInterface;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -210,10 +213,10 @@ public class MinaItems {
 	
 	private static boolean init = false, itemBInit = false;
 
-	public static void registerItems() {
+	public static void registerItems(IRegistrationInterface<Item, CommonRegistrationHandler<Item>> registry) {
 		if (init)throw new RuntimeException("Duplicate call of function");
 		
-		registerItemBlocks();
+		registerItemBlocks(registry);
 		
 		CommonProxy proxy = MinaMod.getProxy();
 
@@ -306,7 +309,7 @@ public class MinaItems {
 		init = true;
 	}
 	
-	private static void registerItemBlocks(){
+	private static void registerItemBlocks(IRegistrationInterface<Item, CommonRegistrationHandler<Item>> registry){
 		if (itemBInit)throw new RuntimeException("Duplicate call of function");
 		CommonProxy proxy = MinaMod.getProxy();
 		

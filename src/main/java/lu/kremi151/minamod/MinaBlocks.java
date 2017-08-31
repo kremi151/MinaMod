@@ -53,6 +53,8 @@ import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.block.BlockTable;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
+import lu.kremi151.minamod.util.registration.CommonRegistrationHandler;
+import lu.kremi151.minamod.util.registration.IRegistrationInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockStairs;
@@ -223,7 +225,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	
 	private static boolean init = false, initOres = false;
 
-	static void registerBlocks() {
+	static void registerBlocks(IRegistrationInterface<Block, CommonRegistrationHandler<Block>> registry) {
 		if (init)throw new RuntimeException("Duplicate call of function");
 
 		CommonProxy proxy = MinaMod.getProxy();
