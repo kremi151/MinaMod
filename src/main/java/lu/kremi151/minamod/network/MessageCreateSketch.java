@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.events.CreateSketchEvent;
 import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class MessageCreateSketch implements IMessage{
 
@@ -47,7 +49,7 @@ public class MessageCreateSketch implements IMessage{
 		public IMessage handleServerMessage(EntityPlayer player, MessageCreateSketch message, MessageContext ctx) {
 			if(player.openContainer instanceof ContainerWorkbench) {
 				ContainerWorkbench crafting = (ContainerWorkbench) player.openContainer;
-				if(!crafting.craftResult.isEmpty() && player.inventory.hasItemStack(new ItemStack(Items.PAPER))) {
+				if(!crafting.craftResult.isEmpty() && player.inventory.hasItemStack(new ItemStack(Items.PAPER)) && PermissionAPI.hasPermission(player, MinaPermissions.ALLOW_CREATING_SKETCHES)) {
 					CreateSketchEvent event = new CreateSketchEvent(player, player.world, new ItemStack(MinaItems.SKETCH));
 					if(!MinecraftForge.EVENT_BUS.post(event)) {
 						IRecipe recipe = findMatchingRecipe(crafting.craftMatrix, player.world).orElse(null);

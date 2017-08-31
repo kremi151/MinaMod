@@ -61,4 +61,7 @@ public class MinaPermissions {
 	
 	@MinaPermission(desc = "Allows to gamble (for example to use slot machines)", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_GAMBLING = "minamod.gambling";
+	
+	@MinaPermission(desc = "Allows to create sketches", lvl = DefaultPermissionLevel.ALL)
+	public static final String ALLOW_CREATING_SKETCHES = "minamod.sketch.create";
 }
