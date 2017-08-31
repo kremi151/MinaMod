@@ -26,7 +26,7 @@ public class ShiftClickManager {
 				
 				boolean handled = false;
 				for(IHandler handler : handlers){
-					if(handler.accepts(slot)){
+					if(handler.accepts(slot, stack)){
 						if(handler.handle(container, stack) == ItemStack.EMPTY){
 							return ItemStack.EMPTY;
 						}
@@ -66,7 +66,7 @@ public class ShiftClickManager {
 	private static interface IHandler{
 		
 		ItemStack handle(Container container, ItemStack stack) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
-		boolean accepts(int slot);
+		boolean accepts(int slot, ItemStack stack);
 		
 	}
 	
@@ -99,8 +99,8 @@ public class ShiftClickManager {
 		}
 
 		@Override
-		public boolean accepts(int slot) {
-			return srcMinIncl <= slot && slot < srcMaxExcl;
+		public boolean accepts(int slot, ItemStack stack) {
+			return srcMinIncl <= slot && slot < srcMaxExcl && this.predicate.test(stack);
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class ShiftClickManager {
 		}
 
 		@Override
-		public boolean accepts(int slot) {
+		public boolean accepts(int slot, ItemStack stack) {
 			return true;
 		}
 		
@@ -126,7 +126,7 @@ public class ShiftClickManager {
 		}
 
 		@Override
-		public boolean accepts(int slot) {
+		public boolean accepts(int slot, ItemStack stack) {
 			return true;
 		}
 		
