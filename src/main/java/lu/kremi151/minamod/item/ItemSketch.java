@@ -67,7 +67,7 @@ public class ItemSketch extends Item implements ISyncCapabilitiesToClient{
 	
 	private static class SketchCapabilityProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>{
 		
-		private static final SketchImpl cap = new SketchImpl();
+		private final SketchImpl cap = new SketchImpl();
 
 		@Override
 		public NBTTagCompound serializeNBT() {
