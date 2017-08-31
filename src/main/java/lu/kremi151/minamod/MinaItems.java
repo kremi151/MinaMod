@@ -250,7 +250,7 @@ public class MinaItems {
 		proxy.registerItem(CITRIN_LEGGINGS, "citrin_leggings");
 		proxy.registerItem(CITRIN_BOOTS, "citrin_boots");
 		proxy.registerItem(KEY, "key");
-		proxy.registerItem(CHIP, "chip", ItemChip.variant_names);
+		proxy.registerItem(CHIP, "chip", ItemChip.getVariantNames());
 		proxy.registerItem(OBSIDIAN_HELMET, "obsidian_helmet");
 		proxy.registerItem(OBSIDIAN_CHESTPLATE, "obsidian_chestplate");
 		proxy.registerItem(OBSIDIAN_LEGGINGS, "obsidian_leggings");

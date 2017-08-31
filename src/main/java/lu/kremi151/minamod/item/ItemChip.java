@@ -11,12 +11,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 
 public class ItemChip extends Item{
-	
-	public static final String[] variant_names = new String[]{
-		"chip_a",
-		"chip_b",
-		"chip_c"
-	};
 
 	public ItemChip(){
 		this.setHasSubtypes(true);
@@ -25,14 +19,71 @@ public class ItemChip extends Item{
 	
 	@Override
 	public void getSubItems(Item a1, CreativeTabs a2, NonNullList<ItemStack> a3){
-		for(int i = 0 ; i < variant_names.length ; i++){
-			a3.add(new ItemStack(a1,1,i));
+		for(ChipType type : ChipType.values()){
+			a3.add(new ItemStack(a1,1,type.meta));
 		}
 	}
 	
 	@Override
-	public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer, List list, boolean par4) {
-		list.add(I18n.translateToLocal("item.chip.info." + is.getItemDamage()));
+	public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+		ChipType type = ChipType.getByMeta(stack.getItemDamage());
+		if(type.has_tooltip)list.add(I18n.translateToLocal("item.chip.info." + type.name));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack)
+    {
+        if(ChipType.getByMeta(stack.getItemDamage()) != ChipType.PROCESSOR_UNIT) {
+        	return super.getUnlocalizedName(stack);
+        }else {
+        	return "item.processor_unit";
+        }
+    }
+	
+	public static String[] getVariantNames() {
+		String res[] = new String[ChipType.values().length];
+		for(ChipType type : ChipType.values()) {
+			res[type.ordinal()] = type.name;
+		}
+		return res;
+	}
+	
+	public static enum ChipType{
+		TYPE_A(0, "chip_a"),
+		TYPE_B(1, "chip_b"),
+		TYPE_C(2, "chip_c"),
+		PROCESSOR_UNIT(3, "processor_unit", false);
+		
+		private static final ChipType LOOKUP[];
+		
+		static {
+			LOOKUP = new ChipType[ChipType.values().length];
+			for(ChipType type : ChipType.values()) {
+				LOOKUP[type.meta] = type;
+			}
+		}
+		
+		public final int meta;
+		private final String name;
+		private final boolean has_tooltip;
+		
+		private ChipType(int meta, String name) {
+			this(meta, name, true);
+		}
+		
+		private ChipType(int meta, String name, boolean has_tooltip) {
+			this.meta = meta;
+			this.name = name;
+			this.has_tooltip = has_tooltip;
+		}
+		
+		public static ChipType getByMeta(int meta) {
+			if(meta < 0 || meta >= LOOKUP.length) {
+				return LOOKUP[0];
+			}else {
+				return LOOKUP[meta];
+			}
+		}
 	}
 	
 	
