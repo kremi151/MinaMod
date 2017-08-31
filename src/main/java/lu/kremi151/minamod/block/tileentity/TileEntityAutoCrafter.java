@@ -30,7 +30,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 	public final IInventory sketchInv = new BaseInventoryTileEntity(this, "inventory.auto_crafter.sketch", 1) {
 		@Override
 		public boolean isItemValidForSlot(int index, ItemStack stack) {
-			return stack.isEmpty() || stack.getItem() == MinaItems.SKETCH;
+			return stack.isEmpty() || stack.hasCapability(ISketch.CAPABILITY, null);
 		}
 	};
 	private final IItemHandler resultsItemHandler;
