@@ -3,8 +3,13 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.container.ContainerAutoCrafter;
+import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,6 +25,12 @@ public class GuiAutoCrafter extends GuiContainer{
 		this.xSize = 238;
 		this.ySize = 196;
 	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+    }
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -29,6 +40,19 @@ public class GuiAutoCrafter extends GuiContainer{
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
 				ySize - 96 + 2, 4210752);
+		
+
+		ItemStack sketch = ((ContainerAutoCrafter)this.inventorySlots).getAutoCrafter().sketchInv.getStackInSlot(0);
+		if(!sketch.isEmpty() && sketch.hasCapability(ISketch.CAPABILITY, null)) {
+			ISketch cap = sketch.getCapability(ISketch.CAPABILITY, null);
+	        RenderHelper.enableGUIStandardItemLighting();
+	        RenderHelper.enableStandardItemLighting();
+			for(int i = 0 ; i < Math.min(9, cap.getOrder().size()) ; i++) {
+		        GlStateManager.translate(0.0F, 0.0F, -32.0F);
+				ReflectionLoader.GuiContainer_drawItemStack(this, cap.getOrder().get(i), 159 + ((i % 3) * 18), 14 + ((i / 3) * 18), "");
+			}
+			RenderHelper.disableStandardItemLighting();
+		}
 	}
 
 	@Override

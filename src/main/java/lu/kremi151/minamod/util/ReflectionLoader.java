@@ -123,9 +123,13 @@ public class ReflectionLoader {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
-		GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
+	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) {
+		try {
+			GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
+			GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

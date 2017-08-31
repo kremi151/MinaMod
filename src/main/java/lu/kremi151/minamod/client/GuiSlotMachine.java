@@ -118,12 +118,8 @@ public class GuiSlotMachine extends GuiContainer{
 				for(int j = 0 ; j < 3 ; j++) {
 					int y = 34 + (j * 17);
 					Item icon = container.getIcon(i, j);
-					try {
-						ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(icon), x, y, "");
-				        GlStateManager.translate(0.0F, 0.0F, -32.0F);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-						e.printStackTrace();
-					}
+					ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(icon), x, y, "");
+			        GlStateManager.translate(0.0F, 0.0F, -32.0F);
 				}
 			}
 			RenderHelper.disableStandardItemLighting();
@@ -170,13 +166,8 @@ public class GuiSlotMachine extends GuiContainer{
 				
 				RenderHelper.enableStandardItemLighting();
 				RenderHelper.enableGUIStandardItemLighting();
-				try {
-					ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(icon.icon), 41, y + 1, "");
-			        GlStateManager.translate(0.0F, 0.0F, -32.0F);
-			        
-				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-				}
+				ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(icon.icon), 41, y + 1, "");
+		        GlStateManager.translate(0.0F, 0.0F, -32.0F);
 				RenderHelper.disableStandardItemLighting();
 			}
 		}
@@ -217,12 +208,8 @@ public class GuiSlotMachine extends GuiContainer{
     }
 	
 	private void drawCoinAmount(int x, int y, int amount) {
-		try {
-			ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(MinaItems.GOLDEN_COIN, amount), x, y, ""+amount);
-	        GlStateManager.translate(0.0F, 0.0F, -32.0F);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		ReflectionLoader.GuiContainer_drawItemStack(this, new ItemStack(MinaItems.GOLDEN_COIN, amount), x, y, ""+amount);
+        GlStateManager.translate(0.0F, 0.0F, -32.0F);
 	}
 
 	@Override

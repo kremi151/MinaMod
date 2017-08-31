@@ -35,6 +35,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 	};
 	private final IItemHandler resultsItemHandler;
 	private TaskRepeat currentTask = null;
+	private boolean isCrafting = false;
 
 	public TileEntityAutoCrafter() {
 		super(9, "inventory.auto_crafter");
@@ -76,6 +77,8 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 	}
 	
 	private boolean craft() {
+		if(isCrafting)return false;
+		isCrafting = true;
 		ItemStack sketch = sketchInv.getStackInSlot(0);
 		if(!sketch.isEmpty()) {
 			ISketch cap = sketch.getCapability(ISketch.CAPABILITY, null);
@@ -104,10 +107,12 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 						if(ItemHandlerHelper.insertItem(resultsItemHandler, result, true).isEmpty()) {
 							for(ItemStack stack : req) {
 								if(!MinaUtils.consumeInventoryItems(this, stack)) {
-									throw new RuntimeException("This should not happen");
+									//throw new RuntimeException("This should not happen");
+									System.out.println("\"This should not happen\"");
 								}
 							}
 							ItemHandlerHelper.insertItem(resultsItemHandler, result, false);
+							isCrafting = false;
 							return true;
 						}
 					}
@@ -115,6 +120,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 				}
 			}
 		}
+		isCrafting = false;
 		return false;
 	}
 	
@@ -124,13 +130,13 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 
 	@Override
 	public void onCraftMatrixChanged() {
-		if(isTaskInactive() && craft()) {
+		if(/*!world.isRemote && */isTaskInactive() && craft()) {
 			currentTask = new TaskRepeat(System.currentTimeMillis() + 500L, 500L, (task, dispatcher) -> {
 				if(!craft()) {
 					task.setCanExecuteAgain(false);
 				}
 			});
-			MinaMod.getMinaMod().getTickHandler().addServerTask(currentTask);
+			currentTask.enqueueServerTask();
 		}
 	}
 

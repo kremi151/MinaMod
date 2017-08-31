@@ -29,10 +29,7 @@ public class BlockAutoCrafter extends BlockContainer{
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-		if(!world.isRemote){
-        	if (player.isSneaking()) {
-            	return false;
-            }
+		if(!world.isRemote && !player.isSneaking()){
     	    player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdAutoCrafter, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
