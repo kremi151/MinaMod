@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -33,6 +34,24 @@ public class BlockAutoCrafter extends BlockContainer{
     	    player.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdAutoCrafter, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+	
+	@Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
+    
+	@Override
+	public boolean isOpaqueCube(IBlockState ibs)
+    {
+        return false;
+    }
+	
+	@Override
+    public boolean isFullCube(IBlockState ibs)
+    {
+        return false;
     }
 
 }

@@ -1,0 +1,96 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "bottom": "minamod:blocks/auto_crafter_bottom",
+        "center": "minamod:blocks/metallic_sanded",
+        "top": "minamod:blocks/auto_crafter_top",
+        "side": "minamod:blocks/auto_crafter_side"
+    },
+    "elements": [
+        {
+            "name": "Bottom",
+            "from": [ 2.0, 0.0, 2.0 ], 
+            "to": [ 14.0, 1.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#bottom", "uv": [ 2.0, 1.0, 14.0, 2.0 ] },
+                "east": { "texture": "#bottom", "uv": [ 1.0, 2.0, 2.0, 14.0 ], "rotation": 270 },
+                "south": { "texture": "#bottom", "uv": [ 2.0, 14.0, 14.0, 15.0 ] },
+                "west": { "texture": "#bottom", "uv": [ 14.0, 2.0, 15.0, 14.0 ], "rotation": 90 },
+                "down": { "texture": "#bottom", "uv": [ 2.0, 2.0, 14.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "Center",
+            "from": [ 1.0, 1.0, 1.0 ], 
+            "to": [ 15.0, 15.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "east": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "south": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "west": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "up": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "down": { "texture": "#center", "uv": [ 1.0, 1.0, 15.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "Top",
+            "from": [ 2.0, 15.0, 2.0 ], 
+            "to": [ 14.0, 16.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#top", "uv": [ 2.0, 1.0, 14.0, 2.0 ] },
+                "east": { "texture": "#top", "uv": [ 1.0, 2.0, 2.0, 14.0 ], "rotation": 90 },
+                "south": { "texture": "#top", "uv": [ 2.0, 14.0, 14.0, 15.0 ] },
+                "west": { "texture": "#top", "uv": [ 14.0, 2.0, 15.0, 14.0 ], "rotation": 270 },
+                "up": { "texture": "#top", "uv": [ 2.0, 2.0, 14.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "North",
+            "from": [ 2.0, 2.0, 0.0 ], 
+            "to": [ 14.0, 14.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 2.0, 2.0, 14.0, 14.0 ] },
+                "east": { "texture": "#side", "uv": [ 1.0, 2.0, 2.0, 14.0 ] },
+                "west": { "texture": "#side", "uv": [ 14.0, 2.0, 15.0, 14.0 ] },
+                "up": { "texture": "#side", "uv": [ 2.0, 1.0, 14.0, 2.0 ] },
+                "down": { "texture": "#side", "uv": [ 2.0, 14.0, 14.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "East",
+            "from": [ 15.0, 2.0, 2.0 ], 
+            "to": [ 16.0, 14.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 14.0, 2.0, 15.0, 14.0 ] },
+                "east": { "texture": "#side", "uv": [ 2.0, 2.0, 14.0, 14.0 ] },
+                "south": { "texture": "#side", "uv": [ 1.0, 2.0, 2.0, 14.0 ] },
+                "up": { "texture": "#side", "uv": [ 2.0, 1.0, 14.0, 2.0 ], "rotation": 270 },
+                "down": { "texture": "#side", "uv": [ 2.0, 14.0, 14.0, 15.0 ], "rotation": 90 }
+            }
+        },
+        {
+            "name": "South",
+            "from": [ 2.0, 2.0, 15.0 ], 
+            "to": [ 14.0, 14.0, 16.0 ], 
+            "faces": {
+                "east": { "texture": "#side", "uv": [ 14.0, 2.0, 15.0, 14.0 ] },
+                "south": { "texture": "#side", "uv": [ 2.0, 2.0, 14.0, 14.0 ] },
+                "west": { "texture": "#side", "uv": [ 1.0, 2.0, 2.0, 14.0 ] },
+                "up": { "texture": "#side", "uv": [ 2.0, 1.0, 14.0, 2.0 ] },
+                "down": { "texture": "#side", "uv": [ 2.0, 14.0, 14.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "West",
+            "from": [ 0.0, 2.0, 2.0 ], 
+            "to": [ 1.0, 14.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#side", "uv": [ 1.0, 2.0, 2.0, 14.0 ] },
+                "south": { "texture": "#side", "uv": [ 14.0, 2.0, 15.0, 14.0 ] },
+                "west": { "texture": "#side", "uv": [ 2.0, 2.0, 14.0, 14.0 ] },
+                "up": { "texture": "#side", "uv": [ 2.0, 1.0, 14.0, 2.0 ], "rotation": 90 },
+                "down": { "texture": "#side", "uv": [ 2.0, 14.0, 14.0, 15.0 ], "rotation": 270 }
+            }
+        }
+    ]
+}

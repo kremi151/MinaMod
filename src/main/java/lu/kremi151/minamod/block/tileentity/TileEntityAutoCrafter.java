@@ -26,8 +26,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 	
-	public final IInventory resultsInv = new BaseInventoryTileEntity(this, "inventory.auto_crafter.results", 5);
-	public final IInventory sketchInv = new BaseInventoryTileEntity(this, "inventory.auto_crafter.sketch", 1) {
+	public final IInventory resultsInv = new BaseInventoryTileEntity(this, "inventory.autocrafter.results", 5);
+	public final IInventory sketchInv = new BaseInventoryTileEntity(this, "inventory.autocrafter.sketch", 1) {
 		@Override
 		public boolean isItemValidForSlot(int index, ItemStack stack) {
 			return stack.isEmpty() || stack.hasCapability(ISketch.CAPABILITY, null);
@@ -38,7 +38,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 	private boolean isCrafting = false;
 
 	public TileEntityAutoCrafter() {
-		super(9, "inventory.auto_crafter");
+		super(9, "inventory.autocrafter");
 		this.resultsItemHandler = new InvWrapper(resultsInv);
 	}
 
