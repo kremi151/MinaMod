@@ -364,6 +364,7 @@ item.key.info.master=Universalschlüssel
 item.key.info.unknown=Dieser Schlüssel ist in einem unbekanntem Zustand
 item.chip.info.0=Typ A
 item.chip.info.1=Typ B
+item.chip.info.2=Typ C
 item.mixture.minastats.attack.info=Attacke: %d
 item.mixture.minastats.defense.info=Verteidigung: %d
 item.mixture.minastats.speed.info=Geschwindigkeit: %d

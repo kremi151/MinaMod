@@ -14,7 +14,8 @@ public class ItemChip extends Item{
 	
 	public static final String[] variant_names = new String[]{
 		"chip_a",
-		"chip_b"
+		"chip_b",
+		"chip_c"
 	};
 
 	public ItemChip(){

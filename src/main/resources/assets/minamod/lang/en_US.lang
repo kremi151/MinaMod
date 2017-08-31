@@ -365,6 +365,7 @@ item.key.info.master=Master key
 item.key.info.unknown=This key is in an unknown state
 item.chip.info.0=Type A
 item.chip.info.1=Type B
+item.chip.info.2=Type C
 item.mixture.minastats.attack.info=Attack: %d
 item.mixture.minastats.defense.info=Defense: %d
 item.mixture.minastats.speed.info=Speed: %d

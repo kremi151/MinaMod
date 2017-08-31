@@ -108,6 +108,8 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, 0), Items.GOLD_NUGGET, Items.REDSTONE);
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, 1), Items.GOLD_INGOT, Items.REDSTONE,
 				Items.IRON_INGOT);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, 2), MinaItems.CITRIN, Items.REDSTONE,
+				MinaItems.PLATINUM_INGOT);
 		
 		GameRegistry.addRecipe(ItemKey.rawKey(), " L", "I ", 'I', Items.IRON_INGOT, 'L',
 				Items.LEATHER);

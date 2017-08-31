@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "minamod:items/chip"
+    "layer0": "minamod:items/chip_b"
   }
 }
