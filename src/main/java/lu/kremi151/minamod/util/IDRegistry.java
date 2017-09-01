@@ -15,17 +15,18 @@ public class IDRegistry {
 	//Free id 10
 	public static final int entityFishId = 11;
 
-	public static final int guiIdSlotMachine = 186;
-	public static final int guiIdFilter = 187;
-	public static final int guiIdSelectItem = 188;
-	public static final int guiIdKeyChain = 189;
-	public static final int guiIdExtendedCrafting = 190;
-	public static final int guiIdLetterbox = 191;
-	public static final int guiIdElevator = 192;
-	public static final int guiIdAutoFeeder = 193;
-	public static final int guiIdCollector = 194;
-	public static final int guiIdCoinBag = 195;
-	public static final int guiIdHerbGuide = 196;
-	public static final int guiIdAmulets = 197;
-	public static final int guiIdAutoCrafter = 198;
+	public static final int guiIdSlotMachine = 0;
+	public static final int guiIdFilter = 1;
+	public static final int guiIdSelectItem = 2;
+	public static final int guiIdKeyChain = 3;
+	public static final int guiIdExtendedCrafting = 4;
+	public static final int guiIdLetterbox = 5;
+	public static final int guiIdElevator = 6;
+	public static final int guiIdAutoFeeder = 7;
+	public static final int guiIdCollector = 8;
+	public static final int guiIdCoinBag = 9;
+	public static final int guiIdHerbGuide = 10;
+	public static final int guiIdAmulets = 11;
+	public static final int guiIdAutoCrafter = 12;
+	public static final int guiIdCombiner = 13;
 }
