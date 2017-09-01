@@ -2,7 +2,9 @@ package lu.kremi151.minamod.block;
 
 import java.util.ArrayList;
 
-import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
+import lu.kremi151.minamod.util.registration.IRegistrationInterface;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,10 +19,10 @@ public class BlockCustomStairs extends BlockStairs{
 		stairs.add(this);
 	}
 	
-	public static void registerStairBlocks(){
+	public static void registerStairBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry){
 		if(init)return;
 		for(int i = 0 ; i < stairs.size() ; i++){
-			MinaMod.getProxy().registerBlock(stairs.get(i), stairs.get(i).getUnlocalizedName().substring(5));
+			registry.register(stairs.get(i), stairs.get(i).getUnlocalizedName().substring(5)).submit();
 		}
 		init = true;
 	}

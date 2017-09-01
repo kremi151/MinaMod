@@ -103,7 +103,7 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.EVER_ICE_BLOCK, 1), "FF", "FF", 'F',
 				MinaItems.EVER_SNOW);
 
-		if(FeatureList.enable_soul_pearls)GameRegistry.addShapedRecipe(new ItemStack(MinaItems.SOUL_PEARL, 1), " C ", "CSC", " C ", 'C',
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.SOUL_PEARL, 1), " C ", "CSC", " C ", 'C',
 				MinaItems.CITRIN, 'S', Blocks.SOUL_SAND);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta), Items.GOLD_NUGGET, Items.REDSTONE);
@@ -308,7 +308,7 @@ public class MinaRecipes {
 		if (init)throw new RuntimeException("Duplicate call of function");
 		GameRegistry.addRecipe(new RecipeColoredKey());
 		GameRegistry.addRecipe(new RecipeHerbMixture());
-		if(FeatureList.enable_soul_pearls)GameRegistry.addRecipe(new RecipeDamagedSoulPearl());
+		GameRegistry.addRecipe(new RecipeDamagedSoulPearl());
 		GameRegistry.addRecipe(new RecipeColoredBook());
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
 		GameRegistry.addRecipe(new RecipeCopyKey());

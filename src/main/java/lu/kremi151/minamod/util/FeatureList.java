@@ -16,6 +16,5 @@ public class FeatureList {
 	
 	//1.11:
 	public static final boolean enable_mixtures = true;
-	public static final boolean enable_soul_pearls = true;
 	
 }

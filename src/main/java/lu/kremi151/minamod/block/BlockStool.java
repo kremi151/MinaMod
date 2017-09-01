@@ -5,23 +5,25 @@ import java.util.Iterator;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaCreativeTabs;
-import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.interfaces.TriConsumer;
 import lu.kremi151.minamod.item.block.ItemBlockStool;
 import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
+import lu.kremi151.minamod.util.registration.IRegistrationInterface;
+import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockStool extends BlockColored{
 	
@@ -57,7 +59,7 @@ public class BlockStool extends BlockColored{
 		return stool_blocks.iterator();
 	}
 	
-	public static void registerStools(){
+	private static void registerStools(TriConsumer<BlockStool, String, String[]> consumer){
 		EnumDyeColor[] colors = EnumDyeColor.values();
 		String[] vn_oak;
 		String[] vn_dark_oak;
@@ -72,15 +74,17 @@ public class BlockStool extends BlockColored{
 			vn_acacia[i] = colors[i].getName().toLowerCase() + "_stool_acacia";
 		}
 		
-    	registerStool(MinaBlocks.OAK_STOOL, "stool_oak", vn_oak);
-    	registerStool(MinaBlocks.DARK_OAK_STOOL, "stool_dark_oak", vn_dark_oak);
-    	registerStool(MinaBlocks.ACACIA_STOOL, "stool_acacia", vn_acacia);
+    	consumer.accept(MinaBlocks.OAK_STOOL, "stool_oak", vn_oak);
+    	consumer.accept(MinaBlocks.DARK_OAK_STOOL, "stool_dark_oak", vn_dark_oak);
+    	consumer.accept(MinaBlocks.ACACIA_STOOL, "stool_acacia", vn_acacia);
 	}
 	
-	private static void registerStool(BlockStool block, String type, String[] variantNames){
-		MinaMod.getProxy().registerBlockOnly(block, type);
-		//GameRegistry.register(new ItemBlockStool(block).setRegistryName(block.getRegistryName()));
-		MinaMod.getProxy().registerItem(new ItemBlockStool(block).setRegistryName(block.getRegistryName()), type, variantNames);
+	public static void registerStoolBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry){
+		registerStools((block, name, variantNames) -> registry.register(block, name).blockOnly().submit());
+	}
+	
+	public static void registerStoolItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
+		registerStools((block, name, variantNames) -> registry.register(new ItemBlockStool(block).setRegistryName(block.getRegistryName()), name).variantNames(variantNames).submit());
 	}
 	
 }

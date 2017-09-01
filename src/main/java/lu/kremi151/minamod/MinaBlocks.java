@@ -51,9 +51,8 @@ import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.block.BlockTable;
-import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FeatureList;
-import lu.kremi151.minamod.util.registration.CommonRegistrationHandler;
+import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
@@ -223,121 +222,109 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockFilter FILTER = (BlockFilter) new BlockFilter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("filter");
 	public static final BlockAutoCrafter AUTO_CRAFTER = (BlockAutoCrafter) new BlockAutoCrafter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("autocrafter");
 	
-	private static boolean init = false, initOres = false;
+	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
+		BlockTable.registerTableBlocks(registry);
+		BlockStool.registerStoolBlocks(registry);
 
-	static void registerBlocks(IRegistrationInterface<Block, CommonRegistrationHandler<Block>> registry) {
-		if (init)throw new RuntimeException("Duplicate call of function");
-
-		CommonProxy proxy = MinaMod.getProxy();
-
-		BlockTable.registerTables();
-		BlockStool.registerStools();
-
-		proxy.registerBlockOnly(NAMIE_FLOWER, "namie_flower_crop");
-		proxy.registerBlockWithOre(CITRIN_ORE, "citrin_ore", "oreCitrin");
-		proxy.registerBlockWithOre(CITRIN_BLOCK, "citrin_block", "blockCitrin");
-		proxy.registerBlockWithOre(HONEYCOMB, "honeycomb", "honeycomb");
-		proxy.registerBlock(HONEY_CAKE, "honeycake");
-		proxy.registerBlockOnly(STRAWBERRY_CROP, "strawberry_crop");
-		proxy.registerBlock(STRAWBERRY_CAKE, "strawberrycake");
-		proxy.registerBlock(CHOCOLATE_CAKE, "chocolatecake");
-		proxy.registerBlockOnly(RHUBARB_PLANT, "rhubarb");
-		proxy.registerBlock(CREEPER_CAKE, "creepercake");
-		proxy.registerBlock(FROZEN_STONE, "frozen_stone");
-		proxy.registerBlock(FROZEN_BRICK, "frozen_brick");
-		proxy.registerBlock(FROZEN_GLOWSTONE, "frozen_glowstone");
-		BlockCustomStairs.registerStairBlocks();
-		proxy.registerBlockOnly(BAMBUS_CROP, "bambus_crop");
-		proxy.registerBlock(EVER_ICE_BLOCK, "ever_ice");
-		proxy.registerBlock(RHUBARB_PIE, "rhubarbpie");
-		proxy.registerBlock(LITTLE_BUSH, "little_bush");
-		proxy.registerBlock(OPAQUE_BUSH, "opaque_bush");
-		proxy.registerBlock(BAMBUS_BLOCK, "bambus_block");
-		proxy.registerBlockOnly(EFFECT_BUSH, "effect_bush");
-		proxy.registerBlock(KEY_LOCK, "keylock");
+		registry.register(NAMIE_FLOWER, "namie_flower_crop").blockOnly().submit();
+		registry.register(CITRIN_ORE, "citrin_ore").ore("oreCitrin").submit();
+		registry.register(CITRIN_BLOCK, "citrin_block").ore("blockCitrin").submit();
+		registry.register(HONEYCOMB, "honeycomb").ore("honeycomb").submit();
+		registry.register(HONEY_CAKE, "honeycake").submit();
+		registry.register(STRAWBERRY_CROP, "strawberry_crop").submit();
+		registry.register(STRAWBERRY_CAKE, "strawberrycake").submit();
+		registry.register(CHOCOLATE_CAKE, "chocolatecake").submit();
+		registry.register(RHUBARB_PLANT, "rhubarb").blockOnly().submit();
+		registry.register(CREEPER_CAKE, "creepercake").submit();
+		registry.register(FROZEN_STONE, "frozen_stone").submit();
+		registry.register(FROZEN_BRICK, "frozen_brick").submit();
+		registry.register(FROZEN_GLOWSTONE, "frozen_glowstone").submit();
+		BlockCustomStairs.registerStairBlocks(registry);
+		registry.register(BAMBUS_CROP, "bambus_crop").blockOnly().submit();
+		registry.register(EVER_ICE_BLOCK, "ever_ice").submit();
+		registry.register(RHUBARB_PIE, "rhubarbpie").submit();
+		registry.register(LITTLE_BUSH, "little_bush").submit();
+		registry.register(OPAQUE_BUSH, "opaque_bush").submit();
+		registry.register(BAMBUS_BLOCK, "bambus_block").submit();
+		registry.register(EFFECT_BUSH, "effect_bush").blockOnly().submit();
+		registry.register(KEY_LOCK, "keylock").submit();
 		if(FeatureList.enable_ice_altar){
-			proxy.registerBlock(ICE_ALTAR, "ice_altar");
+			registry.register(ICE_ALTAR, "ice_altar").submit();
 		}
-		proxy.registerBlockWithOre(PLATINUM_ORE, "platinum_ore", "orePlatinum");
-		proxy.registerBlockWithOre(PLATINUM_BLOCK, "platinum_block", "blockPlatinum");
-		proxy.registerBlockOnly(PLANKS, "mina_planks");
-		proxy.registerBlock(LOG_PEPPEL, "log_peppel");
-		proxy.registerBlock(LOG_COTTON, "log_cotton");
-		proxy.registerBlock(LOG_CHESTNUT, "log_chestnut");
-		proxy.registerBlock(LOG_CHERRY, "log_cherry");
-		proxy.registerBlockOnly(MINA_LEAVES_A, "mina_leaves_a");
+		registry.register(PLATINUM_ORE, "platinum_ore").ore("orePlatinum").submit();
+		registry.register(PLATINUM_BLOCK, "platinum_block").ore("blockPlatinum").submit();
+		registry.register(PLANKS, "mina_planks").blockOnly().submit();
+		registry.register(LOG_PEPPEL, "log_peppel").submit();
+		registry.register(LOG_COTTON, "log_cotton").submit();
+		registry.register(LOG_CHESTNUT, "log_chestnut").submit();
+		registry.register(LOG_CHERRY, "log_cherry").submit();
+		registry.register(MINA_LEAVES_A, "mina_leaves_a").blockOnly().submit();
 		//proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
-		proxy.registerBlockOnly(PALM_LEAVES, "palm_leaves");
-		proxy.registerBlockOnly(SAPLING, "mina_sapling");
-		proxy.registerBlockOnly(HERB_CROP, "herb");
+		registry.register(PALM_LEAVES, "palm_leaves").blockOnly().submit();
+		registry.register(SAPLING, "mina_sapling").blockOnly().submit();
+		registry.register(HERB_CROP, "herb").blockOnly().submit();
 		
 		if(FeatureList.enable_plate){
-			proxy.registerBlock(PLATE, "plate");
+			registry.register(PLATE, "plate").submit();
 		}
-		proxy.registerBlock(OAK_LETTERBOX, "letterbox_oak");
-		proxy.registerBlock(SPRUCE_LETTERBOX, "letterbox_spruce");
-		proxy.registerBlock(BIRCH_LETTERBOX, "letterbox_birch");
-		proxy.registerBlock(JUNGLE_LETTERBOX, "letterbox_jungle");
-		proxy.registerBlock(ACACIA_LETTERBOX, "letterbox_acacia");
-		proxy.registerBlock(BIG_OAK_LETTERBOX, "letterbox_big_oak");
-		proxy.registerBlock(CHESTNUT_LETTERBOX, "letterbox_chestnut");
-		proxy.registerBlock(CHERRY_LETTERBOX, "letterbox_cherry");
-		proxy.registerBlock(PEPPEL_LETTERBOX, "letterbox_peppel");
-		proxy.registerBlock(COTTON_LETTERBOX, "letterbox_cotton");
-		proxy.registerBlock(PALM_LETTERBOX, "letterbox_palm");
-		proxy.registerBlock(BAMBUS_LETTERBOX, "letterbox_bambus");
-		proxy.registerBlockWithOre(RUBY_ORE, "ruby_ore", "oreRuby");
-		proxy.registerBlockWithOre(SAPPHIRE_ORE, "sapphire_ore", "oreSapphire");
-		proxy.registerBlockWithOre(RUBY_BLOCK, "ruby_block", "blockRuby");
-		proxy.registerBlockWithOre(SAPPHIRE_BLOCK, "sapphire_block", "blockSapphire");
-		proxy.registerBlockOnly(ELEVATOR_FLOOR, "elevator_floor");
-		proxy.registerBlock(ELEVATOR_CONTROL, "elevator_control");
-		proxy.registerBlock(AUTO_FEEDER, "autofeeder");
+		registry.register(OAK_LETTERBOX, "letterbox_oak").submit();
+		registry.register(SPRUCE_LETTERBOX, "letterbox_spruce").submit();
+		registry.register(BIRCH_LETTERBOX, "letterbox_birch").submit();
+		registry.register(JUNGLE_LETTERBOX, "letterbox_jungle").submit();
+		registry.register(ACACIA_LETTERBOX, "letterbox_acacia").submit();
+		registry.register(BIG_OAK_LETTERBOX, "letterbox_big_oak").submit();
+		registry.register(CHESTNUT_LETTERBOX, "letterbox_chestnut").submit();
+		registry.register(CHERRY_LETTERBOX, "letterbox_cherry").submit();
+		registry.register(PEPPEL_LETTERBOX, "letterbox_peppel").submit();
+		registry.register(COTTON_LETTERBOX, "letterbox_cotton").submit();
+		registry.register(PALM_LETTERBOX, "letterbox_palm").submit();
+		registry.register(BAMBUS_LETTERBOX, "letterbox_bambus").submit();
+		registry.register(RUBY_ORE, "ruby_ore").ore("oreRuby").submit();
+		registry.register(SAPPHIRE_ORE, "sapphire_ore").ore("oreSapphire").submit();
+		registry.register(RUBY_BLOCK, "ruby_block").ore("blockRuby").submit();
+		registry.register(SAPPHIRE_BLOCK, "sapphire_block").ore("blockSapphire").submit();
+		registry.register(ELEVATOR_FLOOR, "elevator_floor").blockOnly().submit();
+		registry.register(ELEVATOR_CONTROL, "elevator_control").submit();
+		registry.register(AUTO_FEEDER, "autofeeder").submit();
 		if(FeatureList.enable_redstone_crossroad){
-			proxy.registerBlock(REDSTONE_CROSSROAD, "redstone_crossroad");
+			registry.register(REDSTONE_CROSSROAD, "redstone_crossroad").submit();
 		}
 		if(FeatureList.enable_cable){
-			proxy.registerBlock(CABLE, "cable");
-			proxy.registerBlock(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source");
+			registry.register(CABLE, "cable").submit();
+			registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
 		}
-		proxy.registerBlockOnly(MILKY_GLASS, "milky_glass");
-		proxy.registerBlockOnly(LIT_MILKY_GLASS, "lit_milky_glass");
-		proxy.registerBlockOnly(GIFT_BOX, "gift_box");
-		proxy.registerBlockOnly(DOGE_CROP, "doge_crop");
-		proxy.registerBlockOnly(KEVIKUS_CROP, "kevikus_crop");
-		proxy.registerBlockOnly(TRACIUS_CROP, "tracius_crop");
-		proxy.registerBlockOnly(CHILI_CROP, "chili_crop");
-		proxy.registerBlockOnly(COBBLEBRICKS, "cobblebrick_stone");
-		proxy.registerBlock(COLLECTOR, "collector");
-		proxy.registerBlock(CAMPFIRE, "campfire");
-		proxy.registerBlock(SLOT_MACHINE, "slot_machine");
-		if(FeatureList.enable_chairs)proxy.registerBlock(OAK_CHAIR, "oak_chair");
-		proxy.registerBlock(SIEVE, "sieve");
-		proxy.registerBlockOnly(CAMPBENCH, "campbench");
-		proxy.registerBlock(QUICKSAND, "quicksand");
-		proxy.registerBlock(LOG_PALM, "log_palm");
-		proxy.registerBlockOnly(WOODEN_SLAB, "mina_wooden_slab");
-		proxy.registerBlockOnly(DOUBLE_WOODEN_SLAB, "mina_double_wooden_slab");
-		proxy.registerBlock(PEPPEL_STAIRS, "peppel_stairs");
-		proxy.registerBlock(COTTON_STAIRS, "cotton_stairs");
-		proxy.registerBlock(CHESTNUT_STAIRS, "chestnut_stairs");
-		proxy.registerBlock(CHERRY_STAIRS, "cherry_stairs");
-		proxy.registerBlock(PALM_STAIRS, "palm_stairs");
-		proxy.registerBlockWithOre(COCONUT, "coconut");
-		proxy.registerBlock(DIMMABLE_LIGHT, "dimmable_lamp");
-		proxy.registerBlock(WABE_BLOCK, "wabe_block");
-		proxy.registerBlock(FILTER, "filter");
-		proxy.registerBlock(AUTO_CRAFTER, "autocrafter");
-		
-		init = true;
+		registry.register(MILKY_GLASS, "milky_glass").blockOnly().submit();
+		registry.register(LIT_MILKY_GLASS, "lit_milky_glass").blockOnly().submit();
+		registry.register(GIFT_BOX, "gift_box").blockOnly().submit();
+		registry.register(DOGE_CROP, "doge_crop").blockOnly().submit();
+		registry.register(KEVIKUS_CROP, "kevikus_crop").blockOnly().submit();
+		registry.register(TRACIUS_CROP, "tracius_crop").blockOnly().submit();
+		registry.register(CHILI_CROP, "chili_crop").blockOnly().submit();
+		registry.register(COBBLEBRICKS, "cobblebrick_stone").blockOnly().submit();
+		registry.register(COLLECTOR, "collector").submit();
+		registry.register(CAMPFIRE, "campfire").submit();
+		registry.register(SLOT_MACHINE, "slot_machine").submit();
+		if(FeatureList.enable_chairs)registry.register(OAK_CHAIR, "oak_chair").submit();
+		registry.register(SIEVE, "sieve").submit();
+		registry.register(CAMPBENCH, "campbench").blockOnly().submit();
+		registry.register(QUICKSAND, "quicksand").submit();
+		registry.register(LOG_PALM, "log_palm").submit();
+		registry.register(WOODEN_SLAB, "mina_wooden_slab").blockOnly().submit();
+		registry.register(DOUBLE_WOODEN_SLAB, "mina_double_wooden_slab").blockOnly().submit();
+		registry.register(PEPPEL_STAIRS, "peppel_stairs").submit();
+		registry.register(COTTON_STAIRS, "cotton_stairs").submit();
+		registry.register(CHESTNUT_STAIRS, "chestnut_stairs").submit();
+		registry.register(CHERRY_STAIRS, "cherry_stairs").submit();
+		registry.register(PALM_STAIRS, "palm_stairs").submit();
+		registry.register(COCONUT, "coconut").ore("coconut").submit();;
+		registry.register(DIMMABLE_LIGHT, "dimmable_lamp").submit();
+		registry.register(WABE_BLOCK, "wabe_block").submit();
+		registry.register(FILTER, "filter").submit();
+		registry.register(AUTO_CRAFTER, "autocrafter").submit();
 	}
 	
 	static void registerOreEntries(){
-		if (initOres)throw new RuntimeException("Duplicate call of function");
-		
 		OreDictionary.registerOre("plankWood", new ItemStack(PLANKS, 1, OreDictionary.WILDCARD_VALUE));
-		
-		initOres = true;
 	}
 
 	static void setFireInfos() {

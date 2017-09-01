@@ -156,10 +156,8 @@ public class MinaMod {
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),
 				MinaUtils.convertRGBToDecimal(11, 112, 179));
 
-		if(FeatureList.enable_soul_pearls){
-			EntityRegistry.registerModEntity(EntitySoulPearl.ID, EntitySoulPearl.class, createDottedIdentifier(EntitySoulPearl.entityId), IDRegistry.entitySoulPearlId, this, 64,
-					1, true);
-		}
+		EntityRegistry.registerModEntity(EntitySoulPearl.ID, EntitySoulPearl.class, createDottedIdentifier(EntitySoulPearl.entityId), IDRegistry.entitySoulPearlId, this, 64,
+				1, true);
 
 		if(FeatureList.enable_ice_altar){
 			EntityRegistry.registerModEntity(EntityIceSentinel.ID, EntityIceSentinel.class, createDottedIdentifier(EntityIceSentinel.entityId),

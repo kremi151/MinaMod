@@ -6,7 +6,11 @@ import java.util.List;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.interfaces.TriConsumer;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
+import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
+import lu.kremi151.minamod.util.registration.IRegistrationInterface;
+import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -22,7 +26,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,7 +36,6 @@ public class BlockTable extends Block{
 	public static final PropertyEnum<TableForm> FORM = PropertyEnum.<TableForm>create("form", TableForm.class);
 	
 	private static final List<BlockTable> tables = new ArrayList<BlockTable>();
-	private static boolean init = false;
 	
 	private TableType type;
 
@@ -98,13 +100,10 @@ public class BlockTable extends Block{
 		return tables.iterator();
 	}
 	
-	public static void registerTables(){
-		if(init)return;
+	private static void prepareRegistering(TriConsumer<BlockTable, String, String[]> consumer) {
 		for(int i = 0 ; i < tables.size() ; i++){
 			BlockTable t = tables.get(i);
 			String tname = t.getUnlocalizedName().substring(5);
-			//MinaMod.getProxy().registerBlock(t, t.getUnlocalizedName().substring(5));
-			
 			String[] variantNames = new String[FORM_NAMES.length];
 			for(int j = 0 ; j < FORM_NAMES.length; j++){
 				if(j == 0){
@@ -113,14 +112,17 @@ public class BlockTable extends Block{
 					variantNames[j] = tname + "_" + FORM_NAMES[j];
 				}
 			}
-			
-			MinaMod.getProxy().registerBlockOnly(t, tname);
-			//GameRegistry.register(new ItemBlockMulti<BlockTable>(t, FORM_NAMES).setRegistryName(t.getRegistryName()));
-			MinaMod.getProxy().registerItem(new ItemBlockMulti<BlockTable>(t, FORM_NAMES).setRegistryName(t.getRegistryName()), tname, variantNames);
-			
+			consumer.accept(t, tname, variantNames);
 			t.setCreativeTab(MinaCreativeTabs.FURNISHING);
 		}
-		init = true;
+	}
+	
+	public static void registerTableBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry){
+		prepareRegistering((t, tname, variantNames) -> registry.register(t, tname).blockOnly().submit());
+	}
+	
+	public static void registerTableItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
+		prepareRegistering((t, tname, variantNames) -> registry.register(new ItemBlockMulti<BlockTable>(t, FORM_NAMES).setRegistryName(t.getRegistryName()), tname).variantNames(variantNames).submit());
 	}
 	
 	public static void registerFireInfos(){

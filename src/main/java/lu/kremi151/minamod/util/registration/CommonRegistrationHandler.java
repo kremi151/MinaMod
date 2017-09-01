@@ -23,5 +23,10 @@ public abstract class CommonRegistrationHandler<T extends IForgeRegistryEntry<T>
 		this.oreName = ore;
 		return this;
 	}
+	
+	public CommonRegistrationHandler ore() {
+		this.oreName = name;
+		return this;
+	}
 
 }
