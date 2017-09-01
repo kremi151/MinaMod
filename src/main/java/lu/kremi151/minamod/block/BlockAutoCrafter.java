@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.block;
 
+import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.util.IDRegistry;
@@ -20,7 +21,7 @@ public class BlockAutoCrafter extends BlockContainer{
 
 	public BlockAutoCrafter() {
 		super(Material.IRON, MapColor.BLACK);
-		this.setCreativeTab(CreativeTabs.REDSTONE);
+		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
 
 	@Override
