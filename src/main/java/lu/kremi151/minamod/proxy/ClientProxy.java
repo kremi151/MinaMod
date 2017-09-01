@@ -1,7 +1,5 @@
 package lu.kremi151.minamod.proxy;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -12,7 +10,6 @@ import org.lwjgl.input.Keyboard;
 import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
-import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockDimmableLight;
@@ -52,33 +49,24 @@ import lu.kremi151.minamod.entity.EntitySoulPearl;
 import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
-import lu.kremi151.minamod.item.ItemHerbGuide;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
-import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelManager;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IThreadListener;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -92,8 +80,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
-
-	private ArrayList<ItemVariantsData> variantsStack = new ArrayList<ItemVariantsData>();
 
 	private RenderPlate renderPlate;
 	// private RenderJoinerTable renderJoinerTable;
@@ -216,12 +202,6 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(MinaBlocks.KEY_LOCK, new StateMap.Builder().ignore(BlockLock.POWERED).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.FILTER, new StateMap.Builder().ignore(BlockFilter.ENABLED).build());
 	}
-	
-	@Override
-	public void registerCustomMeshDefinitions() {
-		ModelBakery.registerItemVariants(MinaItems.HERB_GUIDE, MinaUtils.deserializeResourceLocations(MinaMod.MODID, "herb_guide", "herb_guide_completed"));
-		ModelLoader.setCustomMeshDefinition(MinaItems.HERB_GUIDE, new HerbGuideMeshDefinition());
-	}
 
 	@Override
 	public void registerKeyBindings() {
@@ -307,62 +287,6 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void registerItem(Item item, String name, String... variantNames) {
-		super.registerItem(item, name, variantNames);
-		if (variantsStack != null) {
-			variantsStack.add(new ItemVariantsData(item, name, MinaUtils.deserializeResourceLocations(MinaMod.MODID, variantNames)));
-		}
-	}
-
-	private void registerVariantNamesForItem(Item item, String name, ResourceLocation... variantNames) {
-		if(item == Items.AIR){
-			throw new RuntimeException("Cannot register mesh definition for air item");
-		}
-		try{
-			boolean valid_vn = variantNames != null && variantNames.length > 0;
-			if (valid_vn) {				
-				if (variantNames.length == 1) {
-					ModelLoader.setCustomMeshDefinition(item, new StaticMeshDefinition(new ModelResourceLocation(variantNames[0], "inventory")));
-				} else {
-					ModelBakery.registerItemVariants(item, variantNames);
-					for (int i = 0; i < variantNames.length; i++) {
-						ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(variantNames[i], "inventory"));
-					}
-				}
-				
-			} else {
-				ModelLoader.setCustomMeshDefinition(item, new StaticMeshDefinition(new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, name), "inventory")));
-			}
-			
-		}catch(RuntimeException e){
-			MinaMod.errorln("Error registering variant names for item \"" + name + "\" [" + item.getClass() + "]");
-			e.printStackTrace();
-			throw(e);
-		}
-	}
-
-	@Override
-	public void registerBlock(Block block, String name, String... variantNames) {
-		super.registerBlock(block, name, variantNames);
-		if (variantsStack != null) {
-			variantsStack.add(new ItemVariantsData(Item.getItemFromBlock(block), name, MinaUtils.deserializeResourceLocations(MinaMod.MODID, variantNames)));
-		}
-	}
-
-	@Override
-	public void registerVariantNames() {
-		if (variantsStack != null) {
-			Iterator<ItemVariantsData> it = variantsStack.iterator();
-			while (it.hasNext()) {
-				ItemVariantsData bv = it.next();
-				registerVariantNamesForItem(bv.item, bv.name, bv.variantNames);
-				it.remove();
-			}
-		}
-		variantsStack = null;
-	}
-	
-	@Override
 	public void registerFluidModels() {
 		
 	}
@@ -416,52 +340,5 @@ public class ClientProxy extends CommonProxy {
 		boolean signed = book.hasTagCompound() && book.getTagCompound().hasKey("author", 8);
 		Minecraft.getMinecraft().displayGuiScreen(new GuiScreenBook(Minecraft.getMinecraft().player, book, !signed));
 	}
-
-	@SideOnly(Side.CLIENT)
-	private class ItemVariantsData {
-
-		final Item item;
-		final String name;
-		final ResourceLocation[] variantNames;
-
-		private ItemVariantsData(Item item, String name, ResourceLocation... variantNames) {
-			this.item = item;
-			this.name = name;
-			this.variantNames = variantNames;
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	private class StaticMeshDefinition implements ItemMeshDefinition {
-
-		private ModelResourceLocation m;
-
-		private StaticMeshDefinition(ModelResourceLocation m) {
-			this.m = m;
-		}
-
-		@Override
-		public ModelResourceLocation getModelLocation(ItemStack stack) {
-			return m;
-		}
-
-	}
 	
-	@SideOnly(Side.CLIENT)
-	private class HerbGuideMeshDefinition implements ItemMeshDefinition{
-
-		private final ModelResourceLocation COMPLETED = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "herb_guide_completed"), "inventory");
-		private final ModelResourceLocation INCOMPLETED = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "herb_guide"), "inventory");
-
-		@Override
-		public ModelResourceLocation getModelLocation(ItemStack stack) {
-			if(ItemHerbGuide.percentageCompleted(stack) >= 1.0f) {
-				return COMPLETED;
-			}else {
-				return INCOMPLETED;
-			}
-		}
-		
-	}
-
 }

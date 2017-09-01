@@ -10,28 +10,20 @@ import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.network.MessageShowCustomAchievement;
 import lu.kremi151.minamod.network.MessageSpawnParticleEffect;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IThreadListener;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy{
 
 	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
 	public void registerStateMappings() {}
-	public void registerCustomMeshDefinitions() {}
 	public void registerKeyBindings(){}
-	public void registerVariantNames() {}
 	public void registerFluidModels() {}
 	public void registerItemAndBlockColors() {}
 	public void executeClientSide(Runnable r){}
@@ -82,40 +74,6 @@ public class CommonProxy{
      */
     public EntityPlayer getPlayerEntity(MessageContext ctx) {
     	return ctx.getServerHandler().player;
-    }
-    
-    public void registerItemWithOre(Item item, String universalName) {
-    	registerItemWithOre(item, universalName, universalName);
-    }
-    
-    public void registerItemWithOre(Item item, String name, String oreName, String... variantNames){
-    	registerItem(item, name, variantNames);
-    	OreDictionary.registerOre(oreName, item);
-    }
-    
-    public void registerItem(Item item, String name, String... variantNames){
-    	if(item.getRegistryName() == null){
-    		item.setRegistryName(new ResourceLocation(MinaMod.MODID, name));
-    	}
-    	GameRegistry.register(item);
-    }
-    
-    public void registerBlockWithOre(Block block, String universalName){
-    	registerBlockWithOre(block, universalName, universalName);
-    }
-    
-    public void registerBlockWithOre(Block block, String name, String oreName, String... variantNames){
-    	registerBlock(block, name, variantNames);
-    	OreDictionary.registerOre(oreName, block);
-    }
-    
-    public void registerBlock(Block block, String name, String... variantNames){
-    	GameRegistry.register(block.setRegistryName(new ResourceLocation(MinaMod.MODID, name)));
-    	GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-    }
-    
-    public void registerBlockOnly(Block block, String name){
-    	GameRegistry.register(block.setRegistryName(new ResourceLocation(MinaMod.MODID, name)));
     }
 	
 	private HashMap<UUID, Long> getCooldownCategory(String category){

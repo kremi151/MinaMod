@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
+import lu.kremi151.minamod.util.registration.proxy.RegisteringProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +26,7 @@ public final class RegisteringHandler {
 	private static final LinkedList<Pair<Block, String>> BLOCK_ORES = new LinkedList<>();
 	
 	@SidedProxy(modId = MinaMod.MODID, clientSide = "lu.kremi151.minamod.util.registration.proxy.ClientRegisteringProxy", serverSide = "lu.kremi151.minamod.util.registration.proxy.RegisteringProxy")
-	private static CommonProxy proxy;
+	private static RegisteringProxy proxy;
 	
 	private RegisteringHandler() {}
 
@@ -45,7 +46,9 @@ public final class RegisteringHandler {
 					if(this.oreName != null) {
 				    	BLOCK_ORES.add(Pair.of(this.obj, this.oreName));
 					}
-					// TODO Auto-generated method stub
+					if(!this.blockOnly) {
+						proxy.addItemVariants(obj, name, this.variantNames);
+					}
 				}
 			};
 		});
@@ -72,7 +75,7 @@ public final class RegisteringHandler {
 						if(this.oreName != null) {
 					    	OreDictionary.registerOre(this.oreName, obj);
 						}
-						// TODO Auto-generated method stub
+						proxy.addItemVariants(obj, name, this.variantNames);
 			    	}
 				}
 			};
@@ -87,11 +90,11 @@ public final class RegisteringHandler {
 	
 	@SubscribeEvent
 	protected static void onRegisterModels(ModelRegistryEvent event) {
-		CommonProxy proxy = MinaMod.getProxy();
-		proxy.registerStateMappings();
-		proxy.registerVariantNames();
+		CommonProxy main_proxy = MinaMod.getProxy();
+		main_proxy.registerStateMappings();
+		proxy.registerItemModels();
 		proxy.registerCustomMeshDefinitions();
-		proxy.registerFluidModels();
+		main_proxy.registerFluidModels();
 	}
 	
 }
