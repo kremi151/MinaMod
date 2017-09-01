@@ -321,7 +321,7 @@ public class EntityFish extends EntityAnimal {
 
 	@SubscribeEvent
 	public static void registerFishTypes(RegistryEvent.Register<FishType> event) {
-		FishTypes.register();
+		FishTypes.register(event.getRegistry());
 	}
 
 	@SubscribeEvent
