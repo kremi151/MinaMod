@@ -3,12 +3,13 @@ package lu.kremi151.minamod;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -20,6 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public final class RegisteringHandler {
 	
 	private static final LinkedList<Item> ITEM_BLOCKS = new LinkedList<>();
+	private static final LinkedList<Pair<Block, String>> BLOCK_ORES = new LinkedList<>();
 	
 	private RegisteringHandler() {}
 
@@ -37,7 +39,7 @@ public final class RegisteringHandler {
 			    		ITEM_BLOCKS.add(this.itemBlockFactory.apply(obj));
 			    	}
 					if(this.oreName != null) {
-				    	OreDictionary.registerOre(this.oreName, obj);
+				    	BLOCK_ORES.add(Pair.of(this.obj, this.oreName));
 					}
 					// TODO Auto-generated method stub
 				}
@@ -71,6 +73,12 @@ public final class RegisteringHandler {
 				}
 			};
 		});
+		Iterator<Pair<Block, String>> it2 = BLOCK_ORES.iterator();
+		while(it2.hasNext()) {
+			Pair<Block, String> pair = it2.next();
+			OreDictionary.registerOre(pair.getRight(), pair.getLeft());
+			it2.remove();
+		}
 	}
 	
 	@SubscribeEvent
