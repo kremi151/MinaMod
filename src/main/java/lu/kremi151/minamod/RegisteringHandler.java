@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -22,6 +23,9 @@ public final class RegisteringHandler {
 	
 	private static final LinkedList<Item> ITEM_BLOCKS = new LinkedList<>();
 	private static final LinkedList<Pair<Block, String>> BLOCK_ORES = new LinkedList<>();
+	
+	@SidedProxy(modId = MinaMod.MODID, clientSide = "lu.kremi151.minamod.util.registration.proxy.ClientRegisteringProxy", serverSide = "lu.kremi151.minamod.util.registration.proxy.RegisteringProxy")
+	private static CommonProxy proxy;
 	
 	private RegisteringHandler() {}
 
