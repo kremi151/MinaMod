@@ -9,7 +9,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class BaseInventory implements IInventory{
 	
-	private final NonNullList<ItemStack> inv;
+	protected final NonNullList<ItemStack> inv;
 	private final int size;
 	
 	public BaseInventory(int size){

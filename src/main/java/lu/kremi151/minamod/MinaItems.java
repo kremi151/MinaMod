@@ -20,6 +20,7 @@ import lu.kremi151.minamod.item.ItemChiliPowder;
 import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemCoinBag;
 import lu.kremi151.minamod.item.ItemColoredWrittenBook;
+import lu.kremi151.minamod.item.ItemCombiner;
 import lu.kremi151.minamod.item.ItemCustomArmor;
 import lu.kremi151.minamod.item.ItemCustomAxe;
 import lu.kremi151.minamod.item.ItemCustomHoe;
@@ -209,6 +210,7 @@ public class MinaItems {
 	public static final ItemUnpackedGift UNPACKED_GIFT = (ItemUnpackedGift) new ItemUnpackedGift().setUnlocalizedName("unpacked_gift");
 	public static final ItemKeyChain KEY_CHAIN = (ItemKeyChain) new ItemKeyChain().setUnlocalizedName("key_chain");
 	public static final ItemSketch SKETCH = (ItemSketch) new ItemSketch().setUnlocalizedName("sketch");
+	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -298,6 +300,7 @@ public class MinaItems {
 		registry.register(UNPACKED_GIFT, "unpacked_gift").variantNames(BlockGiftBox.getVariantNames("unpacked_gift")).submit();
 		registry.register(KEY_CHAIN, "key_chain").submit();
 		registry.register(SKETCH, "sketch").submit();
+		registry.register(COMBINER, "combiner").submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){

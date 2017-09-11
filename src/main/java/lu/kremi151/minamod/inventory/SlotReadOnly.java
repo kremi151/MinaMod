@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotReadOnly extends Slot{
 	
-	ISlotReadOnlyHandler l;
+	private ISlotReadOnlyHandler l;
 
 	public SlotReadOnly(IInventory inv, int slot, int x, int y) {
 		super(inv, slot, x, y);
