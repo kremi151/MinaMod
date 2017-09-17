@@ -6,8 +6,8 @@ import lu.kremi151.minamod.inventory.SlotReadOnly.ISlotReadOnlyHandler;
 import lu.kremi151.minamod.util.CombinerRecipes;
 import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -16,12 +16,7 @@ public class ContainerCombiner extends BaseContainer implements ISlotReadOnlyHan
 	private final EntityPlayer player;
 	private final int slot;
 
-	private final IInventory inputInv = new BaseInventoryImpl("input", 3) {
-		@Override
-		public void onCraftMatrixChanged() {
-			outputInv.setInventorySlotContents(0, CombinerRecipes.tryCombine(inv));
-		}
-	};
+	private final IInventory inputInv = new InventoryCrafting(this, 1, 3);
 	private final IInventory outputInv = new BaseInventoryImpl("output", 1);
 	
 	private static final ShiftClickManager shiftClick = ShiftClickManager.builder()
@@ -77,6 +72,15 @@ public class ContainerCombiner extends BaseContainer implements ISlotReadOnlyHan
             {
                 playerIn.dropItem(stack, false);
             }
+        }
+    }
+	
+	@Override
+	public void onCraftMatrixChanged(IInventory inventoryIn)
+    {
+        super.onCraftMatrixChanged(inventoryIn);
+        if(inventoryIn == inputInv) {
+        	outputInv.setInventorySlotContents(0, CombinerRecipes.tryCombine((InventoryCrafting)inventoryIn, player.world));
         }
     }
 
