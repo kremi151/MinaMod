@@ -18,7 +18,9 @@ public final class CombinerRecipes {
 	private final static LinkedList<ShapelessRecipes> RECIPES = new LinkedList<>();
 	
 	static {
-		registerRecipe(new ItemStack(Items.NETHER_STAR), MinaItems.STRAWBERRY, MinaItems.CITRIN);
+		registerRecipe(new ItemStack(MinaItems.STRAWBERRY, 1, 1), MinaItems.STRAWBERRY, MinaItems.RUBY);
+		registerRecipe(new ItemStack(MinaItems.STRAWBERRY, 1, 2), MinaItems.STRAWBERRY, MinaItems.SAPPHIRE);
+		registerRecipe(new ItemStack(MinaItems.STRAWBERRY, 1, 3), MinaItems.STRAWBERRY, MinaItems.CITRIN);
 	}
 	
 	public static ItemStack tryCombine(InventoryCrafting inv, World world) {

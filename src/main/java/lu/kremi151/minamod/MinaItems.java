@@ -42,6 +42,7 @@ import lu.kremi151.minamod.item.ItemPowder;
 import lu.kremi151.minamod.item.ItemSickle;
 import lu.kremi151.minamod.item.ItemSketch;
 import lu.kremi151.minamod.item.ItemSoulPearl;
+import lu.kremi151.minamod.item.ItemStrawberry;
 import lu.kremi151.minamod.item.ItemUnpackedGift;
 import lu.kremi151.minamod.item.amulet.AmuletRegistry;
 import lu.kremi151.minamod.item.block.ItemBlockCombined;
@@ -59,7 +60,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemSoup;
@@ -91,7 +91,7 @@ public class MinaItems {
 			.setUnlocalizedName("citrin_hoe");
 	public static final Item HONEYWABE = new Item().setUnlocalizedName("honeywabe")
 			.setCreativeTab(CreativeTabs.MATERIALS);
-	public static final Item STRAWBERRY = new ItemSeedFood(1, 0.2f, MinaBlocks.STRAWBERRY_CROP, Blocks.FARMLAND).setUnlocalizedName("strawberry");
+	public static final Item STRAWBERRY = new ItemStrawberry().setUnlocalizedName("strawberry");
 	@AutoToolRecipe("bambus")
 	public static final Item BAMBUS = new ItemBambus().setUnlocalizedName("bambus");
 	public static final Item BAMBUS_SWORD = new ItemCustomSword(MinaToolMaterials.BAMBUS)
@@ -226,7 +226,7 @@ public class MinaItems {
 		registry.register(CITRIN_SHOVEL, "citrin_shovel").submit();
 		registry.register(CITRIN_HOE, "citrin_hoe").submit();
 		registry.register(HONEYWABE, "honeywabe").submit();
-		registry.register(STRAWBERRY, "strawberry").ore().submit();
+		registry.register(STRAWBERRY, "strawberry").variantNames("strawberry", "ruby_strawberry", "sapphire_strawberry", "citrin_strawberry").ore().submit();
 		registry.register(BAMBUS, "bambus_item").submit();
 		registry.register(BAMBUS_SWORD, "bambus_sword").submit();
 		registry.register(BAMBUS_AXE, "bambus_axe").submit();
