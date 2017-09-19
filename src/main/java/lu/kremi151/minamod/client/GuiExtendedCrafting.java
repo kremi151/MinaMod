@@ -52,6 +52,8 @@ public class GuiExtendedCrafting extends GuiCrafting{
 		super.initGui();
 		this.buttonList.add(this.btnSketch);
 		setupPositions();
+		
+		btnSketch.enabled = false;
 	}
 	
 	@Override

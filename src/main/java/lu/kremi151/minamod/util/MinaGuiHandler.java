@@ -16,6 +16,7 @@ import lu.kremi151.minamod.container.ContainerFilter;
 import lu.kremi151.minamod.container.ContainerKeyChain;
 import lu.kremi151.minamod.container.ContainerLetterbox;
 import lu.kremi151.minamod.container.ContainerSelectItem;
+import lu.kremi151.minamod.container.ContainerSketchView;
 import lu.kremi151.minamod.container.ContainerSlotMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
@@ -53,6 +54,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerAutoCrafter(player, (TileEntityAutoCrafter) world.getTileEntity(new BlockPos(x,y,z)));
 		case IDRegistry.guiIdCombiner:
 			return new ContainerCombiner(player, x);
+		case IDRegistry.guiIdSketch:
+			return new ContainerSketchView(player, x);
 		}
 		return null;
 	}
@@ -88,6 +91,8 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiAutoCrafter(new ContainerAutoCrafter(player, (TileEntityAutoCrafter) world.getTileEntity(new BlockPos(x,y,z))));
 		case IDRegistry.guiIdCombiner:
 			return new lu.kremi151.minamod.client.GuiCombiner(new ContainerCombiner(player, x));
+		case IDRegistry.guiIdSketch:
+			return new lu.kremi151.minamod.client.GuiSketchView(new ContainerSketchView(player, x));
 		}
 		return null;
 	}

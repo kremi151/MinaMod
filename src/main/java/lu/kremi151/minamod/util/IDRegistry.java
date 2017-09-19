@@ -29,4 +29,5 @@ public class IDRegistry {
 	public static final int guiIdAmulets = 11;
 	public static final int guiIdAutoCrafter = 12;
 	public static final int guiIdCombiner = 13;
+	public static final int guiIdSketch = 14;
 }
