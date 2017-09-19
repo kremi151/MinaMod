@@ -59,7 +59,7 @@ public class MessageCreateSketch implements IMessage{
 							
 							NonNullList<ItemStack> order = NonNullList.withSize(9, ItemStack.EMPTY);
 							for(int i = 0 ; i < crafting.craftMatrix.getSizeInventory() ; i++) {
-								order.set(i, crafting.craftMatrix.getStackInSlot(i));
+								order.set(i, crafting.craftMatrix.getStackInSlot(i).copy());
 							}
 							cap.setOrder(order);
 							cap.setCachedRecipe(recipe);
