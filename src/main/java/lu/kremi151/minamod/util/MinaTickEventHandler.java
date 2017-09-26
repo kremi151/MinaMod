@@ -41,6 +41,7 @@ public class MinaTickEventHandler {
 				.add(MinaBlocks.NAMIE_FLOWER.getDefaultState().withProperty(BlockCustomCrops.AGE, Integer.valueOf(7)), 1.0)
 				.build();
 		server_tasks.addTask(new TaskRepeat(System.currentTimeMillis() + 600000l, 600000l, greenifyWorld));
+		server_tasks.addTask(new TaskRepeat(System.currentTimeMillis(), 100l, TaskOreInjector.instance()));
 	}
 	
 	public void addServerTask(Task t){ // NO_UCD (unused code)

@@ -2,6 +2,7 @@ package lu.kremi151.minamod.util.eventlisteners;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.OreInjectorManager;
+import lu.kremi151.minamod.util.TaskOreInjector;
 import lu.kremi151.minamod.worlddata.MinaWorld;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.GameRules;
@@ -22,9 +23,7 @@ public class WorldEvents {
 	public void onChunkSave(ChunkDataEvent.Save event){ // NO_UCD (unused code)
 		NBTTagCompound newnbt = new NBTTagCompound();
 		
-		if(MinaWorld.forWorld(event.getWorld()).getConfiguration().isOreInjectionEnabled()){
-			newnbt.setInteger(OreInjectorManager.DATA_TAG, OreInjectorManager.getChunkVersion());
-		}
+		newnbt.setInteger(OreInjectorManager.DATA_TAG, OreInjectorManager.getChunkVersion());
 		
 		event.getData().setTag(MinaMod.MODID, newnbt);
 	}
@@ -40,7 +39,7 @@ public class WorldEvents {
 					last_vcode = newnbt.getInteger(OreInjectorManager.DATA_TAG);
 				}
 				if(last_vcode < OreInjectorManager.getChunkVersion()){
-					OreInjectorManager.performOreInjection(event.getWorld(), event.getChunk(), last_vcode);
+					TaskOreInjector.instance().enqueueChunk(event);
 				}
 			}
 			

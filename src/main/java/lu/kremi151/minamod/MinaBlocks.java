@@ -221,6 +221,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockRotatedPillar WABE_BLOCK = (BlockRotatedPillar) new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setUnlocalizedName("wabe_block").setCreativeTab(CreativeTabs.DECORATIONS);
 	public static final BlockFilter FILTER = (BlockFilter) new BlockFilter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("filter");
 	public static final BlockAutoCrafter AUTO_CRAFTER = (BlockAutoCrafter) new BlockAutoCrafter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("autocrafter");
+	public static final BlockCustomOre RARE_SOIL_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
+			.setResistance(5.0F);
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -321,6 +323,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(WABE_BLOCK, "wabe_block").submit();
 		registry.register(FILTER, "filter").submit();
 		registry.register(AUTO_CRAFTER, "autocrafter").submit();
+		registry.register(RARE_SOIL_ORE, "rare_soil_ore").blockOnly().submit();
 	}
 	
 	static void registerOreEntries(){

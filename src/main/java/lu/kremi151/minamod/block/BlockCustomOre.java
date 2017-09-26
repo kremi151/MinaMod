@@ -25,16 +25,27 @@ public class BlockCustomOre extends Block{
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-//        return this == Blocks.coal_ore ? Items.coal : (this == Blocks.diamond_ore ? Items.diamond : (this == Blocks.lapis_ore ? Items.dye : (this == Blocks.emerald_ore ? Items.emerald : (this == Blocks.quartz_ore ? Items.quartz : Item.getItemFromBlock(this)))));
     	if(this == MinaBlocks.CITRIN_ORE){
     		return MinaItems.CITRIN;
     	}else if(this == MinaBlocks.SAPPHIRE_ORE){
     		return MinaItems.SAPPHIRE;
     	}else if(this == MinaBlocks.RUBY_ORE){
     		return MinaItems.RUBY;
+    	}else if(this == MinaBlocks.RARE_SOIL_ORE) {
+    		return MinaItems.RARE_SOIL;
     	}else{
     		return Item.getItemFromBlock(this);
     	}
+    }
+    
+    @Override
+    public int damageDropped(IBlockState state)
+    {
+        if(this == MinaBlocks.RARE_SOIL_ORE) {
+        	return MinaItems.RARE_SOIL.getRandomType(RANDOM).getMeta();
+        }else {
+        	return super.damageDropped(state);
+        }
     }
 
     /**

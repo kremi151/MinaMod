@@ -6,7 +6,7 @@ public class FeatureList {
 	public static final boolean enable_plate = false;
 	public static final boolean enable_redstone_crossroad = false;
 	public static final boolean enable_cable = false;
-	public static final boolean enable_ore_injection = false;
+	public static final boolean enable_ore_injection = true;
 	public static final boolean enable_bees = false;
 	public static final boolean enable_jetpack = false;
 	public static final boolean enable_chairs = false;

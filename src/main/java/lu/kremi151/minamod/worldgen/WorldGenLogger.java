@@ -31,6 +31,6 @@ public class WorldGenLogger {
 	}
 	
 	public void logBuilding(String building_name, int x, int y, int z){
-		logger.info("Generated %s at x=%d, y=%d, z=%d", building_name, x, y, z);
+		logger.info(String.format("Generated %s at x=%d, y=%d, z=%d", building_name, x, y, z));
 	}
 }
