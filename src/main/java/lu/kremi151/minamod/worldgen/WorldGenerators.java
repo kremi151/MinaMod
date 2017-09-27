@@ -37,7 +37,7 @@ public class WorldGenerators {
 	public static final WorldGenNewOre SAPPHIRE_ORE = new WorldGenNewOre(MinaBlocks.SAPPHIRE_ORE.getDefaultState(), 5, 2).setRange(6, 18);
 	
 	@OreInjector(chunkVersion = 2)
-	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_SOIL_ORE.getDefaultState(), 1, 4).setRange(0, 48);
+	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_SOIL_ORE.getDefaultState(), 2, 8).setRange(0, 48);
 	
 	@OreInjector(chunkVersion = 1)
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
