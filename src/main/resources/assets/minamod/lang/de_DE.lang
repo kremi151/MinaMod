@@ -196,6 +196,7 @@ tile.dimmable_lamp.name=Dimmbare Laterne
 tile.wabe_block.name=Wabenblock
 tile.filter.name=Filter
 tile.autocrafter.name=Automatische Werkbank
+tile.pumpkin_lantern.name=Kürbislaterne
 item.ever_snow.name=Ewige Schneeflocke
 item.namie_seeds.name=Namiesamen
 item.namie_fruit.name=Namiefrucht

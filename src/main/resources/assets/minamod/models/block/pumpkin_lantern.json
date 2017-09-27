@@ -1,0 +1,72 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "tex_base": "blocks/stone",
+        "tex_stem_top": "blocks/log_big_oak_top",
+        "tex_stem_side": "blocks/log_big_oak",
+        "tex_pumpkin_face": "blocks/pumpkin_face_on",
+        "tex_pumpkin_side": "blocks/pumpkin_side",
+        "tex_pumpkin_top": "blocks/pumpkin_top",
+        "tex_string": "blocks/wool_colored_brown",
+		"particle": "blocks/pumpkin_side"
+    },
+    "elements": [
+        {
+            "name": "Base",
+            "from": [ 6.0, 10.0, 15.0 ], 
+            "to": [ 10.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "tex_base", "uv": [ 5.0, 6.0, 9.0, 12.0 ] },
+                "east": { "texture": "tex_base", "uv": [ 10.0, 5.0, 11.0, 11.0 ] },
+                "west": { "texture": "tex_base", "uv": [ 5.0, 5.0, 6.0, 11.0 ] },
+                "up": { "texture": "tex_base", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+                "down": { "texture": "tex_base", "uv": [ 6.0, 11.0, 10.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "Stem",
+            "from": [ 7.0, 12.0, 7.0 ], 
+            "to": [ 9.0, 14.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "tex_stem_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "tex_stem_side", "uv": [ 6.0, 0.0, 10.0, 16.0 ], "rotation": 90 },
+                "west": { "texture": "tex_stem_side", "uv": [ 6.0, 0.0, 10.0, 16.0 ], "rotation": 270 },
+                "up": { "texture": "tex_stem_side", "uv": [ 6.0, 0.0, 10.0, 16.0 ] },
+                "down": { "texture": "tex_stem_side", "uv": [ 6.0, 0.0, 10.0, 16.0 ], "rotation": 180 }
+            }
+        },
+        {
+            "name": "Pumpkin",
+            "from": [ 4.0, 2.0, 4.0 ], 
+            "to": [ 12.0, 10.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "tex_pumpkin_face", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "east": { "texture": "tex_pumpkin_side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "south": { "texture": "tex_pumpkin_side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "west": { "texture": "tex_pumpkin_side", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "up": { "texture": "tex_pumpkin_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "tex_pumpkin_top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "StringLeft",
+            "from": [ 8.0, 8.0, 7.0 ], 
+            "to": [ 8.0, 12.0, 9.0 ], 
+            "rotation": { "origin": [ 8.0, 13.0, 8.0 ], "axis": "z", "angle": -45.0 },
+            "faces": {
+                "east": { "texture": "tex_string", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+                "west": { "texture": "tex_string", "uv": [ 0.0, 0.0, 2.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "StringRight",
+            "from": [ 8.0, 8.0, 7.0 ], 
+            "to": [ 8.0, 12.0, 9.0 ], 
+            "rotation": { "origin": [ 8.0, 13.0, 8.0 ], "axis": "z", "angle": 45.0 },
+            "faces": {
+                "east": { "texture": "tex_string", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+                "west": { "texture": "tex_string", "uv": [ 0.0, 0.0, 1.0, 3.0 ] }
+            }
+        }
+    ]
+}

@@ -197,6 +197,7 @@ tile.dimmable_lamp.name=Dimmable lamp
 tile.wabe_block.name=Wabe block
 tile.filter.name=Filter
 tile.autocrafter.name=Automatic workbench
+tile.pumpkin_lantern.name=Pumpkin lantern
 item.ever_snow.name=Ever snow
 item.namie_seeds.name=Namie seeds
 item.namie_fruit.name=Namie fruit
