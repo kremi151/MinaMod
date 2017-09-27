@@ -42,6 +42,7 @@ import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockPlate;
+import lu.kremi151.minamod.block.BlockPumpkinLantern;
 import lu.kremi151.minamod.block.BlockQuicksand;
 import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
 import lu.kremi151.minamod.block.BlockRhubarb;
@@ -223,6 +224,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockAutoCrafter AUTO_CRAFTER = (BlockAutoCrafter) new BlockAutoCrafter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("autocrafter");
 	public static final BlockCustomOre RARE_EARTH_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
 			.setResistance(5.0F);
+	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -324,6 +326,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(FILTER, "filter").submit();
 		registry.register(AUTO_CRAFTER, "autocrafter").submit();
 		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
+		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
 	}
 	
 	static void registerOreEntries(){
