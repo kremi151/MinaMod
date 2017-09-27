@@ -11,7 +11,6 @@ import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemChip.ChipType;
 import lu.kremi151.minamod.item.ItemKey;
-import lu.kremi151.minamod.item.ItemRareEarth;
 import lu.kremi151.minamod.recipe.RecipeColoredBook;
 import lu.kremi151.minamod.recipe.RecipeColoredBookCloning;
 import lu.kremi151.minamod.recipe.RecipeColoredKey;

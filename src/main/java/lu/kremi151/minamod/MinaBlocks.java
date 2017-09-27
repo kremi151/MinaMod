@@ -320,7 +320,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(CHESTNUT_STAIRS, "chestnut_stairs").submit();
 		registry.register(CHERRY_STAIRS, "cherry_stairs").submit();
 		registry.register(PALM_STAIRS, "palm_stairs").submit();
-		registry.register(COCONUT, "coconut").ore("coconut").submit();;
+		registry.register(COCONUT, "coconut").ore("coconut").submit();
 		registry.register(DIMMABLE_LIGHT, "dimmable_lamp").submit();
 		registry.register(WABE_BLOCK, "wabe_block").submit();
 		registry.register(FILTER, "filter").submit();
