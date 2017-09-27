@@ -8,9 +8,10 @@ import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.enums.EnumHerb;
+import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemChip.ChipType;
 import lu.kremi151.minamod.item.ItemKey;
-import lu.kremi151.minamod.item.ItemRareSoil;
+import lu.kremi151.minamod.item.ItemRareEarth;
 import lu.kremi151.minamod.recipe.RecipeColoredBook;
 import lu.kremi151.minamod.recipe.RecipeColoredBookCloning;
 import lu.kremi151.minamod.recipe.RecipeColoredKey;
@@ -54,7 +55,8 @@ public class MinaRecipes {
 		// TODO: GameRegistry.addSmelting(MinaItems.itemHoneywabe, new
 		// ItemStack(MinaItems.itemHoney,1), 0f);
 		GameRegistry.addSmelting(MinaItems.CHESTNUT, new ItemStack(MinaItems.CHESTNUT_COOKED, 1), 0f);
-		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 1f);
+		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 0.8f);
+		GameRegistry.addSmelting(new ItemStack(MinaItems.RARE_EARTH), new ItemStack(MinaItems.RARE_EARTH, 1, 1), 1f);
 
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			GameRegistry.addSmelting(new ItemStack(BlockStandaloneLog.getBlockFor(type), 1), new ItemStack(Items.COAL, 1, 1), 0.2f);
@@ -108,16 +110,15 @@ public class MinaRecipes {
 				MinaItems.CITRIN, 'S', Blocks.SOUL_SAND);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta), Items.GOLD_NUGGET, Items.REDSTONE);
-		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta), Items.GOLD_INGOT, Items.REDSTONE,
-				new ItemStack(MinaItems.RARE_SOIL, 1, ItemRareSoil.Type.COLTAN.getMeta()));
-		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_C.meta), Items.GOLD_INGOT, MinaItems.CITRIN, Items.REDSTONE, new ItemStack(MinaItems.RARE_SOIL, 1, ItemRareSoil.Type.COLTAN.getMeta()));
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.CHIP, 1, 3), "GAG", "BSC", "GRG", 
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta), Items.GOLD_INGOT, Items.REDSTONE);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_C.meta), Items.GOLD_INGOT, MinaItems.CITRIN, Items.REDSTONE, new ItemStack(MinaItems.RARE_EARTH, 1, 1));
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta), "GAG", "BSC", "GRG", 
 				'G', Items.GOLD_INGOT, 
 				'A', new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta),
 				'B', new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta),
 				'C', new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_C.meta),
 				'R', Items.REDSTONE,
-				'S', new ItemStack(MinaItems.RARE_SOIL, 1, ItemRareSoil.Type.NEODYM.getMeta()));
+				'S', new ItemStack(MinaItems.RARE_EARTH, 1, 1));
 		
 		GameRegistry.addRecipe(ItemKey.rawKey(), " L", "I ", 'I', Items.IRON_INGOT, 'L',
 				Items.LEATHER);
@@ -145,7 +146,7 @@ public class MinaRecipes {
 		}
 
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_CONTROL, 1), "III", "QCQ", 'I',
-				Items.IRON_INGOT, 'Q', Items.QUARTZ, 'C', new ItemStack(MinaItems.CHIP, 1, 1));
+				Items.IRON_INGOT, 'Q', Items.QUARTZ, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_B.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 0), "IQI", "QIQ", "IQI", 'I',
 				Items.IRON_INGOT, 'Q', Items.QUARTZ);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 1), "IQI", "QSQ", "IQI", 'I',
@@ -209,8 +210,8 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.HONEYWABE, 9), MinaBlocks.WABE_BLOCK);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.FILTER), " H ", "PSP", " P ", 'H', Blocks.HOPPER, 'P', MinaItems.PLATINUM_INGOT, 'S', Items.STRING);
-		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, 0));
-		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "ICG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_SOIL, 1, ItemRareSoil.Type.LANTHAN.getMeta()), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta));
+		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "ICG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.KEY_CHAIN), " N ", "N N", " N ", 'N', Items.field_191525_da);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_CRAFTER), "PHP", "PWP", "PUP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'W', Blocks.CRAFTING_TABLE, 'U', new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.COMBINER), " I ", " R ", "I I", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);

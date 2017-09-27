@@ -31,8 +31,8 @@ public class BlockCustomOre extends Block{
     		return MinaItems.SAPPHIRE;
     	}else if(this == MinaBlocks.RUBY_ORE){
     		return MinaItems.RUBY;
-    	}else if(this == MinaBlocks.RARE_SOIL_ORE) {
-    		return MinaItems.RARE_SOIL;
+    	}else if(this == MinaBlocks.RARE_EARTH_ORE) {
+    		return MinaItems.RARE_EARTH;
     	}else{
     		return Item.getItemFromBlock(this);
     	}
@@ -41,11 +41,7 @@ public class BlockCustomOre extends Block{
     @Override
     public int damageDropped(IBlockState state)
     {
-        if(this == MinaBlocks.RARE_SOIL_ORE) {
-        	return MinaItems.RARE_SOIL.getRandomType(RANDOM).getMeta();
-        }else {
-        	return super.damageDropped(state);
-        }
+    	return super.damageDropped(state);
     }
 
     /**

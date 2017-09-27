@@ -39,7 +39,7 @@ import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemKeyChain;
 import lu.kremi151.minamod.item.ItemMilkBottle;
 import lu.kremi151.minamod.item.ItemPowder;
-import lu.kremi151.minamod.item.ItemRareSoil;
+import lu.kremi151.minamod.item.ItemRareEarth;
 import lu.kremi151.minamod.item.ItemSickle;
 import lu.kremi151.minamod.item.ItemSketch;
 import lu.kremi151.minamod.item.ItemSoulPearl;
@@ -212,7 +212,7 @@ public class MinaItems {
 	public static final ItemKeyChain KEY_CHAIN = (ItemKeyChain) new ItemKeyChain().setUnlocalizedName("key_chain");
 	public static final ItemSketch SKETCH = (ItemSketch) new ItemSketch().setUnlocalizedName("sketch");
 	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
-	public static final ItemRareSoil RARE_SOIL = (ItemRareSoil) new ItemRareSoil().setUnlocalizedName("rare_soil");
+	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -303,7 +303,7 @@ public class MinaItems {
 		registry.register(KEY_CHAIN, "key_chain").submit();
 		registry.register(SKETCH, "sketch").submit();
 		registry.register(COMBINER, "combiner").submit();
-		registry.register(RARE_SOIL, "rare_soil").variantNames(ItemRareSoil.getVariantNames()).submit();
+		registry.register(RARE_EARTH, "rare_earth_ore").variantNames(ItemRareEarth.VARIANT_NAMES).submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
