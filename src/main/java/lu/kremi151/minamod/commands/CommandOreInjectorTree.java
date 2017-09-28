@@ -24,7 +24,7 @@ public class CommandOreInjectorTree extends MinaCommandTreeBase{
 
 	@Override
 	public String getName() {
-		return "inject-ores";
+		return "ore";
 	}
 
 }
