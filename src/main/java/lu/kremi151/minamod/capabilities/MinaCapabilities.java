@@ -9,6 +9,7 @@ import lu.kremi151.minamod.capabilities.bliss.EntityBlissImpl;
 import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.capabilities.owner.OwnerImpl;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
@@ -43,6 +44,7 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(ISnack.class, new EmptyStorage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(IOwner.class, new OwnerImpl.Storage(), OwnerImpl::new);
 		CapabilityManager.INSTANCE.register(ISketch.class, new EmptyStorage(), new NoImplFactory());
+		CapabilityManager.INSTANCE.register(IEnergyNetworkProvider.class, new EmptyStorage(), new NoImplFactory());
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{

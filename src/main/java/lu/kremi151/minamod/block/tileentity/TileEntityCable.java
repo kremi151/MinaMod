@@ -3,24 +3,37 @@ package lu.kremi151.minamod.block.tileentity;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.block.BlockPipeBase;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
+import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityCable extends TileEntity implements ITickable{
+public class TileEntityCable extends TileEntity /*implements ITickable*/{
 
-	private final IEnergyStorage nrj;
+	@Nullable
+	private final NetworkProviderImpl networkProvider = new NetworkProviderImpl() {
+
+		@Override
+		protected World getWorld() {
+			return TileEntityCable.this.world;
+		}
+
+		@Override
+		protected BlockPos getPos() {
+			return TileEntityCable.this.pos;
+		}
+		
+	};
 	
 	public TileEntityCable(){
 		super();
-		nrj = new EnergyStorage(9999);
 	}
 	
 	private BlockPipeBase getCable(){
@@ -31,7 +44,7 @@ public class TileEntityCable extends TileEntity implements ITickable{
 		return ((BlockPipeBase) this.getBlockType()).getActualState(world.getBlockState(pos), world, pos);
 	}
 
-	@Override
+	/*@Override
 	public void update() {
 		IBlockState as = getActualState();
 		if(as != null){
@@ -63,21 +76,21 @@ public class TileEntityCable extends TileEntity implements ITickable{
 				}
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		if(nbt.hasKey("Energy", 99)){
+		/*if(nbt.hasKey("Energy", 99)){
 			nrj.extractEnergy(nrj.getEnergyStored(), false);
 			nrj.receiveEnergy(nbt.getInteger("Energy"), false);
-		}
+		}*/
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
-		nbt.setInteger("Energy", nrj.getEnergyStored());
+		//nbt.setInteger("Energy", nrj.getEnergyStored());
 		return nbt;
 	}
 	
@@ -96,13 +109,13 @@ public class TileEntityCable extends TileEntity implements ITickable{
 	@Override
     public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
-        return (capability == CapabilityEnergy.ENERGY) || super.hasCapability(capability, facing);
+        return (capability == IEnergyNetworkProvider.CAPABILITY || capability == CapabilityEnergy.ENERGY) || super.hasCapability(capability, facing);
     }
 
     @Override
     @Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
-        return (T) ((capability == CapabilityEnergy.ENERGY) ? nrj : super.getCapability(capability, facing));
+        return (T) ((capability == IEnergyNetworkProvider.CAPABILITY || capability == CapabilityEnergy.ENERGY) ? networkProvider : super.getCapability(capability, facing));
     }
 }
