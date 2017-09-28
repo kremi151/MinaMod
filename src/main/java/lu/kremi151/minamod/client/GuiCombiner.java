@@ -22,7 +22,7 @@ public class GuiCombiner extends GuiContainer{
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		fontRenderer.drawString(
-				I18n.translateToLocal("container.combiner"), 8, 6,
+				I18n.translateToLocal("item.combiner.name"), 8, 6,
 				4210752);
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
