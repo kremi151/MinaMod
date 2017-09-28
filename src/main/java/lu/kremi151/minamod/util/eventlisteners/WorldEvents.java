@@ -2,7 +2,6 @@ package lu.kremi151.minamod.util.eventlisteners;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.OreInjectorManager;
-import lu.kremi151.minamod.util.TaskOreInjector;
 import lu.kremi151.minamod.worlddata.MinaWorld;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.GameRules;
@@ -19,7 +18,7 @@ public class WorldEvents {
 		this.mod = mod;
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onChunkSave(ChunkDataEvent.Save event){ // NO_UCD (unused code)
 		NBTTagCompound newnbt = new NBTTagCompound();
 		
@@ -39,7 +38,7 @@ public class WorldEvents {
 					last_vcode = newnbt.getInteger(OreInjectorManager.DATA_TAG);
 				}
 				if(last_vcode < OreInjectorManager.getChunkVersion()){
-					TaskOreInjector.instance().enqueueChunk(event);
+					OreInjectorManager.markToInject(event.getWorld(), event.getChunk(), last_vcode);
 				}
 			}
 			
@@ -47,7 +46,7 @@ public class WorldEvents {
 		}else{
 //			MinaMod.debugPrintln("Chunk " + event.getChunk().xPosition + " " + event.getChunk().zPosition + " hasn't minamod specific information");
 		}
-	}
+	}*/
 	
 	//WTF?!?
 //	@SubscribeEvent

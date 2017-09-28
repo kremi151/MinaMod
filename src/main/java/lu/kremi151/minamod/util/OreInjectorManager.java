@@ -1,8 +1,12 @@
 package lu.kremi151.minamod.util;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.annotations.OreInjector;
@@ -10,27 +14,24 @@ import lu.kremi151.minamod.interfaces.IOreInjector;
 import lu.kremi151.minamod.worldgen.WorldGenerators;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class OreInjectorManager {
-	
-	public static final String DATA_TAG = "oi";
 
-	private static Bundle injectors[];
-	private static int highestVersion = 0;
+	private static final Map<String, IOreInjector> INJECTORS;
 	private static Random rand = new Random(System.currentTimeMillis());
 	
-	public static void init(){
+	static{
 		Field fields[] = WorldGenerators.class.getDeclaredFields();
-		ArrayList<Bundle> wg = new ArrayList<Bundle>();
+		HashMap<String, IOreInjector> injectors = new HashMap<>();
 		for(Field f : fields){
 			f.setAccessible(true);
 			OreInjector oi = f.getAnnotation(OreInjector.class);
 			if(IOreInjector.class.isAssignableFrom(f.getType()) && oi != null){
 				try {
-					wg.add(new Bundle((IOreInjector)f.get(null), oi.chunkVersion()));
-					if(oi.chunkVersion() > highestVersion){
-						highestVersion = oi.chunkVersion();
+					if(!injectors.containsKey(oi.value())) {
+						injectors.put(oi.value(), (IOreInjector)f.get(null));
+					}else {
+						throw new RuntimeException("Ore injector with id " + oi.value() + " already defined");
 					}
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
@@ -39,30 +40,24 @@ public class OreInjectorManager {
 				}
 			}
 		}
-		injectors = new Bundle[wg.size()];
-		injectors = wg.toArray(injectors);
+		INJECTORS = Collections.unmodifiableMap(injectors);
 		
-		MinaMod.println("Found %d ore injectors with version %d", injectors.length, highestVersion);
+		MinaMod.println("Found %d ore injectors", injectors.size());
 	}
 	
-	public static int getChunkVersion(){
-		return highestVersion;
-	}
-	
-	public static void performOreInjection(World world, Chunk chunk, int chunkVersion){
-		for(Bundle w : injectors){
-			if(chunkVersion < w.versionCode){
-				w.injector.injectOre(rand, chunk.x, chunk.z, world, world.getChunkProvider());
+	public static void performOreInjection(World world, Chunk chunk, String... injectorIds){
+		for(String injid : injectorIds) {
+			IOreInjector inj = INJECTORS.get(injid);
+			if(inj != null) {
+				inj.injectOre(rand, chunk.x, chunk.z, world, world.getChunkProvider());
+			}else {
+				MinaMod.errorln("Ore injector %s not found. Skipping...", injid);
 			}
 		}
 	}
 	
-	private static class Bundle{
-		final IOreInjector injector;
-		final int versionCode;
-		private Bundle(IOreInjector injector, int versionCode){
-			this.injector = injector;
-			this.versionCode = versionCode;
-		}
+	public static Set<String> getAvailableInjectors(){
+		return new HashSet<>(INJECTORS.keySet());
 	}
+	
 }

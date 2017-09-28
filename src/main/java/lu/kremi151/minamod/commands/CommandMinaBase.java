@@ -17,6 +17,7 @@ public class CommandMinaBase extends CommandTreeBase{
 		this.addSubcommand(new CommandStats(this));
 		this.addSubcommand(new CommandResetSlotMachine(this));
 		this.addSubcommand(new CommandBloodMoon(this));
+		this.addSubcommand(new CommandOreInjectorTree(this));
 	}
 	
 	@Override

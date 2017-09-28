@@ -18,28 +18,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class WorldGenerators {
+public final class WorldGenerators {
 	
 	public static final WorldGenHoneyTrees HONEY_TREES = new WorldGenHoneyTrees();
 	public static final WorldGenSurfaceTree SURFACE_TREE = new WorldGenSurfaceTree();
 	public static final WorldGenStructure WOOKIE_HOUSE = new WorldGenWookieHouseStructure();
 	
-	@OreInjector(chunkVersion = 1)
+	@OreInjector("citrin_ore")
 	public static final WorldGenNewOre CITRIN_ORE = new WorldGenNewOre(MinaBlocks.CITRIN_ORE.getDefaultState(), 5, 2).setRange(6, 12);
 	
-	@OreInjector(chunkVersion = 1)
+	@OreInjector("platinum_ore")
 	public static final WorldGenNewOre PLATINUM_ORE = new WorldGenNewOre(MinaBlocks.PLATINUM_ORE.getDefaultState(), 3, 4).setRange(10, 20);
 	
-	@OreInjector(chunkVersion = 1)
+	@OreInjector("ruby_ore")
 	public static final WorldGenNewOre RUBY_ORE = new WorldGenNewOre(MinaBlocks.RUBY_ORE.getDefaultState(), 5, 2).setRange(6, 18);
 	
-	@OreInjector(chunkVersion = 1)
+	@OreInjector("sapphire_ore")
 	public static final WorldGenNewOre SAPPHIRE_ORE = new WorldGenNewOre(MinaBlocks.SAPPHIRE_ORE.getDefaultState(), 5, 2).setRange(6, 18);
 	
-	@OreInjector(chunkVersion = 2)
-	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 2, 8).setRange(0, 48);
+	@OreInjector("rare_earth")
+	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 2).setRange(15, 30);
 	
-	@OreInjector(chunkVersion = 1)
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
 			.beginSection(70.0)
 			.add(MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4, 60)
@@ -62,6 +61,8 @@ public class WorldGenerators {
 			.build();
 	
 	public static final WorldGenQuicksand QUICKSAND = new WorldGenQuicksand();
+	
+	private WorldGenerators() {}
 	
 	private static boolean init = false;
 	

@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy{
+	
+	private boolean flag_maintenance = false;
 
 	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
@@ -103,6 +105,14 @@ public class CommonProxy{
 	
 	public void clearCooldowns(){
 		cooldown_map.clear();
+	}
+	
+	public boolean isMaintenanceFlagSet() {
+		return flag_maintenance;
+	}
+	
+	public void setMaintenanceFlag(boolean flag) {
+		this.flag_maintenance = flag;
 	}
     
 }

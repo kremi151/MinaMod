@@ -56,10 +56,10 @@ import lu.kremi151.minamod.util.MinaModConfiguration;
 import lu.kremi151.minamod.util.MinaTickEventHandler;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Once;
-import lu.kremi151.minamod.util.OreInjectorManager;
 import lu.kremi151.minamod.util.VillagerHelper;
 import lu.kremi151.minamod.util.eventlisteners.BlockEvents;
 import lu.kremi151.minamod.util.eventlisteners.EntityEvents;
+import lu.kremi151.minamod.util.eventlisteners.NetworkEvents;
 import lu.kremi151.minamod.util.eventlisteners.PlayerSpecificEvents;
 import lu.kremi151.minamod.util.eventlisteners.TerrainEventListeners;
 import lu.kremi151.minamod.util.eventlisteners.WorldEvents;
@@ -125,7 +125,6 @@ public class MinaMod {
 		getProxy().registerItemAndBlockColors();
 		
 		WorldGenerators.registerWorldGenerators();
-		OreInjectorManager.init();
 
 		TerrainEventListeners terrainEventListener = new TerrainEventListeners(this);
 
@@ -279,6 +278,7 @@ public class MinaMod {
 		debugPrintln("preinit called");
 
 		MinecraftForge.EVENT_BUS.register(new FMLEventListeners());
+		MinecraftForge.EVENT_BUS.register(new NetworkEvents());
 		proxy.initClientEvents();
 
 		setupNetworkWrapper(event.getSide());

@@ -52,6 +52,9 @@ public class MinaPermissions {
 	@MinaPermission(desc = "Allows to set the world time to the next blood moon", lvl = DefaultPermissionLevel.OP)
 	public static final String CMD_BLOOD_MOON = "minamod.admin.time.blood_moon";
 	
+	@MinaPermission(desc = "Allows to regenerate missing ores to a world", lvl = DefaultPermissionLevel.OP)
+	public static final String CMD_REGEN_ORES = "minamod.admin.ore_injector.regen";
+	
 
 	@MinaPermission(desc = "Allows to use elevators", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_ELEVATOR_USE = "minamod.all.elevator.use";

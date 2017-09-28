@@ -14,7 +14,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-public class WorldGenNewOre extends WorldGenTestMinable implements IWorldGenerator, IOreInjector{
+public class WorldGenNewOre extends WorldGenMinable implements IWorldGenerator, IOreInjector{
 	
 	private DimensionType dimension;
 	private int minY = 6, maxY = 40, chancesToSpawn;

@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.worlddata;
 
-import lu.kremi151.minamod.util.FeatureList;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -13,8 +12,6 @@ public class MinaWorldConfiguration {
 	
 	private Configuration conf;
 	
-	private boolean ore_injection = false;
-	
 	private boolean structure_wookie_house;
 	private Biome structure_wookie_biome;
 
@@ -25,8 +22,6 @@ public class MinaWorldConfiguration {
 	}
 	
 	public void reload(){
-		ore_injection = conf.getBoolean("enabled", CATEGORY_ORE_INJECTION, false, "EXPERIMENTAL FEATURE!!! It lets generate new added ores on already created chunks if you update the Mina mod");
-
 		structure_wookie_house = conf.getBoolean("generate", CATEGORY_STRUCTURE_WOOKIE_HOUSE, true, "Defines if wookie houses should be generated for this world");
 		structure_wookie_biome = getBiome(conf, "biome", CATEGORY_STRUCTURE_WOOKIE_HOUSE, Biomes.FOREST, "The biome for wookie houses to generate. This value should be in resource location style like {domain}:{value}");
 		
@@ -43,11 +38,6 @@ public class MinaWorldConfiguration {
 		}else{
 			return entry;
 		}
-	}
-	
-	@SuppressWarnings("unused")
-	public boolean isOreInjectionEnabled(){
-		return FeatureList.enable_ore_injection && ore_injection;
 	}
 	
 	public boolean shouldGenerateWookieHouses(){
