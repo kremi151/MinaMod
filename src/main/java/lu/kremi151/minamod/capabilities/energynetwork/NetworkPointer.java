@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.capabilities.energynetwork;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -16,6 +18,23 @@ public class NetworkPointer implements IEnergyNetwork{
 			throw new NullPointerException();
 		}
 		this.network = network;
+	}
+	
+	@Nullable NetworkImpl getPointingNetwork() {
+		return network;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}else if(obj == this) {
+			return true;
+		}else if(obj.getClass() == NetworkPointer.class) {
+			return ((NetworkPointer)obj).network == this.network;
+		}else {
+			return false;
+		}
 	}
 
 	@Override

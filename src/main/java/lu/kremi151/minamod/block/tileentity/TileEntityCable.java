@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block.tileentity;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.block.BlockPipeBase;
+import lu.kremi151.minamod.capabilities.energynetwork.EnergyNetworkHelper;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
@@ -29,6 +30,17 @@ public class TileEntityCable extends TileEntity /*implements ITickable*/{
 		protected BlockPos getPos() {
 			return TileEntityCable.this.pos;
 		}
+
+		@Override
+		public void onNeighbourNetworkChanged(BlockPos neighbor, IEnergyNetwork newNetwork) {
+			if(this.hasNetwork()) {
+				if(!this.getNetwork().equals(newNetwork)) {
+					setNetwork(EnergyNetworkHelper.combine(this.getNetwork(), newNetwork));
+				}
+			}else {
+				setNetwork(newNetwork);
+			}
+		}
 		
 	};
 	
@@ -44,53 +56,14 @@ public class TileEntityCable extends TileEntity /*implements ITickable*/{
 		return ((BlockPipeBase) this.getBlockType()).getActualState(world.getBlockState(pos), world, pos);
 	}
 
-	/*@Override
-	public void update() {
-		IBlockState as = getActualState();
-		if(as != null){
-			int count = 1;
-			long energyTotal = nrj.getEnergyStored();
-			for(EnumFacing ef : EnumFacing.VALUES){
-				if(getCable().isConnected(as, ef)){
-					TileEntity te = world.getTileEntity(pos.offset(ef));
-					if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, null)){//TODO:Face
-						IEnergyStorage nrj = te.getCapability(CapabilityEnergy.ENERGY, null);//TODO:Face
-						if(nrj.canReceive() && nrj.getEnergyStored() < this.nrj.getEnergyStored()){
-							count ++;
-							energyTotal += nrj.getEnergyStored();
-						}
-					}
-				}
-			}
-			int partialEnergy = Math.max(0, (int)(energyTotal / count));
-			for(EnumFacing ef : EnumFacing.VALUES){
-				if(getCable().isConnected(as, ef)){
-					TileEntity te = world.getTileEntity(pos.offset(ef));
-					if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, null)){//TODO:Face
-						IEnergyStorage nrj = te.getCapability(CapabilityEnergy.ENERGY, null);//TODO:Face
-						if(nrj.canReceive() && nrj.getEnergyStored() < partialEnergy){
-							int toGive = partialEnergy - nrj.getEnergyStored();
-							if(this.nrj.getEnergyStored() >= toGive)this.nrj.extractEnergy(nrj.receiveEnergy(toGive, false), false);
-						}
-					}
-				}
-			}
-		}
-	}*/
-
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		/*if(nbt.hasKey("Energy", 99)){
-			nrj.extractEnergy(nrj.getEnergyStored(), false);
-			nrj.receiveEnergy(nbt.getInteger("Energy"), false);
-		}*/
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
-		//nbt.setInteger("Energy", nrj.getEnergyStored());
 		return nbt;
 	}
 	

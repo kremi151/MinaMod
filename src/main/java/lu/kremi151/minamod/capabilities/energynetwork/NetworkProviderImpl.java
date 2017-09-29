@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.capabilities.energynetwork;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -20,13 +22,15 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 				if(te != null && te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
 					IEnergyNetworkProvider prov = te.getCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite());
 					if(network == null) {
-						network = prov.getNetwork();
+						if(prov.hasNetwork()) {
+							setNetwork(prov.getNetwork());
+						}
 					}else {
-						network = EnergyNetworkHelper.combine(network, prov.getNetwork());
+						setNetwork(EnergyNetworkHelper.combine(network, prov.getNetwork()));
 					}
 				}
 			}
-			if(network == null)network = EnergyNetworkHelper.createNetwork(getWorld());
+			if(network == null)setNetwork(EnergyNetworkHelper.createNetwork(getWorld()));
 		}
 		return network;
 	}
@@ -64,6 +68,31 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 	@Override
 	public IEnergyNetwork getNetwork() {
 		return checkNetwork();
+	}
+	
+	@Override
+	public boolean hasNetwork() {
+		return network != null;
+	}
+	
+	protected void setNetwork(@Nonnull IEnergyNetwork network) {
+		if(network == null)throw new NullPointerException("Cannot set a network to null");
+		boolean dispatch = (this.network == null || !this.network.equals(network));
+		this.network = network;
+		if(dispatch) {
+			dispatchNetworkChangeToNeighbours(network);
+		}
+	}
+	
+	protected void dispatchNetworkChangeToNeighbours(IEnergyNetwork network) {
+		World world = getWorld();
+		for(EnumFacing face : EnumFacing.VALUES) {
+			BlockPos npos = getPos().offset(face);
+			TileEntity te = world.getTileEntity(npos);
+			if(te != null && te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
+				te.getCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite()).onNeighbourNetworkChanged(getPos(), network);
+			}
+		}
 	}
 
 }

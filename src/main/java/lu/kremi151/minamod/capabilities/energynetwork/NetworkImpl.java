@@ -15,8 +15,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class NetworkImpl implements IEnergyNetwork{
 	
-	private final LinkedList<NetworkPointer> pointers = new LinkedList<>();
-	private final HashMap<BlockPos, ClientReference> clients = new HashMap<>();
+	final LinkedList<NetworkPointer> pointers = new LinkedList<>();
+	final HashMap<BlockPos, ClientReference> clients = new HashMap<>();
 	private final World world;
 	
 	NetworkImpl(World world){
@@ -26,86 +26,102 @@ public class NetworkImpl implements IEnergyNetwork{
 
 	@Override
 	public int receiveEnergy(int maxReceive, boolean simulate) {
-		int consumed = 0;
-		boolean _cont = true;
-		while(_cont && maxReceive > 0) {
-			_cont = false;
-			final int portions = maxReceive / clients.size();
+		if(clients.size() > 0) {
+			int consumed = 0;
+			boolean _cont = true;
+			while(_cont && maxReceive > 0) {
+				_cont = false;
+				final int portions = maxReceive / clients.size();
+				Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
+				while(it.hasNext()) {
+					ClientReference ref = it.next().getValue();
+					if(!ref.isEmpty()) {
+						int accepted = ref.receiveEnergy(maxReceive, simulate);
+						if(accepted > 0) {
+							_cont = true;
+							maxReceive -= accepted;
+							consumed += accepted;
+						}
+					}else {
+						it.remove();
+					}
+				}
+			}
+			return consumed;
+		}else {
+			return 0;
+		}
+	}
+
+	@Override
+	public int extractEnergy(int maxExtract, boolean simulate) {
+		if(clients.size() > 0) {
+			int extracted = 0;
 			Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
-			while(it.hasNext()) {
+			while(maxExtract > 0 && it.hasNext()) {
 				ClientReference ref = it.next().getValue();
 				if(!ref.isEmpty()) {
-					int accepted = ref.receiveEnergy(maxReceive, simulate);
-					if(accepted > 0) {
-						_cont = true;
-						maxReceive -= accepted;
-						consumed += accepted;
+					int taken = ref.extractEnergy(maxExtract, simulate);
+					if(taken > 0) {
+						maxExtract -= taken;
+						extracted += taken;
 					}
 				}else {
 					it.remove();
 				}
 			}
+			return extracted;
+		}else {
+			return 0;
 		}
-		return consumed;
-	}
-
-	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		int extracted = 0;
-		Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
-		while(maxExtract > 0 && it.hasNext()) {
-			ClientReference ref = it.next().getValue();
-			if(!ref.isEmpty()) {
-				int taken = ref.extractEnergy(maxExtract, simulate);
-				if(taken > 0) {
-					maxExtract -= taken;
-					extracted += taken;
-				}
-			}else {
-				it.remove();
-			}
-		}
-		return extracted;
 	}
 
 	@Override
 	public int getEnergyStored() {
-		int energy = 0;
-		Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
-		while(it.hasNext()) {
-			ClientReference ref = it.next().getValue();
-			if(!ref.isEmpty()) {
-				int _en = ref.getEnergyStored();
-				if(_en <= Integer.MAX_VALUE - energy) {
-					energy += _en;
+		if(clients.size() > 0) {
+			int energy = 0;
+			Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
+			while(it.hasNext()) {
+				ClientReference ref = it.next().getValue();
+				if(!ref.isEmpty()) {
+					int _en = ref.getEnergyStored();
+					if(_en <= Integer.MAX_VALUE - energy) {
+						energy += _en;
+					}else {
+						return Integer.MAX_VALUE;
+					}
 				}else {
-					return Integer.MAX_VALUE;
+					it.remove();
 				}
-			}else {
-				it.remove();
 			}
+			return energy;
+		}else {
+			return 0;
 		}
-		return energy;
 	}
 
 	@Override
 	public int getMaxEnergyStored() {
-		int max_energy = 0;
-		Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
-		while(it.hasNext()) {
-			ClientReference ref = it.next().getValue();
-			if(!ref.isEmpty()) {
-				int _en = ref.getMaxEnergyStored();
-				if(_en <= Integer.MAX_VALUE - max_energy) {
-					max_energy += _en;
+		if(clients.size() > 0) {
+			int max_energy = 0;
+			Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
+			while(it.hasNext()) {
+				ClientReference ref = it.next().getValue();
+				if(!ref.isEmpty()) {
+					int _en = ref.getMaxEnergyStored();
+					if(_en <= Integer.MAX_VALUE - max_energy) {
+						max_energy += _en;
+					}else {
+						return Integer.MAX_VALUE;
+					}
 				}else {
-					return Integer.MAX_VALUE;
+					it.remove();
 				}
-			}else {
-				it.remove();
 			}
+			return max_energy;
+		}else {
+			return 0;
 		}
-		return max_energy;
 	}
 
 	@Override

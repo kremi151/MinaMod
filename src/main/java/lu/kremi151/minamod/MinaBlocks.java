@@ -293,10 +293,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		if(FeatureList.enable_redstone_crossroad){
 			registry.register(REDSTONE_CROSSROAD, "redstone_crossroad").submit();
 		}
-		if(FeatureList.enable_cable){
-			registry.register(CABLE, "cable").submit();
-			registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
-		}
 		registry.register(MILKY_GLASS, "milky_glass").blockOnly().submit();
 		registry.register(LIT_MILKY_GLASS, "lit_milky_glass").blockOnly().submit();
 		registry.register(GIFT_BOX, "gift_box").blockOnly().submit();
@@ -327,6 +323,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(AUTO_CRAFTER, "autocrafter").submit();
 		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
 		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
+		registry.register(CABLE, "cable").submit();
+		registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
 	}
 	
 	static void registerOreEntries(){

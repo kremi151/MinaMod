@@ -140,16 +140,14 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityLock.class, createDottedIdentifier("keylock"));
 		GameRegistry.registerTileEntity(TileEntityCollector.class, createDottedIdentifier("collector"));
 		GameRegistry.registerTileEntity(TileEntitySieve.class, createDottedIdentifier("sieve"));
-		if(FeatureList.enable_cable){
-			GameRegistry.registerTileEntity(TileEntityCable.class, createDottedIdentifier("cable"));
-			GameRegistry.registerTileEntity(TileEntityEnergySource.class, createDottedIdentifier("energy_source"));
-		}
 		GameRegistry.registerTileEntity(TileEntityHerbCrop.class, createDottedIdentifier("herb"));
 		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createDottedIdentifier("elevator_control"));
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, createDottedIdentifier("camp_fire"));
 		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createDottedIdentifier("slot_machine"));
 		GameRegistry.registerTileEntity(TileEntityFilter.class, createDottedIdentifier("filter"));
 		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, createDottedIdentifier("auto_crafter"));
+		GameRegistry.registerTileEntity(TileEntityCable.class, createDottedIdentifier("cable"));
+		GameRegistry.registerTileEntity(TileEntityEnergySource.class, createDottedIdentifier("energy_source"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),
