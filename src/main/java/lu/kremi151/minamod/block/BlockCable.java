@@ -3,6 +3,7 @@ package lu.kremi151.minamod.block;
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
+import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -18,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockCable extends BlockPipeBase{
 	
@@ -99,10 +99,16 @@ public class BlockCable extends BlockPipeBase{
 			System.err.println("Neighbour face could not be determined");
 			return;
 		}
+		TileEntity myte = world.getTileEntity(pos);
 		if(nte != null && nte.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
-			TileEntity myte = world.getTileEntity(pos);
+			if(!nte.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
+				if(myte != null) {
+					myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork().registerClient(neighbor, face.getOpposite());
+				}
+			}
+		}else {
 			if(myte != null) {
-				myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork().registerClient(neighbor, face.getOpposite());
+				myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork().unregisterClient(neighbor, face.getOpposite());
 			}
 		}
 	}
@@ -110,9 +116,11 @@ public class BlockCable extends BlockPipeBase{
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-		IEnergyStorage nrj = world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
-		TextHelper.sendChatMessage(player, "Energy: " + nrj.getEnergyStored());
-        return false;
+		if(!world.isRemote) {
+			IEnergyNetworkProvider nrj = world.getTileEntity(pos).getCapability(IEnergyNetworkProvider.CAPABILITY, null);
+			((NetworkProviderImpl)nrj).printDebugInformation(player);
+		}
+        return true;
     }
 	
 	/**

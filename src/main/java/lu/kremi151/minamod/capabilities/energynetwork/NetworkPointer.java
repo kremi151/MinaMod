@@ -72,4 +72,9 @@ public class NetworkPointer implements IEnergyNetwork{
 		network.registerClient(pos, face);
 	}
 
+	@Override
+	public void unregisterClient(BlockPos pos, EnumFacing face) {
+		network.unregisterClient(pos, face);
+	}
+
 }

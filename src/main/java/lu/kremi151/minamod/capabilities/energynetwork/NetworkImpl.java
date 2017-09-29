@@ -1,10 +1,12 @@
 package lu.kremi151.minamod.capabilities.energynetwork;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -161,8 +163,19 @@ public class NetworkImpl implements IEnergyNetwork{
 		}
 		ref.addFace(face);
 	}
+
+	@Override
+	public void unregisterClient(BlockPos pos, EnumFacing face) {
+		ClientReference ref = clients.get(pos);
+		if(ref != null) {
+			ref.faces.remove(face);
+			if(ref.faces.size() == 0) {
+				clients.remove(pos);
+			}
+		}
+	}
 	
-	private class ClientReference implements IEnergyStorage{
+	class ClientReference implements IEnergyStorage{
 		
 		private final BlockPos pos;
 		private final HashSet<EnumFacing> faces = new HashSet<>();
@@ -174,6 +187,10 @@ public class NetworkImpl implements IEnergyNetwork{
 		private ClientReference addFace(EnumFacing face) {
 			this.faces.add(face);
 			return this;
+		}
+		
+		Set<EnumFacing> getFaces(){
+			return Collections.unmodifiableSet(faces);
 		}
 		
 		private boolean isEmpty() {

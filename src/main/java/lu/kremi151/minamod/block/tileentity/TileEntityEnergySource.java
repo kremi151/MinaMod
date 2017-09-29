@@ -1,9 +1,9 @@
 package lu.kremi151.minamod.block.tileentity;
 
-import javax.annotation.Nullable;
-
 import lu.kremi151.minamod.block.BlockPipeBase;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -12,16 +12,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
+/**
+ * Testing class. Will be deleted for final release.
+ * @author michm
+ *
+ */
 public class TileEntityEnergySource extends TileEntity implements ITickable{
 
-	private final IEnergyStorage nrj;
+	private int deliveringEnergy = 9999;
+	public long lastClickCooldown = 0;
 	
 	public TileEntityEnergySource(){
 		super();
-		nrj = new EnergyStorage(9999);
 	}
 	
 	private BlockPipeBase getCable(){
@@ -31,20 +35,37 @@ public class TileEntityEnergySource extends TileEntity implements ITickable{
 	private IBlockState getActualState(){
 		return ((BlockPipeBase) this.blockType).getActualState(world.getBlockState(pos), world, pos);
 	}
+	
+	public void toggleProducingEnergy(EntityPlayer player) {
+		if(System.currentTimeMillis() - lastClickCooldown > 500L) {
+			lastClickCooldown = System.currentTimeMillis();
+			if(deliveringEnergy >= 9999) {
+				deliveringEnergy = 0;
+			}else if(deliveringEnergy >= 999) {
+				deliveringEnergy = 9999;
+			}else if(deliveringEnergy >= 99) {
+				deliveringEnergy = 999;
+			}else if(deliveringEnergy >= 9) {
+				deliveringEnergy = 99;
+			}else {
+				deliveringEnergy = 9;
+			}
+			TextHelper.sendChatMessage(player, "Producing energy has been set to " + deliveringEnergy);
+		}
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		if(nbt.hasKey("Energy", 99)){
-			nrj.extractEnergy(nrj.getEnergyStored(), false);
-			nrj.receiveEnergy(nbt.getInteger("Energy"), false);
+		if(nbt.hasKey("Producing", 99)) {
+			this.deliveringEnergy = nbt.getInteger("Producing");
 		}
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
-		nbt.setInteger("Energy", nrj.getEnergyStored());
+		nbt.setInteger("Producing", deliveringEnergy);
 		return nbt;
 	}
 	
@@ -59,19 +80,6 @@ public class TileEntityEnergySource extends TileEntity implements ITickable{
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         readFromNBT(packet.getNbtCompound());
 	}
-	
-	@Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-        return (capability == CapabilityEnergy.ENERGY) || super.hasCapability(capability, facing);
-    }
-
-    @Override
-    @Nullable
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-        return (T) ((capability == CapabilityEnergy.ENERGY) ? nrj : super.getCapability(capability, facing));
-    }
 
 	@Override
 	public void update() {
@@ -79,7 +87,7 @@ public class TileEntityEnergySource extends TileEntity implements ITickable{
 			BlockPos pos = this.pos.offset(face);
 			TileEntity te = this.world.getTileEntity(pos);
 			if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, null)){
-				((IEnergyStorage)te.getCapability(CapabilityEnergy.ENERGY, null)).receiveEnergy(9999, false);
+				((IEnergyStorage)te.getCapability(CapabilityEnergy.ENERGY, null)).receiveEnergy(deliveringEnergy, false);
 			}
 		}
 	}
