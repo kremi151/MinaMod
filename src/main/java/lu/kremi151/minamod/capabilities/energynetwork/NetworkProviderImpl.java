@@ -94,10 +94,12 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 		return network != null;
 	}
 	
-	protected void setNetwork(@Nonnull IEnergyNetwork network) {
+	@Override
+	public void setNetwork(@Nonnull IEnergyNetwork network) {
 		if(network == null)throw new NullPointerException("Cannot set a network to null");
 		boolean dispatch = (this.network == null || !this.network.equals(network));
 		this.network = network;
+		network.registerNetworkBlock(getPos());
 		if(dispatch) {
 			dispatchNetworkChangeToNeighbours(network);
 		}

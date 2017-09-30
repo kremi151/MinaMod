@@ -11,6 +11,7 @@ import java.util.Set;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -19,9 +20,10 @@ public class NetworkImpl implements IEnergyNetwork{
 	
 	final LinkedList<NetworkPointer> pointers = new LinkedList<>();
 	final HashMap<BlockPos, ClientReference> clients = new HashMap<>();
-	private final World world;
+	final HashSet<BlockPos> networkBlocks = new HashSet<>();
+	final IBlockAccess world;
 	
-	NetworkImpl(World world){
+	NetworkImpl(IBlockAccess world){
 		this.world = world;
 		pointers.add(new NetworkPointer(this));
 	}
@@ -166,15 +168,35 @@ public class NetworkImpl implements IEnergyNetwork{
 	}
 
 	@Override
-	public void unregisterClient(BlockPos pos, EnumFacing face) {
+	public boolean unregisterClient(BlockPos pos, EnumFacing face) {
 		ClientReference ref = clients.get(pos);
 		if(ref != null) {
-			ref.faces.remove(face);
+			boolean r = ref.faces.remove(face);
 			if(ref.faces.size() == 0) {
 				clients.remove(pos);
 				System.out.println("Unegister client at " + pos + " {" + face + "}");
 			}
+			return r;
 		}
+		return false;
+	}
+
+	@Override
+	public void registerNetworkBlock(BlockPos pos) {
+		networkBlocks.add(pos);
+	}
+
+	@Override
+	public boolean unregisterNetworkBlock(BlockPos pos) {
+		return networkBlocks.remove(pos);
+	}
+
+	@Override
+	public IEnergyNetwork copy() {
+		NetworkImpl n = new NetworkImpl(world);
+		n.clients.putAll(clients);
+		n.networkBlocks.addAll(networkBlocks);
+		return n;
 	}
 	
 	class ClientReference implements IEnergyStorage{

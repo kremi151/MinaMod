@@ -13,6 +13,12 @@ public interface IEnergyNetworkProvider extends IEnergyStorage{
 	IEnergyNetwork getNetwork();
 	
 	/**
+	 * Replaces the current network with a new one. Please only supply a network created by {@link EnergyNetworkHelper.createNetwork}.
+	 * @param network
+	 */
+	void setNetwork(IEnergyNetwork network);
+	
+	/**
 	 * Checks if a network has been set for this provider. This method shall NOT create a network if it is absent!!!
 	 * @return
 	 */

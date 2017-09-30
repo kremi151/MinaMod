@@ -73,8 +73,25 @@ public class NetworkPointer implements IEnergyNetwork{
 	}
 
 	@Override
-	public void unregisterClient(BlockPos pos, EnumFacing face) {
-		network.unregisterClient(pos, face);
+	public boolean unregisterClient(BlockPos pos, EnumFacing face) {
+		return network.unregisterClient(pos, face);
+	}
+
+	@Override
+	public void registerNetworkBlock(BlockPos pos) {
+		network.registerNetworkBlock(pos);
+	}
+
+	@Override
+	public boolean unregisterNetworkBlock(BlockPos pos) {
+		return network.unregisterNetworkBlock(pos);
+	}
+
+	@Override
+	public IEnergyNetwork copy() {
+		NetworkPointer n = new NetworkPointer((NetworkImpl) network.copy());
+		n.getPointingNetwork().pointers.add(n);
+		return n;
 	}
 
 }
