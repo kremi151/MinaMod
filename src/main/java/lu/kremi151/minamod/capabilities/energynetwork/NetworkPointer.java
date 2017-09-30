@@ -11,6 +11,7 @@ public class NetworkPointer implements IEnergyNetwork{
 	
 	NetworkPointer(NetworkImpl network){
 		this.network = network;
+		network.pointers.add(this);
 	}
 	
 	void swapNetwork(NetworkImpl network) {
@@ -35,6 +36,11 @@ public class NetworkPointer implements IEnergyNetwork{
 		}else {
 			return false;
 		}
+	}
+	
+	@Override
+	public int hashCode() {//TODO: Remove
+		return network.hashCode();
 	}
 
 	@Override
@@ -92,6 +98,11 @@ public class NetworkPointer implements IEnergyNetwork{
 		NetworkPointer n = new NetworkPointer((NetworkImpl) network.copy());
 		n.getPointingNetwork().pointers.add(n);
 		return n;
+	}
+
+	@Override
+	public void reset() {
+		network.reset();
 	}
 
 }

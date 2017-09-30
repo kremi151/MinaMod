@@ -6,7 +6,6 @@ import lu.kremi151.minamod.capabilities.energynetwork.EnergyNetworkHelper;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
-import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -61,12 +60,7 @@ public class BlockCable extends BlockPipeBase{
     {
 		TileEntity myte = worldIn.getTileEntity(pos);
 		if(myte != null) {
-			for(EnumFacing face : EnumFacing.VALUES) {
-				TileEntity nte = worldIn.getTileEntity(pos.offset(face));
-				if(nte != null && nte.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
-					myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork().registerClient(pos.offset(face), face.getOpposite());
-				}
-			}
+			EnergyNetworkHelper.scanForClients(myte.getCapability(IEnergyNetworkProvider.CAPABILITY, null).getNetwork(), pos);//TODO: Make direction specific
 		}else {
 			System.err.println("Something went wrong");
 		}
@@ -113,20 +107,7 @@ public class BlockCable extends BlockPipeBase{
 				IEnergyNetwork myNetwork = myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork();
 				if(nte == null || !nte.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
 					myNetwork.unregisterClient(neighbor, face.getOpposite());
-					if(myNetwork.unregisterNetworkBlock(neighbor)){
-						IEnergyNetwork networks[] = EnergyNetworkHelper.split(myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork(), neighbor);
-						for(EnumFacing face1 : EnumFacing.VALUES) {
-							TileEntity te1 = world.getTileEntity(neighbor.offset(face1));
-							if(te1 != null && te1.hasCapability(IEnergyNetworkProvider.CAPABILITY, face1.getOpposite())) {
-								IEnergyNetworkProvider nprov1 = te1.getCapability(IEnergyNetworkProvider.CAPABILITY, face1.getOpposite());
-								if(networks[face1.ordinal()] != null) {
-									nprov1.setNetwork(networks[face1.ordinal()]);
-								}else {
-									nprov1.setNetwork(EnergyNetworkHelper.createNetwork(world));
-								}
-							}
-						}
-					}
+					EnergyNetworkHelper.executeSplit(myNetwork, neighbor);
 				}
 			}
 		}

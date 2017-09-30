@@ -25,7 +25,6 @@ public class NetworkImpl implements IEnergyNetwork{
 	
 	NetworkImpl(IBlockAccess world){
 		this.world = world;
-		pointers.add(new NetworkPointer(this));
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class NetworkImpl implements IEnergyNetwork{
 				while(it.hasNext()) {
 					ClientReference ref = it.next().getValue();
 					if(!ref.isEmpty()) {
-						int accepted = ref.receiveEnergy(maxReceive, simulate);
+						int accepted = ref.receiveEnergy(portions, simulate);
 						if(accepted > 0) {
 							_cont = true;
 							maxReceive -= accepted;
@@ -164,7 +163,6 @@ public class NetworkImpl implements IEnergyNetwork{
 			clients.put(pos, ref);
 		}
 		ref.addFace(face);
-		System.out.println("Register client at " + pos + " {" + face + "}");
 	}
 
 	@Override
@@ -174,7 +172,6 @@ public class NetworkImpl implements IEnergyNetwork{
 			boolean r = ref.faces.remove(face);
 			if(ref.faces.size() == 0) {
 				clients.remove(pos);
-				System.out.println("Unegister client at " + pos + " {" + face + "}");
 			}
 			return r;
 		}
@@ -197,6 +194,18 @@ public class NetworkImpl implements IEnergyNetwork{
 		n.clients.putAll(clients);
 		n.networkBlocks.addAll(networkBlocks);
 		return n;
+	}
+
+	@Override
+	public void reset() {
+		for(BlockPos pos : networkBlocks) {
+			TileEntity te = world.getTileEntity(pos);
+			if(te != null && te.hasCapability(IEnergyNetworkProvider.CAPABILITY, null)) {
+				te.getCapability(IEnergyNetworkProvider.CAPABILITY, null).reset();
+			}
+		}
+		networkBlocks.clear();
+		clients.clear();
 	}
 	
 	class ClientReference implements IEnergyStorage{
@@ -251,7 +260,7 @@ public class NetworkImpl implements IEnergyNetwork{
 						while(it.hasNext()) {
 							IEnergyStorage nrj = te.getCapability(CapabilityEnergy.ENERGY, it.next());
 							if(nrj != null && !(nrj instanceof IEnergyNetworkProvider)) {
-								int accepted = nrj.receiveEnergy(maxReceive, simulate);
+								int accepted = nrj.receiveEnergy(portions, simulate);
 								if(accepted > 0) {
 									_cont = true;
 									maxReceive -= accepted;

@@ -36,17 +36,11 @@ public class TileEntityCable extends TileEntity /*implements ITickable*/{
 		public void onNeighbourNetworkChanged(BlockPos neighbor, IEnergyNetwork newNetwork) {
 			if(this.hasNetwork()) {
 				if(!this.getNetwork().equals(newNetwork)) {
-					setNetwork(EnergyNetworkHelper.combine(this.getNetwork(), newNetwork));
+					setNetwork(EnergyNetworkHelper.combine(this.getNetwork(), newNetwork), true);
 				}
 			}else {
-				setNetwork(newNetwork);
-				for(EnumFacing face : EnumFacing.VALUES) {
-					BlockPos npos = TileEntityCable.this.pos.offset(face);
-					TileEntity te = TileEntityCable.this.world.getTileEntity(npos);
-					if(te != null && !te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite()) && te.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
-						getNetwork().registerClient(npos, face.getOpposite());
-					}
-				}
+				setNetwork(newNetwork, true);
+				EnergyNetworkHelper.scanForClients(getNetwork(), TileEntityCable.this.pos);
 			}
 		}
 		

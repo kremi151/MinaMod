@@ -2,12 +2,15 @@ package lu.kremi151.minamod.capabilities.energynetwork;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 public class EnergyNetworkHelper {
 
@@ -28,7 +31,7 @@ public class EnergyNetworkHelper {
 		NetworkPointer pa = (NetworkPointer) a, pb = (NetworkPointer) b;
 		if(pa.getPointingNetwork() != null && pb.getPointingNetwork() != null) {
 			if(pa.getPointingNetwork() != pb.getPointingNetwork()) {
-				forceCombine(pa.getPointingNetwork(), pb.getPointingNetwork());
+				return forceCombine(pa.getPointingNetwork(), pb.getPointingNetwork());
 			}
 			return pa;
 		}else if(pa.getPointingNetwork() != null && pb.getPointingNetwork() == null) {
@@ -44,12 +47,14 @@ public class EnergyNetworkHelper {
 		}
 	}
 	
-	private static void forceCombine(NetworkImpl a, NetworkImpl b) {
+	private static NetworkPointer forceCombine(NetworkImpl a, NetworkImpl b) {
 		a.clients.putAll(b.clients);
 		a.pointers.addAll(b.pointers);
+		a.networkBlocks.addAll(b.networkBlocks);
 		for(NetworkPointer sp : b.pointers) {
 			sp.swapNetwork(a);
 		}
+		return a.pointers.getFirst();
 	}
 	
 	/**
@@ -102,6 +107,67 @@ public class EnergyNetworkHelper {
 			for(EnumFacing face : EnumFacing.VALUES) {
 				BlockPos npos = origin.offset(face);
 				iterateSplittingEdge(source, npos, extracted);
+			}
+		}
+	}
+	
+	public static void executeSplit(IEnergyNetwork network, BlockPos splitter) {
+		if(network == null) {
+			throw new NullPointerException("Cannot split a null network");
+		}else if(!(network instanceof NetworkPointer)) {
+			throw new IllegalArgumentException("The supplied network has to be provided by EnergyNetworkHelper::createNetwork");
+		}
+		if(network.unregisterNetworkBlock(splitter)){
+			IEnergyNetwork networks[] = EnergyNetworkHelper.split(network, splitter);
+			NetworkImpl ni = ((NetworkPointer)network).getPointingNetwork();
+			if(ni != null) {
+				IBlockAccess world = ni.world;
+				ni.reset();
+				if(true)return;//TODO: Is the code below really needed?
+				for(EnumFacing face1 : EnumFacing.VALUES) {
+					TileEntity te1 = world.getTileEntity(splitter.offset(face1));
+					if(te1 != null && te1.hasCapability(IEnergyNetworkProvider.CAPABILITY, face1.getOpposite())) {
+						IEnergyNetworkProvider nprov1 = te1.getCapability(IEnergyNetworkProvider.CAPABILITY, face1.getOpposite());
+						if(networks[face1.ordinal()] != null) {
+							IEnergyNetwork newNet = networks[face1.ordinal()];
+							NetworkImpl ni1 = ((NetworkPointer)newNet).getPointingNetwork();
+							Iterator<BlockPos> it = ni1.networkBlocks.iterator();
+							while(it.hasNext()) {
+								BlockPos pos1 = it.next();
+								TileEntity te2 = world.getTileEntity(pos1);
+								if(te2 != null && te2.hasCapability(IEnergyNetworkProvider.CAPABILITY, null)) {//TODO: Add face specification
+									te2.getCapability(IEnergyNetworkProvider.CAPABILITY, null).setNetwork(newNet, true);
+								}else {
+									it.remove();
+								}
+							}
+							scanForClients(newNet, splitter.offset(face1));
+							//nprov1.setNetwork(networks[face1.ordinal()], false);
+						}else {
+							IEnergyNetwork newNet = EnergyNetworkHelper.createNetwork(world);
+							nprov1.setNetwork(newNet, true);
+							scanForClients(newNet, splitter.offset(face1));
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public static void scanForClients(IEnergyNetwork network, BlockPos pos) {
+		if(network == null) {
+			return;
+		}else if(!(network instanceof NetworkPointer)) {
+			throw new IllegalArgumentException("The supplied network has to be provided by EnergyNetworkHelper::createNetwork");
+		}
+		if(((NetworkPointer)network).getPointingNetwork() != null) {
+			IBlockAccess world = ((NetworkPointer)network).getPointingNetwork().world;
+			for(EnumFacing face : EnumFacing.VALUES) {
+				TileEntity te = world.getTileEntity(pos.offset(face));
+				if(te != null && !te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())
+						&& te.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
+					network.registerClient(pos.offset(face), face.getOpposite());
+				}
 			}
 		}
 	}

@@ -11,5 +11,6 @@ public interface IEnergyNetwork extends IEnergyStorage{
 	void registerNetworkBlock(BlockPos pos);
 	boolean unregisterNetworkBlock(BlockPos pos);
 	IEnergyNetwork copy();
+	void reset();
 	
 }

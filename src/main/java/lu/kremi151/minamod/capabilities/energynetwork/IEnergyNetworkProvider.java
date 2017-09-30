@@ -15,8 +15,9 @@ public interface IEnergyNetworkProvider extends IEnergyStorage{
 	/**
 	 * Replaces the current network with a new one. Please only supply a network created by {@link EnergyNetworkHelper.createNetwork}.
 	 * @param network
+	 * @param notify If neighbours should be notified about the network change
 	 */
-	void setNetwork(IEnergyNetwork network);
+	void setNetwork(IEnergyNetwork network, boolean notify);
 	
 	/**
 	 * Checks if a network has been set for this provider. This method shall NOT create a network if it is absent!!!
@@ -25,5 +26,7 @@ public interface IEnergyNetworkProvider extends IEnergyStorage{
 	boolean hasNetwork();
 	
 	void onNeighbourNetworkChanged(BlockPos neighbor, IEnergyNetwork newNetwork);
+	
+	void reset();
 
 }

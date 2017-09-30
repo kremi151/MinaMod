@@ -31,10 +31,10 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 						IEnergyNetworkProvider prov = te.getCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite());
 						if(network == null) {
 							if(prov.hasNetwork()) {
-								setNetwork(prov.getNetwork());
+								setNetwork(prov.getNetwork(), true);
 							}
 						}else {
-							setNetwork(EnergyNetworkHelper.combine(network, prov.getNetwork()));
+							setNetwork(EnergyNetworkHelper.combine(network, prov.getNetwork()), true);
 						}
 					}else if(te.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
 						potentialClients.add(face.getOpposite());
@@ -42,14 +42,8 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 					
 				}
 			}
-			if(network == null)setNetwork(EnergyNetworkHelper.createNetwork(getWorld()));
-			for(EnumFacing face : potentialClients) {
-				BlockPos npos = getPos().offset(face);
-				TileEntity te = getWorld().getTileEntity(npos);
-				if(te != null && te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
-					network.registerClient(npos, face.getOpposite());
-				}
-			}
+			if(network == null)setNetwork(EnergyNetworkHelper.createNetwork(getWorld()), true);
+			EnergyNetworkHelper.scanForClients(network, getPos());
 		}
 		return network;
 	}
@@ -95,9 +89,9 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 	}
 	
 	@Override
-	public void setNetwork(@Nonnull IEnergyNetwork network) {
+	public void setNetwork(@Nonnull IEnergyNetwork network, boolean notify) {
 		if(network == null)throw new NullPointerException("Cannot set a network to null");
-		boolean dispatch = (this.network == null || !this.network.equals(network));
+		boolean dispatch = notify && (this.network == null || !this.network.equals(network));
 		this.network = network;
 		network.registerNetworkBlock(getPos());
 		if(dispatch) {
@@ -116,8 +110,14 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 		}
 	}
 	
+	@Override
+	public void reset() {
+		this.network = null;
+	}
+	
 	//TODO: Remove!!!
 	public void printDebugInformation(ICommandSender sender) {
+		TextHelper.sendChatMessage(sender, "Id: " + checkNetwork().hashCode());
 		TextHelper.sendChatMessage(sender, "Energy: " + this.getEnergyStored());
 		TextHelper.sendChatMessage(sender, "Clients:");
 		NetworkImpl nimpl = ((NetworkPointer)network).getPointingNetwork();
