@@ -162,6 +162,7 @@ public class NetworkImpl implements IEnergyNetwork{
 			clients.put(pos, ref);
 		}
 		ref.addFace(face);
+		System.out.println("Register client at " + pos + " {" + face + "}");
 	}
 
 	@Override
@@ -171,6 +172,7 @@ public class NetworkImpl implements IEnergyNetwork{
 			ref.faces.remove(face);
 			if(ref.faces.size() == 0) {
 				clients.remove(pos);
+				System.out.println("Unegister client at " + pos + " {" + face + "}");
 			}
 		}
 	}

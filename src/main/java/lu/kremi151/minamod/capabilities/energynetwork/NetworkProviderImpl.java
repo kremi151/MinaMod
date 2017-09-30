@@ -48,7 +48,6 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 				TileEntity te = getWorld().getTileEntity(npos);
 				if(te != null && te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
 					network.registerClient(npos, face.getOpposite());
-					System.out.println("Register client at " + npos + " {" + face.getOpposite() + "}");
 				}
 			}
 		}

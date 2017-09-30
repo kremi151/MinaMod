@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -39,6 +40,13 @@ public class TileEntityCable extends TileEntity /*implements ITickable*/{
 				}
 			}else {
 				setNetwork(newNetwork);
+				for(EnumFacing face : EnumFacing.VALUES) {
+					BlockPos npos = TileEntityCable.this.pos.offset(face);
+					TileEntity te = TileEntityCable.this.world.getTileEntity(npos);
+					if(te != null && !te.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite()) && te.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
+						getNetwork().registerClient(npos, face.getOpposite());
+					}
+				}
 			}
 		}
 		
