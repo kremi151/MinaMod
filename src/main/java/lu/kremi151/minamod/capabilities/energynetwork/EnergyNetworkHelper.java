@@ -12,7 +12,12 @@ public class EnergyNetworkHelper {
 	
 	@Nullable
 	public static IEnergyNetwork combine(IEnergyNetwork a, IEnergyNetwork b) throws IllegalArgumentException{
-		if(!(a instanceof NetworkImpl && b instanceof NetworkPointer)) {
+		if(a == null) {
+			return b;
+		}else if(b == null) {
+			return a;
+		}
+		if(!(a instanceof NetworkPointer && b instanceof NetworkPointer)) {
 			throw new IllegalArgumentException("The supplied networks have to be provided by EnergyNetworkHelper::createNetwork");
 		}
 		NetworkPointer pa = (NetworkPointer) a, pb = (NetworkPointer) b;
