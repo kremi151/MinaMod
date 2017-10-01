@@ -69,9 +69,9 @@ public class BlockCable extends BlockPipeBase{
 	@Override
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
 		TileEntity nte = world.getTileEntity(neighbor);
-		int ox = pos.getX() - neighbor.getX();
-		int oy = pos.getY() - neighbor.getY();
-		int oz = pos.getZ() - neighbor.getZ();
+		int ox = neighbor.getX() - pos.getX();
+		int oy = neighbor.getY() - pos.getY();
+		int oz = neighbor.getZ() - pos.getZ();
 		EnumFacing.AxisDirection dir = null;
 		EnumFacing.Axis axis = null;
 		if(ox != 0) {
