@@ -29,6 +29,8 @@ import lu.kremi151.minamod.client.GuiMinaOverlay;
 import lu.kremi151.minamod.client.HerbColorHandler;
 import lu.kremi151.minamod.client.ItemColorHandler;
 import lu.kremi151.minamod.client.LeafColorHandler;
+import lu.kremi151.minamod.client.WallCableColorHandler;
+import lu.kremi151.minamod.client.blockmodel.MinaModelLoader;
 import lu.kremi151.minamod.client.fx.EntityFXSpore;
 import lu.kremi151.minamod.client.render.RenderBee;
 import lu.kremi151.minamod.client.render.RenderFish;
@@ -70,6 +72,7 @@ import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -108,6 +111,8 @@ public class ClientProxy extends CommonProxy {
 		renderPlate = new RenderPlate();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, renderPlate);
+		
+		ModelLoaderRegistry.registerLoader(new MinaModelLoader());
 
 		if(FeatureList.enable_ice_altar){
 			RenderingRegistry.registerEntityRenderingHandler(EntityIceSentinel.class, rm -> new RenderIceSentinel(rm));
@@ -142,6 +147,7 @@ public class ClientProxy extends CommonProxy {
 		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.PALM_LEAVES);
 		bc.registerBlockColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
 		bc.registerBlockColorHandler(HerbColorHandler.get(), MinaBlocks.HERB_CROP);
+		bc.registerBlockColorHandler(new WallCableColorHandler(), MinaBlocks.WALL_CABLE);
 
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
 		/*ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);

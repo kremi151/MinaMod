@@ -52,6 +52,7 @@ import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.block.BlockTable;
+import lu.kremi151.minamod.block.BlockWallCable;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
@@ -201,6 +202,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockAutoFeeder AUTO_FEEDER = (BlockAutoFeeder) new BlockAutoFeeder().setUnlocalizedName("autofeeder");
 	public static final BlockRedstoneCrossroad REDSTONE_CROSSROAD = (BlockRedstoneCrossroad) new BlockRedstoneCrossroad().setUnlocalizedName("redstone_crossroad");
 	public static final BlockCable CABLE = (BlockCable) new BlockCable().setUnlocalizedName("cable");
+	public static final BlockWallCable WALL_CABLE = (BlockWallCable) new BlockWallCable().setUnlocalizedName("wall_cable");
 	public static final BlockCustomStainedGlass MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.3F).setUnlocalizedName("milky_glass");
 	public static final BlockCustomStainedGlass LIT_MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.5f).setUnlocalizedName("lit_milky_glass").setLightLevel(1f);
 	public static final BlockGiftBox GIFT_BOX = (BlockGiftBox) new BlockGiftBox().setHardness(0.5f).setUnlocalizedName("gift_box");
@@ -323,7 +325,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(AUTO_CRAFTER, "autocrafter").submit();
 		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
 		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
-		registry.register(CABLE, "cable").submit();
+		registry.register(CABLE, "cable").blockOnly().submit();
+		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();//TODO: block only
 		registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
 	}
 	

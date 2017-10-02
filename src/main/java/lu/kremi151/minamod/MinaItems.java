@@ -46,6 +46,7 @@ import lu.kremi151.minamod.item.ItemSoulPearl;
 import lu.kremi151.minamod.item.ItemStrawberry;
 import lu.kremi151.minamod.item.ItemUnpackedGift;
 import lu.kremi151.minamod.item.amulet.AmuletRegistry;
+import lu.kremi151.minamod.item.block.ItemBlockCable;
 import lu.kremi151.minamod.item.block.ItemBlockCombined;
 import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import lu.kremi151.minamod.item.block.ItemBlockLeaves;
@@ -321,5 +322,6 @@ public class MinaItems {
 		//registry.register(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		registry.register(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves").variantNames("palm_leaf_stack", "palm_leaf").submit();
 		registry.register(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab").variantNames(BlockMinaPlanks.EnumType.variantNamesSlabs).submit();
+		registry.register(new ItemBlockCable(MinaBlocks.CABLE).setRegistryName(MinaBlocks.CABLE.getRegistryName()), "cable").submit();
 	}
 }

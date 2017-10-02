@@ -21,6 +21,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.block.tileentity.TileEntityWallCable;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.commands.CommandMinaBase;
 import lu.kremi151.minamod.entity.EntityBee;
@@ -147,6 +148,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityFilter.class, createDottedIdentifier("filter"));
 		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, createDottedIdentifier("auto_crafter"));
 		GameRegistry.registerTileEntity(TileEntityCable.class, createDottedIdentifier("cable"));
+		GameRegistry.registerTileEntity(TileEntityWallCable.class, createDottedIdentifier("wall_cable"));
 		GameRegistry.registerTileEntity(TileEntityEnergySource.class, createDottedIdentifier("energy_source"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
