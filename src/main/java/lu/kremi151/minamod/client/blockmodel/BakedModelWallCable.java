@@ -38,19 +38,13 @@ public class BakedModelWallCable implements IPerspectiveAwareModel, IResourceMan
 
 	private final IModel model;
 	private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
-	private final TextureAtlasSprite particle, up, down, north, east, south, west;
+	private final TextureAtlasSprite particle;
 	private final VertexFormat format;
 
-	public BakedModelWallCable(IModel model, TextureAtlasSprite particle, TextureAtlasSprite up, TextureAtlasSprite down, TextureAtlasSprite north, TextureAtlasSprite east, TextureAtlasSprite south, TextureAtlasSprite west, VertexFormat fmt,
+	public BakedModelWallCable(IModel model, TextureAtlasSprite particle, VertexFormat fmt,
 			ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms) {
 		this.model = model;
 		this.particle = particle;
-		this.up = up;
-		this.down = down;
-		this.north = north;
-		this.east = east;
-		this.south = south;
-		this.west = west;
 		this.format = fmt;
 		this.transforms = transforms;
 	}

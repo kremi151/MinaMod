@@ -55,12 +55,6 @@ public class ModelWallCable implements IRetexturableModel{
 		
 		return new BakedModelWallCable(this, 
 				safeResolveTexture(bakedTextureGetter, "particle"),
-				safeResolveTexture(bakedTextureGetter, "up"),
-				safeResolveTexture(bakedTextureGetter, "down"),
-				safeResolveTexture(bakedTextureGetter, "north"),
-				safeResolveTexture(bakedTextureGetter, "east"),
-				safeResolveTexture(bakedTextureGetter, "south"),
-				safeResolveTexture(bakedTextureGetter, "west"),
 				format, transformMap);
 	}
 
