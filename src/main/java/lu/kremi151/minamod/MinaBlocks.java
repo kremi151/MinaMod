@@ -24,7 +24,6 @@ import lu.kremi151.minamod.block.BlockDimmableLight;
 import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockElevatorControl;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
-import lu.kremi151.minamod.block.BlockEnergySource;
 import lu.kremi151.minamod.block.BlockFilter;
 import lu.kremi151.minamod.block.BlockGiftBox;
 import lu.kremi151.minamod.block.BlockHerb;
@@ -48,6 +47,7 @@ import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
 import lu.kremi151.minamod.block.BlockRhubarb;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.BlockSlotMachine;
+import lu.kremi151.minamod.block.BlockSolarPanel;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
@@ -227,6 +227,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCustomOre RARE_EARTH_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
 			.setResistance(5.0F);
 	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
+	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -326,8 +327,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
 		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
 		registry.register(CABLE, "cable").blockOnly().submit();
-		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();//TODO: block only
-		registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
+		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();
+		registry.register(SOLAR_PANEL, "solar_panel").submit();
 	}
 	
 	static void registerOreEntries(){

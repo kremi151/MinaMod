@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "position=0": { "model": "minamod:solar_panel_0" },
+        "position=1": { "model": "minamod:solar_panel_1" },
+        "position=2": { "model": "minamod:solar_panel_2" },
+        "position=3": { "model": "minamod:solar_panel_3" },
+        "position=4": { "model": "minamod:solar_panel_4" }
+    }
+}

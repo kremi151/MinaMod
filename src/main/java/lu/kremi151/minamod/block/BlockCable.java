@@ -6,6 +6,7 @@ import lu.kremi151.minamod.capabilities.energynetwork.EnergyNetworkHelper;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
+import lu.kremi151.minamod.interfaces.IEnergySupplier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -135,7 +136,7 @@ public class BlockCable extends BlockPipeBase{
 	@Override
 	protected boolean canConnectTo(IBlockState ownState, IBlockAccess worldIn, BlockPos ownPos, EnumFacing neighbourDirection) {
 		TileEntity dest = worldIn.getTileEntity(ownPos.offset(neighbourDirection));
-		return (dest != null && dest.hasCapability(CapabilityEnergy.ENERGY, null)) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
+		return (dest != null && (dest.hasCapability(CapabilityEnergy.ENERGY, null) || dest instanceof IEnergySupplier)) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
 	}
 	
 	@Override
