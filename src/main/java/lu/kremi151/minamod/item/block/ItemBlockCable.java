@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -25,13 +26,16 @@ public class ItemBlockCable extends ItemBlock{
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
+
+        ItemStack itemstack = player.getHeldItem(hand);
         
-        if(!player.isSneaking() && iblockstate.isBlockNormalCube() && !block.hasTileEntity(iblockstate)) {
+        if(!player.isSneaking() && !itemstack.isEmpty() && iblockstate.isBlockNormalCube() && !block.hasTileEntity(iblockstate)) {
         	TileEntityWallCable wc = new TileEntityWallCable();
         	worldIn.setBlockState(pos, MinaBlocks.WALL_CABLE.getDefaultState());
         	worldIn.setTileEntity(pos, wc);
         	wc.setWallModel(iblockstate);
         	wc.getCapability(IEnergyNetworkProvider.CAPABILITY, null).getNetwork();//Initialize
+        	itemstack.shrink(1);
             return EnumActionResult.SUCCESS;
         }else {
         	return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
