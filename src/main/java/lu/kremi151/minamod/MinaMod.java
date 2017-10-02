@@ -12,7 +12,6 @@ import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
-import lu.kremi151.minamod.block.tileentity.TileEntityEnergySource;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
@@ -136,22 +135,21 @@ public class MinaMod {
 		if(FeatureList.enable_plate){
 			GameRegistry.registerTileEntity(TileEntityPlate.class, createDottedIdentifier("plate"));
 		}
-		GameRegistry.registerTileEntity(TileEntityLetterbox.class, createDottedIdentifier("letterbox"));
-		GameRegistry.registerTileEntity(TileEntityAutoFeeder.class, createDottedIdentifier("auto_feeder"));
-		GameRegistry.registerTileEntity(TileEntityGiftBox.class, createDottedIdentifier("gift_box"));
-		GameRegistry.registerTileEntity(TileEntityLock.class, createDottedIdentifier("keylock"));
-		GameRegistry.registerTileEntity(TileEntityCollector.class, createDottedIdentifier("collector"));
-		GameRegistry.registerTileEntity(TileEntitySieve.class, createDottedIdentifier("sieve"));
-		GameRegistry.registerTileEntity(TileEntityHerbCrop.class, createDottedIdentifier("herb"));
-		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createDottedIdentifier("elevator_control"));
-		GameRegistry.registerTileEntity(TileEntityCampfire.class, createDottedIdentifier("camp_fire"));
-		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createDottedIdentifier("slot_machine"));
-		GameRegistry.registerTileEntity(TileEntityFilter.class, createDottedIdentifier("filter"));
-		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, createDottedIdentifier("auto_crafter"));
-		GameRegistry.registerTileEntity(TileEntityCable.class, createDottedIdentifier("cable"));
-		GameRegistry.registerTileEntity(TileEntityWallCable.class, createDottedIdentifier("wall_cable"));
-		GameRegistry.registerTileEntity(TileEntityEnergySource.class, createDottedIdentifier("energy_source"));
-		GameRegistry.registerTileEntity(TileEntitySolarPanel.class, createDottedIdentifier("solar_panel"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"), createDottedIdentifier("letterbox"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"), createDottedIdentifier("auto_feeder"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityGiftBox.class, createNamespacedIdentifier("gift_box"), createDottedIdentifier("gift_box"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityLock.class, createNamespacedIdentifier("keylock"), createDottedIdentifier("keylock"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityCollector.class, createNamespacedIdentifier("collector"), createDottedIdentifier("collector"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntitySieve.class, createNamespacedIdentifier("sieve"), createDottedIdentifier("sieve"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityHerbCrop.class, createNamespacedIdentifier("herb"), createDottedIdentifier("herb"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityElevatorControl.class, createNamespacedIdentifier("elevator_control"), createDottedIdentifier("elevator_control"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityCampfire.class, createNamespacedIdentifier("camp_fire"), createDottedIdentifier("camp_fire"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntitySlotMachine.class, createNamespacedIdentifier("slot_machine"), createDottedIdentifier("slot_machine"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityFilter.class, createNamespacedIdentifier("filter"), createDottedIdentifier("filter"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoCrafter.class, createNamespacedIdentifier("auto_crafter"), createDottedIdentifier("auto_crafter"));
+		GameRegistry.registerTileEntity(TileEntityCable.class, createNamespacedIdentifier("cable"));
+		GameRegistry.registerTileEntity(TileEntityWallCable.class, createNamespacedIdentifier("wall_cable"));
+		GameRegistry.registerTileEntity(TileEntitySolarPanel.class, createNamespacedIdentifier("solar_panel"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),
@@ -384,6 +382,10 @@ public class MinaMod {
 	
 	public static String createDottedIdentifier(String name){
 		return MODID + "." + name;
+	}
+	
+	public static String createNamespacedIdentifier(String name){
+		return MODID + ':' + name;
 	}
 	
 	public static ResourceLocation createResourceLocation(String name){
