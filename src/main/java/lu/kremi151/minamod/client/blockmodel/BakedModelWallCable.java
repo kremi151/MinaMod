@@ -75,36 +75,6 @@ public class BakedModelWallCable implements IPerspectiveAwareModel, IResourceMan
 	}
 
 	private final Map<IntPair, IBakedModel> cache = new HashMap<>();
-
-	/*public IBakedModel getCachedModel(int blockID, int blockMeta) {
-		List<Integer> key = Arrays.asList(blockID, blockMeta);
-
-		if (!this.cache.containsKey(key)) {
-			ImmutableMap.Builder<String, String> newTexture = ImmutableMap.builder();
-
-			if (Block.getBlockById(blockID) == Blocks.GRASS) {
-				newTexture.put("texture", "minecraft:blocks/grass_top");
-			} else if (Block.getBlockById(blockID) == Blocks.DIRT && blockMeta == 2) {
-				newTexture.put("texture", "minecraft:blocks/dirt_podzol_top");
-			} else if (Block.getBlockById(blockID) == Blocks.MYCELIUM) {
-				newTexture.put("texture", "minecraft:blocks/mycelium_top");
-			} else {
-				BlockModelShapes blockModel = Minecraft.getMinecraft().getBlockRendererDispatcher()
-						.getBlockModelShapes();
-				IBlockState blockState = Block.getBlockById(blockID).getStateFromMeta(blockMeta);
-				TextureAtlasSprite blockTexture = blockModel.getTexture(blockState);
-
-				newTexture.put("texture", blockTexture.getIconName());
-			}
-
-			System.out.println("Adding to cache " + key);
-			this.cache.put(key, ModelProcessingHelper.retexture(model, newTexture.build())
-					.bake(new SimpleModelState(transforms), format, ModelLoader.defaultTextureGetter()));
-		}
-
-		System.out.println(key);
-		return this.cache.get(key);
-	}*/
 	
 	public IBakedModel getCachedModel(int blockID, int blockMeta) {
 		IntPair key = new IntPair(blockID, blockMeta);
@@ -149,24 +119,6 @@ public class BakedModelWallCable implements IPerspectiveAwareModel, IResourceMan
 	public ItemOverrideList getOverrides() {
 		return new ItemOverrideList(Lists.<ItemOverride>newArrayList());
 	}
-
-	/*@Override
-	public ItemOverrideList getOverrides() {
-		return itemHandler;
-	}
-
-	private final ItemOverrideList itemHandler = new ItemOverrideList(Lists.<ItemOverride>newArrayList()) {
-		@Override
-		public IBakedModel handleItemState(IBakedModel model, ItemStack stack, World world, EntityLivingBase entity) {
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("blockID")
-					&& stack.getTagCompound().hasKey("blockMeta")) {
-				int blockID = NBTHelper.getInt(stack, "blockID");
-				int blockMeta = NBTHelper.getInt(stack, "blockMeta");
-				return BakedFurnitureModel.this.getCachedModel(blockID, blockMeta);
-			}
-			return BakedFurnitureModel.this;
-		}
-	};*/
 
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType cameraTransformType) {
