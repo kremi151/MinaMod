@@ -233,7 +233,7 @@ public class BlockEvents {
 	
 	@SubscribeEvent
 	public void onBlockPlaced(PlaceEvent event) {
-		TileEntity te = event.getWorld().getTileEntity(event.getPos());
+		final TileEntity te = event.getWorld().getTileEntity(event.getPos());
 		if(te != null) {
 			for(EnumFacing dir : EnumFacing.VALUES) {
 				if(te.hasCapability(CapabilityEnergy.ENERGY, dir)) {

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "minamod:etr_converter_horizontal" },
+        "facing=south": { "model": "minamod:etr_converter_horizontal", "y": 180 },
+        "facing=west":  { "model": "minamod:etr_converter_horizontal", "y": 270 },
+        "facing=east":  { "model": "minamod:etr_converter_horizontal", "y": 90 }
+    }
+}
