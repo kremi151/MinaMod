@@ -2,9 +2,6 @@ package lu.kremi151.minamod.block;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.block.tileentity.TileEntityEnergyToRedstone;
-import lu.kremi151.minamod.block.tileentity.TileEntitySolarPanel;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
@@ -19,19 +16,24 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockEnergyToRedstone extends BlockCustomHorizontal{
+public class BlockEnergyToRedstone extends BlockCustomDirectional{
 	
 	public static final PropertyInteger OUTPUT = PropertyInteger.create("output", 0, 15);
-	private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.0625, 1);
+	private static final AxisAlignedBB AABB_H = new AxisAlignedBB(0, 0, 0, 1, 0.0625, 1);
+	private static final AxisAlignedBB AABB_V = new AxisAlignedBB(0.1785, 0, 0.1785, 0.8125, 1, 0.8125);
 
 	public BlockEnergyToRedstone() {
-		super(Material.IRON, MapColor.RED);
+		super(Material.IRON);
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-		return AABB;
+		if(state.getValue(FACING).getAxis() == EnumFacing.Axis.Y) {
+			return AABB_V;
+		}else {
+			return AABB_H;
+		}
 	}
 
     @Override
@@ -49,8 +51,17 @@ public class BlockEnergyToRedstone extends BlockCustomHorizontal{
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+        return this.getDefaultState().withProperty(FACING, getAdjustedFacing(pos, placer));
     }
+	
+	private static EnumFacing getAdjustedFacing(BlockPos pos, EntityLivingBase placer) {
+		EnumFacing face = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+		if(face.getHorizontalIndex() != -1) {
+			return face.getOpposite();
+		}else {
+			return face;
+		}
+	}
 	
 	@Override
 	public boolean hasTileEntity(IBlockState bs)
