@@ -115,7 +115,7 @@ public class TileEntityEnergyToRedstone extends TileEntity implements ITickable{
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound nbt = super.getUpdateTag();
-		nbt.setInteger("Energy", energy);
+		nbt.setInteger("Output", output);
 		return nbt;
 	}
 	
@@ -127,8 +127,8 @@ public class TileEntityEnergyToRedstone extends TileEntity implements ITickable{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         readFromNBT(packet.getNbtCompound());
-        if(packet.getNbtCompound().hasKey("Energy", 99)) {
-        	this.energy = MathHelper.clamp(packet.getNbtCompound().getInteger("Energy"), 0, 15);
+        if(packet.getNbtCompound().hasKey("Output", 99)) {
+        	this.output = MathHelper.clamp(packet.getNbtCompound().getInteger("Output"), 0, 15);
             sync();
         }
 	}
