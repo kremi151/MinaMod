@@ -1,5 +1,5 @@
 {
-    "parent":"block/block",
+    "parent": "block/block",
     "textures": {
         "particle": "minamod:blocks/metallic_sanded",
         "0": "minamod:blocks/etr_top",
@@ -24,12 +24,12 @@
         {
             "name": "Plug",
             "from": [ 4.0, 1.0, 12.0 ], 
-            "to": [ 12.0, 8.0, 16.0 ], 
+            "to": [ 12.0, 7.0, 16.0 ], 
             "faces": {
-                "north": { "texture": "#2", "uv": [ 4.0, 5.0, 12.0, 12.0 ] },
-                "east": { "texture": "#2", "uv": [ 0.0, 5.0, 4.0, 12.0 ] },
-                "south": { "texture": "#2", "uv": [ 4.0, 5.0, 12.0, 12.0 ] },
-                "west": { "texture": "#2", "uv": [ 12.0, 5.0, 16.0, 12.0 ] },
+                "north": { "texture": "#2", "uv": [ 4.0, 5.0, 12.0, 11.0 ] },
+                "east": { "texture": "#2", "uv": [ 0.0, 5.0, 4.0, 11.0 ] },
+                "south": { "texture": "#2", "uv": [ 4.0, 5.0, 12.0, 11.0 ] },
+                "west": { "texture": "#2", "uv": [ 12.0, 5.0, 16.0, 11.0 ] },
                 "up": { "texture": "#2", "uv": [ 4.0, 1.0, 12.0, 5.0 ] }
             }
         },
@@ -54,6 +54,24 @@
                 "east": { "texture": "#3", "uv": [ 7.0, 7.0, 9.0, 9.0 ] },
                 "south": { "texture": "#3", "uv": [ 7.0, 7.0, 9.0, 9.0 ] },
                 "west": { "texture": "#3", "uv": [ 7.0, 7.0, 9.0, 9.0 ] }
+            }
+        },
+        {
+            "name": "PlugL",
+            "from": [ 6.0, 3.0, 16.0 ], 
+            "to": [ 6.0, 5.0, 18.0 ], 
+            "faces": {
+                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "west": { "texture": "#2", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "PlugR",
+            "from": [ 10.0, 3.0, 16.0 ], 
+            "to": [ 10.0, 5.0, 18.0 ], 
+            "faces": {
+                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "west": { "texture": "#2", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
             }
         }
     ]
