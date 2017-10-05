@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import org.apache.logging.log4j.Logger;
 
 import lu.kremi151.minamod.annotations.MinaPermission;
+import lu.kremi151.minamod.block.tileentity.TileEntityAccumulator;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
@@ -152,6 +153,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityWallCable.class, createNamespacedIdentifier("wall_cable"));
 		GameRegistry.registerTileEntity(TileEntitySolarPanel.class, createNamespacedIdentifier("solar_panel"));
 		GameRegistry.registerTileEntity(TileEntityEnergyToRedstone.class, createNamespacedIdentifier("energy_to_redstone"));
+		GameRegistry.registerTileEntity(TileEntityAccumulator.class, createNamespacedIdentifier("accumulator"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),

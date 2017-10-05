@@ -1,5 +1,6 @@
 package lu.kremi151.minamod;
 
+import lu.kremi151.minamod.block.BlockAccumulator;
 import lu.kremi151.minamod.block.BlockAutoCrafter;
 import lu.kremi151.minamod.block.BlockAutoFeeder;
 import lu.kremi151.minamod.block.BlockBambusCrop;
@@ -230,6 +231,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
 	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
+	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setUnlocalizedName("accumulator");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -332,6 +334,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();
 		registry.register(SOLAR_PANEL, "solar_panel").submit();
 		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
+		registry.register(ACCUMULATOR, "accumulator").submit();
 	}
 	
 	static void registerOreEntries(){
