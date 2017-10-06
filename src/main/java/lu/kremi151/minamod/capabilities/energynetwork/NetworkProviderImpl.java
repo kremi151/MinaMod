@@ -117,9 +117,9 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 	
 	//TODO: Remove!!!
 	public void printDebugInformation(ICommandSender sender) {
-		TextHelper.sendChatMessage(sender, "Id: " + checkNetwork().hashCode());
+		//TextHelper.sendChatMessage(sender, "Id: " + checkNetwork().hashCode());
 		TextHelper.sendChatMessage(sender, "Energy: " + this.getEnergyStored());
-		TextHelper.sendChatMessage(sender, "Clients:");
+		/*TextHelper.sendChatMessage(sender, "Clients:");
 		NetworkImpl nimpl = ((NetworkPointer)network).getPointingNetwork();
 		for(Map.Entry<BlockPos, NetworkImpl.ClientReference> entry : nimpl.clients.entrySet()) {
 			StringBuilder sb = new StringBuilder("* ");
@@ -131,7 +131,7 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 			}
 			sb.append("]");
 			TextHelper.sendChatMessage(sender, sb.toString());
-		}
+		}*/
 	}
 
 }
