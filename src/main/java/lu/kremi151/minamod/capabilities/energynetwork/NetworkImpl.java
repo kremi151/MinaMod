@@ -22,6 +22,7 @@ public class NetworkImpl implements IEnergyNetwork{
 	final HashMap<BlockPos, ClientReference> clients = new HashMap<>();
 	final HashSet<BlockPos> networkBlocks = new HashSet<>();
 	final IBlockAccess world;
+	private int energyBuffer = 0;
 	
 	NetworkImpl(IBlockAccess world){
 		this.world = world;
@@ -29,12 +30,20 @@ public class NetworkImpl implements IEnergyNetwork{
 
 	@Override
 	public int receiveEnergy(int maxReceive, boolean simulate) {
-		if(clients.size() > 0) {
+		if(maxReceive > 0 && clients.size() > 0) {
+			final int initialEnergyBuffer = energyBuffer;
+			final int initialMaxReceive = maxReceive;
+			maxReceive += energyBuffer;
+			energyBuffer = 0;
 			int consumed = 0;
 			boolean _cont = true;
 			while(_cont && maxReceive > 0) {
 				_cont = false;
 				final int portions = maxReceive / clients.size();
+				if(portions == 0) {
+					energyBuffer += maxReceive;
+					return initialMaxReceive;
+				}
 				Iterator<Map.Entry<BlockPos, ClientReference>> it = clients.entrySet().iterator();
 				while(it.hasNext()) {
 					ClientReference ref = it.next().getValue();
@@ -50,7 +59,7 @@ public class NetworkImpl implements IEnergyNetwork{
 					}
 				}
 			}
-			return consumed;
+			return Math.max(0, consumed - initialEnergyBuffer);
 		}else {
 			return 0;
 		}
@@ -212,6 +221,7 @@ public class NetworkImpl implements IEnergyNetwork{
 		
 		private final BlockPos pos;
 		private final HashSet<EnumFacing> faces = new HashSet<>();
+		private int energyBuffer = 0;
 		
 		private ClientReference(BlockPos pos) {
 			this.pos = pos;
@@ -248,7 +258,11 @@ public class NetworkImpl implements IEnergyNetwork{
 
 		@Override
 		public int receiveEnergy(int maxReceive, boolean simulate) {
-			if(faces.size() > 0) {
+			if(maxReceive > 0 && faces.size() > 0) {
+				final int initialEnergyBuffer = energyBuffer;
+				final int initialMaxReceive = maxReceive;
+				maxReceive += energyBuffer;
+				energyBuffer = 0;
 				TileEntity te = world.getTileEntity(pos);
 				if(te != null) {
 					int consumed = 0;
@@ -256,6 +270,10 @@ public class NetworkImpl implements IEnergyNetwork{
 					while(_cont && maxReceive > 0) {
 						_cont = false;
 						final int portions = maxReceive / faces.size();
+						if(portions == 0) {
+							energyBuffer += maxReceive;
+							return initialMaxReceive;
+						}
 						Iterator<EnumFacing> it = faces.iterator();
 						while(it.hasNext()) {
 							IEnergyStorage nrj = te.getCapability(CapabilityEnergy.ENERGY, it.next());
@@ -271,7 +289,7 @@ public class NetworkImpl implements IEnergyNetwork{
 							}
 						}
 					}
-					return consumed;
+					return Math.max(0, consumed - initialEnergyBuffer);
 				}
 			}
 			return 0;
