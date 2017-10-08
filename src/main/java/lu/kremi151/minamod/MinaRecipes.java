@@ -17,6 +17,7 @@ import lu.kremi151.minamod.recipe.RecipeColoredKey;
 import lu.kremi151.minamod.recipe.RecipeCopyKey;
 import lu.kremi151.minamod.recipe.RecipeDamagedSoulPearl;
 import lu.kremi151.minamod.recipe.RecipeEncodeKey;
+import lu.kremi151.minamod.recipe.RecipeFixDrill;
 import lu.kremi151.minamod.recipe.RecipeHerbMixture;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -325,6 +326,7 @@ public class MinaRecipes {
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
 		GameRegistry.addRecipe(new RecipeCopyKey());
 		GameRegistry.addRecipe(new RecipeEncodeKey());
+		GameRegistry.addRecipe(new RecipeFixDrill());
 
 		RecipeSorter.register(MinaMod.MODID + ":colored_key", RecipeColoredKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
@@ -339,6 +341,8 @@ public class MinaRecipes {
 		RecipeSorter.register(MinaMod.MODID + ":copy_key", RecipeCopyKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":encode_key", RecipeEncodeKey.class, RecipeSorter.Category.SHAPELESS,
+				"after:minecraft:shapeless");
+		RecipeSorter.register(MinaMod.MODID + ":fix_drill", RecipeFixDrill.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		
 		/*RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
