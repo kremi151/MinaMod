@@ -81,7 +81,9 @@ public class ClientRegisteringProxy extends RegisteringProxy{
 	@Override
 	public void registerCustomMeshDefinitions() {
 		ModelBakery.registerItemVariants(MinaItems.HERB_GUIDE, MinaUtils.deserializeResourceLocations(MinaMod.MODID, "herb_guide", "herb_guide_completed"));
+		ModelBakery.registerItemVariants(MinaItems.DRILL, MinaUtils.deserializeResourceLocations(MinaMod.MODID, "drill", "drill_broken"));
 		ModelLoader.setCustomMeshDefinition(MinaItems.HERB_GUIDE, new HerbGuideMeshDefinition());
+		ModelLoader.setCustomMeshDefinition(MinaItems.DRILL, new DrillMeshDefinition());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -156,6 +158,23 @@ public class ClientRegisteringProxy extends RegisteringProxy{
 				return COMPLETED;
 			}else {
 				return INCOMPLETED;
+			}
+		}
+		
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private class DrillMeshDefinition implements ItemMeshDefinition{
+
+		private final ModelResourceLocation INTACT = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "drill"), "inventory");
+		private final ModelResourceLocation DEFECT = new ModelResourceLocation(new ResourceLocation(MinaMod.MODID, "drill_broken"), "inventory");
+
+		@Override
+		public ModelResourceLocation getModelLocation(ItemStack stack) {
+			if(stack.getItemDamage() >= stack.getMaxDamage()) {
+				return DEFECT;
+			}else {
+				return INTACT;
 			}
 		}
 		

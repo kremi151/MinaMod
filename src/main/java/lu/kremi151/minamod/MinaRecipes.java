@@ -215,6 +215,14 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_CRAFTER), "PHP", "PWP", "PUP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'W', Blocks.CRAFTING_TABLE, 'U', new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.COMBINER), " I ", " R ", "I I", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, Blocks.STONE, Blocks.LIT_PUMPKIN);
+	
+		//TODO: Accumulator (item)
+		//TODO: Cable
+		//TODO: Solar panel
+		//TODO: ETR converter
+		//TODO: Accumulator (block)
+		//TODO: Oven
+		//TODO: Drill
 	}
 	
 	private static void initColoredRecipes(){

@@ -27,6 +27,7 @@ import lu.kremi151.minamod.item.ItemCustomHoe;
 import lu.kremi151.minamod.item.ItemCustomPickaxe;
 import lu.kremi151.minamod.item.ItemCustomShovel;
 import lu.kremi151.minamod.item.ItemCustomSword;
+import lu.kremi151.minamod.item.ItemDrill;
 import lu.kremi151.minamod.item.ItemEmptyPot;
 import lu.kremi151.minamod.item.ItemFoodContainer;
 import lu.kremi151.minamod.item.ItemGoldenCoin;
@@ -214,6 +215,7 @@ public class MinaItems {
 	public static final ItemSketch SKETCH = (ItemSketch) new ItemSketch().setUnlocalizedName("sketch");
 	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
 	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
+	public static final ItemDrill DRILL = (ItemDrill) new ItemDrill().setUnlocalizedName("drill");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -305,6 +307,7 @@ public class MinaItems {
 		registry.register(SKETCH, "sketch").submit();
 		registry.register(COMBINER, "combiner").submit();
 		registry.register(RARE_EARTH, "rare_earth_ore").variantNames(ItemRareEarth.VARIANT_NAMES).submit();
+		registry.register(DRILL.setRegistryName(MinaMod.MODID, "drill"), "drill").submitSimple();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
