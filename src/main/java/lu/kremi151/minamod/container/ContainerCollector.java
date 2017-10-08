@@ -10,13 +10,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerCollector extends BaseContainer{
 
-	EntityPlayer pl;
-	TileEntityCollector te;
+	private final EntityPlayer pl;
+	private final TileEntityCollector te;
 	
-	int ticksLeft;
-	int maxTicks = 1000;
+	private int ticksLeft;
+	private int maxTicks = 1000;
 	
-	int lastTicksLeft;
+	private int lastTicksLeft;
 
 	public ContainerCollector(EntityPlayer player, TileEntityCollector te) {
 		this.pl = player;

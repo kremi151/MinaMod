@@ -40,6 +40,7 @@ import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockNamieFlower;
+import lu.kremi151.minamod.block.BlockOven;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockPlate;
@@ -232,6 +233,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
 	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setUnlocalizedName("accumulator");
+	public static final BlockOven OVEN = (BlockOven) new BlockOven().setUnlocalizedName("oven");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -335,6 +337,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(SOLAR_PANEL, "solar_panel").submit();
 		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
 		registry.register(ACCUMULATOR, "accumulator").submit();
+		registry.register(OVEN, "oven").submit();
 	}
 	
 	static void registerOreEntries(){

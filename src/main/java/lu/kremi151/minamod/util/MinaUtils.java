@@ -25,12 +25,14 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MinaUtils {
@@ -481,6 +483,29 @@ public class MinaUtils {
         Vec3d vec3d1 = entity.getLook(partialTicks);
         Vec3d vec3d2 = vec3d.addVector(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
         return Optional.ofNullable(entity.world.rayTraceBlocks(vec3d, vec3d2, false, false, true));
+	}
+	
+	public static int calcRedstoneFromItemHandlers(IItemHandler... handlers) {
+		int i = 0;
+        float f = 0.0F;
+        float d = 0.0F;
+
+        for(IItemHandler handler : handlers) {
+        	for (int j = 0; j < handler.getSlots(); ++j)
+            {
+        		d += (float)handler.getSlots();
+                ItemStack itemstack = handler.getStackInSlot(j);
+
+                if (!itemstack.isEmpty())
+                {
+                    f += (float)itemstack.getCount() / (float)Math.min(handler.getSlotLimit(j), itemstack.getMaxStackSize());
+                    ++i;
+                }
+            }
+        }
+
+        f /= d;
+        return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 	}
 
 }

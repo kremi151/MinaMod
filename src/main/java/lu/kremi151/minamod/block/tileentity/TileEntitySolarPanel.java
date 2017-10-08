@@ -1,7 +1,6 @@
 package lu.kremi151.minamod.block.tileentity;
 
 import lu.kremi151.minamod.interfaces.IEnergySupplier;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -12,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class TileEntitySolarPanel extends TileEntity implements ITickable, IEnergySupplier{
+public class TileEntitySolarPanel extends BaseTileEntity implements ITickable, IEnergySupplier{
 	
 	private int position = 2;
 	
@@ -22,7 +21,7 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IEner
 
 	@Override
 	public void update() {
-        if (this.world != null && !this.world.isRemote && this.world.getTotalWorldTime() % 20L == 0L)
+        if (this.world != null && !this.world.isRemote && this.world.getTotalWorldTime() % 10L == 0L)
         {
         	if (world.provider.hasSkyLight())
             {
@@ -57,11 +56,6 @@ public class TileEntitySolarPanel extends TileEntity implements ITickable, IEner
 		boolean notify = this.position != position;
 		this.position = position;
 		if(notify)sync();
-	}
-	
-	private void sync() {
-		IBlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
 	}
 	
 	@Override
