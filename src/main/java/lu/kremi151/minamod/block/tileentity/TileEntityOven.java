@@ -80,8 +80,9 @@ public class TileEntityOven extends BaseTileEntity implements ITickable{
 	}
 
 	@Override
-	public void update() {//TODO: statically decrement stored energy when idle
+	public void update() {
 		if(!world.isRemote && world.getWorldTime() % 10 == 0) {
+			if(energy > 0)energy = Math.max(energy - 5, 0);
 			acceptingEnergy = false;
 			if(!inputInv.getStackInSlot(0).isEmpty()) {
 				if(tmpResult == null)tmpResult = FurnaceRecipes.instance().getSmeltingResult(inputInv.getStackInSlot(0));
