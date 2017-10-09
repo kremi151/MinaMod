@@ -493,6 +493,7 @@ msg.gambling.not_allowed=You are not allowed to gamble
 msg.slotmachine.reset.no_slot_machine=You have to look at a malfunctioning slot machine when calling this command
 msg.slotmachine.reset.executed=The mulfunctioning slot machine should now work again
 msg.server_maintenance=This server is currently under maintenance. Please try again later.
+msg.energy.run_out=This machine has run out of energy
 achievement.minamod.citrinicious=Citrinicious
 achievement.minamod.citrinicious.desc=Find your first citrin
 achievement.minamod.stats=Know your strengths

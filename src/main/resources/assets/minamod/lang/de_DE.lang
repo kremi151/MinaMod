@@ -492,6 +492,7 @@ msg.gambling.not_allowed=Du bist nicht berechtigt um Glücksspiel zu betreiben
 msg.slotmachine.reset.no_slot_machine=Du musst auf einen defekten einarmigen Banditen schauen wenn du diesen Befehl ausführst
 msg.slotmachine.reset.executed=Der defekte einarmige Bandit sollte jetzt wieder funktionieren
 msg.server_maintenance=Dieser Server wird zurzeit gewartet. Bitte versuche es später noch ein Mal.
+msg.energy.run_out=Diese Machine hat nicht genügend Energie
 achievement.minamod.citrinicious=Citrintastisch
 achievement.minamod.citrinicious.desc=Finde deinen ersten Citrin
 achievement.minamod.stats=Kenne deine Stärkten

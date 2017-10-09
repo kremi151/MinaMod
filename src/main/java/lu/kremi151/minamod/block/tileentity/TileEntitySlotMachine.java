@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.BlockSlotMachine;
+import lu.kremi151.minamod.capabilities.AccessableEnergyStorage;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
 import lu.kremi151.minamod.events.SlotMachineEvent;
 import lu.kremi151.minamod.util.Task;
@@ -37,6 +39,7 @@ import lu.kremi151.minamod.util.slotmachine.WheelManager;
 import lu.kremi151.minamod.util.weightedlist.MutableWeightedList;
 import lu.kremi151.minamod.util.weightedlist.WeightedList;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -47,13 +50,16 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 public class TileEntitySlotMachine extends TileEntity{
 	
 	private static final NBTMathHelper nbtmath = NBTMathHelper.getDefaultInstance();
+	private static final int ENERGY_PER_TURN = 100;
 	
 	private String customName = null;
 	private Session currentSession = Session.empty();
@@ -73,6 +79,8 @@ public class TileEntitySlotMachine extends TileEntity{
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private boolean needs_sync = false, expandCherryItems = true;
 	private int coinTray = 0;
+	private final AccessableEnergyStorage energy = new AccessableEnergyStorage(800, 200, 0);
+	private boolean infiniteEnergy = false;
 
 	private SerializableFunctionBase<? extends NBTBase> customRowPriceFunction = null;
 	private final SlotMachineEconomyHandler economyHandler;
@@ -91,6 +99,10 @@ public class TileEntitySlotMachine extends TileEntity{
 		MinecraftForge.EVENT_BUS.post(event);
 		this.economyHandler = event.getNewHandler();
 		this.coinHandler = new SlotMachineCoinHandler();
+	}
+	
+	private EnumFacing getFacing() {
+		return world.getBlockState(pos).getValue(BlockSlotMachine.FACING);
 	}
 	
 	public void setRowPriceFunction(SerializableFunctionBase<? extends NBTBase> func) {
@@ -267,6 +279,8 @@ public class TileEntitySlotMachine extends TileEntity{
 		if(nbt.hasKey("ExpandCherryIcon", 99)) {
 			this.expandCherryItems = nbt.getBoolean("ExpandCherryIcon");
 		}
+		this.infiniteEnergy = nbt.getBoolean("InfiniteEnergy");
+		this.energy.setEnergy(nbt.getInteger("Energy"));
 	}
 	
 	public NBTTagCompound writeSlotMachineToNBT(NBTTagCompound nbt) {
@@ -280,6 +294,11 @@ public class TileEntitySlotMachine extends TileEntity{
 		nbt.setInteger("CoinTray", coinTray);
 		if(customRowPriceFunction != null)nbt.setTag("RowPriceFunction", customRowPriceFunction.serialize());
 		nbt.setBoolean("ExpandCherryIcon", expandCherryItems);
+		if(this.infiniteEnergy) {
+			nbt.setBoolean("InfiniteEnergy", true);
+		}else {
+			nbt.setInteger("Energy", this.energy.getEnergyStored());
+		}
 		
 		return nbt;
 	}
@@ -307,14 +326,20 @@ public class TileEntitySlotMachine extends TileEntity{
 	@Override
     public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
-        return capability == ICoinHandler.CAPABILITY || super.hasCapability(capability, facing);
+        return capability == ICoinHandler.CAPABILITY || (capability == CapabilityEnergy.ENERGY && facing != getFacing())|| super.hasCapability(capability, facing);
     }
 
     @Override
     @Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
-        return capability == ICoinHandler.CAPABILITY ? (T) coinHandler : super.getCapability(capability, facing);
+    	if(capability == ICoinHandler.CAPABILITY) {
+    		return (T) coinHandler;
+    	}else if(capability == CapabilityEnergy.ENERGY && facing != getFacing()) {
+    		return (T) energy;
+    	}else {
+    		return super.getCapability(capability, facing);
+    	}
     }
 	
 	@Override
@@ -383,34 +408,51 @@ public class TileEntitySlotMachine extends TileEntity{
 		return (customRowPriceFunction != null ? customRowPriceFunction : defaultRowPriceFunction).apply(iconId, context).intValue();
 	}
 	
-	public void turnSlots(SpinMode mode, Random rand, boolean instant) {
+	public float getEnergyPercentage() {
+		return infiniteEnergy?1.0f:((float)energy.getEnergyStored() / (float)energy.getMaxEnergyStored());
+	}
+	
+	private boolean hasEnoughEnergy() {
+		return infiniteEnergy || energy.getEnergyStored() >= ENERGY_PER_TURN;
+	}
+	
+	private void decrementEnergy() {
+		if(!infiniteEnergy)energy.setEnergy(energy.getEnergyStored() - ENERGY_PER_TURN);
+	}
+	
+	public void turnSlots(ICommandSender sender, SpinMode mode, Random rand, boolean instant) {
 		if(!world.isRemote) {
-			if(isTurning()) {
-				throw new IllegalStateException("Slot machine is already turning");
-			}else {
-				int price = getPriceForSpinMode(mode);
-				EntityPlayer playing = getPlaying();
-				if(playing != null) {
-					if(withdrawCoins(playing, price)){
-						coinHandler.depositCoins(price);
-						currentSession.currentWin -= price;
-						wheels.clearWinnings();
-						needs_sync = true;
-						this.currentTask = new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand));
-						if(instant) {
-							while(this.currentTask != null && this.currentTask.canExecuteAgain()) {
-								this.currentTask.run(currentTask);//Simulate spinning
+			if(hasEnoughEnergy()) {
+				decrementEnergy();
+				if(isTurning()) {
+					throw new IllegalStateException("Slot machine is already turning");
+				}else {
+					int price = getPriceForSpinMode(mode);
+					EntityPlayer playing = getPlaying();
+					if(playing != null) {
+						if(withdrawCoins(playing, price)){
+							coinHandler.depositCoins(price);
+							currentSession.currentWin -= price;
+							wheels.clearWinnings();
+							needs_sync = true;
+							this.currentTask = new TaskRepeat(System.currentTimeMillis(), 100, new TaskTurnSlots(mode, rand));
+							if(instant) {
+								while(this.currentTask != null && this.currentTask.canExecuteAgain()) {
+									this.currentTask.run(currentTask);//Simulate spinning
+								}
+							}else {
+								isTurning = true;
+								notifyClientTurnState(true);
+								this.currentTask.enqueueServerTask();
 							}
+							
 						}else {
-							isTurning = true;
-							notifyClientTurnState(true);
-							this.currentTask.enqueueServerTask();
+							TextHelper.sendTranslateableErrorMessage(playing, "gui.slot_machine.not_enough_coins");
 						}
-						
-					}else {
-						TextHelper.sendTranslateableErrorMessage(playing, "gui.slot_machine.not_enough_coins");
 					}
 				}
+			}else {
+				TextHelper.sendTranslateableErrorMessage(sender, "msg.energy.run_out");
 			}
 		}
 	}

@@ -16,7 +16,7 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	private boolean isTurning = false;
 	private final WheelManager wheels = new WheelManager(5, 3);
 	private final int prices[] = new int[3];
-	private int credits = 0, sessionWin = 0, creditsBuffer = 0, sessionWinBuffer = 0, rowValueBuffer = 0, rowValueIdx = 0;
+	private int credits = 0, sessionWin = 0, creditsBuffer = 0, sessionWinBuffer = 0, rowValueBuffer = 0, rowValueIdx = 0, energyPercentage = 0;
 	
 	private final int iconRowValues[];
 
@@ -65,6 +65,11 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 	public Item getIcon(int wheelIdx, int wheelPos) {
 		int id = wheels.getWheelValue(wheelIdx, wheelPos);
 		return slotMachine.getItemIcon(id);
+	}
+	
+	@Override
+	public int getEnergyPercentage(){
+		return energyPercentage;
 	}
 	
 	public int getWheelCount() {
@@ -121,6 +126,9 @@ public class ContainerSlotMachineClient extends ContainerSlotMachine{
 			break;
 		case CMD_UPDATE_ICON_ROW_VALUE_MOST:
 			iconRowValues[rowValueIdx++] = rowValueBuffer | (data & 0xFFFF);
+			break;
+		case CMD_UPDATE_ENERGY_PERCENTAGE:
+			energyPercentage = data;
 			break;
 		}
     }
