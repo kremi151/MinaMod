@@ -199,6 +199,10 @@ tile.autocrafter.name=Automatische Werkbank
 tile.pumpkin_lantern.name=Kürbislaterne
 tile.solar_panel.name=Solarmodul
 tile.etr_converter.name=Energie-zu-Redstone-Umwandler
+tile.copper_block.name=Kupfer Block
+tile.copper_ore.name=Kupfer Erz
+item.copper_ingot.name=Kupfer Barren
+
 item.ever_snow.name=Ewige Schneeflocke
 item.namie_seeds.name=Namiesamen
 item.namie_fruit.name=Namiefrucht

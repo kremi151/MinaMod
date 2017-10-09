@@ -200,6 +200,10 @@ tile.autocrafter.name=Automatic workbench
 tile.pumpkin_lantern.name=Pumpkin lantern
 tile.solar_panel.name=Solar panel
 tile.etr_converter.name=Energy to redstone converter
+tile.copper_block.name=Copper Block
+tile.copper_ore.name=Copper Ore
+item.copper_ingot.name=Copper Ingot
+
 item.ever_snow.name=Ever snow
 item.namie_seeds.name=Namie seeds
 item.namie_fruit.name=Namie fruit

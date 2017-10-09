@@ -12,6 +12,8 @@ import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
+import lu.kremi151.minamod.block.BlockCopper_Block;
+import lu.kremi151.minamod.block.BlockCopper_Ore;
 import lu.kremi151.minamod.block.BlockCustom;
 import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
@@ -231,6 +233,10 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
 	
+	
+	public static final BlockCopper_Ore COPPER_ORE = (BlockCopper_Ore) new BlockCopper_Ore().setUnlocalizedName("copper_ore");
+    public static final BlockCopper_Block COPPER_BLOCK = (BlockCopper_Block) new BlockCopper_Block().setUnlocalizedName("copper_block");
+   
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
 		BlockStool.registerStoolBlocks(registry);
@@ -257,6 +263,9 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(BAMBUS_BLOCK, "bambus_block").submit();
 		registry.register(EFFECT_BUSH, "effect_bush").blockOnly().submit();
 		registry.register(KEY_LOCK, "keylock").submit();
+		
+	
+		
 		if(FeatureList.enable_ice_altar){
 			registry.register(ICE_ALTAR, "ice_altar").submit();
 		}
@@ -332,6 +341,9 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();
 		registry.register(SOLAR_PANEL, "solar_panel").submit();
 		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
+		
+		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
+		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
 	}
 	
 	static void registerOreEntries(){
