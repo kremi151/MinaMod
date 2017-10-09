@@ -12,5 +12,5 @@ public class ItemCopperIngot extends Item {
 		setMaxStackSize(64);
 		setUnlocalizedName(name);
 		setCreativeTab(CreativeTabs.MATERIALS);
-		}
+	}
 }

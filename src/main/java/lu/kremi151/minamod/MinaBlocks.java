@@ -13,8 +13,8 @@ import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
-import lu.kremi151.minamod.block.BlockCopper_Block;
-import lu.kremi151.minamod.block.BlockCopper_Ore;
+import lu.kremi151.minamod.block.BlockCopperBlock;
+import lu.kremi151.minamod.block.BlockCopperOre;
 import lu.kremi151.minamod.block.BlockCustom;
 import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
@@ -236,8 +236,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
 	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setUnlocalizedName("accumulator");
 	public static final BlockOven OVEN = (BlockOven) new BlockOven().setUnlocalizedName("oven");
-	public static final BlockCopper_Ore COPPER_ORE = (BlockCopper_Ore) new BlockCopper_Ore().setUnlocalizedName("copper_ore");
-    public static final BlockCopper_Block COPPER_BLOCK = (BlockCopper_Block) new BlockCopper_Block().setUnlocalizedName("copper_block");
+	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
+    public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
