@@ -21,6 +21,7 @@ import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemCoinBag;
 import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.item.ItemCombiner;
+import lu.kremi151.minamod.item.ItemCopperIngot;
 import lu.kremi151.minamod.item.ItemCustomArmor;
 import lu.kremi151.minamod.item.ItemCustomAxe;
 import lu.kremi151.minamod.item.ItemCustomHoe;
@@ -216,6 +217,8 @@ public class MinaItems {
 	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
 	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
 	public static final ItemDrill DRILL = (ItemDrill) new ItemDrill().setUnlocalizedName("drill");
+	public static final Item COPPER_INGOT = new ItemCopperIngot().setUnlocalizedName("copper_ingot");
+	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -308,6 +311,8 @@ public class MinaItems {
 		registry.register(COMBINER, "combiner").submit();
 		registry.register(RARE_EARTH, "rare_earth_ore").variantNames(ItemRareEarth.VARIANT_NAMES).submit();
 		registry.register(DRILL.setRegistryName(MinaMod.MODID, "drill"), "drill").submitSimple();
+		registry.register(COPPER_INGOT, "copper_ingot").submit();
+		registry.register(COPPER_NUGGET, "copper_nugget").submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){

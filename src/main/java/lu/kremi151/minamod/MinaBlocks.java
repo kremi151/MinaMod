@@ -13,6 +13,8 @@ import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
+import lu.kremi151.minamod.block.BlockCopper_Block;
+import lu.kremi151.minamod.block.BlockCopper_Ore;
 import lu.kremi151.minamod.block.BlockCustom;
 import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
@@ -234,6 +236,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
 	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setUnlocalizedName("accumulator");
 	public static final BlockOven OVEN = (BlockOven) new BlockOven().setUnlocalizedName("oven");
+	public static final BlockCopper_Ore COPPER_ORE = (BlockCopper_Ore) new BlockCopper_Ore().setUnlocalizedName("copper_ore");
+    public static final BlockCopper_Block COPPER_BLOCK = (BlockCopper_Block) new BlockCopper_Block().setUnlocalizedName("copper_block");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -338,6 +342,8 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
 		registry.register(ACCUMULATOR, "accumulator").submit();
 		registry.register(OVEN, "oven").submit();
+		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
+		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
 	}
 	
 	static void registerOreEntries(){
