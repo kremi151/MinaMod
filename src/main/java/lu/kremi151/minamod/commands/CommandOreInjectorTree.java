@@ -10,6 +10,7 @@ public class CommandOreInjectorTree extends MinaCommandTreeBase{
 		super(parent);
 		this.addSubcommand(new CommandOreInjectorList(this));
 		this.addSubcommand(new CommandOreInjector(this));
+		this.addSubcommand(new CommandOreAnalyse(this));
 	}
 
 	@Override
