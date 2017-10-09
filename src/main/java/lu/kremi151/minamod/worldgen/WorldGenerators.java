@@ -39,7 +39,7 @@ public final class WorldGenerators {
 	@OreInjector("rare_earth")
 	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 2).setRange(15, 30);
 	
-	@OreInjector("platinum_ore")
+	@OreInjector("copper_ore")
 	public static final WorldGenNewOre COPPER_ORE = new WorldGenNewOre(MinaBlocks.COPPER_ORE.getDefaultState(), 7, 2).setRange(0, 64);
 	
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
