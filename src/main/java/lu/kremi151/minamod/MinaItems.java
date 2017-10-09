@@ -216,6 +216,7 @@ public class MinaItems {
 	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
 	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
 	public static final Item COPPER_INGOT = new ItemCopperIngot().setUnlocalizedName("copper_ingot");
+	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
 	
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -308,6 +309,7 @@ public class MinaItems {
 		registry.register(COMBINER, "combiner").submit();
 		registry.register(RARE_EARTH, "rare_earth_ore").variantNames(ItemRareEarth.VARIANT_NAMES).submit();
 		registry.register(COPPER_INGOT, "copper_ingot").submit();
+		registry.register(COPPER_NUGGET, "copper_nugget").submit();
 		
 	}
 	

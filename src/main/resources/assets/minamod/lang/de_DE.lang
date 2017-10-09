@@ -202,6 +202,7 @@ tile.etr_converter.name=Energie-zu-Redstone-Umwandler
 tile.copper_block.name=Kupfer Block
 tile.copper_ore.name=Kupfer Erz
 item.copper_ingot.name=Kupfer Barren
+item.copper_nugget.name=Kupfer Klumpen
 
 item.ever_snow.name=Ewige Schneeflocke
 item.namie_seeds.name=Namiesamen
