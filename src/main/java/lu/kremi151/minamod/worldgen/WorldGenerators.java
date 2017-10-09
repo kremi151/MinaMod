@@ -39,6 +39,9 @@ public final class WorldGenerators {
 	@OreInjector("rare_earth")
 	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 2).setRange(15, 30);
 	
+	@OreInjector("platinum_ore")
+	public static final WorldGenNewOre COPPER_ORE = new WorldGenNewOre(MinaBlocks.COPPER_ORE.getDefaultState(), 7, 2).setRange(0, 64);
+	
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
 			.beginSection(70.0)
 			.add(MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4, 60)
@@ -80,7 +83,8 @@ public final class WorldGenerators {
 		GameRegistry.registerWorldGenerator(RUBY_ORE, 3);
 		GameRegistry.registerWorldGenerator(SAPPHIRE_ORE, 3);
 		GameRegistry.registerWorldGenerator(RARE_SOIL_ORE, 3);
-
+		
+		GameRegistry.registerWorldGenerator(COPPER_ORE, 4);
 		GameRegistry.registerWorldGenerator(SURFACE_PLANTS, 4);
 		
 		if(FeatureList.enable_ice_altar){
