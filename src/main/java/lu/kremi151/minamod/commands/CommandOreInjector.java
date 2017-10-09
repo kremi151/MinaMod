@@ -53,6 +53,7 @@ public class CommandOreInjector extends MinaCommandBase{
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		String worldstr = null;
 		ArrayList<String> id_list = new ArrayList<String>(args.length);
+		boolean info = false;
 		
 		for(int i = 0 ; i < args.length ; i++) {
 			String arg = args[i];
@@ -63,6 +64,8 @@ public class CommandOreInjector extends MinaCommandBase{
 				}else {
 					throw new CommandException("The world flag (-w or -world) needs to be followed by a valid world name");
 				}
+			}else if(arg.equalsIgnoreCase("--info")) {
+				info = true;
 			}else {
 				id_list.add(arg);
 			}
@@ -76,20 +79,20 @@ public class CommandOreInjector extends MinaCommandBase{
 		if(worldstr != null) {
 			WorldServer world = findWorldByName(server.getServer(), worldstr);
 			if(world != null) {
-				doOreInjection(sender, world, oreInjectors);
+				doOreInjection(sender, info, world, oreInjectors);
 			}else {
 				TextHelper.sendTranslateableErrorMessage(sender, "msg.cmd.ore_injector.regen.not_found", worldstr);
 			}
 		}else {
 			if(sender instanceof EntityPlayer) {
-				doOreInjection(sender, (WorldServer)((EntityPlayer)sender).world, oreInjectors);
+				doOreInjection(sender, info, (WorldServer)((EntityPlayer)sender).world, oreInjectors);
 			}else {
 				TextHelper.sendTranslateableErrorMessage(sender, "msg.cmd.ore_injector.regen.only_for_players");
 			}
 		}
 	}
 	
-	private void doOreInjection(ICommandSender sender, WorldServer world, String oreInjectors[]) {
+	private void doOreInjection(ICommandSender sender, boolean info, WorldServer world, String oreInjectors[]) {
 		//world.sendQuittingDisconnectingPacket();
 		TextHelper.sendTranslateableChatMessage(sender, "msg.cmd.ore_injector.regen.processing");
 
@@ -110,6 +113,7 @@ public class CommandOreInjector extends MinaCommandBase{
 						
 						for(; cx < bcx ; cx++) {
 							for(; cz < bcz ; cz++) {
+								if(info)TextHelper.sendChatMessage(sender, String.format("Regenerating chunk at x=%d, z=%d", cx, cz));
 								ChunkPos cpos = new ChunkPos(cx, cz);
 								if(world.isChunkGeneratedAt(cx, cz)) {
 									Chunk chunk = world.getChunkFromChunkCoords(cx, cz);
