@@ -25,19 +25,19 @@ public final class WorldGenerators {
 	public static final WorldGenStructure WOOKIE_HOUSE = new WorldGenWookieHouseStructure();
 	
 	@OreInjector("citrin_ore")
-	public static final WorldGenNewOre CITRIN_ORE = new WorldGenNewOre(MinaBlocks.CITRIN_ORE.getDefaultState(), 5, 2).setRange(6, 12);
+	public static final WorldGenNewOre CITRIN_ORE = new WorldGenNewOre(MinaBlocks.CITRIN_ORE.getDefaultState(), 5, 8).setRange(6, 12);
 	
 	@OreInjector("platinum_ore")
-	public static final WorldGenNewOre PLATINUM_ORE = new WorldGenNewOre(MinaBlocks.PLATINUM_ORE.getDefaultState(), 3, 4).setRange(10, 20);
+	public static final WorldGenNewOre PLATINUM_ORE = new WorldGenNewOre(MinaBlocks.PLATINUM_ORE.getDefaultState(), 4, 14).setRange(10, 20);
 	
 	@OreInjector("ruby_ore")
-	public static final WorldGenNewOre RUBY_ORE = new WorldGenNewOre(MinaBlocks.RUBY_ORE.getDefaultState(), 5, 2).setRange(6, 18);
+	public static final WorldGenNewOre RUBY_ORE = new WorldGenNewOre(MinaBlocks.RUBY_ORE.getDefaultState(), 5, 8).setRange(6, 18);
 	
 	@OreInjector("sapphire_ore")
-	public static final WorldGenNewOre SAPPHIRE_ORE = new WorldGenNewOre(MinaBlocks.SAPPHIRE_ORE.getDefaultState(), 5, 2).setRange(6, 18);
+	public static final WorldGenNewOre SAPPHIRE_ORE = new WorldGenNewOre(MinaBlocks.SAPPHIRE_ORE.getDefaultState(), 5, 8).setRange(6, 18);
 	
 	@OreInjector("rare_earth")
-	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 2).setRange(15, 30);
+	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 8).setRange(15, 30);
 	
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
 			.beginSection(70.0)
