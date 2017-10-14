@@ -4,10 +4,16 @@ import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerAutoCrafter extends BaseContainer{
+	
+	private static final int PB_UPDATE_ENERGY = 0;
 	
 	private static final ShiftClickManager shiftClick = ShiftClickManager.builder()
 					.addTransfer(15, 15 + PLAYER_INV_SLOT_COUNT, 9, 10, true, stack -> stack.hasCapability(ISketch.CAPABILITY, null))
@@ -16,6 +22,7 @@ public class ContainerAutoCrafter extends BaseContainer{
 					.build();
 	
 	private final TileEntityAutoCrafter te;
+	private int energy = 0;
 
 	public ContainerAutoCrafter(EntityPlayer player, TileEntityAutoCrafter te) {
 		this.te = te;
@@ -47,6 +54,34 @@ public class ContainerAutoCrafter extends BaseContainer{
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
 		return shiftClick.handle(this, player, slot);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data)
+    {
+		switch(id){
+		case PB_UPDATE_ENERGY:
+			this.energy = data;
+			break;
+		}
+    }
+	
+	@Override
+	public void detectAndSendChanges(){
+        super.detectAndSendChanges();
+
+        int l = this.listeners.size();
+    	for (int i = 0; i < l; ++i)
+        {
+    		IContainerListener icrafting = (IContainerListener)this.listeners.get(i);
+            icrafting.sendWindowProperty(this, PB_UPDATE_ENERGY, te.getCapability(CapabilityEnergy.ENERGY, null).getEnergyStored());
+        }
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public int getEnergy() {
+		return energy;
 	}
 
 }

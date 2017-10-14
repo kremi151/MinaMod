@@ -4,27 +4,29 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-import lu.kremi151.minamod.MinaItems;
-import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.capabilities.AccessableEnergyStorage;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.inventory.BaseInventoryTileEntity;
 import lu.kremi151.minamod.inventory.PseudoInventoryCrafting;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.util.TaskRepeat;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class TileEntityAutoCrafter extends TileEntitySidedInventory{
+public class TileEntityAutoCrafter extends TileEntitySidedInventory implements ITickable{
+	
+	public final static int ENERGY_TRESHOLD = 150;
 	
 	public final IInventory resultsInv = new BaseInventoryTileEntity(this, "inventory.autocrafter.results", 5);
 	public final IInventory sketchInv = new BaseInventoryTileEntity(this, "inventory.autocrafter.sketch", 1) {
@@ -34,8 +36,8 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 		}
 	};
 	private final IItemHandler resultsItemHandler;
-	private TaskRepeat currentTask = null;
 	private boolean isCrafting = false;
+	private final AccessableEnergyStorage energy = new AccessableEnergyStorage(450, 200, 0);
 
 	public TileEntityAutoCrafter() {
 		super(9, "inventory.autocrafter");
@@ -75,12 +77,19 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 		}
 		return res;
 	}
+
+	@Override
+	public void update() {
+		if(world != null && !world.isRemote && world.getWorldTime() % 10 == 0) {
+			craft();
+		}
+	}
 	
 	private boolean craft() {
 		if(isCrafting)return false;
 		isCrafting = true;
 		ItemStack sketch = sketchInv.getStackInSlot(0);
-		if(!sketch.isEmpty()) {
+		if(energy.getEnergyStored() >= ENERGY_TRESHOLD && !sketch.isEmpty()) {
 			ISketch cap = sketch.getCapability(ISketch.CAPABILITY, null);
 			NonNullList<ItemStack> req = getRequirements();
 			NonNullList<ItemStack> req_clone = MinaUtils.cloneItemList(req);
@@ -108,10 +117,11 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 							for(ItemStack stack : req) {
 								if(!MinaUtils.consumeInventoryItems(this, stack)) {
 									//throw new RuntimeException("This should not happen");
-									System.out.println("\"This should not happen\"");
+									System.err.println("Items could not be consumed while crafting in auto crafter at " + pos + ". This should not happen...");
 								}
 							}
 							ItemHandlerHelper.insertItem(resultsItemHandler, result, false);
+							energy.setEnergy(energy.getEnergyStored() - ENERGY_TRESHOLD);
 							isCrafting = false;
 							return true;
 						}
@@ -123,22 +133,17 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 		isCrafting = false;
 		return false;
 	}
-	
-	private boolean isTaskInactive() {
-		return currentTask == null || !currentTask.canExecuteAgain();
-	}
 
 	@Override
-	public void onCraftMatrixChanged() {
-		if(/*!world.isRemote && */isTaskInactive() && craft()) {
-			currentTask = new TaskRepeat(System.currentTimeMillis() + 500L, 500L, (task, dispatcher) -> {
-				if(!craft()) {
-					task.setCanExecuteAgain(false);
-				}
-			});
-			currentTask.enqueueServerTask();
-		}
-	}
+	public void onCraftMatrixChanged() {}
+	
+	@Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY 
+        		|| capability == CapabilityEnergy.ENERGY
+        		|| super.hasCapability(capability, facing);
+    }
 
     @Override
     @Nullable
@@ -150,6 +155,8 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
         	}else {
         		return (T) resultsItemHandler;
         	}
+    	}else if(capability == CapabilityEnergy.ENERGY) {
+    		return (T) energy;
         }else{
         	return super.getCapability(capability, facing);
         }
@@ -170,6 +177,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 		if(nbt.hasKey("Sketch", 10)) {
 			sketchInv.setInventorySlotContents(0, new ItemStack(nbt.getCompoundTag("Sketch")));
 		}
+		energy.setEnergy(nbt.getInteger("Energy"));
 	}
 	
 	@Override
@@ -184,6 +192,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory{
 		if(!sketchInv.getStackInSlot(0).isEmpty()) {
 			nbt.setTag("Sketch", sketchInv.getStackInSlot(0).writeToNBT(new NBTTagCompound()));
 		}
+		nbt.setInteger("Energy", energy.getEnergyStored());
 		return nbt;
 	}
 

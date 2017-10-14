@@ -3,8 +3,10 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.container.ContainerAutoCrafter;
+import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiAutoCrafter extends GuiContainer{
 
 	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/auto_crafter.png");
+	private static final int FONT_COLOR_GREEN = MinaUtils.convertRGBToDecimal(0, 180, 60);
+	private static final int FONT_COLOR_RED = MinaUtils.convertRGBToDecimal(255, 0, 0);
 
 	public GuiAutoCrafter(ContainerAutoCrafter inventorySlotsIn) {
 		super(inventorySlotsIn);
@@ -40,6 +44,10 @@ public class GuiAutoCrafter extends GuiContainer{
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
 				ySize - 96 + 2, 4210752);
+		final int energy = ((ContainerAutoCrafter)this.inventorySlots).getEnergy();
+		fontRenderer.drawString(
+				I18n.translateToLocalFormatted("gui.energy.display", energy), 8,
+				ySize - 105, energy >= TileEntityAutoCrafter.ENERGY_TRESHOLD ? FONT_COLOR_GREEN : FONT_COLOR_RED);
 		
 
 		ItemStack sketch = ((ContainerAutoCrafter)this.inventorySlots).getAutoCrafter().sketchInv.getStackInSlot(0);
