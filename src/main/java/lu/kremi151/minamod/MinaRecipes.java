@@ -58,6 +58,7 @@ public class MinaRecipes {
 		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 0.8f);
 		GameRegistry.addSmelting(new ItemStack(MinaItems.RARE_EARTH), new ItemStack(MinaItems.RARE_EARTH, 1, 1), 1f);
 		GameRegistry.addSmelting(MinaBlocks.COPPER_ORE, new ItemStack(MinaItems.COPPER_INGOT), 0.8f);
+		GameRegistry.addSmelting(MinaItems.RUBBER_TREE_BRANCH, new ItemStack(MinaItems.RUBBER), 0.1f);
 
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			GameRegistry.addSmelting(new ItemStack(BlockStandaloneLog.getBlockFor(type), 1), new ItemStack(Items.COAL, 1, 1), 0.2f);
@@ -222,7 +223,7 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, Blocks.STONE, Blocks.LIT_PUMPKIN);
 	
 		//TODO: Accumulator (item)
-		//TODO: Cable
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.CABLE), MinaItems.RUBBER, MinaItems.COPPER_NUGGET, MinaItems.COPPER_NUGGET);
 		//TODO: Solar panel
 		//TODO: ETR converter
 		//TODO: Accumulator (block)

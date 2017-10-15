@@ -10,6 +10,7 @@ import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
+import lu.kremi151.minamod.block.BlockRubberTree;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -61,6 +62,7 @@ public final class WorldGenerators {
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.CHESTNUT), 10)
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.COTTON), 2)
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.PEPPEL), 2)
+			.add(new BlockRubberTree.Plant(), 4)
 			.build();
 	
 	public static final WorldGenQuicksand QUICKSAND = new WorldGenQuicksand();

@@ -42,6 +42,7 @@ import lu.kremi151.minamod.item.ItemKeyChain;
 import lu.kremi151.minamod.item.ItemMilkBottle;
 import lu.kremi151.minamod.item.ItemPowder;
 import lu.kremi151.minamod.item.ItemRareEarth;
+import lu.kremi151.minamod.item.ItemRubberTreeBranch;
 import lu.kremi151.minamod.item.ItemSickle;
 import lu.kremi151.minamod.item.ItemSketch;
 import lu.kremi151.minamod.item.ItemSoulPearl;
@@ -219,6 +220,8 @@ public class MinaItems {
 	public static final ItemDrill DRILL = (ItemDrill) new ItemDrill().setUnlocalizedName("drill");
 	public static final Item COPPER_INGOT = new ItemCopperIngot().setUnlocalizedName("copper_ingot");
 	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
+	public static final Item RUBBER_TREE_BRANCH = new ItemRubberTreeBranch().setUnlocalizedName("rubber_tree_branch");
+	public static final Item RUBBER = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("rubber");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -313,6 +316,8 @@ public class MinaItems {
 		registry.register(DRILL.setRegistryName(MinaMod.MODID, "drill"), "drill").submitSimple();
 		registry.register(COPPER_INGOT, "copper_ingot").submit();
 		registry.register(COPPER_NUGGET, "copper_nugget").submit();
+		registry.register(RUBBER_TREE_BRANCH, "rubber_tree_branch").submit();
+		registry.register(RUBBER, "rubber").submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){

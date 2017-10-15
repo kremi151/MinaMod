@@ -50,6 +50,7 @@ import lu.kremi151.minamod.block.BlockPumpkinLantern;
 import lu.kremi151.minamod.block.BlockQuicksand;
 import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
 import lu.kremi151.minamod.block.BlockRhubarb;
+import lu.kremi151.minamod.block.BlockRubberTree;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.BlockSlotMachine;
 import lu.kremi151.minamod.block.BlockSolarPanel;
@@ -238,6 +239,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockOven OVEN = (BlockOven) new BlockOven().setUnlocalizedName("oven");
 	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
     public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
+    public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -344,6 +346,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(OVEN, "oven").submit();
 		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
 		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
+		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
 	}
 	
 	static void registerOreEntries(){

@@ -1,0 +1,15 @@
+{
+    "variants": {
+        "part=stage_0": { "model": "minamod:rubber_tree_s0" },
+        "part=stage_1": { "model": "minamod:rubber_tree_s1" },
+        "part=stage_2": { "model": "minamod:rubber_tree_s2" },
+        "part=stage_3": { "model": "minamod:rubber_tree_s3" },
+        "part=stage_4": { "model": "minamod:rubber_tree_s4" },
+        "part=stage_5_lower": { "model": "minamod:rubber_tree_s5l" },
+        "part=stage_5_upper": { "model": "minamod:rubber_tree_s5u" },
+        "part=stage_6_lower": { "model": "minamod:rubber_tree_s6l" },
+        "part=stage_6_upper": { "model": "minamod:rubber_tree_s6u" },
+        "part=stage_7_lower": { "model": "minamod:rubber_tree_s7l" },
+        "part=stage_7_upper": { "model": "minamod:rubber_tree_s7u" }
+    }
+}

@@ -129,7 +129,7 @@ public abstract class BlockCustomCrops extends BlockBush implements IGrowable
         return MathHelper.getInt(worldIn.rand, 2, 5);
     }
 
-    protected static float getGrowthChance(Block blockIn, World worldIn, BlockPos pos)
+    public static float getGrowthChance(Block blockIn, World worldIn, BlockPos pos)
     {
         float f = 1.0F;
         BlockPos blockpos = pos.down();
