@@ -307,14 +307,10 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
 		}
 	}
 	
-	public static class Plant extends WorldGenSurfacePlant.Plant{
-
-		public Plant() {
-			super(null, 1);
-		}
+	public static class Plant implements WorldGenSurfacePlant.IPlantable{
 		
 		@Override
-		protected void spread(int chunkX, int chunkZ, World world, Random random){
+		public void plant(int chunkX, int chunkZ, World world, Random random){
 			int x = (chunkX * 16) + random.nextInt(16);
 			int z = (chunkZ * 16) + random.nextInt(16);
 			int y = MinaUtils.getHeightValue(world, x, z);

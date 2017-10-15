@@ -97,14 +97,16 @@ public final class WorldGenerators {
 		init = true;
 	}
 	
-	private static class RandomSaplingPlant extends WorldGenSurfacePlant.Plant{
+	private static class RandomSaplingPlant implements WorldGenSurfacePlant.IPlantable{
+		
+		private final IBlockState plant;
 		
 		private RandomSaplingPlant(BlockMinaPlanks.EnumType type){
-			super(MinaBlocks.SAPLING.getDefaultState().withProperty(BlockMinaSapling.TYPE, type), 0);
+			this.plant = MinaBlocks.SAPLING.getDefaultState().withProperty(BlockMinaSapling.TYPE, type);
 		}
 		
 		@Override
-		protected void spread(int chunkX, int chunkZ, World world, Random random){
+		public void plant(int chunkX, int chunkZ, World world, Random random){
 			int x = (chunkX * 16) + random.nextInt(16);
 			int z = (chunkZ * 16) + random.nextInt(16);
 			int y = MinaUtils.getHeightValue(world, x, z);
