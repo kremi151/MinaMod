@@ -10,7 +10,7 @@ import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
-import lu.kremi151.minamod.block.BlockCoalGenerator;
+import lu.kremi151.minamod.block.BlockHeatGenerator;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
@@ -241,7 +241,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
     public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
     public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
-    public static final BlockCoalGenerator COAL_GENERATOR = (BlockCoalGenerator) new BlockCoalGenerator().setUnlocalizedName("coal_generator");
+    public static final BlockHeatGenerator HEAT_GENERATOR = (BlockHeatGenerator) new BlockHeatGenerator().setUnlocalizedName("heat_generator");
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -349,7 +349,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
 		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
 		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
-		registry.register(COAL_GENERATOR, "coal_generator").submit();
+		registry.register(HEAT_GENERATOR, "heat_generator").submit();
 	}
 	
 	static void registerOreEntries(){

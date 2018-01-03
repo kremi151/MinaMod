@@ -470,6 +470,7 @@ minastats.speed=Geschwindigkeit
 container.amulets.inventory=Amulette
 container.filter=Filter
 container.oven=Elektro-Ofen
+container.minamod.heatgen=Hitzegenerator
 msg.letterbox.blockbreak=Nur der Besitzer kann diesen Briefkasten zerstören
 msg.soulpearl.disabled=Seelenperlen sind auf diesem Server deaktiviert
 msg.soulpearl.not_allowed=Du bist nicht berechtigt um Seelenperlen zu benutzen

@@ -3,21 +3,21 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.container.ContainerCoalGenerator;
+import lu.kremi151.minamod.container.ContainerHeatGenerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 
-public class GuiCoalGenerator extends GuiContainer {
+public class GuiHeatGenerator extends GuiContainer {
 
 	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/coal_generator.png");
+			MinaMod.MODID, "textures/gui/heat_generator.png");
 
-	private final ContainerCoalGenerator ct;
+	private final ContainerHeatGenerator ct;
 
-	public GuiCoalGenerator(ContainerCoalGenerator container) {
+	public GuiHeatGenerator(ContainerHeatGenerator container) {
 		super(container);
 		this.ySize = 133;
 		this.ct = container;
@@ -34,8 +34,7 @@ public class GuiCoalGenerator extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
-			int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;
@@ -44,9 +43,9 @@ public class GuiCoalGenerator extends GuiContainer {
 		
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int width = MathHelper.floor(34 * ct.getGenerator().getHeating());
-		drawTexturedModalRect(x + 129, y + 14, 176, 0, width, 12);
+		drawTexturedModalRect(x + 129, y + 19, 176, 0, width, 12);
 		width = MathHelper.floor(34 * ct.getGenerator().getProgress());
-		drawTexturedModalRect(x + 129, y + 30, 176, 12, width, 12);
+		drawTexturedModalRect(x + 129, y + 35, 176, 12, width, 12);
 	}
 
 }

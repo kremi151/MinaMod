@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.block.tileentity;
 
 import lu.kremi151.minamod.MinaBlocks;
-import lu.kremi151.minamod.block.BlockCoalGenerator;
+import lu.kremi151.minamod.block.BlockHeatGenerator;
 import lu.kremi151.minamod.interfaces.IEnergySupplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ItemStackHelper;
@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -19,10 +20,10 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class TileEntityCoalGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
+public class TileEntityHeatGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
 	
-	public TileEntityCoalGenerator() {
-		super(1, "container.minamod.coalgen");
+	public TileEntityHeatGenerator() {
+		super(1, "container.minamod.heatgen");
 	}
 
 	private static final int PERIOD_MAX = 50;
@@ -31,21 +32,39 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 	private int period = 0;
 	
 	private EnumFacing getOutputFacing() {
-		return this.world.getBlockState(pos).getValue(BlockCoalGenerator.FACING).getOpposite();
+		return this.world.getBlockState(pos).getValue(BlockHeatGenerator.FACING).getOpposite();
 	}
 
 	@Override
 	public boolean canCableConnect(EnumFacing face, TileEntity entity, BlockPos pos, IBlockAccess world) {
 		return face == getOutputFacing();
 	}
+	
+	protected void sync() {
+		final IBlockState state = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+	}
 
 	@Override
 	public void update() {
 		if(world.getWorldTime() % 10 == 0) {
+			ItemStack stack = getStackInSlot(0);
+			if(period <= 0 && !stack.isEmpty()) {
+				int fuel = TileEntityFurnace.getItemBurnTime(stack);
+				if(fuel > 0) {//TODO: Use fuel value
+					stack.shrink(1);
+					period = PERIOD_MAX;
+				}
+			}else if(period > 0) {
+				period--;
+				heating = (heating + 0.05f) * 1.055f;
+			}
 			if(heating < 0.0f) {
 				heating = 0.0f;
 			}else if(heating > 1.0f) {
 				heating = 1.0f;
+			}else if(Float.isNaN(heating)){
+				heating = 0.0f;
 			}
 			if(heating > 0.0f) {
 				heating = (heating * 0.95f) - 0.0001f;
@@ -58,23 +77,12 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 					heating *= 1.0f + (((float)rest / (float)energy) / 25f);
 				}
 			}
-			ItemStack stack = getStackInSlot(0);
-			if(!stack.isEmpty()) {
-				int fuel = GameRegistry.getFuelValue(stack);
-				if(true || fuel > 0) {//TODO: Fix coal not found as fuel
-					if(period <= 0) {
-						stack.shrink(1);
-						period = PERIOD_MAX;
-					}
-					period--;
-					heating = (heating + 0.05f) * 1.1f;
-				}
-			}
+			sync();
 		}
 	}
 	
 	public float getProgress() {
-		return 1.0f - ((float)period / (float)PERIOD_MAX);
+		return (float)period / (float)PERIOD_MAX;
 	}
 	
 	public float getHeating() {
@@ -124,7 +132,7 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 		IBlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(getPos(), state, MinaBlocks.SIEVE.getActualState(state, world, pos), 3);
+		world.notifyBlockUpdate(getPos(), state, MinaBlocks.HEAT_GENERATOR.getActualState(state, world, pos), 3);
 	}
 	
 }

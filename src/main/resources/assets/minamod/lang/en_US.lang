@@ -471,6 +471,7 @@ minastats.speed=Speed
 container.amulets.inventory=Amulets
 container.filter=Filter
 container.oven=Oven
+container.minamod.heatgen=Heat generator
 msg.letterbox.blockbreak=Only the owner can destroy this letterbox
 msg.soulpearl.disabled=Soul pearls are not enabled on this server
 msg.soulpearl.not_allowed=You are not allowed to use soul pearls

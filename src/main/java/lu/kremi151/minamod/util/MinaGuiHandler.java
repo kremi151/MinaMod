@@ -2,7 +2,7 @@ package lu.kremi151.minamod.util;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
-import lu.kremi151.minamod.block.tileentity.TileEntityCoalGenerator;
+import lu.kremi151.minamod.block.tileentity.TileEntityHeatGenerator;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
@@ -11,7 +11,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
 import lu.kremi151.minamod.container.ContainerAutoCrafter;
 import lu.kremi151.minamod.container.ContainerAutoFeeder;
-import lu.kremi151.minamod.container.ContainerCoalGenerator;
+import lu.kremi151.minamod.container.ContainerHeatGenerator;
 import lu.kremi151.minamod.container.ContainerCoinBag;
 import lu.kremi151.minamod.container.ContainerCollector;
 import lu.kremi151.minamod.container.ContainerCombiner;
@@ -63,7 +63,7 @@ public class MinaGuiHandler implements IGuiHandler{
 		case IDRegistry.guiIdOven:
 			return new ContainerOven(player, (TileEntityOven) world.getTileEntity(new BlockPos(x,y,z)));
 		case IDRegistry.guiIdCoalGenerator:
-			return new ContainerCoalGenerator(player, (TileEntityCoalGenerator) world.getTileEntity(new BlockPos(x,y,z)));
+			return new ContainerHeatGenerator(player, (TileEntityHeatGenerator) world.getTileEntity(new BlockPos(x,y,z)));
 		}
 		return null;
 	}
@@ -104,7 +104,7 @@ public class MinaGuiHandler implements IGuiHandler{
 		case IDRegistry.guiIdOven:
 			return new lu.kremi151.minamod.client.GuiOven(new ContainerOven(player, (TileEntityOven) world.getTileEntity(new BlockPos(x,y,z))));
 		case IDRegistry.guiIdCoalGenerator:
-			return new lu.kremi151.minamod.client.GuiCoalGenerator(new ContainerCoalGenerator(player, (TileEntityCoalGenerator) world.getTileEntity(new BlockPos(x,y,z))));
+			return new lu.kremi151.minamod.client.GuiHeatGenerator(new ContainerHeatGenerator(player, (TileEntityHeatGenerator) world.getTileEntity(new BlockPos(x,y,z))));
 		}
 		return null;
 	}
