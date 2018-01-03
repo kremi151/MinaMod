@@ -5,7 +5,9 @@ import org.lwjgl.opengl.GL11;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.container.ContainerCoalGenerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 
 public class GuiCoalGenerator extends GuiContainer {
@@ -39,6 +41,12 @@ public class GuiCoalGenerator extends GuiContainer {
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+		
+		this.mc.renderEngine.bindTexture(guiTextures);
+		int width = MathHelper.floor(34 * ct.getGenerator().getHeating());
+		drawTexturedModalRect(x + 129, y + 14, 176, 0, width, 12);
+		width = MathHelper.floor(34 * ct.getGenerator().getProgress());
+		drawTexturedModalRect(x + 129, y + 30, 176, 12, width, 12);
 	}
 
 }

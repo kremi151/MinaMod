@@ -1,6 +1,9 @@
 package lu.kremi151.minamod.block.tileentity;
 
+import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.BlockCoalGenerator;
+import lu.kremi151.minamod.interfaces.IEnergySupplier;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,12 +12,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class TileEntityCoalGenerator extends TileEntitySidedInventory implements ITickable{
+public class TileEntityCoalGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
 	
 	public TileEntityCoalGenerator() {
 		super(1, "container.minamod.coalgen");
@@ -27,6 +32,11 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 	
 	private EnumFacing getOutputFacing() {
 		return this.world.getBlockState(pos).getValue(BlockCoalGenerator.FACING).getOpposite();
+	}
+
+	@Override
+	public boolean canCableConnect(EnumFacing face, TileEntity entity, BlockPos pos, IBlockAccess world) {
+		return face == getOutputFacing();
 	}
 
 	@Override
@@ -62,6 +72,14 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 			}
 		}
 	}
+	
+	public float getProgress() {
+		return 1.0f - ((float)period / (float)PERIOD_MAX);
+	}
+	
+	public float getHeating() {
+		return MathHelper.clamp(heating, 0f, 1.0f);
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -75,25 +93,38 @@ public class TileEntityCoalGenerator extends TileEntitySidedInventory implements
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
 		loadItems(nbt);
+		heating = nbt.getFloat("Heating");
+		period = nbt.getInteger("Period");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
 		saveItems(nbt);
+		nbt.setFloat("Heating", heating);
+		nbt.setInteger("Period", period);
 		return nbt;
 	}
 	
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket(){
-		NBTTagCompound tagPacket = new NBTTagCompound();
-		writeToNBT(tagPacket);
-		return new SPacketUpdateTileEntity(this.pos, 0, tagPacket);
+	public NBTTagCompound getUpdateTag()
+    {
+		NBTTagCompound nbt = super.getUpdateTag();
+		nbt.setFloat("Heating", heating);
+		nbt.setInteger("Period", period);
+		return nbt;
+    }
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.pos, 0, getUpdateTag());
 	}
-	
+
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-        readFromNBT(packet.getNbtCompound());
+		readFromNBT(packet.getNbtCompound());
+		IBlockState state = world.getBlockState(getPos());
+		world.notifyBlockUpdate(getPos(), state, MinaBlocks.SIEVE.getActualState(state, world, pos), 3);
 	}
 	
 }

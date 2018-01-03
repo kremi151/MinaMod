@@ -135,8 +135,9 @@ public class BlockCable extends BlockPipeBase{
 	 */
 	@Override
 	protected boolean canConnectTo(IBlockState ownState, IBlockAccess worldIn, BlockPos ownPos, EnumFacing neighbourDirection) {
-		TileEntity dest = worldIn.getTileEntity(ownPos.offset(neighbourDirection));
-		return (dest != null && (dest.hasCapability(CapabilityEnergy.ENERGY, neighbourDirection.getOpposite()) || dest instanceof IEnergySupplier)) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
+		BlockPos destPos = ownPos.offset(neighbourDirection);
+		TileEntity dest = worldIn.getTileEntity(destPos);
+		return (dest != null && (dest.hasCapability(CapabilityEnergy.ENERGY, neighbourDirection.getOpposite()) || (dest instanceof IEnergySupplier && ((IEnergySupplier)dest).canCableConnect(neighbourDirection.getOpposite(), dest, destPos, worldIn)))) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
 	}
 	
 	@Override
