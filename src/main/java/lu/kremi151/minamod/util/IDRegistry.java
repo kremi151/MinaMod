@@ -31,4 +31,5 @@ public class IDRegistry {
 	public static final int guiIdCombiner = 13;
 	public static final int guiIdSketch = 14;
 	public static final int guiIdOven = 15;
+	public static final int guiIdCoalGenerator = 16;
 }
