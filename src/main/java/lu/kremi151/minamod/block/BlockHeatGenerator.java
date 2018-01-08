@@ -9,6 +9,9 @@ import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -18,14 +21,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHeatGenerator extends BlockCustomHorizontal{
+	
+	public final static PropertyBool HEATING = PropertyBool.create("heating");
 
 	public BlockHeatGenerator() {
 		super(Material.IRON, MapColor.BLACK);
+		this.setDefaultState(this.blockState.getBaseState().withProperty(HEATING, false));
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
 	
@@ -59,6 +66,34 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
 
             return true;
         }
+    }
+    
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+    	TileEntity tes = worldIn.getTileEntity(pos);
+    	if(tes instanceof TileEntityHeatGenerator) {
+    		state = state.withProperty(HEATING, ((TileEntityHeatGenerator)tes).getHeating() > 0.0f);
+    	}
+        return state;
+    }
+	
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3));
+    }
+    
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {FACING, HEATING});
     }
 
     @Override
