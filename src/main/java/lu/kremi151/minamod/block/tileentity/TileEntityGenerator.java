@@ -1,7 +1,7 @@
 package lu.kremi151.minamod.block.tileentity;
 
 import lu.kremi151.minamod.MinaBlocks;
-import lu.kremi151.minamod.block.BlockHeatGenerator;
+import lu.kremi151.minamod.block.BlockGenerator;
 import lu.kremi151.minamod.interfaces.IEnergySupplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -20,14 +20,14 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class TileEntityHeatGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
+public class TileEntityGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
 
 	private float heating = 0.0f;
 	private int fuel = 0;
 	private int maxFuel = 0;
 	
-	public TileEntityHeatGenerator() {
-		super(1, "container.minamod.heatgen");
+	public TileEntityGenerator() {
+		super(1, "container.minamod.generator");
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
     }
 	
 	private EnumFacing getOutputFacing() {
-		return this.world.getBlockState(pos).getValue(BlockHeatGenerator.FACING).getOpposite();
+		return this.world.getBlockState(pos).getValue(BlockGenerator.FACING).getOpposite();
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 		IBlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(getPos(), state, MinaBlocks.HEAT_GENERATOR.getActualState(state, world, pos), 3);
+		world.notifyBlockUpdate(getPos(), state, MinaBlocks.GENERATOR.getActualState(state, world, pos), 3);
 	}
 	
 }

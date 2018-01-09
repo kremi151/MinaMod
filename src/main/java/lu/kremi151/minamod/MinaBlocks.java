@@ -10,7 +10,7 @@ import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
-import lu.kremi151.minamod.block.BlockHeatGenerator;
+import lu.kremi151.minamod.block.BlockGenerator;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
@@ -236,12 +236,12 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
 	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
 	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
-	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setUnlocalizedName("accumulator");
-	public static final BlockOven OVEN = (BlockOven) new BlockOven().setUnlocalizedName("oven");
+	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setHardness(3.5F).setUnlocalizedName("accumulator");
+	public static final BlockOven OVEN = (BlockOven) new BlockOven().setHardness(3.5F).setUnlocalizedName("oven");
 	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
     public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
     public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
-    public static final BlockHeatGenerator HEAT_GENERATOR = (BlockHeatGenerator) new BlockHeatGenerator().setUnlocalizedName("heat_generator");
+    public static final BlockGenerator GENERATOR = (BlockGenerator) new BlockGenerator().setUnlocalizedName("generator").setHardness(3.5f).setResistance(6f);
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
@@ -349,7 +349,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
 		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
 		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
-		registry.register(HEAT_GENERATOR, "heat_generator").submit();
+		registry.register(GENERATOR, "generator").submit();
 	}
 	
 	static void registerOreEntries(){

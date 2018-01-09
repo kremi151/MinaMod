@@ -4,7 +4,7 @@ import java.util.Random;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.block.tileentity.TileEntityHeatGenerator;
+import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -27,11 +27,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHeatGenerator extends BlockCustomHorizontal{
+public class BlockGenerator extends BlockCustomHorizontal{
 	
 	public final static PropertyBool HEATING = PropertyBool.create("heating");
 
-	public BlockHeatGenerator() {
+	public BlockGenerator() {
 		super(Material.IRON, MapColor.BLACK);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(HEATING, false));
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
@@ -46,7 +46,7 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState bs)
     {
-        return new TileEntityHeatGenerator();
+        return new TileEntityGenerator();
     }
 
     @Override
@@ -60,9 +60,9 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityHeatGenerator)
+            if (tileentity instanceof TileEntityGenerator)
             {
-            	playerIn.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdCoalGenerator, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            	playerIn.openGui(MinaMod.getMinaMod(), IDRegistry.guiIdGenerator, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
 
             return true;
@@ -79,8 +79,8 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
     	TileEntity tes = worldIn.getTileEntity(pos);
-    	if(tes instanceof TileEntityHeatGenerator) {
-    		state = state.withProperty(HEATING, ((TileEntityHeatGenerator)tes).getHeating() > 0.0f);
+    	if(tes instanceof TileEntityGenerator) {
+    		state = state.withProperty(HEATING, ((TileEntityGenerator)tes).getHeating() > 0.0f);
     	}
         return state;
     }
@@ -113,7 +113,7 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
             world.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
         }
     	TileEntity te = world.getTileEntity(pos);
-    	if(te instanceof TileEntityHeatGenerator && ((TileEntityHeatGenerator)te).getHeating() > 0.0f){
+    	if(te instanceof TileEntityGenerator && ((TileEntityGenerator)te).getHeating() > 0.0f){
         	double x = (double)pos.getX() + 0.5D;
             double y = (double)pos.getY() + 0.5D;
             double z = (double)pos.getZ() + 0.5D;

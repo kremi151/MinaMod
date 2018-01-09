@@ -3,21 +3,20 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.container.ContainerHeatGenerator;
+import lu.kremi151.minamod.container.ContainerGenerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 
-public class GuiHeatGenerator extends GuiContainer {
+public class GuiGenerator extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/heat_generator.png");
+	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/generator.png");
 
-	private final ContainerHeatGenerator ct;
+	private final ContainerGenerator ct;
 
-	public GuiHeatGenerator(ContainerHeatGenerator container) {
+	public GuiGenerator(ContainerGenerator container) {
 		super(container);
 		this.ySize = 133;
 		this.ct = container;
