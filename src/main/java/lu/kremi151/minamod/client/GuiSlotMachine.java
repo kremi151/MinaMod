@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiSlotMachine extends GuiContainer{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/slot_machine.png");
+	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/slot_machine/default.png");
 	
 	private final ContainerSlotMachineClient container;
 	private final GuiButton spin1LButton, spin3LButton, spin5LButton, nextPageButton, previousPageButton;

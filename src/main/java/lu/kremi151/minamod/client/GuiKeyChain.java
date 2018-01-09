@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiKeyChain extends GuiCustomContainer{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/keychain.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/keychain/default.png");
 
 	private ContainerKeyChain container;
 	

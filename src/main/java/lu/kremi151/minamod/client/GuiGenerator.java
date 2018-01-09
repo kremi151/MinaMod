@@ -12,7 +12,7 @@ import net.minecraft.util.text.translation.I18n;
 
 public class GuiGenerator extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/generator.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/generator/default.png");
 
 	private final ContainerGenerator ct;
 

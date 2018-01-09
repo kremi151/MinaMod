@@ -22,8 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiHerbBook extends GuiNoInventory{
 
-	private static ResourceLocation guiTexturesLeft = new ResourceLocation(MinaMod.MODID, "textures/gui/herb_guide_left.png");
-	private static ResourceLocation guiTexturesRight = new ResourceLocation(MinaMod.MODID, "textures/gui/herb_guide_right.png");
+	private static final ResourceLocation guiTexturesLeft = new ResourceLocation(MinaMod.MODID, "textures/gui/herb_guide/left.png");
+	private static final ResourceLocation guiTexturesRight = new ResourceLocation(MinaMod.MODID, "textures/gui/herb_guide/right.png");
 
 	private static final int COLOR_GREEN = MinaUtils.convertRGBToDecimal(20, 160, 40);
 	private static final int COLOR_RED = MinaUtils.convertRGBToDecimal(200, 20, 20);

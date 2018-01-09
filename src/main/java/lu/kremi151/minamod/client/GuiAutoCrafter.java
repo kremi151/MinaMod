@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiAutoCrafter extends GuiContainer{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/auto_crafter.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/auto_crafter/default.png");
 	private static final int FONT_COLOR_GREEN = MinaUtils.convertRGBToDecimal(0, 180, 60);
 	private static final int FONT_COLOR_RED = MinaUtils.convertRGBToDecimal(255, 0, 0);
 

@@ -13,10 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiCollector extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/collector.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/collector/default.png");
 
-	private ContainerCollector ct;
+	private final ContainerCollector ct;
 
 	public GuiCollector(ContainerCollector container) {
 		super(container);

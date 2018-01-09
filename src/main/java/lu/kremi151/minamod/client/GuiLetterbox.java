@@ -13,10 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiLetterbox extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/letterbox.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/letterbox/default.png");
 
-	ContainerLetterbox ct;
+	private ContainerLetterbox ct;
 
 	public GuiLetterbox(ContainerLetterbox container) {
 		super(container);

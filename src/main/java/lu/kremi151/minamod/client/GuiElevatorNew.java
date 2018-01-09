@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiElevatorNew extends GuiNoInventory{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/elevator.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/elevator/default.png");
 	
 	private final static int BTN_PREVIOUS = 0;
 	private final static int BTN_NEXT = 1;
