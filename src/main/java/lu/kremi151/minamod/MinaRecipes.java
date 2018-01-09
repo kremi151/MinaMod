@@ -229,6 +229,7 @@ public class MinaRecipes {
 		//TODO: Accumulator (block)
 		//TODO: Oven
 		//TODO: Drill
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.GENERATOR), "PPP", "CWP", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'C', MinaItems.COPPER_INGOT, 'W', Items.WATER_BUCKET);
 	}
 	
 	private static void initColoredRecipes(){
