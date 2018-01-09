@@ -82,7 +82,14 @@ public class TileEntityGenerator extends TileEntitySidedInventory implements ITi
 						int rest = energy - prov.receiveEnergy(energy, false);
 						heating += (((float)rest / (float)energy) * 0.0125f);
 					}
-				}//TODO: Consider case where no energy consumer is present -> slower cooling
+				}else {
+					heating += 0.0125f;
+				}
+				if(heating < 0.0f) {
+					heating = 0.0f;
+				}else if(heating > 1.0f) {
+					heating = 1.0f;
+				}
 			}
 			sync();
 		}
