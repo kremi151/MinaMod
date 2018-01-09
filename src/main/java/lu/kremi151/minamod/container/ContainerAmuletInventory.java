@@ -35,11 +35,11 @@ public class ContainerAmuletInventory extends BaseContainer{
 		}
 		invInitState = false;
 
-		addSlotToContainer(new SlotSpecific(internalInv, 0, 44, 34));
-		addSlotToContainer(new SlotSpecific(internalInv, 1, 80, 34));
-		addSlotToContainer(new SlotSpecific(internalInv, 2, 116, 34));
+		addSlotToContainer(new SlotSpecific(internalInv, 0, 52, 22));
+		addSlotToContainer(new SlotSpecific(internalInv, 1, 70, 40));
+		addSlotToContainer(new SlotSpecific(internalInv, 2, 88, 58));
 		
-		bindPlayerInventory(player.inventory, 8, 84);
+		bindPlayerInventory(player.inventory, 8, 94);
 	}
 
 	@Override
