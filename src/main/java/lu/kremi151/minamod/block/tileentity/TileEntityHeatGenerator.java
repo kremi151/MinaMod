@@ -22,10 +22,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TileEntityHeatGenerator extends TileEntitySidedInventory implements ITickable, IEnergySupplier{
 
-	private static final int PERIOD_MAX = 50;
-
 	private float heating = 0.0f;
-	private int period = 0;
+	private int fuel = 0;
+	private int maxFuel = 0;
 	
 	public TileEntityHeatGenerator() {
 		super(1, "container.minamod.heatgen");
@@ -55,15 +54,15 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
 	public void update() {
 		if(world.getWorldTime() % 10 == 0) {
 			ItemStack stack = getStackInSlot(0);
-			if(period <= 0 && !stack.isEmpty()) {
-				int fuel = TileEntityFurnace.getItemBurnTime(stack);
-				if(fuel > 0) {//TODO: Use fuel value
+			if(fuel <= 0 && !stack.isEmpty()) {
+				maxFuel = TileEntityFurnace.getItemBurnTime(stack);
+				fuel = maxFuel;
+				if(fuel > 0) {
 					stack.shrink(1);
-					period = PERIOD_MAX;
 				}
-			}else if(period > 0) {
-				period--;
-				heating = (heating + 0.05f) * 1.055f;
+			}else if(fuel > 0) {
+				fuel -= 5;
+				heating += 0.05f;
 			}
 			if(heating < 0.0f) {
 				heating = 0.0f;
@@ -73,22 +72,24 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
 				heating = 0.0f;
 			}
 			if(heating > 0.0f) {
-				heating = (heating * 0.95f) - 0.0001f;
+				heating -= 0.02f;
 				EnumFacing outputFacing = getOutputFacing();
 				TileEntity te = world.getTileEntity(pos.offset(outputFacing));
 				if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, outputFacing.getOpposite())) {
 					IEnergyStorage prov = te.getCapability(CapabilityEnergy.ENERGY, outputFacing.getOpposite());
 					int energy = MathHelper.floor(20 * heating);
-					int rest = energy - prov.receiveEnergy(energy, false);
-					heating *= 1.0f + (((float)rest / (float)energy) / 25f);
-				}
+					if(energy > 0) {
+						int rest = energy - prov.receiveEnergy(energy, false);
+						heating += (((float)rest / (float)energy) * 0.0125f);
+					}
+				}//TODO: Consider case where no energy consumer is present -> slower cooling
 			}
 			sync();
 		}
 	}
 	
 	public float getProgress() {
-		return (float)period / (float)PERIOD_MAX;
+		return maxFuel > 0 ? (float)fuel / (float)maxFuel : 0.0f;
 	}
 	
 	public float getHeating() {
@@ -108,7 +109,8 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
 		super.readFromNBT(nbt);
 		loadItems(nbt);
 		heating = nbt.getFloat("Heating");
-		period = nbt.getInteger("Period");
+		fuel = nbt.getInteger("Fuel");
+		maxFuel = nbt.getInteger("MaxFuel");
 	}
 
 	@Override
@@ -116,7 +118,8 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
 		super.writeToNBT(nbt);
 		saveItems(nbt);
 		nbt.setFloat("Heating", heating);
-		nbt.setInteger("Period", period);
+		nbt.setInteger("Fuel", fuel);
+		nbt.setInteger("MaxFuel", maxFuel);
 		return nbt;
 	}
 	
@@ -125,7 +128,8 @@ public class TileEntityHeatGenerator extends TileEntitySidedInventory implements
     {
 		NBTTagCompound nbt = super.getUpdateTag();
 		nbt.setFloat("Heating", heating);
-		nbt.setInteger("Period", period);
+		nbt.setInteger("Fuel", fuel);
+		nbt.setInteger("MaxFuel", maxFuel);
 		return nbt;
     }
 

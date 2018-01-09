@@ -5,7 +5,6 @@ import java.util.Random;
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntityHeatGenerator;
-import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -15,6 +14,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -67,6 +68,12 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
             return true;
         }
     }
+	
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
+        return getActualState(state, world, pos).getValue(HEATING) ? 10 : 0;
+    }
     
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
@@ -78,16 +85,18 @@ public class BlockHeatGenerator extends BlockCustomHorizontal{
         return state;
     }
 	
-    @Override
-    public IBlockState getStateFromMeta(int meta)
+	@Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3));
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (tileentity instanceof IInventory)
+        {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory)tileentity);
+            worldIn.updateComparatorOutputLevel(pos, this);
+        }
+
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override
