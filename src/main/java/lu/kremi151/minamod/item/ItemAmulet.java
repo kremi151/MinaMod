@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,16 +34,34 @@ public class ItemAmulet extends Item{
         return (stack.getItemDamage() < AmuletRegistry.amuletCount())?stack.getItemDamage():0;
     }
 	
+	protected final NBTTagCompound getAmuletData(ItemStack stack) {
+		return stack.getOrCreateSubCompound("amulet");
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@Override
     public boolean hasEffect(ItemStack stack){
-		return getAmuletType(stack.getMetadata()).hasEffect(stack.getOrCreateSubCompound("amulet"));
+		return getAmuletType(stack.getMetadata()).hasEffect(getAmuletData(stack));
 	}
+	
+	@Override
+	public boolean showDurabilityBar(ItemStack stack)
+    {
+        return getAmuletType(stack.getMetadata()).hasDurability(getAmuletData(stack));
+    }
+	
+	@Override
+	public double getDurabilityForDisplay(ItemStack stack)
+    {
+		NBTTagCompound data = getAmuletData(stack);
+		AmuletBase amulet = getAmuletType(stack.getMetadata());
+        return amulet.hasDurability(data) ? amulet.getDurability(data) : super.getDurabilityForDisplay(stack);
+    }
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-		getAmuletType(stack.getMetadata()).addInformation(stack.getOrCreateSubCompound("amulet"), player, tooltip, advanced);
+		getAmuletType(stack.getMetadata()).addInformation(getAmuletData(stack), player, tooltip, advanced);
     }
 	
 	private AmuletBase getAmuletType(int meta){

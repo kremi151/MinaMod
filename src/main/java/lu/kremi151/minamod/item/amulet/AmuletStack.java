@@ -60,11 +60,15 @@ public class AmuletStack {
 	}
 	
 	public ItemStack toItemStack(){
-		ItemStack stack = new ItemStack(MinaItems.AMULET, 1, amulet.getId());
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setTag("amulet", data.copy());
-		stack.setTagCompound(nbt);
-		return stack;
+		if(isEmpty()) {
+			return ItemStack.EMPTY;
+		}else {
+			ItemStack stack = new ItemStack(MinaItems.AMULET, 1, amulet.getId());
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setTag("amulet", data.copy());
+			stack.setTagCompound(nbt);
+			return stack;
+		}
 	}
 	
 	@Override

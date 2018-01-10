@@ -10,7 +10,8 @@ public class AmuletRegistry {
 		AMULETS = new AmuletBase[]{
 				new AmuletExperience(),
 				new AmuletEnder(),
-				new AmuletReturn()
+				new AmuletReturn(),
+				new AmuletRegeneration()
 		};
 		for(int i = 0 ; i < AMULETS.length ; i++)AMULETS[i].allocateId(i);
 	}

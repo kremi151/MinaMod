@@ -28,6 +28,19 @@ public abstract class AmuletBase {
 		return false;
 	}
 	
+	public boolean hasDurability(NBTTagCompound data) {
+		return false;
+	}
+	
+	/**
+	 * Remember: 0.0 equals 100% (full bar), 1.0 equals 0% (empty bar)
+	 * @param data
+	 * @return
+	 */
+	public double getDurability(NBTTagCompound data) {
+		return 0.0;
+	}
+	
 	final AmuletBase allocateId(int id){
 		this.id = id;
 		return this;
