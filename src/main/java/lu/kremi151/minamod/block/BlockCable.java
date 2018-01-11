@@ -5,24 +5,24 @@ import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.capabilities.energynetwork.EnergyNetworkHelper;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
-import lu.kremi151.minamod.capabilities.energynetwork.NetworkProviderImpl;
+import lu.kremi151.minamod.interfaces.IDiagnosable;
 import lu.kremi151.minamod.interfaces.IEnergySupplier;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class BlockCable extends BlockPipeBase{
+public class BlockCable extends BlockPipeBase implements IDiagnosable{
 	
 	public BlockCable() {
 		super(Material.CIRCUITS);
@@ -114,16 +114,6 @@ public class BlockCable extends BlockPipeBase{
 		}
 	}
 	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-		if(!world.isRemote) {
-			IEnergyNetworkProvider nrj = world.getTileEntity(pos).getCapability(IEnergyNetworkProvider.CAPABILITY, null);
-			((NetworkProviderImpl)nrj).printDebugInformation(player);
-		}
-        return true;
-    }
-	
 	/**
 	 * Can this pipe connect to the neighbouring block?
 	 *
@@ -147,5 +137,14 @@ public class BlockCable extends BlockPipeBase{
 		}
 
 		return state;
+	}
+
+	@Override
+	public void onDiagnose(IBlockAccess world, BlockPos pos, ICommandSender subject) {
+		IEnergyNetworkProvider nrj = world.getTileEntity(pos).getCapability(IEnergyNetworkProvider.CAPABILITY, null);
+		if(nrj != null) {
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.energy", nrj.getEnergyStored());
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.client_count", nrj.getNetwork().clientCount());
+		}
 	}
 }

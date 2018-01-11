@@ -216,6 +216,11 @@ public class NetworkImpl implements IEnergyNetwork{
 		networkBlocks.clear();
 		clients.clear();
 	}
+
+	@Override
+	public int clientCount() {
+		return clients.size();
+	}
 	
 	class ClientReference implements IEnergyStorage{
 		

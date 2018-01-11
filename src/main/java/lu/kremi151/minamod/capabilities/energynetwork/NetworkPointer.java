@@ -105,4 +105,9 @@ public class NetworkPointer implements IEnergyNetwork{
 		network.reset();
 	}
 
+	@Override
+	public int clientCount() {
+		return network.clientCount();
+	}
+
 }

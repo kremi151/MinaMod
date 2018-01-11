@@ -12,5 +12,6 @@ public interface IEnergyNetwork extends IEnergyStorage{
 	boolean unregisterNetworkBlock(BlockPos pos);
 	IEnergyNetwork copy();
 	void reset();
+	int clientCount();
 	
 }

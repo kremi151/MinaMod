@@ -1,12 +1,9 @@
 package lu.kremi151.minamod.capabilities.energynetwork;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import lu.kremi151.minamod.util.TextHelper;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -113,25 +110,6 @@ public abstract class NetworkProviderImpl implements IEnergyNetworkProvider{
 	@Override
 	public void reset() {
 		this.network = null;
-	}
-	
-	//TODO: Remove!!!
-	public void printDebugInformation(ICommandSender sender) {
-		//TextHelper.sendChatMessage(sender, "Id: " + checkNetwork().hashCode());
-		TextHelper.sendChatMessage(sender, "Energy: " + this.getEnergyStored());
-		/*TextHelper.sendChatMessage(sender, "Clients:");
-		NetworkImpl nimpl = ((NetworkPointer)network).getPointingNetwork();
-		for(Map.Entry<BlockPos, NetworkImpl.ClientReference> entry : nimpl.clients.entrySet()) {
-			StringBuilder sb = new StringBuilder("* ");
-			sb.append(entry.getKey().toString());
-			sb.append(" [");
-			for(EnumFacing f : entry.getValue().getFaces()) {
-				sb.append(f.getName());
-				sb.append(' ');
-			}
-			sb.append("]");
-			TextHelper.sendChatMessage(sender, sb.toString());
-		}*/
 	}
 
 }

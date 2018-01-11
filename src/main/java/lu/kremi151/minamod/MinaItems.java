@@ -30,6 +30,7 @@ import lu.kremi151.minamod.item.ItemCustomShovel;
 import lu.kremi151.minamod.item.ItemCustomSword;
 import lu.kremi151.minamod.item.ItemDrill;
 import lu.kremi151.minamod.item.ItemEmptyPot;
+import lu.kremi151.minamod.item.ItemEnergyDiagnostic;
 import lu.kremi151.minamod.item.ItemFoodContainer;
 import lu.kremi151.minamod.item.ItemGoldenCoin;
 import lu.kremi151.minamod.item.ItemHerb;
@@ -226,6 +227,7 @@ public class MinaItems {
 	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
 	public static final Item RUBBER_TREE_BRANCH = new ItemRubberTreeBranch().setUnlocalizedName("rubber_tree_branch");
 	public static final Item RUBBER = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("rubber");
+	public static final Item DIAGNOSE_TOOL = new ItemEnergyDiagnostic().setUnlocalizedName("diagnose_tool");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -327,6 +329,7 @@ public class MinaItems {
 		registry.register(COPPER_NUGGET, "copper_nugget").submit();
 		registry.register(RUBBER_TREE_BRANCH, "rubber_tree_branch").submit();
 		registry.register(RUBBER, "rubber").submit();
+		registry.register(DIAGNOSE_TOOL, "diagnose_tool").submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){

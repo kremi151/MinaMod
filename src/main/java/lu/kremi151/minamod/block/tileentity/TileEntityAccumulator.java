@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityAccumulator extends TileEntity implements ITickable{
 	
@@ -53,6 +53,13 @@ public class TileEntityAccumulator extends TileEntity implements ITickable{
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
         return (T) ((capability == CapabilityEnergy.ENERGY && facing == getDirection()) ? nrj : super.getCapability(capability, facing));
+    }
+    
+    /**
+     * @return Returns energy capability, bypassing facing check
+     */
+    public IEnergyStorage getEnergy() {
+    	return nrj;
     }
 	
 	@Override
