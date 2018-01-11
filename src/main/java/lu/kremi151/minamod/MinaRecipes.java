@@ -213,19 +213,19 @@ public class MinaRecipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.FILTER), " H ", "PSP", " P ", 'H', Blocks.HOPPER, 'P', MinaItems.PLATINUM_INGOT, 'S', Items.STRING);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta));
-		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "ICG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
+		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "RCG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.KEY_CHAIN), " N ", "N N", " N ", 'N', Items.field_191525_da);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_CRAFTER), "PHP", "PWP", "PUP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'W', Blocks.CRAFTING_TABLE, 'U', new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.COMBINER), " I ", " R ", "I I", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);
-		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, Blocks.STONE, Blocks.LIT_PUMPKIN);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, new ItemStack(Blocks.STONE, 1, 0), Blocks.LIT_PUMPKIN);
 	
 		//TODO: Accumulator (item)
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.CABLE), MinaItems.RUBBER, MinaItems.COPPER_NUGGET, MinaItems.COPPER_NUGGET);
-		//TODO: Solar panel
-		//TODO: ETR converter
-		//TODO: Accumulator (block)
-		//TODO: Oven
-		//TODO: Drill
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.SOLAR_PANEL), "GGG", "QRQ", "PCP", 'G', Blocks.GLASS, 'Q', Items.QUARTZ, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'P', MinaItems.PLATINUM_INGOT, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta));
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ENERGY_TO_REDSTONE), "RCO", "SSS", 'R', Items.REDSTONE, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta), 'O', MinaItems.COPPER_NUGGET, 'S', new ItemStack(Blocks.STONE, 1, 0));
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ACCUMULATOR), "IQI", "CRQ", "IQI", 'I', Items.IRON_INGOT, 'Q', Items.QUARTZ, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.COPPER_INGOT);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.OVEN), "PQP", "P G", "PQP", 'P', MinaItems.PLATINUM_INGOT, 'Q', Items.QUARTZ, 'G', Blocks.GLASS);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.DRILL), "IQQ", "  R", " QQ", 'I', Items.field_191525_da, 'Q', Items.QUARTZ, 'R', MinaItems.RUBBER);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.GENERATOR), "PPP", "CWP", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'C', MinaItems.COPPER_INGOT, 'W', Items.WATER_BUCKET);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_REGENERATION), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.RUBY);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_MERMAID), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.SAPPHIRE);
