@@ -3,23 +3,17 @@ package lu.kremi151.minamod.item.amulet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class AmuletEnder extends AmuletBase{
 
 	@Override
-	public boolean onUse(World world, EntityPlayer player, AmuletStack stack) {
+	public boolean onUse(World world, EntityPlayer player, ItemStack stack) {
 		if(!world.isRemote){
 			enderTeleport(player);
 		}
 		return true;
-	}
-
-	@Override
-	public String getUnlocalizedName() {
-		return "ender";
 	}
 	
 	private void enderTeleport(EntityPlayer player){

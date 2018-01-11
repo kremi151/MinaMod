@@ -180,11 +180,11 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.KEY, 1), " L", "I ", 'L', Items.LEATHER, 'I', Items.IRON_INGOT);
 	
 		//Amulet of experience:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 0), " S ", "S S", " N ", 'S', Items.STRING, 'N', Items.NETHER_STAR);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_EXPERIENCE, 1, 0), " S ", "S S", " N ", 'S', Items.STRING, 'N', Items.NETHER_STAR);
 		//Amulet of ender:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 1), " S ", "S S", " E ", 'S', Items.STRING, 'E', Items.ENDER_EYE);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_ENDER, 1, 1), " S ", "S S", " E ", 'S', Items.STRING, 'E', Items.ENDER_EYE);
 		//Amulet of return:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 2), " S ", "SES", " Y ", 'S', Items.STRING, 'Y', Items.ENDER_EYE, 'E', Items.EMERALD);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_RETURN, 1, 2), " S ", "SES", " Y ", 'S', Items.STRING, 'Y', Items.ENDER_EYE, 'E', Items.EMERALD);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COLLECTOR, 1), "CCC", "WHW", "CRC", 'C', Blocks.COBBLESTONE, 'W', Blocks.WOOL, 'H', Blocks.HOPPER, 'R', Items.REDSTONE);
 	

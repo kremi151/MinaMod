@@ -1,39 +1,30 @@
 package lu.kremi151.minamod.container;
 
-import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
 import lu.kremi151.minamod.inventory.BaseInventory;
 import lu.kremi151.minamod.inventory.SlotSpecific;
-import lu.kremi151.minamod.item.amulet.AmuletStack;
+import lu.kremi151.minamod.item.ItemAmulet;
 import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class ContainerAmuletInventory extends BaseContainer{
 	
 	private static final ShiftClickManager shiftMan = ShiftClickManager.builder()
 			.addTransfer(0, 3, 3, 3 + PLAYER_INV_SLOT_COUNT)
-			.addTransfer(3, 3 + PLAYER_INV_SLOT_COUNT, 0, 3, stack -> (!stack.isEmpty() && stack.getItem() == MinaItems.AMULET))
+			.addTransfer(3, 3 + PLAYER_INV_SLOT_COUNT, 0, 3, stack -> (!stack.isEmpty() && stack.getItem() instanceof ItemAmulet))
 			.build();
 	
 	private final EntityPlayer player;
 	private final IAmuletHolder holder;
-	private boolean invInitState = true;
+	private final IInventory internalInv;
 	
 	public ContainerAmuletInventory(EntityPlayer player){
 		this.player = player;
 		this.holder = player.getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
-		
-		if(!player.world.isRemote){
-			for(int n = 0 ; n <3 ; n++){
-				AmuletStack amulet = holder.getAmuletAt(n);
-				if(!amulet.isEmpty()){
-					internalInv.setInventorySlotContents(n, amulet.toItemStack());
-				}
-			}
-		}
-		invInitState = false;
+		this.internalInv = new InternalInventory(holder);
 
 		addSlotToContainer(new SlotSpecific(internalInv, 0, 52, 22));
 		addSlotToContainer(new SlotSpecific(internalInv, 1, 70, 40));
@@ -52,8 +43,12 @@ public class ContainerAmuletInventory extends BaseContainer{
 		return shiftMan.handle(this, player, slot);
 	}
 	
-	private final BaseInventory internalInv = new BaseInventory(3){
+	private class InternalInventory extends BaseInventory{
 
+		public InternalInventory(IAmuletHolder holder) {
+			super(holder.getAmulets());
+		}
+		
 		@Override
 		public int getInventoryStackLimit() {
 			return 1;
@@ -72,7 +67,7 @@ public class ContainerAmuletInventory extends BaseContainer{
 
 		@Override
 		public boolean isItemValidForSlot(int index, ItemStack stack) {
-			return stack.isEmpty() || stack.getItem() == MinaItems.AMULET;
+			return stack.isEmpty() || stack.getItem() instanceof ItemAmulet;
 		}
 
 		@Override
@@ -81,19 +76,8 @@ public class ContainerAmuletInventory extends BaseContainer{
 		}
 
 		@Override
-		public void onCraftMatrixChanged() {
-			if(!invInitState){
-				for(int n = 0 ; n <3 ; n++){
-					ItemStack stack = getStackInSlot(n);
-					if(stack.isEmpty()){
-						holder.setAmuletAt(n, AmuletStack.EMPTY);
-					}else{
-						holder.setAmuletAt(n, AmuletStack.fromItemStack(stack));
-					}
-				}
-			}
-		}
+		public void onCraftMatrixChanged() {}
 		
-	};
+	}
 
 }

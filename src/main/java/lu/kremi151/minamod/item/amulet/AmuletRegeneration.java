@@ -2,6 +2,7 @@ package lu.kremi151.minamod.item.amulet;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
@@ -12,18 +13,14 @@ public class AmuletRegeneration extends AmuletBase{
 	private static final byte MAX_DURATION = 10;
 
 	@Override
-	public boolean onUse(World world, EntityPlayer player, AmuletStack stack) {
-		byte duration = (byte)(stack.getData().getByte("duration") - 1);
+	public boolean onUse(World world, EntityPlayer player, ItemStack stack) {
+		byte duration = (byte)(stack.getOrCreateSubCompound("regenData").getByte("duration") - 1);
 		player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200));
+		spawnAmuletAura(player, 0.0f, 0.5f, 0.5f);
 		if(duration <= 0) {
 			//TODO: Destroy
 		}
 		return true;
-	}
-
-	@Override
-	public String getUnlocalizedName() {
-		return "regeneration";
 	}
 	
 	@Override

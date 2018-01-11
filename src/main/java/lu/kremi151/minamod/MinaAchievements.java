@@ -24,7 +24,7 @@ public class MinaAchievements {
 			"minamod.train_stats", 2, 4, MinaItems.KATANA, MODIFY_STATS).registerStat();
 
 	public static final Achievement OPEN_AMULET_INV = new Achievement("achievement.minamod.amulets", "minamod.amulets",
-			4, 0, MinaItems.AMULET, (Achievement) null).initIndependentStat().registerStat();
+			4, 0, MinaItems.AMULET_OF_ENDER, (Achievement) null).initIndependentStat().registerStat();
 
 	static void register() {
 		AchievementPage.registerAchievementPage(new AchievementPage(MinaMod.MODNAME,

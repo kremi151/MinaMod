@@ -5,14 +5,18 @@ import static lu.kremi151.minamod.MinaMod.println;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class MappingsHandler {
+	
+	private static final ResourceLocation OLD_LOG = new ResourceLocation(MODID, "mina_log_g1");
+	private static final ResourceLocation DOGE_SEEDS = new ResourceLocation(MODID, "doge_seeds");
+	private static final ResourceLocation KEVIKUS_SEEDS = new ResourceLocation(MODID, "kevikus_seeds");
+	private static final ResourceLocation TRACIUS_SEEDS = new ResourceLocation(MODID, "tracius_seeds");
+	private static final ResourceLocation OLD_AMULET = new ResourceLocation(MODID, "amulet");
 	
 	private static void handleItemMapping(FMLMissingMappingsEvent.MissingMapping mapping){
 		if(mapping.resourceLocation.equals(MinaBlocks.NAMIE_FLOWER.getRegistryName())
@@ -26,19 +30,22 @@ public class MappingsHandler {
 			}catch(Exception t){
 				t.printStackTrace();
 			}
-		}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_log_g1"))){
+		}else if(mapping.resourceLocation.equals(OLD_LOG)){
 			println("Remapping old MinaMod item log type to new one (peppel by default)");
 			mapping.remap(Item.getItemFromBlock(MinaBlocks.LOG_PEPPEL));
-		}else if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "doge_seeds"))
-				|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "kevikus_seeds"))
-				|| mapping.resourceLocation.equals(new ResourceLocation(MODID, "tracius_seeds"))){
+		}else if(mapping.resourceLocation.equals(DOGE_SEEDS)
+				|| mapping.resourceLocation.equals(KEVIKUS_SEEDS)
+				|| mapping.resourceLocation.equals(TRACIUS_SEEDS)){
 			println("Remapping old berry item type to combined item, old ones will result in doge berrys #CollateralDamage");
 			mapping.remap(MinaItems.BERRY_SEEDS);
+		}else if(mapping.resourceLocation.equals(OLD_AMULET)) {
+			println("Remapping old amulet type to ender amulet");
+			mapping.remap(MinaItems.AMULET_OF_ENDER);
 		}
 	}
 	
 	private static void handleBlockMapping(FMLMissingMappingsEvent.MissingMapping mapping){
-		if(mapping.resourceLocation.equals(new ResourceLocation(MODID, "mina_log_g1"))){
+		if(mapping.resourceLocation.equals(OLD_LOG)){
 			println("Remapping old MinaMod block log type to new one (peppel by default)");
 			mapping.remap(MinaBlocks.LOG_PEPPEL);
 		}

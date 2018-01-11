@@ -3,7 +3,6 @@ package lu.kremi151.minamod.item.amulet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -11,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AmuletExperience extends AmuletBase{
 
 	@Override
-	public boolean onUse(World world, EntityPlayer player, AmuletStack stack) {
+	public boolean onUse(World world, EntityPlayer player, ItemStack stack) {
 		if(!world.isRemote){
 			int exp = getStoredExperience(stack);
 			if(exp == 0){
@@ -25,11 +24,6 @@ public class AmuletExperience extends AmuletBase{
 		}
 		return true;
 	}
-
-	@Override
-	public String getUnlocalizedName() {
-		return "experience";
-	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -41,8 +35,8 @@ public class AmuletExperience extends AmuletBase{
 		player.addExperience(exp);
 	}
 	
-	private int getStoredExperience(AmuletStack stack){
-		return getStoredExperience(stack.getData());
+	private int getStoredExperience(ItemStack stack){
+		return getStoredExperience(stack.getOrCreateSubCompound("expData"));
 	}
 	
 	private int getStoredExperience(NBTTagCompound data){
@@ -53,8 +47,8 @@ public class AmuletExperience extends AmuletBase{
 		}
 	}
 	
-	private void storeExperience(AmuletStack stack, int amount){
-		stack.getData().setInteger("exp", amount);
+	private void storeExperience(ItemStack stack, int amount){
+		stack.getOrCreateSubCompound("expData").setInteger("exp", amount);
 	}
 
 }

@@ -2,10 +2,11 @@ package lu.kremi151.minamod.item.amulet;
 
 import java.util.List;
 
+import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.enums.EnumParticleEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,8 +15,7 @@ public abstract class AmuletBase {
 	
 	private int id;
 
-	public abstract boolean onUse(World world, EntityPlayer player, AmuletStack stack);
-	public abstract String getUnlocalizedName();
+	public abstract boolean onUse(World world, EntityPlayer player, ItemStack stack);
 	
 	public void addInformation(NBTTagCompound data, EntityPlayer player, List<String> tooltip, boolean advanced){}
 	
@@ -48,5 +48,9 @@ public abstract class AmuletBase {
 	
 	public final int getId(){
 		return id;
+	}
+	
+	protected void spawnAmuletAura(EntityPlayer player, float red, float green, float blue){
+		MinaMod.getProxy().spawnParticleEffectToAllAround(EnumParticleEffect.AMULET_AURA, player.world, player.posX, player.posY + 1.5, player.posZ, red, green, blue);
 	}
 }
