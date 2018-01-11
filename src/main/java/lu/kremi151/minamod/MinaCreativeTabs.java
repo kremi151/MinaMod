@@ -29,5 +29,13 @@ public class MinaCreativeTabs {
 		}
 
 	};
+	public static final CreativeTabs AMULETS = new CreativeTabs("amulets") {
+
+		@Override
+		public ItemStack getTabIconItem() {
+			return new ItemStack(MinaItems.AMULET_OF_ENDER);
+		}
+
+	};
 
 }

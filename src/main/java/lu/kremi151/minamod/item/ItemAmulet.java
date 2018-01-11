@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.capabilities.amulets.ItemAmuletCapabilityProvider;
@@ -11,7 +12,6 @@ import lu.kremi151.minamod.capabilities.amulets.impl.AmuletEnder;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletExperience;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletPotionEffect;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletReturn;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemAmulet extends Item{
 
 	public ItemAmulet(){
-		this.setCreativeTab(CreativeTabs.MISC);
+		this.setCreativeTab(MinaCreativeTabs.AMULETS);
 		this.setMaxStackSize(1);
 	}
 	

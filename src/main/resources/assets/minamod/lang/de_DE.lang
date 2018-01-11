@@ -379,6 +379,7 @@ potion.minamod.doge=Wowness
 itemGroup.mixtures=Mixturen
 itemGroup.technology=Technologie
 itemGroup.furnishing=Einrichtung
+itemGroup.amulets=Amulette
 item.honey_pot.info.saturation=Gibt für einen bestimmten Zeitraum Sättigung
 item.key.info.duplicate=Duplikat
 item.key.info.no_raw=Imprägniert
