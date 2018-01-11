@@ -9,10 +9,11 @@ import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.capabilities.amulets.ItemAmuletCapabilityProvider;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletEnder;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletExperience;
-import lu.kremi151.minamod.capabilities.amulets.impl.AmuletRegeneration;
+import lu.kremi151.minamod.capabilities.amulets.impl.AmuletPotionEffect;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletReturn;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +36,9 @@ public class ItemAmulet extends Item{
         }else if(stack.getItem() == MinaItems.AMULET_OF_RETURN) {
         	cap = new AmuletReturn();
         }else if(stack.getItem() == MinaItems.AMULET_OF_REGENERATION) {
-        	cap = new AmuletRegeneration(stack);
+        	cap = new AmuletPotionEffect(stack, MobEffects.REGENERATION, 200);
+        }else if(stack.getItem() == MinaItems.AMULET_OF_MERMAID) {
+        	cap = new AmuletPotionEffect(stack, MobEffects.WATER_BREATHING, 200);
         }else {
         	cap = new AmuletEnder();
         }

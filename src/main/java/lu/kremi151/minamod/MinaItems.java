@@ -210,6 +210,7 @@ public class MinaItems {
 	public static final Item AMULET_OF_EXPERIENCE = new ItemAmulet().setUnlocalizedName("amulet_of_experience");
 	public static final Item AMULET_OF_RETURN = new ItemAmulet().setUnlocalizedName("amulet_of_return");
 	public static final Item AMULET_OF_REGENERATION = new ItemAmulet().setUnlocalizedName("amulet_of_regeneration");
+	public static final Item AMULET_OF_MERMAID = new ItemAmulet().setUnlocalizedName("amulet_of_mermaid");
 	public static final ItemBattery BATTERY = (ItemBattery)new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
 	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
@@ -309,6 +310,7 @@ public class MinaItems {
 		registry.register(AMULET_OF_EXPERIENCE, "amulet_of_experience").submit();
 		registry.register(AMULET_OF_RETURN, "amulet_of_return").submit();
 		registry.register(AMULET_OF_REGENERATION, "amulet_of_regeneration").submit();
+		registry.register(AMULET_OF_MERMAID, "amulet_of_mermaid").submit();
 		registry.register(BATTERY, "battery").submit();
 		registry.register(HERB_GUIDE.setRegistryName(MinaMod.MODID, "herb_guide"), "herb_guide").submitSimple();
 		registry.register(CHICKEN_NUGGETS, "chicken_nuggets").submit();
