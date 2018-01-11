@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.container;
 
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
+import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
 import lu.kremi151.minamod.inventory.BaseInventory;
 import lu.kremi151.minamod.inventory.SlotSpecific;
@@ -14,7 +15,7 @@ public class ContainerAmuletInventory extends BaseContainer{
 	
 	private static final ShiftClickManager shiftMan = ShiftClickManager.builder()
 			.addTransfer(0, 3, 3, 3 + PLAYER_INV_SLOT_COUNT)
-			.addTransfer(3, 3 + PLAYER_INV_SLOT_COUNT, 0, 3, stack -> (!stack.isEmpty() && stack.getItem() instanceof ItemAmulet))
+			.addTransfer(3, 3 + PLAYER_INV_SLOT_COUNT, 0, 3, stack -> (!stack.isEmpty() && stack.hasCapability(IAmulet.CAPABILITY, null)))
 			.build();
 	
 	private final EntityPlayer player;
@@ -67,7 +68,7 @@ public class ContainerAmuletInventory extends BaseContainer{
 
 		@Override
 		public boolean isItemValidForSlot(int index, ItemStack stack) {
-			return stack.isEmpty() || stack.getItem() instanceof ItemAmulet;
+			return stack.isEmpty() || stack.hasCapability(IAmulet.CAPABILITY, null);
 		}
 
 		@Override

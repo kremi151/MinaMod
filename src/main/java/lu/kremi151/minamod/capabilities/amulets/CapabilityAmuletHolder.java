@@ -24,7 +24,7 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 
 	@Override
 	public boolean setAmuletAt(int slot, ItemStack amulet) {
-		if(amulet.isEmpty() || amulet.getItem() instanceof ItemAmulet) {
+		if(amulet.isEmpty() || amulet.hasCapability(IAmulet.CAPABILITY, null)) {
 			inv.set(slot, amulet);
 			return true;
 		}else {

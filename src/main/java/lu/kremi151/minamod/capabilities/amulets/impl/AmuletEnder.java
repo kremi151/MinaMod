@@ -1,15 +1,16 @@
-package lu.kremi151.minamod.item.amulet;
+package lu.kremi151.minamod.capabilities.amulets.impl;
 
+import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class AmuletEnder extends AmuletBase{
+public class AmuletEnder implements IAmulet{
 
 	@Override
-	public boolean onUse(World world, EntityPlayer player, ItemStack stack) {
+	public boolean onUse(World world, EntityPlayer player) {
 		if(!world.isRemote){
 			enderTeleport(player);
 		}

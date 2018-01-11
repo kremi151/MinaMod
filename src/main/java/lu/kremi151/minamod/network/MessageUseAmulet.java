@@ -2,8 +2,8 @@ package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
+import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
-import lu.kremi151.minamod.item.ItemAmulet;
 import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -41,8 +41,8 @@ public class MessageUseAmulet implements IMessage{
 			if(message.getSlot() >= 0 && message.getSlot() < 3){
 				IAmuletHolder holder = player.getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
 				ItemStack amulet = holder.getAmuletAt(message.getSlot());
-				if(!amulet.isEmpty() && amulet.getItem() instanceof ItemAmulet) {
-					((ItemAmulet)amulet.getItem()).tryUseAmulet(amulet, player.world, player);
+				if(!amulet.isEmpty() && amulet.hasCapability(IAmulet.CAPABILITY, null)) {
+					amulet.getCapability(IAmulet.CAPABILITY, null).onUse(player.world, player);
 				}
 			}
 			return null;
