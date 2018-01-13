@@ -29,13 +29,10 @@ public class ItemEnergyDiagnostic extends Item{
 			if(state.getBlock() instanceof IDiagnosable) {
 				TextHelper.sendTranslateableChatMessage(player, TextFormatting.AQUA, "msg.diagnose.title");
 				((IDiagnosable)state.getBlock()).onDiagnose(worldIn, pos, player);
-				return EnumActionResult.SUCCESS;
 			}else {
 				TextHelper.sendTranslateableChatMessage(player, TextFormatting.RED, "msg.diagnose.fail");
-				return EnumActionResult.PASS;
 			}
-		}else {
-			return EnumActionResult.SUCCESS;
 		}
+		return EnumActionResult.SUCCESS;
     }
 }
