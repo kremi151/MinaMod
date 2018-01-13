@@ -77,7 +77,7 @@ public class TileEntityGenerator extends TileEntitySidedInventory implements ITi
 				TileEntity te = world.getTileEntity(pos.offset(outputFacing));
 				if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, outputFacing.getOpposite())) {
 					IEnergyStorage prov = te.getCapability(CapabilityEnergy.ENERGY, outputFacing.getOpposite());
-					int energy = MathHelper.floor(20 * heating);
+					int energy = MathHelper.floor(10 * heating);
 					if(energy > 0) {
 						int rest = energy - prov.receiveEnergy(energy, false);
 						heating += (((float)rest / (float)energy) * 0.0125f);
