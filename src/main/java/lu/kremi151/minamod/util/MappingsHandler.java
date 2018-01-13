@@ -17,6 +17,7 @@ public class MappingsHandler {
 	private static final ResourceLocation KEVIKUS_SEEDS = new ResourceLocation(MODID, "kevikus_seeds");
 	private static final ResourceLocation TRACIUS_SEEDS = new ResourceLocation(MODID, "tracius_seeds");
 	private static final ResourceLocation OLD_AMULET = new ResourceLocation(MODID, "amulet");
+	private static final ResourceLocation OLD_BAMBUS_ID = new ResourceLocation(MODID, "bambus_item");
 	
 	private static void handleItemMapping(FMLMissingMappingsEvent.MissingMapping mapping){
 		if(mapping.resourceLocation.equals(MinaBlocks.NAMIE_FLOWER.getRegistryName())
@@ -41,6 +42,8 @@ public class MappingsHandler {
 		}else if(mapping.resourceLocation.equals(OLD_AMULET)) {
 			println("Remapping old amulet type to ender amulet");
 			mapping.remap(MinaItems.AMULET_OF_ENDER);
+		}else if(mapping.resourceLocation.equals(OLD_BAMBUS_ID)) {
+			mapping.remap(MinaItems.BAMBUS);
 		}
 	}
 	
