@@ -231,10 +231,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) { // NO_UCD (unused
-																// code)
-		// BiomeDictionary.registerAllBiomes();
-		
+	public void postInit(FMLPostInitializationEvent event) { 
 		logger.info("MinaMod inside! #MakeMinecraftGreatAgain");
 		
 		if(MOD_DEV_ANALYTICS){
@@ -261,8 +258,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) throws NoSuchMethodException, SecurityException { // NO_UCD
-																											// code)
+	public void preInit(FMLPreInitializationEvent event) throws NoSuchMethodException, SecurityException {
 		this.logger = event.getModLog();
 
 		minaConfigPath.set(new File(event.getModConfigurationDirectory(), "minamod"));
@@ -310,8 +306,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event) { // NO_UCD (unused
-																// code)
+	public void serverStarting(FMLServerStartingEvent event) {						// code)
 		this.theServer = event.getServer();
 		ServerCommandManager cm = (ServerCommandManager) theServer.getCommandManager();
 		cm.registerCommand(new CommandMinaBase());

@@ -59,9 +59,6 @@ public class MinaRecipes {
 
 	static void initFurnaceRecipes(MinaMod mod) {
 		if (init_furnace)throw new RuntimeException("Duplicate call of function");
-		// GameRegistry.registerFuelHandler(mod);
-		// TODO: GameRegistry.addSmelting(MinaItems.itemHoneywabe, new
-		// ItemStack(MinaItems.itemHoney,1), 0f);
 		GameRegistry.addSmelting(MinaItems.CHESTNUT, new ItemStack(MinaItems.CHESTNUT_COOKED, 1), 0f);
 		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 0.8f);
 		GameRegistry.addSmelting(new ItemStack(MinaItems.RARE_EARTH), new ItemStack(MinaItems.RARE_EARTH, 1, 1), 1f);
@@ -76,9 +73,6 @@ public class MinaRecipes {
 
 	static void initBrewingRecipes(MinaMod mod) {
 		if (init_brewing)throw new RuntimeException("Duplicate call of function");
-		// BrewingRecipeRegistry.addRecipe(new ItemStack(Items.potionitem, 1,
-		// 64), new ItemStack(MinaItems.itemRhubarb), new
-		// ItemStack(MinaItems.itemAquaGem));
 		init_brewing = true;
 	}
 
@@ -358,10 +352,6 @@ public class MinaRecipes {
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":fix_drill", RecipeFixDrill.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
-		
-		/*RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
-				"after:minecraft:shaped before:minecraft:shapeless");*/
-		
 	}
 
 	private static void initArmorRecipes() {

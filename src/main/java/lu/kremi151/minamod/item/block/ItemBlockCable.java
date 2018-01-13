@@ -17,27 +17,6 @@ public class ItemBlockCable extends ItemBlock implements IDrillItem{
 	public ItemBlockCable(BlockCable block) {
 		super(block);
 	}
-	
-	/*@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
-
-        ItemStack itemstack = player.getHeldItem(hand);
-        
-        if(!player.isSneaking() && !itemstack.isEmpty() && iblockstate.isBlockNormalCube() && !block.hasTileEntity(iblockstate)) {
-        	TileEntityWallCable wc = new TileEntityWallCable();
-        	worldIn.setBlockState(pos, MinaBlocks.WALL_CABLE.getDefaultState());
-        	worldIn.setTileEntity(pos, wc);
-        	wc.setWallModel(iblockstate);
-        	wc.getCapability(IEnergyNetworkProvider.CAPABILITY, null).getNetwork();//Initialize
-        	itemstack.shrink(1);
-            return EnumActionResult.SUCCESS;
-        }else {
-        	return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-        }
-    }*/
 
 	@Override
 	public boolean onDrillUsed(World world, BlockPos target, EntityPlayer player, ItemStack stack) {
