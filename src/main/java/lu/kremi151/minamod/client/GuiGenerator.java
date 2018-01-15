@@ -5,11 +5,13 @@ import org.lwjgl.opengl.GL11;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.container.ContainerGenerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiGenerator extends GuiContainer {
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/generator/default.png");
