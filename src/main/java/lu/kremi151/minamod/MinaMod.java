@@ -11,11 +11,12 @@ import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
-import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
+import lu.kremi151.minamod.block.tileentity.TileEntityCoalCompressor;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
 import lu.kremi151.minamod.block.tileentity.TileEntityEnergyToRedstone;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
+import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
@@ -158,6 +159,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityAccumulator.class, createNamespacedIdentifier("accumulator"));
 		GameRegistry.registerTileEntity(TileEntityOven.class, createNamespacedIdentifier("oven"));
 		GameRegistry.registerTileEntity(TileEntityGenerator.class, createNamespacedIdentifier("generator"));
+		GameRegistry.registerTileEntity(TileEntityCoalCompressor.class, createNamespacedIdentifier("coal_compressor"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),

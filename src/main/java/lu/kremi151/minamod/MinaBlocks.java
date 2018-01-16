@@ -10,7 +10,7 @@ import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
-import lu.kremi151.minamod.block.BlockGenerator;
+import lu.kremi151.minamod.block.BlockCoalCompressor;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
@@ -30,6 +30,7 @@ import lu.kremi151.minamod.block.BlockElevatorControl;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockEnergyToRedstone;
 import lu.kremi151.minamod.block.BlockFilter;
+import lu.kremi151.minamod.block.BlockGenerator;
 import lu.kremi151.minamod.block.BlockGiftBox;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
@@ -242,7 +243,8 @@ public class MinaBlocks { // NO_UCD (unused code)
     public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
     public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
     public static final BlockGenerator GENERATOR = (BlockGenerator) new BlockGenerator().setUnlocalizedName("generator").setHardness(3.5f).setResistance(6f);
-	
+	public static final BlockCoalCompressor COMPRESSOR = (BlockCoalCompressor) new BlockCoalCompressor().setUnlocalizedName("coal_compressor").setHardness(3.5f).setResistance(6f);
+    
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
 		BlockStool.registerStoolBlocks(registry);
@@ -350,6 +352,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
 		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
 		registry.register(GENERATOR, "generator").submit();
+		registry.register(COMPRESSOR, "coal_compressor").submit();
 	}
 	
 	static void registerOreEntries(){
