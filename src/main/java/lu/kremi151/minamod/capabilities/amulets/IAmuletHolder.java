@@ -1,10 +1,12 @@
 package lu.kremi151.minamod.capabilities.amulets;
 
-import lu.kremi151.minamod.item.amulet.AmuletStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public interface IAmuletHolder {
 
-	AmuletStack getAmuletAt(int slot);
-	void setAmuletAt(int slot, AmuletStack amulet);
+	ItemStack getAmuletAt(int slot);
+	boolean setAmuletAt(int slot, ItemStack amulet);
 	int amuletAmount();
+	NonNullList<ItemStack> getAmulets();
 }

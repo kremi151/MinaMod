@@ -1,5 +1,6 @@
 package lu.kremi151.minamod;
 
+import lu.kremi151.minamod.block.BlockAccumulator;
 import lu.kremi151.minamod.block.BlockAutoCrafter;
 import lu.kremi151.minamod.block.BlockAutoFeeder;
 import lu.kremi151.minamod.block.BlockBambusCrop;
@@ -9,9 +10,12 @@ import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCampfire;
 import lu.kremi151.minamod.block.BlockChair;
 import lu.kremi151.minamod.block.BlockChiliCrop;
+import lu.kremi151.minamod.block.BlockCoalCompressor;
 import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
+import lu.kremi151.minamod.block.BlockCopperBlock;
+import lu.kremi151.minamod.block.BlockCopperOre;
 import lu.kremi151.minamod.block.BlockCustom;
 import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
@@ -24,8 +28,9 @@ import lu.kremi151.minamod.block.BlockDimmableLight;
 import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockElevatorControl;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
-import lu.kremi151.minamod.block.BlockEnergySource;
+import lu.kremi151.minamod.block.BlockEnergyToRedstone;
 import lu.kremi151.minamod.block.BlockFilter;
+import lu.kremi151.minamod.block.BlockGenerator;
 import lu.kremi151.minamod.block.BlockGiftBox;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
@@ -39,6 +44,7 @@ import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockNamieFlower;
+import lu.kremi151.minamod.block.BlockOven;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockPlate;
@@ -46,12 +52,15 @@ import lu.kremi151.minamod.block.BlockPumpkinLantern;
 import lu.kremi151.minamod.block.BlockQuicksand;
 import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
 import lu.kremi151.minamod.block.BlockRhubarb;
+import lu.kremi151.minamod.block.BlockRubberTree;
 import lu.kremi151.minamod.block.BlockSieve;
 import lu.kremi151.minamod.block.BlockSlotMachine;
+import lu.kremi151.minamod.block.BlockSolarPanel;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.block.BlockTable;
+import lu.kremi151.minamod.block.BlockWallCable;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
@@ -201,6 +210,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockAutoFeeder AUTO_FEEDER = (BlockAutoFeeder) new BlockAutoFeeder().setUnlocalizedName("autofeeder");
 	public static final BlockRedstoneCrossroad REDSTONE_CROSSROAD = (BlockRedstoneCrossroad) new BlockRedstoneCrossroad().setUnlocalizedName("redstone_crossroad");
 	public static final BlockCable CABLE = (BlockCable) new BlockCable().setUnlocalizedName("cable");
+	public static final BlockWallCable WALL_CABLE = (BlockWallCable) new BlockWallCable().setUnlocalizedName("wall_cable");
 	public static final BlockCustomStainedGlass MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.3F).setUnlocalizedName("milky_glass");
 	public static final BlockCustomStainedGlass LIT_MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.5f).setUnlocalizedName("lit_milky_glass").setLightLevel(1f);
 	public static final BlockGiftBox GIFT_BOX = (BlockGiftBox) new BlockGiftBox().setHardness(0.5f).setUnlocalizedName("gift_box");
@@ -225,7 +235,16 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockCustomOre RARE_EARTH_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
 			.setResistance(5.0F);
 	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
-	
+	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
+	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
+	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setHardness(3.5F).setUnlocalizedName("accumulator");
+	public static final BlockOven OVEN = (BlockOven) new BlockOven().setHardness(3.5F).setUnlocalizedName("oven");
+	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
+    public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
+    public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
+    public static final BlockGenerator GENERATOR = (BlockGenerator) new BlockGenerator().setUnlocalizedName("generator").setHardness(3.5f).setResistance(6f);
+	public static final BlockCoalCompressor COMPRESSOR = (BlockCoalCompressor) new BlockCoalCompressor().setUnlocalizedName("coal_compressor").setHardness(3.5f).setResistance(6f);
+    
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
 		BlockStool.registerStoolBlocks(registry);
@@ -293,10 +312,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		if(FeatureList.enable_redstone_crossroad){
 			registry.register(REDSTONE_CROSSROAD, "redstone_crossroad").submit();
 		}
-		if(FeatureList.enable_cable){
-			registry.register(CABLE, "cable").submit();
-			registry.register(new BlockEnergySource().setUnlocalizedName("energy_source"), "energy_source").submit();
-		}
 		registry.register(MILKY_GLASS, "milky_glass").blockOnly().submit();
 		registry.register(LIT_MILKY_GLASS, "lit_milky_glass").blockOnly().submit();
 		registry.register(GIFT_BOX, "gift_box").blockOnly().submit();
@@ -327,6 +342,17 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(AUTO_CRAFTER, "autocrafter").submit();
 		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
 		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
+		registry.register(CABLE, "cable").blockOnly().submit();
+		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();
+		registry.register(SOLAR_PANEL, "solar_panel").submit();
+		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
+		registry.register(ACCUMULATOR, "accumulator").submit();
+		registry.register(OVEN, "oven").submit();
+		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
+		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
+		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
+		registry.register(GENERATOR, "generator").submit();
+		registry.register(COMPRESSOR, "coal_compressor").submit();
 	}
 	
 	static void registerOreEntries(){

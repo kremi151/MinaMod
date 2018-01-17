@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.block;
 
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,6 +17,10 @@ public class BlockCustomHorizontal extends BlockHorizontal{
 
 	protected BlockCustomHorizontal(Material materialIn) {
 		super(materialIn);
+	}
+
+	protected BlockCustomHorizontal(Material materialIn, MapColor color) {
+		super(materialIn, color);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import lu.kremi151.minamod.block.BlockChiliCrop;
 import lu.kremi151.minamod.block.BlockEffectBush;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
+import lu.kremi151.minamod.block.BlockRubberTree;
 import lu.kremi151.minamod.block.BlockStrawberryCrop;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -38,7 +39,10 @@ public final class WorldGenerators {
 	
 	@OreInjector("rare_earth")
 	public static final WorldGenNewOre RARE_SOIL_ORE = new WorldGenNewOre(MinaBlocks.RARE_EARTH_ORE.getDefaultState(), 5, 8).setRange(15, 30);
-	
+
+	@OreInjector("copper_ore")
+	public static final WorldGenNewOre COPPER_ORE = new WorldGenNewOre(MinaBlocks.COPPER_ORE.getDefaultState(), 7, 20).setRange(0, 64);
+
 	public static final WorldGenSurfacePlant SURFACE_PLANTS = new WorldGenSurfacePlant.Builder()
 			.beginSection(70.0)
 			.add(MinaBlocks.RHUBARB_PLANT.getDefaultState(), 4, 60)
@@ -58,6 +62,7 @@ public final class WorldGenerators {
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.CHESTNUT), 10)
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.COTTON), 2)
 			.add(new RandomSaplingPlant(BlockMinaPlanks.EnumType.PEPPEL), 2)
+			.add(new BlockRubberTree.Plant(), 4)
 			.build();
 	
 	public static final WorldGenQuicksand QUICKSAND = new WorldGenQuicksand();
@@ -80,7 +85,8 @@ public final class WorldGenerators {
 		GameRegistry.registerWorldGenerator(RUBY_ORE, 3);
 		GameRegistry.registerWorldGenerator(SAPPHIRE_ORE, 3);
 		GameRegistry.registerWorldGenerator(RARE_SOIL_ORE, 3);
-
+		
+		GameRegistry.registerWorldGenerator(COPPER_ORE, 4);
 		GameRegistry.registerWorldGenerator(SURFACE_PLANTS, 4);
 		
 		if(FeatureList.enable_ice_altar){
@@ -91,14 +97,16 @@ public final class WorldGenerators {
 		init = true;
 	}
 	
-	private static class RandomSaplingPlant extends WorldGenSurfacePlant.Plant{
+	private static class RandomSaplingPlant implements WorldGenSurfacePlant.IPlantable{
+		
+		private final IBlockState plant;
 		
 		private RandomSaplingPlant(BlockMinaPlanks.EnumType type){
-			super(MinaBlocks.SAPLING.getDefaultState().withProperty(BlockMinaSapling.TYPE, type), 0);
+			this.plant = MinaBlocks.SAPLING.getDefaultState().withProperty(BlockMinaSapling.TYPE, type);
 		}
 		
 		@Override
-		protected void spread(int chunkX, int chunkZ, World world, Random random){
+		public void plant(int chunkX, int chunkZ, World world, Random random){
 			int x = (chunkX * 16) + random.nextInt(16);
 			int z = (chunkZ * 16) + random.nextInt(16);
 			int y = MinaUtils.getHeightValue(world, x, z);

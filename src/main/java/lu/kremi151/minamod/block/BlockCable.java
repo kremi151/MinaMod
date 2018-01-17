@@ -2,22 +2,27 @@ package lu.kremi151.minamod.block;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
+import lu.kremi151.minamod.capabilities.energynetwork.EnergyNetworkHelper;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetwork;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
+import lu.kremi151.minamod.interfaces.IDiagnosable;
+import lu.kremi151.minamod.interfaces.IEnergySupplier;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
-public class BlockCable extends BlockPipeBase{
+public class BlockCable extends BlockPipeBase implements IDiagnosable{
 	
 	public BlockCable() {
 		super(Material.CIRCUITS);
@@ -52,12 +57,62 @@ public class BlockCable extends BlockPipeBase{
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-		IEnergyStorage nrj = world.getTileEntity(pos).getCapability(CapabilityEnergy.ENERGY, null);
-		TextHelper.sendChatMessage(player, "Energy: " + nrj.getEnergyStored());
-        return false;
+		TileEntity myte = worldIn.getTileEntity(pos);
+		if(myte != null) {
+			EnergyNetworkHelper.scanForClients(myte.getCapability(IEnergyNetworkProvider.CAPABILITY, null).getNetwork(), pos);//TODO: Make direction specific
+		}else {
+			System.err.println("Something went wrong");
+		}
     }
+	
+	@Override
+	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
+		TileEntity nte = world.getTileEntity(neighbor);
+		int ox = neighbor.getX() - pos.getX();
+		int oy = neighbor.getY() - pos.getY();
+		int oz = neighbor.getZ() - pos.getZ();
+		EnumFacing.AxisDirection dir = null;
+		EnumFacing.Axis axis = null;
+		if(ox != 0) {
+			axis = EnumFacing.Axis.X;
+			dir = (ox < 0) ? EnumFacing.AxisDirection.NEGATIVE : EnumFacing.AxisDirection.POSITIVE;
+		}else if(oy != 0) {
+			axis = EnumFacing.Axis.Y;
+			dir = (oy < 0) ? EnumFacing.AxisDirection.NEGATIVE : EnumFacing.AxisDirection.POSITIVE;
+		}else if(oz != 0) {
+			axis = EnumFacing.Axis.Z;
+			dir = (oz < 0) ? EnumFacing.AxisDirection.NEGATIVE : EnumFacing.AxisDirection.POSITIVE;
+		}
+		EnumFacing face = null;
+		for(EnumFacing f : EnumFacing.VALUES) {
+			if(f.getAxis() == axis && f.getAxisDirection() == dir) {
+				face = f;
+				break;
+			}
+		}
+		if(face == null) {
+			System.err.println("Neighbour face could not be determined");
+			return;
+		}
+		TileEntity myte = world.getTileEntity(pos);
+		if(nte != null && nte.hasCapability(CapabilityEnergy.ENERGY, face.getOpposite())) {
+			if(!nte.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
+				if(myte != null) {
+					myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork().registerClient(neighbor, face.getOpposite());
+				}
+			}
+		}else {
+			if(myte != null) {
+				IEnergyNetwork myNetwork = myte.getCapability(IEnergyNetworkProvider.CAPABILITY, face).getNetwork();
+				if(nte == null || !nte.hasCapability(IEnergyNetworkProvider.CAPABILITY, face.getOpposite())) {
+					myNetwork.unregisterClient(neighbor, face.getOpposite());
+					EnergyNetworkHelper.executeSplit(myNetwork, neighbor);
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Can this pipe connect to the neighbouring block?
@@ -70,8 +125,9 @@ public class BlockCable extends BlockPipeBase{
 	 */
 	@Override
 	protected boolean canConnectTo(IBlockState ownState, IBlockAccess worldIn, BlockPos ownPos, EnumFacing neighbourDirection) {
-		TileEntity dest = worldIn.getTileEntity(ownPos.offset(neighbourDirection));
-		return (dest != null && dest.hasCapability(CapabilityEnergy.ENERGY, null)) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
+		BlockPos destPos = ownPos.offset(neighbourDirection);
+		TileEntity dest = worldIn.getTileEntity(destPos);
+		return (dest != null && (dest.hasCapability(CapabilityEnergy.ENERGY, neighbourDirection.getOpposite()) || (dest instanceof IEnergySupplier && ((IEnergySupplier)dest).canCableConnect(neighbourDirection.getOpposite(), dest, destPos, worldIn)))) || super.canConnectTo(ownState, worldIn, ownPos, neighbourDirection);
 	}
 	
 	@Override
@@ -81,5 +137,14 @@ public class BlockCable extends BlockPipeBase{
 		}
 
 		return state;
+	}
+
+	@Override
+	public void onDiagnose(IBlockAccess world, BlockPos pos, ICommandSender subject) {
+		IEnergyNetworkProvider nrj = world.getTileEntity(pos).getCapability(IEnergyNetworkProvider.CAPABILITY, null);
+		if(nrj != null) {
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.energy", nrj.getEnergyStored());
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.client_count", nrj.getNetwork().clientCount());
+		}
 	}
 }

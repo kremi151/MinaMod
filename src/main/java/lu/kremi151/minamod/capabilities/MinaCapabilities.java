@@ -3,12 +3,15 @@ package lu.kremi151.minamod.capabilities;
 import java.util.concurrent.Callable;
 
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.capabilities.amulets.AmuletCapStorage;
 import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
+import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
 import lu.kremi151.minamod.capabilities.bliss.EntityBlissImpl;
 import lu.kremi151.minamod.capabilities.bliss.ICapabilityBliss;
 import lu.kremi151.minamod.capabilities.coinhandler.EntityCoinHandler;
 import lu.kremi151.minamod.capabilities.coinhandler.ICoinHandler;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.capabilities.owner.OwnerImpl;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
@@ -43,6 +46,8 @@ public class MinaCapabilities {
 		CapabilityManager.INSTANCE.register(ISnack.class, new EmptyStorage(), new NoImplFactory());
 		CapabilityManager.INSTANCE.register(IOwner.class, new OwnerImpl.Storage(), OwnerImpl::new);
 		CapabilityManager.INSTANCE.register(ISketch.class, new EmptyStorage(), new NoImplFactory());
+		CapabilityManager.INSTANCE.register(IEnergyNetworkProvider.class, new EmptyStorage(), new NoImplFactory());
+		CapabilityManager.INSTANCE.register(IAmulet.class, new AmuletCapStorage(), new NoImplFactory());
 	}
 	
 	private static class EmptyStorage<A> implements Capability.IStorage<A>{

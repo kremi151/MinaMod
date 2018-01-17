@@ -1,7 +1,6 @@
 package lu.kremi151.minamod;
 
-import lu.kremi151.minamod.annotations.AutoArmorRecipe;
-import lu.kremi151.minamod.annotations.AutoToolRecipe;
+import lu.kremi151.minamod.annotations.AutoRecipe;
 import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
@@ -21,13 +20,16 @@ import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemCoinBag;
 import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.item.ItemCombiner;
+import lu.kremi151.minamod.item.ItemCopperIngot;
 import lu.kremi151.minamod.item.ItemCustomArmor;
 import lu.kremi151.minamod.item.ItemCustomAxe;
 import lu.kremi151.minamod.item.ItemCustomHoe;
 import lu.kremi151.minamod.item.ItemCustomPickaxe;
 import lu.kremi151.minamod.item.ItemCustomShovel;
 import lu.kremi151.minamod.item.ItemCustomSword;
+import lu.kremi151.minamod.item.ItemDrill;
 import lu.kremi151.minamod.item.ItemEmptyPot;
+import lu.kremi151.minamod.item.ItemEnergyDiagnostic;
 import lu.kremi151.minamod.item.ItemFoodContainer;
 import lu.kremi151.minamod.item.ItemGoldenCoin;
 import lu.kremi151.minamod.item.ItemHerb;
@@ -40,12 +42,13 @@ import lu.kremi151.minamod.item.ItemKeyChain;
 import lu.kremi151.minamod.item.ItemMilkBottle;
 import lu.kremi151.minamod.item.ItemPowder;
 import lu.kremi151.minamod.item.ItemRareEarth;
+import lu.kremi151.minamod.item.ItemRubberTreeBranch;
 import lu.kremi151.minamod.item.ItemSickle;
 import lu.kremi151.minamod.item.ItemSketch;
 import lu.kremi151.minamod.item.ItemSoulPearl;
 import lu.kremi151.minamod.item.ItemStrawberry;
 import lu.kremi151.minamod.item.ItemUnpackedGift;
-import lu.kremi151.minamod.item.amulet.AmuletRegistry;
+import lu.kremi151.minamod.item.block.ItemBlockCable;
 import lu.kremi151.minamod.item.block.ItemBlockCombined;
 import lu.kremi151.minamod.item.block.ItemBlockGiftBox;
 import lu.kremi151.minamod.item.block.ItemBlockLeaves;
@@ -76,33 +79,40 @@ public class MinaItems {
 	public static final Item NAMIE_FRUIT = new Item().setUnlocalizedName("namie_fruit")
 			.setCreativeTab(CreativeTabs.FOOD);
 	public static final Item MILK_BOTTLE = new ItemMilkBottle().setUnlocalizedName("milk_bottle");
-	@AutoToolRecipe(value="citrin", useOreName=true)
-	@AutoArmorRecipe(value="citrin", useOreName=true)
 	public static final Item CITRIN = new Item().setUnlocalizedName("citrin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_SWORD = new ItemCustomSword(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_sword");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_AXE = new ItemCustomAxe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_axe");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_pickaxe");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_SHOVEL = new ItemCustomShovel(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_shovel");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_HOE = new ItemCustomHoe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_hoe");
 	public static final Item HONEYWABE = new Item().setUnlocalizedName("honeywabe")
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item STRAWBERRY = new ItemStrawberry().setUnlocalizedName("strawberry");
-	@AutoToolRecipe("bambus")
 	public static final Item BAMBUS = new ItemBambus().setUnlocalizedName("bambus");
+	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_SWORD = new ItemCustomSword(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_sword");
+	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_AXE = new ItemCustomAxe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_axe");
+	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_pickaxe");
+	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_SHOVEL = new ItemCustomShovel(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_shovel");
+	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_HOE = new ItemCustomHoe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_hoe");
 	public static final Item RHUBARB = new Item().setUnlocalizedName("rhubarb")
@@ -112,36 +122,47 @@ public class MinaItems {
 	public static final Item CHESTNUT_COOKED = new ItemFood(4, 0f, false).setUnlocalizedName("chestnut_cooked")
 			.setCreativeTab(CreativeTabs.FOOD);
 	public static final Item CHERRY = new ItemFood(1, 0.2f, false).setUnlocalizedName("cherry");
-	@AutoToolRecipe("obsidian")
-	@AutoArmorRecipe("obsidian")
 	public static final Item OBSIDIAN_FRAGMENT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
 			.setUnlocalizedName("obsidian_fragment");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_SWORD = new ItemCustomSword(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_sword");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_AXE = new ItemCustomAxe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_axe");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_pickaxe");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_SHOVEL = new ItemCustomShovel(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_shovel");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_HOE = new ItemCustomHoe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_hoe");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_HELMET = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("citrin_helmet");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("citrin_chestplate");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("citrin_leggings");
+	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_BOOTS = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("citrin_boots");
 	public static final Item KEY = new ItemKey().setUnlocalizedName("key");
 	public static final Item CHIP = new ItemChip().setUnlocalizedName("chip");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_HELMET = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("obsidian_helmet");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("obsidian_chestplate");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("obsidian_leggings");
+	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_BOOTS = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("obsidian_boots");
 	public static final Item BLACK_PEARL = new Item().setUnlocalizedName("black_pearl")
@@ -160,16 +181,19 @@ public class MinaItems {
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final ItemGoldenCoin GOLDEN_COIN = (ItemGoldenCoin) new ItemGoldenCoin().setUnlocalizedName("golden_coin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
-	@AutoArmorRecipe(value="platinum", useOreName=true)
 	public static final Item PLATINUM_INGOT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
 			.setUnlocalizedName("platinum_ingot");
 	public static final Item SOUL_PEARL = new ItemSoulPearl().setUnlocalizedName("soul_pearl");
+	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_HELMET = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("platinum_helmet");
+	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("platinum_chestplate");
+	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("platinum_leggings");
+	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_BOOTS = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("platinum_boots");
 	public static final ItemHerb HERB = (ItemHerb) new ItemHerb().setUnlocalizedName("herb");
@@ -203,7 +227,12 @@ public class MinaItems {
 	public static final ItemFood GOULASH = (ItemFood) new ItemSoup(12).setUnlocalizedName("goulash");
 	public static final Item KATANA = new ItemKatana().setUnlocalizedName("katana");
 	public static final Item COIN_BAG = new ItemCoinBag().setUnlocalizedName("coin_bag");
-	public static final Item AMULET = new ItemAmulet().setUnlocalizedName("amulet");
+	public static final Item AMULET_OF_ENDER = new ItemAmulet().setUnlocalizedName("amulet_of_ender");
+	public static final Item AMULET_OF_EXPERIENCE = new ItemAmulet().setUnlocalizedName("amulet_of_experience");
+	public static final Item AMULET_OF_RETURN = new ItemAmulet().setUnlocalizedName("amulet_of_return");
+	public static final Item AMULET_OF_REGENERATION = new ItemAmulet().setUnlocalizedName("amulet_of_regeneration");
+	public static final Item AMULET_OF_MERMAID = new ItemAmulet().setUnlocalizedName("amulet_of_mermaid");
+	public static final Item AMULET_OF_HARMONY = new ItemAmulet().setUnlocalizedName("amulet_of_harmony");
 	public static final ItemBattery BATTERY = (ItemBattery)new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
 	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
@@ -213,6 +242,12 @@ public class MinaItems {
 	public static final ItemSketch SKETCH = (ItemSketch) new ItemSketch().setUnlocalizedName("sketch");
 	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
 	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
+	public static final ItemDrill DRILL = (ItemDrill) new ItemDrill().setUnlocalizedName("drill");
+	public static final Item COPPER_INGOT = new ItemCopperIngot().setUnlocalizedName("copper_ingot");
+	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
+	public static final Item RUBBER_TREE_BRANCH = new ItemRubberTreeBranch().setUnlocalizedName("rubber_tree_branch");
+	public static final Item RUBBER = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("rubber");
+	public static final Item DIAGNOSE_TOOL = new ItemEnergyDiagnostic().setUnlocalizedName("diagnose_tool");
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -229,7 +264,7 @@ public class MinaItems {
 		registry.register(CITRIN_HOE, "citrin_hoe").submit();
 		registry.register(HONEYWABE, "honeywabe").submit();
 		registry.register(STRAWBERRY, "strawberry").variantNames("strawberry", "ruby_strawberry", "sapphire_strawberry", "citrin_strawberry").ore().submit();
-		registry.register(BAMBUS, "bambus_item").submit();
+		registry.register(BAMBUS, "bambus").submit();
 		registry.register(BAMBUS_SWORD, "bambus_sword").submit();
 		registry.register(BAMBUS_AXE, "bambus_axe").submit();
 		registry.register(BAMBUS_PICKAXE, "bambus_pickaxe").submit();
@@ -259,6 +294,7 @@ public class MinaItems {
 			registry.register(BLACK_PEARL, "black_pearl").submit();
 			registry.register(WHITE_PEARL, "white_pearl").submit();
 			registry.register(HARMONY_PEARL, "harmony_pearl").submit();
+			registry.register(AMULET_OF_HARMONY, "amulet_of_harmony").submit();
 		}
 		registry.register(POULET_SPECIAL_PIQUANT, "poulet_special_piquant").submit();
 		registry.register(CHILI, "chili").ore().submit();
@@ -294,7 +330,11 @@ public class MinaItems {
 		registry.register(GOULASH, "goulash").submit();
 		registry.register(KATANA, "katana").submit();
 		registry.register(COIN_BAG, "coin_bag").submit();
-		registry.register(AMULET, "amulet").variantNames(AmuletRegistry.getVariantNames()).submit();
+		registry.register(AMULET_OF_ENDER, "amulet_of_ender").submit();
+		registry.register(AMULET_OF_EXPERIENCE, "amulet_of_experience").submit();
+		registry.register(AMULET_OF_RETURN, "amulet_of_return").submit();
+		registry.register(AMULET_OF_REGENERATION, "amulet_of_regeneration").submit();
+		registry.register(AMULET_OF_MERMAID, "amulet_of_mermaid").submit();
 		registry.register(BATTERY, "battery").submit();
 		registry.register(HERB_GUIDE.setRegistryName(MinaMod.MODID, "herb_guide"), "herb_guide").submitSimple();
 		registry.register(CHICKEN_NUGGETS, "chicken_nuggets").submit();
@@ -304,6 +344,12 @@ public class MinaItems {
 		registry.register(SKETCH, "sketch").submit();
 		registry.register(COMBINER, "combiner").submit();
 		registry.register(RARE_EARTH, "rare_earth_ore").variantNames(ItemRareEarth.VARIANT_NAMES).submit();
+		registry.register(DRILL.setRegistryName(MinaMod.MODID, "drill"), "drill").submitSimple();
+		registry.register(COPPER_INGOT, "copper_ingot").submit();
+		registry.register(COPPER_NUGGET, "copper_nugget").submit();
+		registry.register(RUBBER_TREE_BRANCH, "rubber_tree_branch").submit();
+		registry.register(RUBBER, "rubber").submit();
+		registry.register(DIAGNOSE_TOOL, "diagnose_tool").submit();
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
@@ -321,5 +367,6 @@ public class MinaItems {
 		//registry.register(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		registry.register(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves").variantNames("palm_leaf_stack", "palm_leaf").submit();
 		registry.register(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab").variantNames(BlockMinaPlanks.EnumType.variantNamesSlabs).submit();
+		registry.register(new ItemBlockCable(MinaBlocks.CABLE).setRegistryName(MinaBlocks.CABLE.getRegistryName()), "cable").submit();
 	}
 }

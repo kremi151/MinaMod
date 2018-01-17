@@ -1,0 +1,81 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "particle": "minamod:blocks/metallic_sanded",
+        "platform": "minamod:blocks/metallic_sanded",
+        "compressor": "minamod:blocks/metallic"
+    },
+    "elements": [
+        {
+            "name": "Base",
+            "from": [ 1.0, 0.0, 1.0 ], 
+            "to": [ 15.0, 2.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#platform", "uv": [ 1.0, 14.0, 15.0, 16.0 ] },
+                "east": { "texture": "#platform", "uv": [ 1.0, 14.0, 15.0, 16.0 ] },
+                "south": { "texture": "#platform", "uv": [ 1.0, 14.0, 15.0, 16.0 ] },
+                "west": { "texture": "#platform", "uv": [ 1.0, 14.0, 15.0, 16.0 ] },
+                "up": { "texture": "#platform", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+                "down": { "texture": "#platform", "uv": [ 1.0, 1.0, 15.0, 15.0 ] }
+            }
+        },
+        {
+            "name": "BaseTop",
+            "from": [ 2.0, 2.0, 2.0 ], 
+            "to": [ 14.0, 3.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#platform", "uv": [ 2.0, 13.0, 14.0, 14.0 ] },
+                "east": { "texture": "#platform", "uv": [ 2.0, 13.0, 14.0, 14.0 ] },
+                "south": { "texture": "#platform", "uv": [ 2.0, 13.0, 14.0, 14.0 ] },
+                "west": { "texture": "#platform", "uv": [ 2.0, 13.0, 14.0, 14.0 ] },
+                "up": { "texture": "#platform", "uv": [ 2.0, 2.0, 14.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "Center",
+            "from": [ 4.0, 3.0, 3.0 ], 
+            "to": [ 12.0, 13.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 13.0 ] },
+                "east": { "texture": "#compressor", "uv": [ 3.0, 3.0, 13.0, 13.0 ] },
+                "south": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 13.0 ] },
+                "west": { "texture": "#compressor", "uv": [ 3.0, 3.0, 13.0, 13.0 ] },
+                "up": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 13.0 ] }
+            }
+        },
+        {
+            "name": "CenterLeft",
+            "from": [ 3.0, 3.0, 4.0 ], 
+            "to": [ 4.0, 13.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#compressor", "uv": [ 3.0, 3.0, 4.0, 13.0 ] },
+                "south": { "texture": "#compressor", "uv": [ 12.0, 3.0, 13.0, 13.0 ] },
+                "west": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 13.0 ] },
+                "up": { "texture": "#compressor", "uv": [ 3.0, 4.0, 4.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "CenterRight",
+            "from": [ 12.0, 3.0, 4.0 ], 
+            "to": [ 13.0, 13.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#compressor", "uv": [ 12.0, 3.0, 13.0, 13.0 ] },
+                "east": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 13.0 ] },
+                "south": { "texture": "#compressor", "uv": [ 3.0, 3.0, 4.0, 13.0 ] },
+                "up": { "texture": "#compressor", "uv": [ 3.0, 4.0, 4.0, 12.0 ], "rotation": 180 }
+            }
+        },
+        {
+            "name": "Top",
+            "from": [ 4.0, 13.0, 4.0 ], 
+            "to": [ 12.0, 14.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#compressor", "uv": [ 4.0, 3.0, 12.0, 4.0 ], "rotation": 180 },
+                "east": { "texture": "#compressor", "uv": [ 12.0, 4.0, 13.0, 12.0 ], "rotation": 90 },
+                "south": { "texture": "#compressor", "uv": [ 4.0, 12.0, 12.0, 13.0 ] },
+                "west": { "texture": "#compressor", "uv": [ 3.0, 4.0, 4.0, 12.0 ], "rotation": 270 },
+                "up": { "texture": "#compressor", "uv": [ 4.0, 4.0, 12.0, 12.0 ] }
+            }
+        }
+    ]
+}

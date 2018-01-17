@@ -11,6 +11,7 @@ import lu.kremi151.minamod.util.slotmachine.SpinMode;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.MathHelper;
 
 public class ContainerSlotMachine extends BaseContainer{
 
@@ -23,6 +24,7 @@ public class ContainerSlotMachine extends BaseContainer{
 	protected static final int CMD_UPDATE_SESSION_WIN_MOST = 6;
 	protected static final int CMD_UPDATE_ICON_ROW_VALUE_LEAST = 7;
 	protected static final int CMD_UPDATE_ICON_ROW_VALUE_MOST = 8;
+	protected static final int CMD_UPDATE_ENERGY_PERCENTAGE = 9;
 	
 	private final EntityPlayer player;
 	protected final TileEntitySlotMachine slotMachine;
@@ -73,7 +75,7 @@ public class ContainerSlotMachine extends BaseContainer{
 	}
 	
 	public void spin(SpinMode mode, boolean instant) {
-		slotMachine.turnSlots(mode, new Random(System.currentTimeMillis()), instant);
+		slotMachine.turnSlots(player, mode, new Random(System.currentTimeMillis()), instant);
 	}
 	
 	public Item getIcon(int wheelIdx, int wheelPos) {
@@ -103,6 +105,10 @@ public class ContainerSlotMachine extends BaseContainer{
 	
 	public Icon getIcon(int i) {
 		return slotMachine.getIcon(i);
+	}
+	
+	public int getEnergyPercentage() {
+		return MathHelper.floor(100f * slotMachine.getEnergyPercentage());
 	}
 	
 	@Override
@@ -161,6 +167,8 @@ public class ContainerSlotMachine extends BaseContainer{
                 		icrafting.sendWindowProperty(this, CMD_UPDATE_ICON_ROW_VALUE_MOST, rowValue & 0xFFFF);*/
         			}
         		//}
+        			
+        		icrafting.sendWindowProperty(this, CMD_UPDATE_ENERGY_PERCENTAGE, getEnergyPercentage());
             }
     		slotMachine.notifySynced();
     		firstSync = false;

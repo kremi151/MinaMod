@@ -11,10 +11,10 @@ import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.entity.EntityIceSentinel;
 import lu.kremi151.minamod.util.IDRegistry;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.worldgen.WorldGenPalm;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,16 +26,20 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -222,6 +226,21 @@ public class BlockEvents {
 					event.getDrops().add(is);
 				}else{
 					MinaMod.debugPrintln("Break bypass key not found...");
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onBlockPlaced(PlaceEvent event) {
+		final TileEntity te = event.getWorld().getTileEntity(event.getPos());
+		if(te != null) {
+			for(EnumFacing dir : EnumFacing.VALUES) {
+				if(te.hasCapability(CapabilityEnergy.ENERGY, dir)) {
+					TileEntity te1 = event.getWorld().getTileEntity(event.getPos().offset(dir));
+					if(te1 != null && te1.hasCapability(IEnergyNetworkProvider.CAPABILITY, dir.getOpposite())) {
+						te1.getCapability(IEnergyNetworkProvider.CAPABILITY, dir.getOpposite()).getNetwork().registerClient(event.getPos(), dir);
+					}
 				}
 			}
 		}

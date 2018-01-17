@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiButtonItem extends GuiButton{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/widgets.png");
+	private final static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/general/widgets.png");
 	
 	private ItemStack icon;
 	private final RenderItem itemRenderer;

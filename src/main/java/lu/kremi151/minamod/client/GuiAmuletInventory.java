@@ -4,6 +4,8 @@ import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
+import lu.kremi151.minamod.proxy.ClientProxy;
+import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
@@ -13,28 +15,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiAmuletInventory extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/amulets.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/amulets/default.png");
 
 	private ContainerAmuletInventory ct;
 
 	public GuiAmuletInventory(ContainerAmuletInventory container) {
 		super(container);
 		this.ct = container;
+		this.ySize = 176;
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int param1, int param2) {
-		// draw text and stuff here
-		// the parameters for drawString are: string, x, y, color
-		
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.amulets.inventory"), 8, 10,
 				4210752);
-		// draws "Inventory" or your regional equivalent
 		fontRenderer.drawString(
 				I18n.translateToLocal("container.inventory"), 8,
 				ySize - 96 + 2, 4210752);
+		fontRenderer.drawString(ClientProxy.KEY_AMULET_1.getDisplayName(), 72, 26, 4210752);
+		fontRenderer.drawString(ClientProxy.KEY_AMULET_2.getDisplayName(), 90, 44, 4210752);
+		fontRenderer.drawString(ClientProxy.KEY_AMULET_3.getDisplayName(), 108, 62, 4210752);
 	}
 
 	@Override

@@ -1,14 +1,10 @@
 package lu.kremi151.minamod.capabilities.amulets;
 
-import java.util.Optional;
-
-import lu.kremi151.minamod.item.amulet.AmuletBase;
-import lu.kremi151.minamod.item.amulet.AmuletRegistry;
-import lu.kremi151.minamod.item.amulet.AmuletStack;
+import lu.kremi151.minamod.item.ItemAmulet;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,16 +15,21 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 	@CapabilityInject(IAmuletHolder.class)
 	public static final Capability<IAmuletHolder> CAPABILITY_AMULET_HOLDER = null;
 	
-	private final NonNullList<AmuletStack> inv = NonNullList.withSize(3, AmuletStack.EMPTY);
+	private final NonNullList<ItemStack> inv = NonNullList.withSize(3, ItemStack.EMPTY);
 
 	@Override
-	public AmuletStack getAmuletAt(int slot) {
+	public ItemStack getAmuletAt(int slot) {
 		return inv.get(slot);
 	}
 
 	@Override
-	public void setAmuletAt(int slot, AmuletStack amulet) {
-		inv.set(slot, amulet);
+	public boolean setAmuletAt(int slot, ItemStack amulet) {
+		if(amulet.isEmpty() || amulet.hasCapability(IAmulet.CAPABILITY, null)) {
+			inv.set(slot, amulet);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public static final Capability.IStorage<IAmuletHolder> STORAGE = new Capability.IStorage<IAmuletHolder>(){
@@ -36,20 +37,7 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 		@Override
 		public NBTBase writeNBT(Capability<IAmuletHolder> capability, IAmuletHolder instance, EnumFacing side) {
 			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagList inv = new NBTTagList();
-			for(int n = 0 ; n <3 ; n++){
-				AmuletStack amulet = instance.getAmuletAt(n);
-				NBTTagCompound anbt = new NBTTagCompound();
-				if(!amulet.isEmpty()){
-					anbt.setInteger("id", amulet.getAmulet().getId());
-					anbt.setTag("data", amulet.getData());
-					inv.appendTag(anbt);
-				}else{
-					anbt.setInteger("id", -1);
-					inv.appendTag(anbt);
-				}
-			}
-			nbt.setTag("amulets", inv);
+			nbt.setTag("amuletInv", ItemStackHelper.saveAllItems(new NBTTagCompound(), instance.getAmulets()));
 			return nbt;
 		}
 
@@ -57,19 +45,10 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 		public void readNBT(Capability<IAmuletHolder> capability, IAmuletHolder instance, EnumFacing side, NBTBase nbt_) {
 			if(nbt_ instanceof NBTTagCompound){
 				NBTTagCompound nbt = (NBTTagCompound)nbt_;
-				if(nbt.hasKey("amulets", 9)){
-					NBTTagList inv = nbt.getTagList("amulets", 10);
-					final int bound = Math.min(inv.tagCount(), 3);
-					for(int i = 0 ; i < bound ; i++){
-						NBTTagCompound anbt = inv.getCompoundTagAt(i);
-						int id = anbt.getInteger("id");
-						Optional<AmuletBase> op = AmuletRegistry.getByIdSafe(id);
-						if(op.isPresent()){
-							instance.setAmuletAt(i, new AmuletStack(op.get(), anbt.getCompoundTag("data")));
-						}else{
-							instance.setAmuletAt(i, AmuletStack.EMPTY);
-						}
-					}
+				try {
+					ItemStackHelper.loadAllItems(nbt.getCompoundTag("amuletInv"), instance.getAmulets());
+				}catch(IndexOutOfBoundsException e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -79,6 +58,11 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 	@Override
 	public int amuletAmount() {
 		return 3;
+	}
+
+	@Override
+	public NonNullList<ItemStack> getAmulets() {
+		return inv;
 	}
 
 }

@@ -6,21 +6,27 @@ import java.lang.reflect.Field;
 import org.apache.logging.log4j.Logger;
 
 import lu.kremi151.minamod.annotations.MinaPermission;
+import lu.kremi151.minamod.block.tileentity.TileEntityAccumulator;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.block.tileentity.TileEntityCable;
 import lu.kremi151.minamod.block.tileentity.TileEntityCampfire;
+import lu.kremi151.minamod.block.tileentity.TileEntityCoalCompressor;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
-import lu.kremi151.minamod.block.tileentity.TileEntityEnergySource;
+import lu.kremi151.minamod.block.tileentity.TileEntityEnergyToRedstone;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
+import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLock;
+import lu.kremi151.minamod.block.tileentity.TileEntityOven;
 import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
+import lu.kremi151.minamod.block.tileentity.TileEntitySolarPanel;
+import lu.kremi151.minamod.block.tileentity.TileEntityWallCable;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.commands.CommandMinaBase;
 import lu.kremi151.minamod.entity.EntityBee;
@@ -134,22 +140,26 @@ public class MinaMod {
 		if(FeatureList.enable_plate){
 			GameRegistry.registerTileEntity(TileEntityPlate.class, createDottedIdentifier("plate"));
 		}
-		GameRegistry.registerTileEntity(TileEntityLetterbox.class, createDottedIdentifier("letterbox"));
-		GameRegistry.registerTileEntity(TileEntityAutoFeeder.class, createDottedIdentifier("auto_feeder"));
-		GameRegistry.registerTileEntity(TileEntityGiftBox.class, createDottedIdentifier("gift_box"));
-		GameRegistry.registerTileEntity(TileEntityLock.class, createDottedIdentifier("keylock"));
-		GameRegistry.registerTileEntity(TileEntityCollector.class, createDottedIdentifier("collector"));
-		GameRegistry.registerTileEntity(TileEntitySieve.class, createDottedIdentifier("sieve"));
-		if(FeatureList.enable_cable){
-			GameRegistry.registerTileEntity(TileEntityCable.class, createDottedIdentifier("cable"));
-			GameRegistry.registerTileEntity(TileEntityEnergySource.class, createDottedIdentifier("energy_source"));
-		}
-		GameRegistry.registerTileEntity(TileEntityHerbCrop.class, createDottedIdentifier("herb"));
-		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createDottedIdentifier("elevator_control"));
-		GameRegistry.registerTileEntity(TileEntityCampfire.class, createDottedIdentifier("camp_fire"));
-		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createDottedIdentifier("slot_machine"));
-		GameRegistry.registerTileEntity(TileEntityFilter.class, createDottedIdentifier("filter"));
-		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, createDottedIdentifier("auto_crafter"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"), createDottedIdentifier("letterbox"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"), createDottedIdentifier("auto_feeder"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityGiftBox.class, createNamespacedIdentifier("gift_box"), createDottedIdentifier("gift_box"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityLock.class, createNamespacedIdentifier("keylock"), createDottedIdentifier("keylock"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityCollector.class, createNamespacedIdentifier("collector"), createDottedIdentifier("collector"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntitySieve.class, createNamespacedIdentifier("sieve"), createDottedIdentifier("sieve"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityHerbCrop.class, createNamespacedIdentifier("herb"), createDottedIdentifier("herb"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityElevatorControl.class, createNamespacedIdentifier("elevator_control"), createDottedIdentifier("elevator_control"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityCampfire.class, createNamespacedIdentifier("camp_fire"), createDottedIdentifier("camp_fire"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntitySlotMachine.class, createNamespacedIdentifier("slot_machine"), createDottedIdentifier("slot_machine"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityFilter.class, createNamespacedIdentifier("filter"), createDottedIdentifier("filter"));
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoCrafter.class, createNamespacedIdentifier("auto_crafter"), createDottedIdentifier("auto_crafter"));
+		GameRegistry.registerTileEntity(TileEntityCable.class, createNamespacedIdentifier("cable"));
+		GameRegistry.registerTileEntity(TileEntityWallCable.class, createNamespacedIdentifier("wall_cable"));
+		GameRegistry.registerTileEntity(TileEntitySolarPanel.class, createNamespacedIdentifier("solar_panel"));
+		GameRegistry.registerTileEntity(TileEntityEnergyToRedstone.class, createNamespacedIdentifier("energy_to_redstone"));
+		GameRegistry.registerTileEntity(TileEntityAccumulator.class, createNamespacedIdentifier("accumulator"));
+		GameRegistry.registerTileEntity(TileEntityOven.class, createNamespacedIdentifier("oven"));
+		GameRegistry.registerTileEntity(TileEntityGenerator.class, createNamespacedIdentifier("generator"));
+		GameRegistry.registerTileEntity(TileEntityCoalCompressor.class, createNamespacedIdentifier("coal_compressor"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),
@@ -223,10 +233,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) { // NO_UCD (unused
-																// code)
-		// BiomeDictionary.registerAllBiomes();
-		
+	public void postInit(FMLPostInitializationEvent event) { 
 		logger.info("MinaMod inside! #MakeMinecraftGreatAgain");
 		
 		if(MOD_DEV_ANALYTICS){
@@ -253,8 +260,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) throws NoSuchMethodException, SecurityException { // NO_UCD
-																											// code)
+	public void preInit(FMLPreInitializationEvent event) throws NoSuchMethodException, SecurityException {
 		this.logger = event.getModLog();
 
 		minaConfigPath.set(new File(event.getModConfigurationDirectory(), "minamod"));
@@ -302,8 +308,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event) { // NO_UCD (unused
-																// code)
+	public void serverStarting(FMLServerStartingEvent event) {						// code)
 		this.theServer = event.getServer();
 		ServerCommandManager cm = (ServerCommandManager) theServer.getCommandManager();
 		cm.registerCommand(new CommandMinaBase());
@@ -382,6 +387,10 @@ public class MinaMod {
 	
 	public static String createDottedIdentifier(String name){
 		return MODID + "." + name;
+	}
+	
+	public static String createNamespacedIdentifier(String name){
+		return MODID + ':' + name;
 	}
 	
 	public static ResourceLocation createResourceLocation(String name){

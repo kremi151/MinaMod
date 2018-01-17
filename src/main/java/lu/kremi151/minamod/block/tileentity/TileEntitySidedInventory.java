@@ -161,7 +161,7 @@ public abstract class TileEntitySidedInventory extends TileEntity implements ISi
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		validateIndex(index);
 		ItemStack stack = inv.get(index);
-		return stack.isEmpty() || MinaUtils.areItemsStackable(stack, itemStackIn, true);
+		return stack.isEmpty() || isItemValidForSlot(index, itemStackIn) || MinaUtils.areItemsStackable(stack, itemStackIn, true);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package lu.kremi151.minamod.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class BaseInventoryImpl extends BaseInventory{
 	
@@ -9,6 +10,11 @@ public class BaseInventoryImpl extends BaseInventory{
 
 	public BaseInventoryImpl(String name, int size) {
 		super(size);
+		this.name = name;
+	}
+
+	public BaseInventoryImpl(String name, NonNullList<ItemStack> inv) {
+		super(inv);
 		this.name = name;
 	}
 

@@ -12,8 +12,7 @@ import net.minecraft.util.text.translation.I18n;
 
 public class GuiFilter extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/filter.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/filter/default.png");
 
 	private final ContainerFilter ct;
 

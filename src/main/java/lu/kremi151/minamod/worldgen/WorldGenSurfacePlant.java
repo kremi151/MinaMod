@@ -19,15 +19,15 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 	
-	private final WeightedList<Plant> list;
+	private final WeightedList<IPlantable> list;
 	private final int chance;
 	
-	private WorldGenSurfacePlant(int chance, WeightedItem<Plant>... plants){
+	private WorldGenSurfacePlant(int chance, WeightedItem<IPlantable>... plants){
 		this.list = WeightedList.from(plants);
 		this.chance = chance;
 	}
 	
-	private WorldGenSurfacePlant(int chance, WeightedList<Plant> list){
+	private WorldGenSurfacePlant(int chance, WeightedList<IPlantable> list){
 		this.list = list;
 		this.chance = chance;
 	}
@@ -56,34 +56,24 @@ public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 	@Override
 	public void injectOre(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkProvider) {
 		if(world.provider.getDimensionType() == DimensionType.OVERWORLD && random.nextInt(chance) == 0){
-			list.randomElement(random).spread(chunkX, chunkZ, world, random);
+			list.randomElement(random).plant(chunkX, chunkZ, world, random);
 		}
 	}
 	
-	public static class Plant{
-		private final int vein;
-		protected final IBlockState plant;
-		
-		protected Plant(IBlockState plant, int vein){
-			this.plant = plant;
-			this.vein = vein;
-		}
-		
-		protected void spread(int chunkX, int chunkZ, World world, Random random){
-			spreadFlower(plant, chunkX, chunkZ, world, vein, random);
-		}
+	public static interface IPlantable{
+		void plant(int chunkX, int chunkZ, World world, Random random);
 	}
 	
 	public static class Builder{
 		
-		private WeightedList.DistributedBuilder<Plant> builder;
+		private WeightedList.DistributedBuilder<IPlantable> builder;
 		
 		public Builder(){
-			builder = new WeightedList.DistributedBuilder<Plant>();
+			builder = new WeightedList.DistributedBuilder<IPlantable>();
 		}
 		
 		public Builder add(IBlockState plant, int vein, double weight){
-			builder.add(new Plant(plant,vein), weight);
+			builder.add((cx, cz, world, rand) -> spreadFlower(plant, cx, cz, world, vein, rand), weight);
 			return this;
 		}
 		
@@ -91,7 +81,7 @@ public class WorldGenSurfacePlant implements IWorldGenerator, IOreInjector{
 			return add(plant, 3, weight);
 		}
 		
-		public Builder add(Plant plant, double weight){
+		public Builder add(IPlantable plant, double weight){
 			builder.add(plant, weight);
 			return this;
 		}

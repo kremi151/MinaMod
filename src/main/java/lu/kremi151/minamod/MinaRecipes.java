@@ -1,15 +1,16 @@
 package lu.kremi151.minamod;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
-import lu.kremi151.minamod.annotations.AutoArmorRecipe;
-import lu.kremi151.minamod.annotations.AutoToolRecipe;
+import lu.kremi151.minamod.annotations.AutoRecipe;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockStandaloneLog;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemChip.ChipType;
+import lu.kremi151.minamod.item.ItemCustomAxe;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.recipe.RecipeColoredBook;
 import lu.kremi151.minamod.recipe.RecipeColoredBookCloning;
@@ -17,6 +18,7 @@ import lu.kremi151.minamod.recipe.RecipeColoredKey;
 import lu.kremi151.minamod.recipe.RecipeCopyKey;
 import lu.kremi151.minamod.recipe.RecipeDamagedSoulPearl;
 import lu.kremi151.minamod.recipe.RecipeEncodeKey;
+import lu.kremi151.minamod.recipe.RecipeFixDrill;
 import lu.kremi151.minamod.recipe.RecipeHerbMixture;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -25,7 +27,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -50,12 +59,11 @@ public class MinaRecipes {
 
 	static void initFurnaceRecipes(MinaMod mod) {
 		if (init_furnace)throw new RuntimeException("Duplicate call of function");
-		// GameRegistry.registerFuelHandler(mod);
-		// TODO: GameRegistry.addSmelting(MinaItems.itemHoneywabe, new
-		// ItemStack(MinaItems.itemHoney,1), 0f);
 		GameRegistry.addSmelting(MinaItems.CHESTNUT, new ItemStack(MinaItems.CHESTNUT_COOKED, 1), 0f);
 		GameRegistry.addSmelting(MinaBlocks.PLATINUM_ORE, new ItemStack(MinaItems.PLATINUM_INGOT), 0.8f);
 		GameRegistry.addSmelting(new ItemStack(MinaItems.RARE_EARTH), new ItemStack(MinaItems.RARE_EARTH, 1, 1), 1f);
+		GameRegistry.addSmelting(MinaBlocks.COPPER_ORE, new ItemStack(MinaItems.COPPER_INGOT), 0.8f);
+		GameRegistry.addSmelting(MinaItems.RUBBER_TREE_BRANCH, new ItemStack(MinaItems.RUBBER), 0.1f);
 
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
 			GameRegistry.addSmelting(new ItemStack(BlockStandaloneLog.getBlockFor(type), 1), new ItemStack(Items.COAL, 1, 1), 0.2f);
@@ -65,9 +73,6 @@ public class MinaRecipes {
 
 	static void initBrewingRecipes(MinaMod mod) {
 		if (init_brewing)throw new RuntimeException("Duplicate call of function");
-		// BrewingRecipeRegistry.addRecipe(new ItemStack(Items.potionitem, 1,
-		// 64), new ItemStack(MinaItems.itemRhubarb), new
-		// ItemStack(MinaItems.itemAquaGem));
 		init_brewing = true;
 	}
 
@@ -84,6 +89,9 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.PLATINUM_BLOCK, 1), "III", "III", "III", 'I',
 				MinaItems.PLATINUM_INGOT);
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.PLATINUM_INGOT, 9), MinaBlocks.PLATINUM_BLOCK);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.COPPER_INGOT, 9), MinaBlocks.COPPER_BLOCK);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COPPER_BLOCK, 1), "III", "III", "III", 'I',
+				MinaItems.COPPER_INGOT);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.SAPPHIRE_BLOCK, 1), "CCC", "CCC", "CCC", 'C',
 				MinaItems.SAPPHIRE);
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.SAPPHIRE, 9), MinaBlocks.SAPPHIRE_BLOCK);
@@ -173,12 +181,9 @@ public class MinaRecipes {
 	
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.KEY, 1), " L", "I ", 'L', Items.LEATHER, 'I', Items.IRON_INGOT);
 	
-		//Amulet of experience:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 0), " S ", "S S", " N ", 'S', Items.STRING, 'N', Items.NETHER_STAR);
-		//Amulet of ender:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 1), " S ", "S S", " E ", 'S', Items.STRING, 'E', Items.ENDER_EYE);
-		//Amulet of return:
-		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET, 1, 2), " S ", "SES", " Y ", 'S', Items.STRING, 'Y', Items.ENDER_EYE, 'E', Items.EMERALD);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_EXPERIENCE), " S ", "S S", " N ", 'S', Items.STRING, 'N', Items.EMERALD);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_ENDER), " S ", "S S", " E ", 'S', Items.STRING, 'E', Items.ENDER_EYE);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_RETURN), " S ", "SES", " Y ", 'S', Items.STRING, 'Y', Items.ENDER_EYE, 'E', Items.EMERALD);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COLLECTOR, 1), "CCC", "WHW", "CRC", 'C', Blocks.COBBLESTONE, 'W', Blocks.WOOL, 'H', Blocks.HOPPER, 'R', Items.REDSTONE);
 	
@@ -210,11 +215,24 @@ public class MinaRecipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.FILTER), " H ", "PSP", " P ", 'H', Blocks.HOPPER, 'P', MinaItems.PLATINUM_INGOT, 'S', Items.STRING);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_FEEDER), "PHP", "DCD", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'D', Blocks.DISPENSER, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta));
-		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "ICG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
+		GameRegistry.addShapedRecipe(MinaItems.BATTERY.createNotRechargeable(7000), "NNN", "RCG", "NNN", 'N', Items.field_191525_da, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.CITRIN, 'G', Items.GOLD_INGOT);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.KEY_CHAIN), " N ", "N N", " N ", 'N', Items.field_191525_da);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.AUTO_CRAFTER), "PHP", "PWP", "PUP", 'P', MinaItems.PLATINUM_INGOT, 'H', Blocks.HOPPER, 'W', Blocks.CRAFTING_TABLE, 'U', new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.COMBINER), " I ", " R ", "I I", 'I', Items.IRON_INGOT, 'R', Items.REDSTONE);
-		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, Blocks.STONE, Blocks.LIT_PUMPKIN);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.PUMPKIN_LANTERN), Items.STICK, new ItemStack(Blocks.STONE, 1, 0), Blocks.LIT_PUMPKIN);
+	
+		//TODO: Accumulator (item)
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaBlocks.CABLE), MinaItems.RUBBER, MinaItems.COPPER_NUGGET, MinaItems.COPPER_NUGGET);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.SOLAR_PANEL), "GGG", "QRQ", "PCP", 'G', Blocks.GLASS, 'Q', Items.QUARTZ, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'P', MinaItems.PLATINUM_INGOT, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta));
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ENERGY_TO_REDSTONE), "RCO", "SSS", 'R', Items.REDSTONE, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_A.meta), 'O', MinaItems.COPPER_NUGGET, 'S', new ItemStack(Blocks.STONE, 1, 0));
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ACCUMULATOR), "IQI", "CRQ", "IQI", 'I', Items.IRON_INGOT, 'Q', Items.QUARTZ, 'R', new ItemStack(MinaItems.RARE_EARTH, 1, 1), 'C', MinaItems.COPPER_INGOT);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.OVEN), "PQP", "P G", "PQP", 'P', MinaItems.PLATINUM_INGOT, 'Q', Items.QUARTZ, 'G', Blocks.GLASS);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.DRILL), "IQQ", "  R", " QQ", 'I', Items.field_191525_da, 'Q', Items.QUARTZ, 'R', MinaItems.RUBBER);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.GENERATOR), "PPP", "CWP", "PPP", 'P', MinaItems.PLATINUM_INGOT, 'C', MinaItems.COPPER_INGOT, 'W', Items.WATER_BUCKET);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_REGENERATION), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.RUBY);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_MERMAID), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.SAPPHIRE);
+		if(FeatureList.enable_ice_altar)GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_HARMONY), " S ", "S S", " H ", 'S', Items.STRING, 'H', MinaItems.HARMONY_PEARL);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COMPRESSOR), "PPP", "POP", "POP", 'P', MinaItems.PLATINUM_INGOT, 'O', Blocks.OBSIDIAN);
 	}
 	
 	private static void initColoredRecipes(){
@@ -317,6 +335,7 @@ public class MinaRecipes {
 		GameRegistry.addRecipe(new RecipeColoredBookCloning());
 		GameRegistry.addRecipe(new RecipeCopyKey());
 		GameRegistry.addRecipe(new RecipeEncodeKey());
+		GameRegistry.addRecipe(new RecipeFixDrill());
 
 		RecipeSorter.register(MinaMod.MODID + ":colored_key", RecipeColoredKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
@@ -332,158 +351,90 @@ public class MinaRecipes {
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":encode_key", RecipeEncodeKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
-		
-		/*RecipeSorter.register(MinaMod.MODID + ":gift_box_packing", RecipeGiftBox.class, RecipeSorter.Category.SHAPED,
-				"after:minecraft:shaped before:minecraft:shapeless");*/
-		
+		RecipeSorter.register(MinaMod.MODID + ":fix_drill", RecipeFixDrill.class, RecipeSorter.Category.SHAPELESS,
+				"after:minecraft:shapeless");
 	}
-	
-	private static final String TOOL_ARMOR_ITEM_MISSING = "Cannot find %s item for %s recipe \"%s\"";
 
 	private static void initArmorRecipes() {
 		if (init)throw new RuntimeException("Duplicate call of function");
 		Field fields[] = MinaItems.class.getDeclaredFields();
+		HashMap<ResourceLocation, Item> materials = new HashMap<>();
 		for(Field f : fields){
 			f.setAccessible(true);
-			AutoArmorRecipe armorNode = f.getAnnotation(AutoArmorRecipe.class);
-			AutoToolRecipe toolNode = f.getAnnotation(AutoToolRecipe.class);
-			if(armorNode != null && f.getType().isAssignableFrom(Item.class)){
+			AutoRecipe aRecipe = f.getAnnotation(AutoRecipe.class);
+			if(aRecipe != null) {
+				Item item, material;
 				try {
-					Item item = (Item) f.get(null);
-					Item helmet = MinaUtils.findItem(MinaMod.MODID, (armorNode.helmet().length()>0)?armorNode.helmet():(armorNode.value() + "_helmet"));
-					Item chestplate = MinaUtils.findItem(MinaMod.MODID, (armorNode.chestplate().length()>0)?armorNode.chestplate():(armorNode.value() + "_chestplate"));
-					Item leggings = MinaUtils.findItem(MinaMod.MODID, (armorNode.leggings().length()>0)?armorNode.leggings():(armorNode.value() + "_leggings"));
-					Item boots = MinaUtils.findItem(MinaMod.MODID, (armorNode.boots().length()>0)?armorNode.boots():(armorNode.value() + "_boots"));
-					
-					int oreids[] = OreDictionary.getOreIDs(new ItemStack(item));
-					if(armorNode.useOreName() && oreids.length == 0) {
-						throw new RuntimeException("Recipe cannot be created with an empty set of ore names (armor material: " + item.getRegistryName() + ")");
-					}
-					
-					if(helmet != null){
-						if(armorNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(helmet, 1), "AAA", "A A", 'A', OreDictionary.getOreName(id)));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(helmet, 1), "AAA", "A A", 'A', item);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "helmet", "armor", armorNode.value());
-					}
-					if(chestplate != null){
-						if(armorNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chestplate, 1), "A A", "AAA", "AAA", 'A', OreDictionary.getOreName(id)));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(chestplate, 1), "A A", "AAA", "AAA", 'A', item);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "chestplate", "armor", armorNode.value());
-					}
-					if(leggings != null){
-						if(armorNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(leggings, 1), "AAA", "A A", "A A", 'A', OreDictionary.getOreName(id)));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(leggings, 1), "AAA", "A A", "A A", 'A', item);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "leggings", "armor", armorNode.value());
-					}
-					if(boots != null){
-						if(armorNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(boots, 1), "A A", "A A", 'A', OreDictionary.getOreName(id)));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(boots, 1), "A A", "A A", 'A', item);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "boots", "armor", armorNode.value());
-					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					item = (Item) f.get(null);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					throw new RuntimeException(e);
 				}
-			}
-			
-			if(toolNode != null && f.getType().isAssignableFrom(Item.class)){
+				ResourceLocation matRes = new ResourceLocation(aRecipe.material());
+				material = materials.get(matRes);
+				if(material == null) {
+					material = MinaUtils.findItem(matRes);
+					if(material == null) {
+						throw new RuntimeException("Material item for id " + matRes + " was not found for automatic crafting recipe creation");
+					}
+					materials.put(matRes, material);
+				}
 				try {
-					Item item = (Item) f.get(null);
-					Item sword = MinaUtils.findItem(MinaMod.MODID, (toolNode.sword().length()>0)?toolNode.sword():(toolNode.value() + "_sword"));
-					Item axe = MinaUtils.findItem(MinaMod.MODID, (toolNode.axe().length()>0)?toolNode.axe():(toolNode.value() + "_axe"));
-					Item pickaxe = MinaUtils.findItem(MinaMod.MODID, (toolNode.pickaxe().length()>0)?toolNode.pickaxe():(toolNode.value() + "_pickaxe"));
-					Item shovel = MinaUtils.findItem(MinaMod.MODID, (toolNode.shovel().length()>0)?toolNode.shovel():(toolNode.value() + "_shovel"));
-					Item hoe = MinaUtils.findItem(MinaMod.MODID, (toolNode.hoe().length()>0)?toolNode.hoe():(toolNode.value() + "_hoe"));
-
-					int oreids[] = OreDictionary.getOreIDs(new ItemStack(item));
-					if(toolNode.useOreName() && oreids.length == 0) {
-						throw new RuntimeException("Recipe cannot be created with an empty set of ore names (tool material: " + item.getRegistryName() + ")");
-					}
-					
-					if(sword != null){
-						if(toolNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(sword, 1), "A", "A", "B", 'A', OreDictionary.getOreName(id), 'B', Items.STICK));
+					AutoRecipe.Type type = aRecipe.type();
+					if(type == AutoRecipe.Type.AUTO) {
+						if(item instanceof ItemAxe || item instanceof ItemCustomAxe) {
+							type = AutoRecipe.Type.AXE;
+						}else if(item instanceof ItemPickaxe) {
+							type = AutoRecipe.Type.PICKAXE;
+						}else if(item instanceof ItemSpade) {
+							type = AutoRecipe.Type.SHOVEL;
+						}else if(item instanceof ItemHoe) {
+							type = AutoRecipe.Type.HOE;
+						}else if(item instanceof ItemSword) {
+							type = AutoRecipe.Type.SWORD;
+						}else if(item instanceof ItemArmor) {
+							ItemArmor armor = (ItemArmor) item;
+							switch(armor.armorType) {
+							case HEAD: type = AutoRecipe.Type.HELMET; break;
+							case CHEST: type = AutoRecipe.Type.CHESTPLATE; break;
+							case LEGS: type = AutoRecipe.Type.LEGGINGS; break;
+							case FEET: type = AutoRecipe.Type.BOOTS; break;
+							default: throw new IllegalStateException("Unsupported armor type for automatic crafting recipe creation: " + armor.armorType);
 							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(sword, 1), "A", "A", "B", 'A', item, 'B', Items.STICK);
 						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "sword", "tool", armorNode.value());
 					}
-					if(axe != null){
-						if(toolNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe, 1), "AA", "AB", " B", 'A', OreDictionary.getOreName(id), 'B', Items.STICK));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(axe, 1), "AA", "AB", " B", 'A', item, 'B', Items.STICK);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "axe", "tool", armorNode.value());
+					switch(type) {
+					case AXE:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "AA", "AB", " B", 'A', material, 'B', Items.STICK);
+						break;
+					case PICKAXE:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "AAA", " B ", " B ", 'A', material, 'B', Items.STICK);
+						break;
+					case SHOVEL:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "A", "B", "B", 'A', material, 'B', Items.STICK);
+						break;
+					case HOE:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "AA", " B", " B", 'A', material, 'B', Items.STICK);
+						break;
+					case SWORD:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "A", "A", "B", 'A', material, 'B', Items.STICK);
+						break;
+					case HELMET:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "AAA", "A A", 'A', material);
+						break;
+					case CHESTPLATE:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "A A", "AAA", "AAA", 'A', material);
+						break;
+					case LEGGINGS:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "AAA", "A A", "A A", 'A', material);
+						break;
+					case BOOTS:
+						GameRegistry.addShapedRecipe(new ItemStack(item), "A A", "A A", 'A', item);
+						break;
+					default:
+						throw new RuntimeException("Invalid item for automatic crafting recipe: " + item.getRegistryName());
 					}
-					if(pickaxe != null){
-						if(toolNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxe, 1), "AAA", " B ", " B ", 'A', OreDictionary.getOreName(id), 'B', Items.STICK));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(pickaxe, 1), "AAA", " B ", " B ", 'A', item, 'B', Items.STICK);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "pickaxe", "tool", armorNode.value());
-					}
-					if(shovel != null){
-						if(toolNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shovel, 1), "A", "B", "B", 'A', OreDictionary.getOreName(id), 'B', Items.STICK));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(shovel, 1), "A", "B", "B", 'A', item, 'B', Items.STICK);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "shovel", "tool", armorNode.value());
-					}
-					if(hoe != null){
-						if(toolNode.useOreName()) {
-							for(int id : oreids) {
-								GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe, 1), "AA", " B", " B", 'A', OreDictionary.getOreName(id), 'B', Items.STICK));
-							}
-						}else {
-							GameRegistry.addShapedRecipe(new ItemStack(hoe, 1), "AA", " B", " B", 'A', item, 'B', Items.STICK);
-						}
-					}else{
-						MinaMod.errorln(TOOL_ARMOR_ITEM_MISSING, "hoe", "tool", armorNode.value());
-					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+				}catch(Throwable t) {
+					throw new RuntimeException("Could not create automatic crafting recipe for item " + item.getRegistryName(), t);
 				}
 			}
 		}

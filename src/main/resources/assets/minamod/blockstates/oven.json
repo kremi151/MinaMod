@@ -1,0 +1,12 @@
+{
+    "variants": {
+	    "cooking=false,facing=north": { "model": "minamod:oven_off" },
+        "cooking=false,facing=south": { "model": "minamod:oven_off", "y": 180 },
+        "cooking=false,facing=west":  { "model": "minamod:oven_off", "y": 270 },
+        "cooking=false,facing=east":  { "model": "minamod:oven_off", "y": 90 },
+        "cooking=true,facing=north": { "model": "minamod:oven_on" },
+        "cooking=true,facing=south": { "model": "minamod:oven_on", "y": 180 },
+        "cooking=true,facing=west":  { "model": "minamod:oven_on", "y": 270 },
+        "cooking=true,facing=east":  { "model": "minamod:oven_on", "y": 90 }
+    }
+}

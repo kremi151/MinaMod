@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "minamod:blocks/metallic_sanded",
+    "north": "minamod:blocks/oven_front_on",
+    "east": "minamod:blocks/metallic_sanded",
+    "south": "minamod:blocks/metallic_sanded",
+    "west": "minamod:blocks/metallic_sanded",
+    "up": "minamod:blocks/metallic_sanded",
+    "down": "minamod:blocks/metallic_sanded"
+  }
+}

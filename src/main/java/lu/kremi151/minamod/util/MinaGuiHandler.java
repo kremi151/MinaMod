@@ -2,19 +2,25 @@ package lu.kremi151.minamod.util;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
+import lu.kremi151.minamod.block.tileentity.TileEntityCoalCompressor;
 import lu.kremi151.minamod.block.tileentity.TileEntityCollector;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
+import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
+import lu.kremi151.minamod.block.tileentity.TileEntityOven;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
 import lu.kremi151.minamod.container.ContainerAutoCrafter;
 import lu.kremi151.minamod.container.ContainerAutoFeeder;
+import lu.kremi151.minamod.container.ContainerCoalCompressor;
 import lu.kremi151.minamod.container.ContainerCoinBag;
 import lu.kremi151.minamod.container.ContainerCollector;
 import lu.kremi151.minamod.container.ContainerCombiner;
 import lu.kremi151.minamod.container.ContainerFilter;
+import lu.kremi151.minamod.container.ContainerGenerator;
 import lu.kremi151.minamod.container.ContainerKeyChain;
 import lu.kremi151.minamod.container.ContainerLetterbox;
+import lu.kremi151.minamod.container.ContainerOven;
 import lu.kremi151.minamod.container.ContainerSelectItem;
 import lu.kremi151.minamod.container.ContainerSketchView;
 import lu.kremi151.minamod.container.ContainerSlotMachine;
@@ -56,6 +62,12 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new ContainerCombiner(player, x);
 		case IDRegistry.guiIdSketch:
 			return new ContainerSketchView(player, x);
+		case IDRegistry.guiIdOven:
+			return new ContainerOven(player, (TileEntityOven) world.getTileEntity(new BlockPos(x,y,z)));
+		case IDRegistry.guiIdGenerator:
+			return new ContainerGenerator(player, (TileEntityGenerator) world.getTileEntity(new BlockPos(x,y,z)));
+		case IDRegistry.guiIdCompressor:
+			return new ContainerCoalCompressor(player, (TileEntityCoalCompressor) world.getTileEntity(new BlockPos(x,y,z)));
 		}
 		return null;
 	}
@@ -93,6 +105,12 @@ public class MinaGuiHandler implements IGuiHandler{
 			return new lu.kremi151.minamod.client.GuiCombiner(new ContainerCombiner(player, x));
 		case IDRegistry.guiIdSketch:
 			return new lu.kremi151.minamod.client.GuiSketchView(new ContainerSketchView(player, x));
+		case IDRegistry.guiIdOven:
+			return new lu.kremi151.minamod.client.GuiOven(new ContainerOven(player, (TileEntityOven) world.getTileEntity(new BlockPos(x,y,z))));
+		case IDRegistry.guiIdGenerator:
+			return new lu.kremi151.minamod.client.GuiGenerator(new ContainerGenerator(player, (TileEntityGenerator) world.getTileEntity(new BlockPos(x,y,z))));
+		case IDRegistry.guiIdCompressor:
+			return new lu.kremi151.minamod.client.GuiCoalCompressor(new ContainerCoalCompressor(player, (TileEntityCoalCompressor) world.getTileEntity(new BlockPos(x,y,z))));
 		}
 		return null;
 	}

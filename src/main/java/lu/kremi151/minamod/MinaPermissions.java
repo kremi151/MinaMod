@@ -58,6 +58,9 @@ public class MinaPermissions {
 	@MinaPermission(desc = "Allows to analyse a chunk of contained ores", lvl = DefaultPermissionLevel.OP)
 	public static final String CMD_ANALYSE_ORES = "minamod.admin.ore_injector.analyse";
 	
+	@MinaPermission(desc = "Allows management of the working directory of the ore injector", lvl = DefaultPermissionLevel.OP)
+	public static final String CMD_OREGEN_PWD = "minamod.admin.ore_injector.regen";
+	
 
 	@MinaPermission(desc = "Allows to use elevators", lvl = DefaultPermissionLevel.ALL)
 	public static final String ALLOW_ELEVATOR_USE = "minamod.all.elevator.use";

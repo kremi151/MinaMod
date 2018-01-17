@@ -20,8 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiSelectItem extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/select_item.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/select_item/default.png");
 
 	private final ContainerSelectItem ct;
 	private final GuiButton btnOk, btnCancel;

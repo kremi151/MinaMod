@@ -23,7 +23,7 @@ import net.minecraft.util.text.translation.I18n;
 
 public class GuiPlayerStats extends GuiNoInventory{
 
-	public static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/player_stats.png");
+	public static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/player_stats/default.png");
 	
 	private int statsCenterX = 88, statsCenterY = 79;
 	

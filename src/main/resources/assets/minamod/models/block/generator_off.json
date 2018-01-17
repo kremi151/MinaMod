@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "minamod:blocks/platinum_block",
+    "up": "minamod:blocks/platinum_block",
+    "down": "minamod:blocks/platinum_block",
+	"north": "minamod:blocks/generator_front_off",
+    "east": "minamod:blocks/platinum_block",
+    "south": "minamod:blocks/platinum_block",
+    "west": "minamod:blocks/platinum_block"
+  }
+}

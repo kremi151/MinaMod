@@ -16,8 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiAutoFeeder extends GuiContainer {
 
-	private static ResourceLocation guiTextures = new ResourceLocation(
-			MinaMod.MODID, "textures/gui/autofeeder.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/autofeeder/default.png");
 
 	private static final int GUI_ENERGY_CAPTION_GREEN = MinaUtils.convertRGBToDecimal(20, 190, 40);
 	private static final int GUI_ENERGY_CAPTION_RED = MinaUtils.convertRGBToDecimal(190, 20, 40);

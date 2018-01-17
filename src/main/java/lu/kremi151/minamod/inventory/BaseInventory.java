@@ -17,6 +17,11 @@ public abstract class BaseInventory implements IInventory{
 		this.inv = NonNullList.withSize(size, ItemStack.EMPTY);
 	}
 	
+	public BaseInventory(NonNullList<ItemStack> inv) {
+		this.size = inv.size();
+		this.inv = inv;
+	}
+	
 	public abstract void onCraftMatrixChanged();
 
 	@Override

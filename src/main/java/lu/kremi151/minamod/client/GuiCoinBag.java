@@ -27,7 +27,7 @@ import static lu.kremi151.minamod.client.GuiUtils.isHovering;
 @SideOnly(Side.CLIENT)
 public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.Listener{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/coin_bag.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/coin_bag/default.png");
 
 	private final static int BTN_W_PLUS = 0;
 	private final static int BTN_W_MINUS = 1;

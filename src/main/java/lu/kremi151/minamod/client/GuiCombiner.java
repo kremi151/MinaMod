@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiCombiner extends GuiContainer{
 
-	private static ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/combiner.png");
+	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/combiner/default.png");
 
 	public GuiCombiner(ContainerCombiner inventorySlotsIn) {
 		super(inventorySlotsIn);
