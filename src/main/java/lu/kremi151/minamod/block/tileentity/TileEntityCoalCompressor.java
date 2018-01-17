@@ -51,12 +51,16 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
     		return (T) (capability == CapabilityEnergy.ENERGY ? nrj : super.getCapability(capability, facing));
     	}
     }
+    
+    private boolean isValidInputMaterial(ItemStack stack) {
+    	return !stack.isEmpty() && stack.getItem() == Items.COAL && stack.getMetadata() == 0; 
+    }
 
 	@Override
 	public void update() {
 		if(!world.isRemote && world.getWorldTime() % 10 == 0) {
 			ItemStack stack = invIn.getStackInSlot(0);
-			if(!stack.isEmpty() && stack.getItem() == Items.COAL && stack.getCount() >= 8) {//TODO: NO CHARCOALS!
+			if(isValidInputMaterial(stack) && stack.getCount() >= 8) {
 				if(nrj.getEnergyStored() >= 200) {
 					compressing = true;
 					if(++compressingTicks >= MAX_COMPRESSING_TICKS) {
