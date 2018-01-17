@@ -232,6 +232,7 @@ public class MinaRecipes {
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_REGENERATION), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.RUBY);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_MERMAID), " S ", "S S", " G ", 'S', Items.STRING, 'G', MinaItems.SAPPHIRE);
 		if(FeatureList.enable_ice_altar)GameRegistry.addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_HARMONY), " S ", "S S", " H ", 'S', Items.STRING, 'H', MinaItems.HARMONY_PEARL);
+		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COMPRESSOR), "PPP", "POP", "POP", 'P', MinaItems.PLATINUM_INGOT, 'O', Blocks.OBSIDIAN);
 	}
 	
 	private static void initColoredRecipes(){
