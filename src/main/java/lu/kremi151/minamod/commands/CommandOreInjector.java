@@ -1,20 +1,19 @@
 package lu.kremi151.minamod.commands;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.util.OreInjectorManager;
 import lu.kremi151.minamod.util.TextHelper;
+import lu.kremi151.minamod.worlddata.MinaWorld;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
@@ -40,7 +39,7 @@ public class CommandOreInjector extends MinaCommandBase{
 		return "regen";
 	}
 	
-	private WorldServer findWorldByName(MinecraftServer server, String name) {
+	static WorldServer findWorldByName(MinecraftServer server, String name) {
 		for(WorldServer ws : server.getServer().worlds) {
 			if(ws.getWorldInfo().getWorldName().equalsIgnoreCase(name)) {
 				return ws;
@@ -92,13 +91,22 @@ public class CommandOreInjector extends MinaCommandBase{
 		}
 	}
 	
+	static File getRegionFilesFolderForWorld(WorldServer world) {
+		return MinaWorld.forWorld(world).getConfiguration().getCustomOreInjectorWorkingPath()
+				.orElse(new File(world.getChunkSaveLocation().getAbsolutePath(), "region"));
+	}
+	
+	static String[] listRegionFileNames(File folder) {
+		return folder.list((file, str) ->str.toLowerCase().endsWith(".mca"));
+	}
+	
 	private void doOreInjection(ICommandSender sender, boolean info, WorldServer world, String oreInjectors[]) {
 		//world.sendQuittingDisconnectingPacket();
 		TextHelper.sendTranslateableChatMessage(sender, "msg.cmd.ore_injector.regen.processing");
 
-		File regionFolder = new File(world.getChunkSaveLocation().getAbsolutePath(), "region");
+		File regionFolder = getRegionFilesFolderForWorld(world);
 		if(regionFolder.exists() && regionFolder.isDirectory()) {
-			String regionFiles[] = regionFolder.list((file, str) ->str.toLowerCase().endsWith(".mca"));
+			String regionFiles[] = listRegionFileNames(regionFolder);
 			for(String file : regionFiles) {
 				String parts[] = file.split("\\.");
 				if(parts.length == 4) {
