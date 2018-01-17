@@ -92,6 +92,8 @@ public class MinaRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.COPPER_INGOT, 9), MinaBlocks.COPPER_BLOCK);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.COPPER_BLOCK, 1), "III", "III", "III", 'I',
 				MinaItems.COPPER_INGOT);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.COPPER_NUGGET, 9), MinaItems.COPPER_INGOT);
+		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.COPPER_INGOT), "NNN", "NNN", "NNN", 'N', MinaItems.COPPER_NUGGET);
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.SAPPHIRE_BLOCK, 1), "CCC", "CCC", "CCC", 'C',
 				MinaItems.SAPPHIRE);
 		GameRegistry.addShapelessRecipe(new ItemStack(MinaItems.SAPPHIRE, 9), MinaBlocks.SAPPHIRE_BLOCK);
