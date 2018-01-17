@@ -28,7 +28,7 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
 	private final IInventory invOut = new BaseInventoryImpl("output", 1);
 	private final IItemHandler invInHandler = new InvWrapper(invIn), invOutHandler = new ExtractOnlyInvWrapper(invOut);
 
-	private static final int MAX_COMPRESSING_TICKS = 4000;
+	private static final int MAX_COMPRESSING_TICKS = 3000;
 	private int compressingTicks = 0;
 	private boolean compressing = false;
 	
