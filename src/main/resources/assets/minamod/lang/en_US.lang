@@ -205,6 +205,7 @@ tile.oven.name=Oven
 tile.copper_block.name=Copper Block
 tile.copper_ore.name=Copper Ore
 tile.generator.name=Generator
+tile.coal_compressor.name=Coal compressor
 item.copper_ingot.name=Copper Ingot
 item.copper_nugget.name=Copper Nugget
 item.ever_snow.name=Ever snow

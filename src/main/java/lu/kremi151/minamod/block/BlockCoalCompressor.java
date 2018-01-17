@@ -30,6 +30,18 @@ public class BlockCoalCompressor extends Block{
 		super(Material.IRON, MapColor.GRAY);
 		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
+
+    @Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 	
 	@Override
 	public boolean hasTileEntity(IBlockState bs)
