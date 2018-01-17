@@ -28,7 +28,7 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
 	private final IInventory invOut = new BaseInventoryImpl("output", 1);
 	private final IItemHandler invInHandler = new InvWrapper(invIn), invOutHandler = new ExtractOnlyInvWrapper(invOut);
 
-	private static final int MAX_COMPRESSING_TICKS = 3000;
+	private static final int MAX_COMPRESSING_TICKS = 4000;
 	private int compressingTicks = 0;
 	private boolean compressing = false;
 	
@@ -56,7 +56,7 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
 	public void update() {
 		if(!world.isRemote && world.getWorldTime() % 10 == 0) {
 			ItemStack stack = invIn.getStackInSlot(0);
-			if(!stack.isEmpty() && stack.getItem() == Items.COAL && stack.getCount() >= 8) {
+			if(!stack.isEmpty() && stack.getItem() == Items.COAL && stack.getCount() >= 8) {//TODO: NO CHARCOALS!
 				if(nrj.getEnergyStored() >= 200) {
 					compressing = true;
 					if(++compressingTicks >= MAX_COMPRESSING_TICKS) {

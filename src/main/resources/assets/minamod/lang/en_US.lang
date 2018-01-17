@@ -472,6 +472,7 @@ gui.generic.page=Page %d of %d
 gui.select_item.ok=OK
 gui.select_item.cancel=Cancel
 gui.select_item.def_title=Select an item
+gui.progress.caption=Progress: %.3f%%
 minastats.attack=Attack
 minastats.defense=Defense
 minastats.speed=Speed
