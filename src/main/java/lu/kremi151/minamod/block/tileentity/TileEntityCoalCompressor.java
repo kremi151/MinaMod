@@ -2,8 +2,8 @@ package lu.kremi151.minamod.block.tileentity;
 
 import javax.annotation.Nullable;
 
-import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.capabilities.AccessableEnergyStorage;
+import lu.kremi151.minamod.capabilities.itemhandler.ExtractOnlyInvWrapper;
 import lu.kremi151.minamod.inventory.BaseInventoryImpl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -26,9 +26,9 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
 	private final AccessableEnergyStorage nrj = new AccessableEnergyStorage(200, 200, 0);
 	private final IInventory invIn = new BaseInventoryImpl("input", 1);
 	private final IInventory invOut = new BaseInventoryImpl("output", 1);
-	private final IItemHandler invInHandler = new InvWrapper(invIn), invOutHandler = new InvWrapper(invOut);//TODO: Out should be read-only
+	private final IItemHandler invInHandler = new InvWrapper(invIn), invOutHandler = new ExtractOnlyInvWrapper(invOut);
 
-	private static final int MAX_COMPRESSING_TICKS = 2000;//TODO: Adjust
+	private static final int MAX_COMPRESSING_TICKS = 3000;
 	private int compressingTicks = 0;
 	private boolean compressing = false;
 	
@@ -145,6 +145,6 @@ public class TileEntityCoalCompressor extends BaseTileEntity implements ITickabl
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 		IBlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(getPos(), state, MinaBlocks.COMPRESSOR.getActualState(state, world, pos), 3);
+		world.notifyBlockUpdate(getPos(), state, state.getActualState(world, getPos()), 3);
 	}
 }
