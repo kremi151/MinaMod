@@ -36,6 +36,14 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
 	
 	private static final PropertyEnum<Part> PART = PropertyEnum.create("part", Part.class);
 
+	private static final AxisAlignedBB STAGE_0_AABB = BUSH_AABB.setMaxY(0.0625d);
+	private static final AxisAlignedBB STAGE_1_AABB = BUSH_AABB.setMaxY(0.125d);
+	private static final AxisAlignedBB STAGE_2_5U_AABB = BUSH_AABB.setMaxY(0.5d);
+	private static final AxisAlignedBB STAGE_3_AABB = BUSH_AABB.setMaxY(0.625d);
+	private static final AxisAlignedBB STAGE_6U_AABB = BUSH_AABB.setMaxY(0.875d);
+	private static final AxisAlignedBB STAGE_7U_AABB = BUSH_AABB.setMaxY(0.875d);
+	private static final AxisAlignedBB FULL_AABB = BUSH_AABB.setMaxY(1.0d);
+
 	public BlockRubberTree() {
 		super(Material.PLANTS, MapColor.RED);
 		this.setDefaultState(blockState.getBaseState().withProperty(PART, Part.STAGE_0));
@@ -46,22 +54,14 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         switch(state.getValue(PART)) {
-        case STAGE_0:
-        	return BUSH_AABB.setMaxY(0.0625d);
-        case STAGE_1:
-        	return BUSH_AABB.setMaxY(0.125d);
-        case STAGE_2:
-        	return BUSH_AABB.setMaxY(0.5d);
-        case STAGE_3:
-        	return BUSH_AABB.setMaxY(0.625d);
-        case STAGE_5_UPPER:
-        	return BUSH_AABB.setMaxY(0.5d);
-        case STAGE_6_UPPER:
-        	return BUSH_AABB.setMaxY(0.875d);
-        case STAGE_7_UPPER:
-        	return BUSH_AABB.setMaxY(0.875d);
-        default:
-        	return BUSH_AABB.setMaxY(1.0d);
+        case STAGE_0: return STAGE_0_AABB;
+        case STAGE_1: return STAGE_1_AABB;
+        case STAGE_2: return STAGE_2_5U_AABB;
+        case STAGE_3: return STAGE_3_AABB;
+        case STAGE_5_UPPER: return STAGE_2_5U_AABB;
+        case STAGE_6_UPPER: return STAGE_6U_AABB;
+        case STAGE_7_UPPER: return STAGE_7U_AABB;
+        default: return FULL_AABB;
         }
     }
 
