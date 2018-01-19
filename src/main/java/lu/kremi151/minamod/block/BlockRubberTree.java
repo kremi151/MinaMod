@@ -45,7 +45,24 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return FULL_BLOCK_AABB;
+        switch(state.getValue(PART)) {
+        case STAGE_0:
+        	return BUSH_AABB.setMaxY(0.0625d);
+        case STAGE_1:
+        	return BUSH_AABB.setMaxY(0.125d);
+        case STAGE_2:
+        	return BUSH_AABB.setMaxY(0.5d);
+        case STAGE_3:
+        	return BUSH_AABB.setMaxY(0.625d);
+        case STAGE_5_UPPER:
+        	return BUSH_AABB.setMaxY(0.5d);
+        case STAGE_6_UPPER:
+        	return BUSH_AABB.setMaxY(0.875d);
+        case STAGE_7_UPPER:
+        	return BUSH_AABB.setMaxY(0.875d);
+        default:
+        	return BUSH_AABB;
+        }
     }
 
 	@Override
