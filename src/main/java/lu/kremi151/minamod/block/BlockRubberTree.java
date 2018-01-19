@@ -61,7 +61,7 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
         case STAGE_7_UPPER:
         	return BUSH_AABB.setMaxY(0.875d);
         default:
-        	return BUSH_AABB;
+        	return BUSH_AABB.setMaxY(1.0d);
         }
     }
 
