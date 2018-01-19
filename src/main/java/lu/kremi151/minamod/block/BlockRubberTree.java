@@ -83,7 +83,9 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
                 Block block = (Block)(flag ? this : worldIn.getBlockState(blockpos).getBlock());
                 Block block1 = (Block)(flag ? worldIn.getBlockState(blockpos1).getBlock() : this);
 
-                if (!flag) this.dropBlockAsItem(worldIn, pos, state, 0);
+                if (!flag) {
+                	this.dropBlockAsItem(worldIn, pos, state, 0);
+                }
 
                 if (block == this)
                 {
@@ -111,7 +113,7 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
         else
         {
             IBlockState iblockstate = worldIn.getBlockState(pos.up());
-            return iblockstate.getBlock() == this && super.canBlockStay(worldIn, pos, iblockstate);
+            return (worldIn.isAirBlock(pos.up()) || iblockstate.getBlock() == this) && super.canBlockStay(worldIn, pos, iblockstate);//
         }
     }
 	
