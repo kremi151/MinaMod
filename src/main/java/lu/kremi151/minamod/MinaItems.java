@@ -230,8 +230,8 @@ public class MinaItems {
 	public static final Item AMULET_OF_ENDER = new ItemAmulet().setUnlocalizedName("amulet_of_ender");
 	public static final Item AMULET_OF_EXPERIENCE = new ItemAmulet().setUnlocalizedName("amulet_of_experience");
 	public static final Item AMULET_OF_RETURN = new ItemAmulet().setUnlocalizedName("amulet_of_return");
-	public static final Item AMULET_OF_REGENERATION = new ItemAmulet().setUnlocalizedName("amulet_of_regeneration");
-	public static final Item AMULET_OF_MERMAID = new ItemAmulet().setUnlocalizedName("amulet_of_mermaid");
+	public static final Item AMULET_OF_REGENERATION = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_regeneration");
+	public static final Item AMULET_OF_MERMAID = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_mermaid");
 	public static final Item AMULET_OF_HARMONY = new ItemAmulet().setUnlocalizedName("amulet_of_harmony");
 	public static final ItemBattery BATTERY = (ItemBattery)new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");

@@ -25,6 +25,11 @@ public interface IAmulet {
 		return nbt;
 	}
 	default void loadData(NBTTagCompound nbt) {}
+	
+	default NBTTagCompound saveSyncData(NBTTagCompound nbt) {
+		return nbt;
+	}
+	default void loadSyncData(NBTTagCompound nbt) {}
 
 	default long getUseCooldown() {
 		return 500l;

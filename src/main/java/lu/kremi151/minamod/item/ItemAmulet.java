@@ -13,6 +13,7 @@ import lu.kremi151.minamod.capabilities.amulets.impl.AmuletExperience;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletHarmony;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletPotionEffect;
 import lu.kremi151.minamod.capabilities.amulets.impl.AmuletReturn;
+import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -48,7 +49,7 @@ public class ItemAmulet extends Item{
         return new ItemAmuletCapabilityProvider(cap);
     }
 	
-	private IAmulet getAmulet(ItemStack stack) {
+	protected IAmulet getAmulet(ItemStack stack) {
 		return stack.getCapability(IAmulet.CAPABILITY, null);
 	}
 	
@@ -79,4 +80,24 @@ public class ItemAmulet extends Item{
 		IAmulet amulet = getAmulet(stack);
 		if(amulet != null)amulet.addInformation(player, tooltip, advanced);
     }
+	
+	public static class Syncable extends ItemAmulet implements ISyncCapabilitiesToClient{
+
+		@Override
+		public NBTTagCompound writeSyncableData(ItemStack stack, NBTTagCompound nbt) {
+			IAmulet amulet = getAmulet(stack);
+			if(amulet != null) {
+				return amulet.saveSyncData(nbt);
+			}else {
+				return nbt;
+			}
+		}
+
+		@Override
+		public void readSyncableData(ItemStack stack, NBTTagCompound nbt) {
+			IAmulet amulet = getAmulet(stack);
+			if(amulet != null)amulet.loadSyncData(nbt);
+		}
+		
+	}
 }
