@@ -18,6 +18,7 @@ public class AmuletReturn implements IAmulet{
 	
 	private double x, y, z;
 	private String world;
+	private boolean isSetOverride = false;
 
 	@Override
 	public boolean onUse(World world, EntityPlayer player) {
@@ -43,7 +44,7 @@ public class AmuletReturn implements IAmulet{
 	
 	@Override
 	public void addInformation(EntityPlayer player, List<String> tooltip, boolean advanced){
-		if(isSet())tooltip.add(I18n.translateToLocal("item.amulet.return.active"));
+		if(isSetOverride || isSet())tooltip.add(I18n.translateToLocal("item.amulet.return.active"));
 	}
 	
 	private boolean isSet() {
@@ -89,6 +90,17 @@ public class AmuletReturn implements IAmulet{
 			this.y = loc.getDouble("y");
 			this.z = loc.getDouble("z");
 		}
+	}
+	
+	@Override
+	public NBTTagCompound saveSyncData(NBTTagCompound nbt) {
+		nbt.setBoolean("Active", isSet());
+		return nbt;
+	}
+	
+	@Override
+	public void loadSyncData(NBTTagCompound nbt) {
+		isSetOverride = nbt.getBoolean("Active");
 	}
 
 }

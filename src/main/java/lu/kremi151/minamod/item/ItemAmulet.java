@@ -44,7 +44,7 @@ public class ItemAmulet extends Item{
         }else if(stack.getItem() == MinaItems.AMULET_OF_HARMONY) {
         	cap = new AmuletHarmony();
         }else {
-        	cap = new AmuletEnder();
+        	cap = new AmuletEnder(stack);
         }
         return new ItemAmuletCapabilityProvider(cap);
     }

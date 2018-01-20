@@ -227,9 +227,9 @@ public class MinaItems {
 	public static final ItemFood GOULASH = (ItemFood) new ItemSoup(12).setUnlocalizedName("goulash");
 	public static final Item KATANA = new ItemKatana().setUnlocalizedName("katana");
 	public static final Item COIN_BAG = new ItemCoinBag().setUnlocalizedName("coin_bag");
-	public static final Item AMULET_OF_ENDER = new ItemAmulet().setUnlocalizedName("amulet_of_ender");
-	public static final Item AMULET_OF_EXPERIENCE = new ItemAmulet().setUnlocalizedName("amulet_of_experience");
-	public static final Item AMULET_OF_RETURN = new ItemAmulet().setUnlocalizedName("amulet_of_return");
+	public static final Item AMULET_OF_ENDER = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_ender");
+	public static final Item AMULET_OF_EXPERIENCE = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_experience");
+	public static final Item AMULET_OF_RETURN = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_return");
 	public static final Item AMULET_OF_REGENERATION = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_regeneration");
 	public static final Item AMULET_OF_MERMAID = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_mermaid");
 	public static final Item AMULET_OF_HARMONY = new ItemAmulet().setUnlocalizedName("amulet_of_harmony");
