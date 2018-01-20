@@ -1,10 +1,15 @@
 package lu.kremi151.minamod.capabilities.amulets.impl;
 
+import java.util.List;
+
 import lu.kremi151.minamod.capabilities.amulets.IAmulet;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,6 +27,7 @@ public class AmuletReturn implements IAmulet{
 				player.world.playSound((EntityPlayer)null, player.prevPosX, player.prevPosY, player.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	            world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			}else{
+				TextHelper.sendTranslateableChatMessage(player, TextFormatting.RED, "msg.amulet.return.faraway");
 	            world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_NOTE_BASS, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			}
 		}else{
@@ -33,6 +39,11 @@ public class AmuletReturn implements IAmulet{
             world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_NOTE_PLING, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		}
 		return true;
+	}
+	
+	@Override
+	public void addInformation(EntityPlayer player, List<String> tooltip, boolean advanced){
+		if(isSet())tooltip.add(I18n.translateToLocal("item.amulet.return.active"));
 	}
 	
 	private boolean isSet() {
