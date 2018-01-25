@@ -6,6 +6,8 @@ import lu.kremi151.minamod.block.BlockAccumulator;
 import lu.kremi151.minamod.capabilities.AccessableEnergyStorage;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -13,10 +15,20 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityAccumulator extends TileEntity implements ITickable{
+public class TileEntityAccumulator extends BaseTileEntity implements ITickable{
 	
 	private static final int MAX_EXTRACT = 150;
-	private final AccessableEnergyStorage nrj = new AccessableEnergyStorage(8000, 200, MAX_EXTRACT);
+	private final AccessableEnergyStorage nrj = new AccessableEnergyStorage(8000, 200, MAX_EXTRACT) {
+		
+		@Override
+	    public int receiveEnergy(int maxReceive, boolean simulate)
+	    {
+			int res = super.receiveEnergy(maxReceive, simulate);
+			if(!simulate && res != 0) sync();
+			return res;
+	    }
+		
+	};
 
 	@Override
 	public void update() {
@@ -27,6 +39,7 @@ public class TileEntityAccumulator extends TileEntity implements ITickable{
 				int extract = nrj.extractEnergy(MAX_EXTRACT, false);
 				int consumed = te.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()).receiveEnergy(extract, false);
 				nrj.receiveEnergy(extract - consumed, false);
+				if(extract != consumed) sync();
 			}
 		}
 	}
@@ -41,6 +54,10 @@ public class TileEntityAccumulator extends TileEntity implements ITickable{
 	
 	private boolean isPushingBlocked() {
 		return world.isBlockPowered(pos);
+	}
+	
+	public int getStateCharge() {
+		return (4 * nrj.getEnergyStored()) / nrj.getMaxEnergyStored();
 	}
 
     @Override
@@ -75,5 +92,28 @@ public class TileEntityAccumulator extends TileEntity implements ITickable{
 		if(nbt.hasKey("Energy", 99)) {
 			nrj.setEnergy(nbt.getInteger("Energy"));
 		}
+		if(nbt.hasKey("Capacity", 99)) {
+			nrj.setCapacity(Math.max(nbt.getInteger("Capacity"), 0));
+		}
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag()
+    {
+		NBTTagCompound nbt = super.getUpdateTag();
+		nbt.setInteger("Capacity", nrj.getMaxEnergyStored());
+		nbt.setInteger("Energy", nrj.getEnergyStored());
+		return nbt;
+    }
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.pos, 0, getUpdateTag());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+		readFromNBT(packet.getNbtCompound());
+		sync();
 	}
 }

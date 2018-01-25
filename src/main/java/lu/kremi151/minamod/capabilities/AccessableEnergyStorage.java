@@ -24,5 +24,13 @@ public class AccessableEnergyStorage extends EnergyStorage{
 	public void setEnergy(int value) {
 		this.energy = MathHelper.clamp(value, 0, capacity);
 	}
+	
+	public void setCapacity(int value) {
+		if(value < 0)throw new IllegalArgumentException("Energy capacity cannot be lower than 0");
+		this.capacity = value;
+		if(this.energy > value) {
+			this.energy = value;
+		}
+	}
 
 }

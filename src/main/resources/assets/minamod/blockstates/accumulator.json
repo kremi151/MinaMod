@@ -1,8 +1,42 @@
 {
-    "variants": {
-        "facing=north": { "model": "minamod:accumulator" },
-        "facing=south": { "model": "minamod:accumulator", "y": 180 },
-        "facing=west":  { "model": "minamod:accumulator", "y": 270 },
-        "facing=east":  { "model": "minamod:accumulator", "y": 90 }
-    }
+   "forge_marker": 1,
+   "defaults": {
+      "model": "minamod:accumulator",
+      "uvlock": true
+   },
+   "variants": {
+      "charge": {
+         0: {
+		    "textures": {
+               "display": "minamod:blocks/accumulator_display0"
+            }
+		 },
+         1: {
+            "textures": {
+               "display": "minamod:blocks/accumulator_display1"
+            }
+         },
+         2: {
+            "textures": {
+               "display": "minamod:blocks/accumulator_display2"
+            }
+         },
+         3: {
+            "textures": {
+               "display": "minamod:blocks/accumulator_display3"
+            }
+         },
+         4: {
+            "textures": {
+               "display": "minamod:blocks/accumulator_display4"
+            }
+         }
+      },
+	  "facing": {
+	     "north": {},
+         "south": {"y": 180},
+		 "west": {"y": 270},
+		 "east": {"y": 90}
+	  }
+   }
 }

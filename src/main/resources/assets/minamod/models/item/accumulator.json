@@ -1,3 +1,6 @@
 {
-  "parent": "minamod:block/accumulator"
+  "parent": "minamod:block/accumulator",
+  "textures": {
+    "display": "minamod:blocks/accumulator_display0"
+  }
 }
