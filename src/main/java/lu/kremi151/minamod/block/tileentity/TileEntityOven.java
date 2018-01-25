@@ -100,8 +100,8 @@ public class TileEntityOven extends BaseTileEntity implements ITickable{
 							}
 							burningCountdown = MAX_BURNING_COUNTDOWN;
 						}
-					}else {
-						burningCountdown = MAX_BURNING_COUNTDOWN;
+					}else if(world.getWorldTime() % 30 == 0){
+						burningCountdown = Math.min(MAX_BURNING_COUNTDOWN, burningCountdown+1);
 					}
 				}else {
 					burningCountdown = MAX_BURNING_COUNTDOWN;
