@@ -150,10 +150,6 @@ public class MinaRecipes {
 
 		GameRegistry.addShapedRecipe(new ItemStack(MinaItems.EMPTY_POT, 1), "A A", "A A", "AAA", 'A', Items.BRICK);
 
-		if(FeatureList.enable_plate){
-			GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.PLATE, 1), "A A", "AAA", 'A', Items.QUARTZ);
-		}
-
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_CONTROL, 1), "III", "QCQ", 'I',
 				Items.IRON_INGOT, 'Q', Items.QUARTZ, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_B.meta));
 		GameRegistry.addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 0), "IQI", "QIQ", "IQI", 'I',

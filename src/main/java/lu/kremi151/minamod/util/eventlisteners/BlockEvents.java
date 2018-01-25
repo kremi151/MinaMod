@@ -10,7 +10,6 @@ import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
-import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.entity.EntityIceSentinel;
 import lu.kremi151.minamod.util.IDRegistry;
@@ -23,7 +22,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -94,22 +92,6 @@ public class BlockEvents {
 					if(!creative)e.getEntityPlayer().getHeldItemMainhand().shrink(1);
 					return;
 				}
-			}else if(bs.getBlock() == MinaBlocks.PLATE && e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemFood){
-				TileEntityPlate te = (TileEntityPlate) e.getWorld().getTileEntity(e.getPos());
-				if(e.getEntityPlayer().capabilities.isCreativeMode){
-					te.setItem(e.getEntityPlayer().getHeldItemMainhand());
-				}else{
-					if(!te.getItem().isEmpty()){
-						e.getEntityPlayer().dropItem(te.getItem(), true);
-					}
-					te.setItem(e.getEntityPlayer().getHeldItemMainhand());
-					int i = e.getEntityPlayer().inventory.currentItem;
-					e.getEntityPlayer().inventory.decrStackSize(i, 1);
-				}
-				e.getWorld().scheduleBlockUpdate(e.getPos(), bs.getBlock(), 1, 1);
-				//TODO: 1.9
-//				e.getWorld().markBlockForUpdate(e.getPos())
-				return;
 			}
 			
 			if(e.getEntityPlayer().getHeldItemMainhand().getItem() == Items.BLAZE_ROD && PermissionAPI.hasPermission(e.getEntityPlayer(), MinaPermissions.TICK_BLOCK_MANUALLY)){
@@ -125,19 +107,6 @@ public class BlockEvents {
 				if(bp)e.getEntityPlayer().dropItem(MinaItems.BLACK_PEARL, 1);
 				if(wp)e.getEntityPlayer().dropItem(MinaItems.WHITE_PEARL, 1);
 				e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.BLACK_PEARL, false).withProperty(BlockIceAltar.WHITE_PEARL, false));
-				return;
-			}else if(bs.getBlock() == MinaBlocks.PLATE){
-				TileEntityPlate te = (TileEntityPlate) e.getWorld().getTileEntity(e.getPos());
-				if(!te.getItem().isEmpty()){
-					if(e.getEntityPlayer().capabilities.isCreativeMode){
-						te.setItem(null);
-					}else{
-						e.getEntityPlayer().dropItem(te.getItem(), true);
-						te.setItem(null);
-					}
-					//TODO: 1.9
-//					e.getWorld().markBlockForUpdate(e.getPos());
-				}
 				return;
 			}
 		}

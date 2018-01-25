@@ -22,7 +22,6 @@ import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLock;
 import lu.kremi151.minamod.block.tileentity.TileEntityOven;
-import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.block.tileentity.TileEntitySieve;
 import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.block.tileentity.TileEntitySolarPanel;
@@ -136,10 +135,7 @@ public class MinaMod {
 
 		MinaBlocks.setFireInfos();
 		MinaAchievements.register();
-
-		if(FeatureList.enable_plate){
-			GameRegistry.registerTileEntity(TileEntityPlate.class, createDottedIdentifier("plate"));
-		}
+		
 		GameRegistry.registerTileEntityWithAlternatives(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"), createDottedIdentifier("letterbox"));
 		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"), createDottedIdentifier("auto_feeder"));
 		GameRegistry.registerTileEntityWithAlternatives(TileEntityGiftBox.class, createNamespacedIdentifier("gift_box"), createDottedIdentifier("gift_box"));

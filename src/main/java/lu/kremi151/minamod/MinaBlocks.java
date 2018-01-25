@@ -47,7 +47,6 @@ import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockOven;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
 import lu.kremi151.minamod.block.BlockPalmLog;
-import lu.kremi151.minamod.block.BlockPlate;
 import lu.kremi151.minamod.block.BlockPumpkinLantern;
 import lu.kremi151.minamod.block.BlockQuicksand;
 import lu.kremi151.minamod.block.BlockRedstoneCrossroad;
@@ -180,7 +179,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 	public static final BlockMinaWoodStairs CHERRY_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("cherry_stairs");
 	public static final BlockMinaWoodStairs PALM_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("palm_stairs");
 	
-	public static final BlockPlate PLATE = (BlockPlate) new BlockPlate().setUnlocalizedName("plate");
 	public static final Block OAK_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_oak");
 	public static final Block SPRUCE_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_spruce");
 	public static final Block BIRCH_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_birch");
@@ -287,9 +285,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(SAPLING, "mina_sapling").blockOnly().submit();
 		registry.register(HERB_CROP, "herb").blockOnly().submit();
 		
-		if(FeatureList.enable_plate){
-			registry.register(PLATE, "plate").submit();
-		}
 		registry.register(OAK_LETTERBOX, "letterbox_oak").submit();
 		registry.register(SPRUCE_LETTERBOX, "letterbox_spruce").submit();
 		registry.register(BIRCH_LETTERBOX, "letterbox_birch").submit();

@@ -24,7 +24,6 @@ import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLeaf;
-import lu.kremi151.minamod.block.tileentity.TileEntityPlate;
 import lu.kremi151.minamod.client.GiftColorHandler;
 import lu.kremi151.minamod.client.GuiMinaOverlay;
 import lu.kremi151.minamod.client.HerbColorHandler;
@@ -40,7 +39,6 @@ import lu.kremi151.minamod.client.render.RenderIceSentinel;
 import lu.kremi151.minamod.client.render.RenderPenguin;
 import lu.kremi151.minamod.client.render.RenderTurtle;
 import lu.kremi151.minamod.client.render.RenderWookie;
-import lu.kremi151.minamod.client.render.tileentity.RenderPlate;
 import lu.kremi151.minamod.client.util.ScreenDoge;
 import lu.kremi151.minamod.entity.EntityBee;
 import lu.kremi151.minamod.entity.EntityFish;
@@ -85,9 +83,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-	private RenderPlate renderPlate;
-	// private RenderJoinerTable renderJoinerTable;
-
 	private GuiMinaOverlay overlayHandler;
 
 	public static final KeyBinding KEY_JETPACK = new KeyBinding("gui.key.jetpack.desc", Keyboard.KEY_J, "gui.key.category.minamod");
@@ -109,10 +104,6 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerRenderers() {
-		renderPlate = new RenderPlate();
-
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, renderPlate);
-		
 		ModelLoaderRegistry.registerLoader(new MinaModelLoader());
 
 		if(FeatureList.enable_ice_altar){
@@ -171,9 +162,7 @@ public class ClientProxy extends CommonProxy {
 	public void registerBuildInBlocks() {
 		ModelManager mm = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager();
 
-		if(FeatureList.enable_plate){
-			mm.getBlockModelShapes().registerBuiltInBlocks(MinaBlocks.PLATE);
-		}
+		//mm.getBlockModelShapes().registerBuiltInBlocks(MinaBlocks.PLATE);
 	}
 
 	@Override
