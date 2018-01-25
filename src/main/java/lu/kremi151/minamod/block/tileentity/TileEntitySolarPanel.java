@@ -7,8 +7,10 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class TileEntitySolarPanel extends BaseTileEntity implements ITickable, IEnergySupplier{
@@ -17,6 +19,11 @@ public class TileEntitySolarPanel extends BaseTileEntity implements ITickable, I
 	
 	public int getPanelPosition() {
 		return position;
+	}
+
+	@Override
+	public boolean canCableConnect(EnumFacing face, TileEntity entity, BlockPos pos, IBlockAccess world) {
+		return face == EnumFacing.DOWN;
 	}
 
 	@Override
