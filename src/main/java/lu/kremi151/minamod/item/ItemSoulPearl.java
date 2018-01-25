@@ -62,7 +62,8 @@ public class ItemSoulPearl extends Item{
             	EntitySoulPearl sp = new EntitySoulPearl(worldIn, playerIn);
 //            	sp.initWithVelocity(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.3F, 1.0F);
                 sp.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-                worldIn.spawnEntity(sp.setDamage(itemStackIn.getItemDamage()).setCustomName(MinaUtils.getStackCustomName(itemStackIn)).setCatchedEntityNBT(entity_nbt).setCanDrop(!playerIn.capabilities.isCreativeMode));
+                if(itemStackIn.hasDisplayName()) sp.setCustomName(itemStackIn.getDisplayName());
+                worldIn.spawnEntity(sp.setDamage(itemStackIn.getItemDamage()).setCatchedEntityNBT(entity_nbt).setCanDrop(!playerIn.capabilities.isCreativeMode));
             }
 
             playerIn.addStat(StatList.getObjectUseStats(this));

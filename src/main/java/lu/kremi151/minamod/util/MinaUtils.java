@@ -105,19 +105,6 @@ public class MinaUtils {
 		return Math.sqrt(Math.pow(Math.abs(x1 - x2), 2) + Math.pow(Math.abs(y1 - y2), 2) + Math.pow(Math.abs(z1 - z2), 2));
 	}
 
-	public static String getStackCustomName(ItemStack is) {
-		if (is.getTagCompound() == null)
-			return null;
-		if (is.getTagCompound().hasKey("display")) {
-			NBTTagCompound nbt = is.getTagCompound().getCompoundTag("display");
-
-			if (nbt.hasKey("Name", 8)) {
-				return nbt.getString("Name");
-			}
-		}
-		return null;
-	}
-
 	@Deprecated
 	/**
 	 * Use {@link addItemStackToInventory} instead
