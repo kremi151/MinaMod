@@ -1,13 +1,22 @@
 package lu.kremi151.minamod.client;
 
+import java.util.HashMap;
+
 import org.lwjgl.opengl.GL11;
 
+import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.block.BlockElevatorFloor;
+import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
 import lu.kremi151.minamod.network.MessageUseElevator;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +38,8 @@ public class GuiElevatorNew extends GuiNoInventory{
 	private int floors;
 	private int currentFloor;
 	private int floorButtonsSection = 0;
+	
+	private final HashMap<Integer, String> floorNames = new HashMap<>();
 
 	public GuiElevatorNew(int floors, int currentFloor){
 		this.floors = floors;
@@ -41,6 +52,21 @@ public class GuiElevatorNew extends GuiNoInventory{
 		
 		for(int i = 0 ; i < floorButtons.length ; i++){
 			floorButtons[i] = new GuiButton(BTN_FLOORS_START + i, 0, 0, BTN_WIDTH, BTN_HEIGHT, "");
+		}
+		
+		World world = Minecraft.getMinecraft().player.world;
+		int currentLevel = -1;
+		for(int i = 0 ; i < world.getHeight() ; i++) {
+			BlockPos pos = new BlockPos(Minecraft.getMinecraft().player.posX, i, Minecraft.getMinecraft().player.posZ);
+			IBlockState state = world.getBlockState(pos);
+			if(BlockElevatorFloor.isValidLevelFloor(state)) {
+				currentLevel++;
+			}else if(state.getBlock() == MinaBlocks.ELEVATOR_CONTROL) {
+				TileEntity te = world.getTileEntity(pos);
+				if(te instanceof TileEntityElevatorControl && ((TileEntityElevatorControl)te).hasName()) {
+					floorNames.put(currentLevel, ((TileEntityElevatorControl)te).getName());//TODO: Optimize
+				}
+			}
 		}
 	}
 	
@@ -103,33 +129,51 @@ public class GuiElevatorNew extends GuiNoInventory{
 			break;
 		default:
 			if(guibutton.id >= BTN_FLOORS_START){
-				int level = guibutton.id - BTN_FLOORS_START;
-				int relativeFloor1 = ((floorButtonsSection * floorButtons.length) + level) - currentFloor;
-				useElevator(relativeFloor1);
+				useElevator(getFloorLevelFromButton(guibutton));
 			}
 			break;
 		}
 	}
 	
+	private int getFloorLevelFromButton(GuiButton btn) {
+		if(btn.id >= BTN_FLOORS_START){
+			int level = btn.id - BTN_FLOORS_START;
+			return ((floorButtonsSection * floorButtons.length) + level) - currentFloor;
+		}else {
+			return 0;
+		}
+	}
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		// draw text and stuff here
-		// the parameters for drawString are: string, x, y, color
-
-		//fontRendererObj.drawString(I18n.translateToLocal("gui.coin_bag.name"), 8, 10, 4210752);
-		// draws "Inventory" or your regional equivalent
-		fontRenderer.drawString(I18n.translateToLocal("gui.elevator.title"), 8, 10, 4210752);
-
-		String lc = I18n.translateToLocal("gui.elevator.choose_level");
-		final int lcwidth = this.fontRenderer.getStringWidth(lc);
-
-		fontRenderer.drawString(lc, (xSize - lcwidth) / 2, 32, 4210752);
+		fontRenderer.drawString(getFloorName(currentFloor), 8, 10, 4210752);
 		
+		String title = I18n.translateToLocal("gui.elevator.select_level");
+		fontRenderer.drawString(title, (xSize - fontRenderer.getStringWidth(title)) / 2, 32, 4210752);
+	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		for(GuiButton btn : floorButtons) {
+			if(btn.enabled && GuiUtils.isHovering(mouseX, mouseY, btn)) {
+				int level = getFloorLevelFromButton(btn);
+				String cname = floorNames.get(level);
+				if(cname != null) {
+					drawHoveringText(cname, mouseX, mouseY);
+				}
+				break;
+			}
+		}
+	}
+	
+	private String getFloorName(int level) {
+		return floorNames.getOrDefault(level, I18n.translateToLocalFormatted("gui.elevator.level", level + 1));
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		// draw your Gui here, only thing you need to change is the path
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;

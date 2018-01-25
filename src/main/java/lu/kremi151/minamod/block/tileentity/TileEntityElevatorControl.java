@@ -9,6 +9,18 @@ public class TileEntityElevatorControl extends TileEntity{
 	
 	private String title = null;
 	
+	public void setName(String name) {
+		this.title = name;
+	}
+	
+	public String getName() {
+		return title;
+	}
+	
+	public boolean hasName() {
+		return title != null;
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);

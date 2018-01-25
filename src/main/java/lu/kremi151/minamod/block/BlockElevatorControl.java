@@ -1,11 +1,14 @@
 package lu.kremi151.minamod.block;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
+import lu.kremi151.minamod.block.tileentity.TileEntitySlotMachine;
 import lu.kremi151.minamod.util.IDRegistry;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.Block;
@@ -17,6 +20,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -74,6 +79,37 @@ public class BlockElevatorControl extends Block{
         }
     }
 
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		if(stack.hasDisplayName()) {
+			TileEntityElevatorControl te = (TileEntityElevatorControl) worldIn.getTileEntity(pos);
+			te.setName(stack.getDisplayName());
+		}
+    }
+	
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
+	
+	@Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+		if(!worldIn.isRemote) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if(te != null && te instanceof TileEntityElevatorControl) {
+				TileEntityElevatorControl ec = (TileEntityElevatorControl) te;
+				
+				ItemStack stack = new ItemStack(MinaBlocks.ELEVATOR_CONTROL);
+	            if(ec.hasName()) {
+	            	stack.setStackDisplayName(ec.getName());
+	            }
+	            
+	            spawnAsEntity(worldIn, pos, stack);
+			}
+		}
+		super.breakBlock(worldIn, pos, state);
+    }
 
     protected boolean canBlockStay(World world, BlockPos pos, EnumFacing facing)
     {
