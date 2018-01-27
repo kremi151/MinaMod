@@ -14,9 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -50,9 +48,9 @@ public class BlockCampbench extends Block{
 	
 	@SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-        for (int i = 0 ; i < 4 ; i++)list.add(new ItemStack(itemIn, 1, i));
+        for (int i = 0 ; i < 4 ; i++)list.add(new ItemStack(this, 1, i));
     }
 	
 	@Override

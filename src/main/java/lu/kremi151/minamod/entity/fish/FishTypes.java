@@ -2,7 +2,7 @@ package lu.kremi151.minamod.entity.fish;
 
 import lu.kremi151.minamod.MinaMod;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class FishTypes {
 

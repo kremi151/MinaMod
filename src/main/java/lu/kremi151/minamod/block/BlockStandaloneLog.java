@@ -44,7 +44,7 @@ public class BlockStandaloneLog extends BlockRotatedPillar implements ILog{
 	}
 	
 	@Override
-	public MapColor getMapColor(IBlockState state)
+	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
 		return type.getMapColor();
     }

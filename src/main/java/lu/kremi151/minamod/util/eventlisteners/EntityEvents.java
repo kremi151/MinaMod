@@ -276,7 +276,7 @@ public class EntityEvents {
 	}
 	
 	@SubscribeEvent
-	public void onAttachEntityCapabilities(AttachCapabilitiesEvent.Entity e){
+	public void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> e){
 		if(e.getObject() instanceof EntityPlayer){
 			e.addCapability(MinaCapabilities.MINA_PLAYER_CAPS_ID, new MinaCapabilities.MinaPlayerCapabilityProvider((EntityPlayer) e.getObject()));
 		}

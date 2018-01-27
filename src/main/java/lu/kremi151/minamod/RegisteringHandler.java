@@ -6,17 +6,22 @@ import java.util.LinkedList;
 import org.apache.commons.lang3.tuple.Pair;
 
 import lu.kremi151.minamod.proxy.CommonProxy;
+import lu.kremi151.minamod.util.VillagerHelper;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
 import lu.kremi151.minamod.util.registration.proxy.RegisteringProxy;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Mod.EventBusSubscriber(modid = MinaMod.MODID)
@@ -95,6 +100,29 @@ public final class RegisteringHandler {
 		proxy.registerItemModels();
 		proxy.registerCustomMeshDefinitions();
 		main_proxy.registerFluidModels();
+	}
+	
+	@SubscribeEvent
+	protected static void onRegisterVillagers(RegistryEvent.Register<VillagerProfession> event) {
+		for(int i = 0 ; i < 10 ; i++)System.out.println("#");
+		System.out.println("Villagers are registered correctly. If you see this message, please remove it from the code. Thank you. Sincerely, you.");
+		for(int i = 0 ; i < 10 ; i++)System.out.println("#");
+		VillagerHelper.instance().register(event.getRegistry());
+	}
+	
+	@SubscribeEvent
+	protected static void onRegisterEnchantments(RegistryEvent.Register<Enchantment> event) {
+		MinaEnchantments.register(event.getRegistry());
+	}
+	
+	@SubscribeEvent
+	protected static void onRegisterPotions(RegistryEvent.Register<Potion> event) {
+		MinaPotions.register(event.getRegistry());
+	}
+	
+	@SubscribeEvent
+	protected static void onRegisterSounds(RegistryEvent.Register<SoundEvent> event) {
+		MinaSounds.register(event.getRegistry());
 	}
 	
 }

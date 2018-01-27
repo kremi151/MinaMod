@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class FishType extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<FishType>{
+public class FishType extends IForgeRegistryEntry.Impl<FishType>{
 	
 	private final String name;
 	private final ResourceLocation texture;

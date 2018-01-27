@@ -31,6 +31,11 @@ public class MinaDataSerializers {
 	    {
 	        return new DataParameter(id, this);
 	    }
+
+		@Override
+		public StatData copyValue(StatData value) {
+			return value.copy();
+		}
 	};
 	
 	static void register() {

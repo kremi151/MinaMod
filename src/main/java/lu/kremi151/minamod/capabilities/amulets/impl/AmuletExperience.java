@@ -16,7 +16,7 @@ public class AmuletExperience implements IAmulet{
 		if(!world.isRemote){
 			if(experience == 0){
 				experience = player.experienceTotal;
-				player.removeExperienceLevel(player.experienceLevel + 1);
+				player.addExperienceLevel(-(player.experienceLevel + 1));
 			}else{
 				applyExpToPlayer(player, experience);
 				experience = 0;

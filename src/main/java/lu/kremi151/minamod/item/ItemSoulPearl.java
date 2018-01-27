@@ -2,11 +2,14 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.entity.EntitySoulPearl;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.TextHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -60,8 +63,7 @@ public class ItemSoulPearl extends Item{
             {
             	NBTTagCompound entity_nbt = (checkIfFull(itemStackIn))?itemStackIn.getTagCompound().getCompoundTag("entity"):null;
             	EntitySoulPearl sp = new EntitySoulPearl(worldIn, playerIn);
-//            	sp.initWithVelocity(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.3F, 1.0F);
-                sp.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+                sp.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
                 if(itemStackIn.hasDisplayName()) sp.setCustomName(itemStackIn.getDisplayName());
                 worldIn.spawnEntity(sp.setDamage(itemStackIn.getItemDamage()).setCatchedEntityNBT(entity_nbt).setCanDrop(!playerIn.capabilities.isCreativeMode));
             }
@@ -74,7 +76,7 @@ public class ItemSoulPearl extends Item{
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     	if(checkIfFull(stack)){
     		NBTTagCompound nbt = stack.getTagCompound().getCompoundTag("entity");
     		if(nbt.hasKey("id")){

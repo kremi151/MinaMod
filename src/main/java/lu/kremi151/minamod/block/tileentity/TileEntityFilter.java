@@ -108,7 +108,7 @@ public class TileEntityFilter extends TileEntity implements IHopper, ITickable
 
                 if (!this.isFull())
                 {
-                    flag = TileEntityHopper.captureDroppedItems(this) || flag;
+                    flag = TileEntityHopper.pullItems(this) || flag;
                 }
 
                 if (flag)

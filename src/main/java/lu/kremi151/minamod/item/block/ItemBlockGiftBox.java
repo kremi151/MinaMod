@@ -8,12 +8,13 @@ import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox.GiftItemHandler;
 import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -30,14 +31,14 @@ public class ItemBlockGiftBox extends ItemCloth implements ISyncCapabilitiesToCl
 
     @SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
     	boolean has_item = false;
 		if(stack.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
 			ItemStack stack2 = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(0);
 			if(!stack2.isEmpty()) {
 				IOwner owner = stack.getCapability(IOwner.CAPABILITY, null);
-				if(owner != null && owner.getOwner() != null && owner.getOwner().equals(player.getUniqueID())) {
+				if(owner != null && owner.getOwner() != null && owner.getOwner().equals(net.minecraft.client.Minecraft.getMinecraft().player.getUniqueID())) {
 					tooltip.add(I18n.translateToLocalFormatted("tile.gift_box.contains", stack2.getCount(), stack2.getDisplayName()));
 				}else {
 					tooltip.add(I18n.translateToLocal("tile.gift_box.has_item"));

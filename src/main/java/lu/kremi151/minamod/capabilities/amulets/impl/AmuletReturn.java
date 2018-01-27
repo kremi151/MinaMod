@@ -2,10 +2,14 @@ package lu.kremi151.minamod.capabilities.amulets.impl;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.capabilities.amulets.IAmulet;
 import lu.kremi151.minamod.util.TextHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
@@ -43,7 +47,7 @@ public class AmuletReturn implements IAmulet{
 	}
 	
 	@Override
-	public void addInformation(EntityPlayer player, List<String> tooltip, boolean advanced){
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn){
 		if(isSetOverride || isSet())tooltip.add(I18n.translateToLocal("item.amulet.return.active"));
 	}
 	

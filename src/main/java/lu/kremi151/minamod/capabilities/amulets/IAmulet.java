@@ -2,9 +2,13 @@ package lu.kremi151.minamod.capabilities.amulets;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +23,7 @@ public interface IAmulet {
 	
 	boolean onUse(World world, EntityPlayer player);
 	
-	default void addInformation(EntityPlayer player, List<String> tooltip, boolean advanced){}
+	default void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn){}
 	
 	default NBTTagCompound saveData(NBTTagCompound nbt) {
 		return nbt;

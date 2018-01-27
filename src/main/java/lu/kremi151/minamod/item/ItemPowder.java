@@ -36,11 +36,11 @@ public class ItemPowder extends Item implements IMixtureIngredient{
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
 		EnumHerb[] eh = EnumHerb.values();
 		for(int i = 0 ; i < eh.length ; i++){
-	        subItems.add(new ItemStack(itemIn, 1, eh[i].getHerbId()));
+	        subItems.add(new ItemStack(this, 1, eh[i].getHerbId()));
 		}
     }
 

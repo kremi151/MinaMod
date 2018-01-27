@@ -61,7 +61,6 @@ import lu.kremi151.minamod.util.MinaModConfiguration;
 import lu.kremi151.minamod.util.MinaTickEventHandler;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.Once;
-import lu.kremi151.minamod.util.VillagerHelper;
 import lu.kremi151.minamod.util.eventlisteners.BlockEvents;
 import lu.kremi151.minamod.util.eventlisteners.EntityEvents;
 import lu.kremi151.minamod.util.eventlisteners.NetworkEvents;
@@ -74,16 +73,17 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -136,18 +136,18 @@ public class MinaMod {
 		MinaBlocks.setFireInfos();
 		MinaAchievements.register();
 		
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"), createDottedIdentifier("letterbox"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"), createDottedIdentifier("auto_feeder"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityGiftBox.class, createNamespacedIdentifier("gift_box"), createDottedIdentifier("gift_box"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityLock.class, createNamespacedIdentifier("keylock"), createDottedIdentifier("keylock"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityCollector.class, createNamespacedIdentifier("collector"), createDottedIdentifier("collector"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntitySieve.class, createNamespacedIdentifier("sieve"), createDottedIdentifier("sieve"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityHerbCrop.class, createNamespacedIdentifier("herb"), createDottedIdentifier("herb"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityElevatorControl.class, createNamespacedIdentifier("elevator_control"), createDottedIdentifier("elevator_control"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityCampfire.class, createNamespacedIdentifier("camp_fire"), createDottedIdentifier("camp_fire"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntitySlotMachine.class, createNamespacedIdentifier("slot_machine"), createDottedIdentifier("slot_machine"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityFilter.class, createNamespacedIdentifier("filter"), createDottedIdentifier("filter"));
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityAutoCrafter.class, createNamespacedIdentifier("auto_crafter"), createDottedIdentifier("auto_crafter"));
+		GameRegistry.registerTileEntity(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"));
+		GameRegistry.registerTileEntity(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"));
+		GameRegistry.registerTileEntity(TileEntityGiftBox.class, createNamespacedIdentifier("gift_box"));
+		GameRegistry.registerTileEntity(TileEntityLock.class, createNamespacedIdentifier("keylock"));
+		GameRegistry.registerTileEntity(TileEntityCollector.class, createNamespacedIdentifier("collector"));
+		GameRegistry.registerTileEntity(TileEntitySieve.class, createNamespacedIdentifier("sieve"));
+		GameRegistry.registerTileEntity(TileEntityHerbCrop.class, createNamespacedIdentifier("herb"));
+		GameRegistry.registerTileEntity(TileEntityElevatorControl.class, createNamespacedIdentifier("elevator_control"));
+		GameRegistry.registerTileEntity(TileEntityCampfire.class, createNamespacedIdentifier("camp_fire"));
+		GameRegistry.registerTileEntity(TileEntitySlotMachine.class, createNamespacedIdentifier("slot_machine"));
+		GameRegistry.registerTileEntity(TileEntityFilter.class, createNamespacedIdentifier("filter"));
+		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, createNamespacedIdentifier("auto_crafter"));
 		GameRegistry.registerTileEntity(TileEntityCable.class, createNamespacedIdentifier("cable"));
 		GameRegistry.registerTileEntity(TileEntityWallCable.class, createNamespacedIdentifier("wall_cable"));
 		GameRegistry.registerTileEntity(TileEntitySolarPanel.class, createNamespacedIdentifier("solar_panel"));
@@ -287,15 +287,10 @@ public class MinaMod {
 
 		MinaFluids.registerFluids();
 		MinaBlocks.registerOreEntries();
-		MinaPotions.register();
-		MinaEnchantments.registerEnchantments();
-		VillagerHelper.instance().registerVillagers();
 		
 		MinaCapabilities.init();
 
 		MinaBiomes.init();
-
-		MinaSounds.init();
 
 		proxy.registerRenderers();
 		WorldProviderOverworldHook.hookIn();
@@ -304,7 +299,7 @@ public class MinaMod {
 	}
 
 	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event) {						// code)
+	public void serverStarting(FMLServerStartingEvent event) {
 		this.theServer = event.getServer();
 		ServerCommandManager cm = (ServerCommandManager) theServer.getCommandManager();
 		cm.registerCommand(new CommandMinaBase());
@@ -394,8 +389,13 @@ public class MinaMod {
 	}
 	
 	@EventHandler
-	public void onMissingMappings(FMLMissingMappingsEvent event){
-		MappingsHandler.handleMappings(event);
+	public void onMissingBlockMappings(RegistryEvent.MissingMappings<Block> event){
+		MappingsHandler.handleBlockMappings(event);
+	}
+	
+	@EventHandler
+	public void onMissingItemMappings(RegistryEvent.MissingMappings<Item> event){
+		MappingsHandler.handleItemMappings(event);
 	}
 
 }

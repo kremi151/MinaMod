@@ -41,9 +41,9 @@ public class ItemBerrySeed extends Item implements net.minecraftforge.common.IPl
     }
 	
 	@Override
-	public void getSubItems(Item a1, CreativeTabs a2, NonNullList<ItemStack> a3){
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
 		for(int n = 0 ; n <3 ; n++){
-			a3.add(new ItemStack(a1,1,n));
+			items.add(new ItemStack(this,1,n));
 		}
 	}
     

@@ -2,10 +2,13 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.owner.IOwner;
 import lu.kremi151.minamod.container.ContainerSelectItem;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
@@ -29,7 +32,7 @@ public class ItemUnpackedGift extends Item{
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for(int i = 0 ; i < EnumDyeColor.values().length ; i++) {
         	subItems.add(new ItemStack(this, 1, i));
@@ -38,7 +41,7 @@ public class ItemUnpackedGift extends Item{
 
     @SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
 		tooltip.add(I18n.translateToLocal("item.unpacked_gift.lore"));
     }

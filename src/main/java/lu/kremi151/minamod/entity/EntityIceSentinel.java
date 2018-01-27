@@ -303,4 +303,9 @@ public class EntityIceSentinel extends EntityMob implements IRangedAttackMob{
         return false;
     }
 
+	@Override
+	public void setSwingingArms(boolean swingingArms) {
+		// TODO Auto-generated method stub
+	}
+
 }

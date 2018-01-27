@@ -65,7 +65,7 @@ public class TileEntitySlotMachine extends TileEntity{
 	private Session currentSession = Session.empty();
 	//field_191525_da => IRON_NUGGET -.-
 	private Icon icons[] = new Icon[] {
-			new Icon(Items.field_191525_da, 4, false),
+			new Icon(Items.IRON_NUGGET, 4, false),
 			new Icon(Items.GOLD_NUGGET, 4, false),
 			new Icon(Items.IRON_INGOT, 3, false),
 			new Icon(Items.GOLD_INGOT, 3, false),

@@ -6,7 +6,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class MinaEnchantments {
 
@@ -37,18 +37,12 @@ public class MinaEnchantments {
 								.setRegistryName(new ResourceLocation(MinaMod.MODID, "freeze_protection"));
 	}
 
-	private static boolean init = false;
-
-	static void registerEnchantments() {
-		if (init) return;
-
-		GameRegistry.register(EMERGENCY);
-		GameRegistry.register(BEHEADER);
-		GameRegistry.register(WOOD_BACKUP);
-		GameRegistry.register(FUSION);
-		GameRegistry.register(SPAWN_KEEPER);
-		GameRegistry.register(FREEZE_PROTECTION);
-
-		init = true;
+	static void register(IForgeRegistry<Enchantment> registry) {
+		registry.register(EMERGENCY);
+		registry.register(BEHEADER);
+		registry.register(WOOD_BACKUP);
+		registry.register(FUSION);
+		registry.register(SPAWN_KEEPER);
+		registry.register(FREEZE_PROTECTION);
 	}
 }

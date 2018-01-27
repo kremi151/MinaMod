@@ -4,7 +4,6 @@ import lu.kremi151.minamod.MinaPotions;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -55,10 +54,10 @@ public class ItemBerry extends ItemFood{
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for(int i = 0 ; i < VARIANT_NAMES.length ; i++){
-        	subItems.add(new ItemStack(itemIn, 1, i));
+        	subItems.add(new ItemStack(this, 1, i));
         }
     }
 

@@ -45,11 +45,11 @@ public class BlockEffectBush extends BlockCustomBush{
 	
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (BlockEffectBush.EnumType type : BlockEffectBush.EnumType.values())
         {
-            list.add(new ItemStack(itemIn, 1, type.getMetadata()));
+            list.add(new ItemStack(this, 1, type.getMetadata()));
         }
     }
 
@@ -66,7 +66,7 @@ public class BlockEffectBush extends BlockCustomBush{
      * Get the MapColor for this Block and the given BlockState
      */
     @Override
-    public MapColor getMapColor(IBlockState state)
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return ((BlockEffectBush.EnumType)state.getValue(VARIANT)).getMapColor();
     }

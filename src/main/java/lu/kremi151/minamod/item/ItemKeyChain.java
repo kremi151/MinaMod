@@ -14,6 +14,7 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.IKey;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import lu.kremi151.minamod.util.IDRegistry;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -43,7 +44,7 @@ public class ItemKeyChain extends Item implements ISyncCapabilitiesToClient{
 
     @SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
     	if(stack.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
     		IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

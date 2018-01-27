@@ -2,9 +2,12 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.IEconomyValuable;
 import lu.kremi151.minamod.util.IDRegistry;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -40,7 +43,7 @@ public class ItemCoinBag extends Item implements IEconomyValuable{
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
 		tooltip.add(TextFormatting.AQUA + I18n.translateToLocalFormatted("gui.coin_bag.amount", getEconomyValue(stack)));
 		tooltip.add(I18n.translateToLocal("item.coin_bag.lore.rightclick"));

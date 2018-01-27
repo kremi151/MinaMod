@@ -1,6 +1,6 @@
 package lu.kremi151.minamod.util.registration;
 
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class CommonRegistrationHandler<T extends IForgeRegistryEntry<T>> extends AbstractRegistrationHandler{
 

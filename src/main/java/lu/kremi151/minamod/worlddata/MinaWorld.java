@@ -6,8 +6,8 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.worlddata.data.FrostTempleMeta;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.config.Configuration;
 
 public class MinaWorld extends WorldSavedData{

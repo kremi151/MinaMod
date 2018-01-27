@@ -10,7 +10,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -162,10 +161,10 @@ public class BlockCombined extends BlockCustom
     
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-    	list.add(new ItemStack(itemIn, 1, 0));//Full
-    	list.add(new ItemStack(itemIn, 1, 1));//Slab
+    	list.add(new ItemStack(this, 1, 0));//Full
+    	list.add(new ItemStack(this, 1, 1));//Slab
     }
 
 	@Override

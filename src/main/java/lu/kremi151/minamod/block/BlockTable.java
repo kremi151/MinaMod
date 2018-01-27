@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
-import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.interfaces.TriConsumer;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
@@ -56,11 +55,11 @@ public class BlockTable extends Block{
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (TableForm tform : TableForm.values())
         {
-            list.add(new ItemStack(itemIn, 1, tform.getMetadata()));
+            list.add(new ItemStack(this, 1, tform.getMetadata()));
         }
     }
 	

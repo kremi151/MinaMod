@@ -30,11 +30,11 @@ import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
-public class BakedModelWallCable implements IPerspectiveAwareModel, IResourceManagerReloadListener {
+public class BakedModelWallCable implements IBakedModel, IResourceManagerReloadListener {
 
 	private final IModel model;
 	private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
@@ -116,7 +116,7 @@ public class BakedModelWallCable implements IPerspectiveAwareModel, IResourceMan
 
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType cameraTransformType) {
-		return MapWrapper.handlePerspective(this, transforms, cameraTransformType);
+		return PerspectiveMapWrapper.handlePerspective(this, transforms, cameraTransformType);
 	}
 
 }

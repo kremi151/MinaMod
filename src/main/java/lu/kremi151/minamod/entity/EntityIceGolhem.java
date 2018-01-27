@@ -1,9 +1,5 @@
 package lu.kremi151.minamod.entity;
 
-import java.util.UUID;
-
-import com.google.common.base.Optional;
-
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaSounds;
@@ -90,7 +86,7 @@ public class EntityIceGolhem extends EntityTameable{
     }
 	
 	@Override
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return MinaSounds.soundIceGolhemHurt;
     }
@@ -120,9 +116,6 @@ public class EntityIceGolhem extends EntityTameable{
 	public void readEntityFromNBT(NBTTagCompound nbt)
     {
 		super.readEntityFromNBT(nbt);
-//		if(nbt.hasKey("disabled")){//TODO:Iergendwann läschen, ass veraalt
-//			state = nbt.getBoolean("disabled")?EnumIceGolhemState.DISABLED:EnumIceGolhemState.PASSIVE;
-//		}
 		if(nbt.hasKey("state_id")){
 			setState(EnumIceGolhemState.getFromId((byte)nbt.getInteger("state_id")));
 		}else if(nbt.hasKey("ig_state")){

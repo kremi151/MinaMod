@@ -2,8 +2,11 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaPotions;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -24,16 +27,14 @@ public class ItemHoneyPot extends ItemFood{
 	}
 	
 	@Override
-	public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		String i = null;
-		switch(is.getItemDamage()){
+		switch(stack.getItemDamage()){
 		case 1:
 			i = "item.honey_pot.info.saturation";
 			break;
 		}
-		if(i!=null){
-			list.add(I18n.translateToLocal(i));
-		}
+		if(i!=null) tooltip.add(I18n.translateToLocal(i));
 	}
 	
 	@Override
@@ -54,8 +55,8 @@ public class ItemHoneyPot extends ItemFood{
 	}
 	
 	@Override
-	public void getSubItems(Item a1, CreativeTabs a2, NonNullList<ItemStack> a3){
-		for(int i = 0 ; i < 2 ; i++)a3.add(new ItemStack(a1,1,i));
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
+		for(int i = 0 ; i < 2 ; i++)items.add(new ItemStack(this,1,i));
 	}
 	
 	@Override

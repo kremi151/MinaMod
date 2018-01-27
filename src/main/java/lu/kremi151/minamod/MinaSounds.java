@@ -2,7 +2,7 @@ package lu.kremi151.minamod;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class MinaSounds {
 
@@ -22,23 +22,13 @@ public class MinaSounds {
 		soundDrillTurn = new MinaSoundEvent(MinaMod.MODID, "item.drill.turn");
 	}
 	
-	private static boolean init = false;
-	
-	static void init(){
-		if(init)throw new RuntimeException("Duplicate call of function");
-
-		registerSound(soundIceGolhemSay);
-		registerSound(soundIceGolhemHurt);
-		registerSound(soundIceGolhemDeath);
-		registerSound(soundTurtleHello);
-		registerSound(soundPenguinSay);
-		registerSound(soundDrillTurn);
-		
-		init = true;
-	}
-	
-	private static void registerSound(MinaSoundEvent event){
-		GameRegistry.register(event);
+	static void register(IForgeRegistry<SoundEvent> registry){
+		registry.register(soundIceGolhemSay);
+		registry.register(soundIceGolhemHurt);
+		registry.register(soundIceGolhemDeath);
+		registry.register(soundTurtleHello);
+		registry.register(soundPenguinSay);
+		registry.register(soundDrillTurn);
 	}
 	
 	private static class MinaSoundEvent extends SoundEvent{

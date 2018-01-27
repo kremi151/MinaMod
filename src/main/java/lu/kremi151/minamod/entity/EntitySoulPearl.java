@@ -22,7 +22,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -139,26 +138,10 @@ public class EntitySoulPearl extends EntityThrowable{
     	return nbt.getString("id").equalsIgnoreCase("minecraft:");
     }
     
-    public void initWithVelocity(Entity launcher, float rotPitch, float rotYaw, float p_184538_4_, float p_184538_5_, float p_184538_6_)
-    {
-        float f = -MathHelper.sin(rotYaw * 0.017453292F) * MathHelper.cos(rotPitch * 0.017453292F);
-        float f1 = -MathHelper.sin((rotPitch + p_184538_4_) * 0.017453292F);
-        float f2 = MathHelper.cos(rotYaw * 0.017453292F) * MathHelper.cos(rotPitch * 0.017453292F);
-        this.setThrowableHeading((double)f, (double)f1, (double)f2, p_184538_5_, p_184538_6_);
-        this.motionX += launcher.motionX;
-        this.motionZ += launcher.motionZ;
-
-        if (!launcher.onGround)
-        {
-            this.motionY += launcher.motionY;
-        }
-    }
-    
     public void setTargetDead(Entity e){
     	if(!e.world.isRemote){
     		e.setDead();
     	}
-    	//System.out.println("Target killed.");
     }
     
     private static final Predicate<Entity> DEFAULT_PREDICATE = new Predicate<Entity>(){

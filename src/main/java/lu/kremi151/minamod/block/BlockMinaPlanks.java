@@ -8,10 +8,11 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -41,11 +42,11 @@ public class BlockMinaPlanks extends BlockCustom
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values())
         {
-            list.add(new ItemStack(itemIn, 1, type.getMetadata()));
+            list.add(new ItemStack(this, 1, type.getMetadata()));
         }
     }
 
@@ -62,7 +63,7 @@ public class BlockMinaPlanks extends BlockCustom
      * Get the MapColor for this Block and the given BlockState
      */
     @Override
-    public MapColor getMapColor(IBlockState state)
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return ((BlockMinaPlanks.EnumType)state.getValue(VARIANT)).getMapColor();
     }

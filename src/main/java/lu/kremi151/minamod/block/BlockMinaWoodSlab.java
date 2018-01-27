@@ -2,6 +2,7 @@ package lu.kremi151.minamod.block;
 
 import java.util.Random;
 
+import lu.kremi151.minamod.MinaBlocks;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -16,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,7 +45,7 @@ public abstract class BlockMinaWoodSlab extends BlockSlab
     }
 
     @Override
-    public MapColor getMapColor(IBlockState state)
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
         return ((BlockMinaPlanks.EnumType)state.getValue(VARIANT)).getMapColor();
     }
@@ -80,13 +82,13 @@ public abstract class BlockMinaWoodSlab extends BlockSlab
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-        if (itemIn != Item.getItemFromBlock(Blocks.DOUBLE_WOODEN_SLAB))
+        if (this != MinaBlocks.DOUBLE_WOODEN_SLAB)
         {
             for (BlockMinaPlanks.EnumType blockplanks$enumtype : BlockMinaPlanks.EnumType.values())
             {
-                list.add(new ItemStack(itemIn, 1, blockplanks$enumtype.getMetadata()));
+                list.add(new ItemStack(this, 1, blockplanks$enumtype.getMetadata()));
             }
         }
     }

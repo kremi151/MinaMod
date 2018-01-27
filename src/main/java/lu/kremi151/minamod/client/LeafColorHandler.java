@@ -22,7 +22,7 @@ public class LeafColorHandler implements IItemColor, IBlockColor{
 	private LeafColorHandler(){}
 
 	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+	public int colorMultiplier(ItemStack stack, int tintIndex) {
 		if(stack.getItem().getRegistryName().equals(MinaBlocks.MINA_LEAVES_A.getRegistryName())){
 			return BlockMinaPlanks.EnumType.byMetadata(stack.getMetadata()).getLeafColor();
 		}else if(stack.getItem().getRegistryName().equals(MinaBlocks.PALM_LEAVES.getRegistryName())){

@@ -122,7 +122,7 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 		for (int i = 0; i < this.buttonList.size(); ++i) {
 			GuiButton b = this.buttonList.get(i);
 			b.enabled = true;
-			b.drawButton(this.mc, mouseX, mouseY);
+			b.drawButton(this.mc, mouseX, mouseY, partialTicks);
 		}
 		
         RenderHelper.enableGUIStandardItemLighting();

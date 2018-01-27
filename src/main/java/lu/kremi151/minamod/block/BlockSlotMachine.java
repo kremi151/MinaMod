@@ -2,6 +2,8 @@ package lu.kremi151.minamod.block;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
@@ -19,6 +21,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -27,7 +30,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -68,9 +70,9 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-		list.add(new ItemStack(itemIn, 1));
+		list.add(new ItemStack(this, 1));
         
         if(variantShinyGemCrush == null) {        	
         	variantShinyGemCrush = new SlotMachineBuilder()
@@ -175,7 +177,7 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced)
     {
 		NBTTagCompound nbt = stack.getSubCompound("BlockEntityTag");
 		if(nbt != null) {

@@ -19,9 +19,9 @@ public class ItemRareEarth extends Item {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		subItems.add(new ItemStack(itemIn, 1, 0));
-		subItems.add(new ItemStack(itemIn, 1, 1));
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+		subItems.add(new ItemStack(this, 1, 0));
+		subItems.add(new ItemStack(this, 1, 1));
 	}
 	
 	@Override

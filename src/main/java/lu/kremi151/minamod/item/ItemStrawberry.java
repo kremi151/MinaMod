@@ -1,12 +1,10 @@
 package lu.kremi151.minamod.item;
 
 import lu.kremi151.minamod.MinaBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -46,12 +44,12 @@ public class ItemStrawberry extends ItemSeedFood{
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        subItems.add(new ItemStack(itemIn, 1, 0));//Default
-        subItems.add(new ItemStack(itemIn, 1, 1));//Ruby
-        subItems.add(new ItemStack(itemIn, 1, 2));//Sapphire
-        subItems.add(new ItemStack(itemIn, 1, 3));//Citrin
+        subItems.add(new ItemStack(this, 1, 0));//Default
+        subItems.add(new ItemStack(this, 1, 1));//Ruby
+        subItems.add(new ItemStack(this, 1, 2));//Sapphire
+        subItems.add(new ItemStack(this, 1, 3));//Citrin
     }
 	
 	@Override

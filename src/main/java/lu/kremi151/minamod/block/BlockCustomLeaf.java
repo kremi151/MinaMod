@@ -76,17 +76,14 @@ public class BlockCustomLeaf extends BlockLeaves
         return 25;
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-        list.add(new ItemStack(itemIn, 1, BlockMinaPlanks.EnumType.PEPPEL.getMetadata()));
-        list.add(new ItemStack(itemIn, 1, BlockMinaPlanks.EnumType.COTTON.getMetadata()));
-        list.add(new ItemStack(itemIn, 1, BlockMinaPlanks.EnumType.CHESTNUT.getMetadata()));
-        list.add(new ItemStack(itemIn, 1, BlockMinaPlanks.EnumType.CHERRY.getMetadata()));
+        list.add(new ItemStack(this, 1, BlockMinaPlanks.EnumType.PEPPEL.getMetadata()));
+        list.add(new ItemStack(this, 1, BlockMinaPlanks.EnumType.COTTON.getMetadata()));
+        list.add(new ItemStack(this, 1, BlockMinaPlanks.EnumType.CHESTNUT.getMetadata()));
+        list.add(new ItemStack(this, 1, BlockMinaPlanks.EnumType.CHERRY.getMetadata()));
     }
     
     @SideOnly(Side.CLIENT)

@@ -21,7 +21,7 @@ public class ItemColorHandler implements IItemColor{
 	private ItemColorHandler(){}
 
 	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+	public int colorMultiplier(ItemStack stack, int tintIndex) {
 		if(stack.getItem() == MinaItems.HERB || stack.getItem() == MinaItems.POWDER){
 			return EnumHerb.isValidId((byte)stack.getMetadata()) ? EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.WHITE).getTint() : MinaUtils.COLOR_WHITE;
 		}else if(stack.getItem() == MinaItems.MIXTURE && tintIndex == 1){

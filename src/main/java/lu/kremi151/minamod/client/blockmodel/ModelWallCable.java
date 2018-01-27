@@ -3,8 +3,8 @@ package lu.kremi151.minamod.client.blockmodel;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
@@ -14,12 +14,11 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.IRetexturableModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 
-public class ModelWallCable implements IRetexturableModel{
+public class ModelWallCable implements IModel{
 	
 	private final HashMap<String, ResourceLocation> textures = new HashMap<>();
 	
@@ -49,9 +48,8 @@ public class ModelWallCable implements IRetexturableModel{
 	}
 
 	@Override
-	public IBakedModel bake(IModelState state, VertexFormat format,
-			Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-		ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = IPerspectiveAwareModel.MapWrapper.getTransforms(state);
+	public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+		ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
 		
 		return new BakedModelWallCable(this, 
 				safeResolveTexture(bakedTextureGetter, "particle"),
@@ -71,7 +69,5 @@ public class ModelWallCable implements IRetexturableModel{
 		}
 		return new ModelWallCable(resmap);
 	}
-
-	
 
 }

@@ -6,14 +6,13 @@ import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -31,7 +30,7 @@ public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
 		IEnergyStorage cap = stack.getCapability(CapabilityEnergy.ENERGY, null);
 		if(cap != null && cap instanceof BatteryStorage) {

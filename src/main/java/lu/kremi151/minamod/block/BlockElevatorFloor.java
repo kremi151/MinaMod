@@ -13,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -35,10 +34,10 @@ public class BlockElevatorFloor extends Block{
 	
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-    	list.add(new ItemStack(itemIn, 1, 0));
-    	list.add(new ItemStack(itemIn, 1, 1));
+    	list.add(new ItemStack(this, 1, 0));
+    	list.add(new ItemStack(this, 1, 1));
     }
 	
 	@Override

@@ -20,8 +20,6 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResource;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -66,7 +64,7 @@ public class GiftColorHandler implements IBlockColor, IItemColor{
 									}
 								}
 								if(color2 != null){
-									col = color2.getMapColor().colorValue;
+									col = color2.getColorValue();
 								}
 							}catch(ClassCastException e){
 								col = jcol.getAsInt();
@@ -100,7 +98,7 @@ public class GiftColorHandler implements IBlockColor, IItemColor{
 	}
 
 	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+	public int colorMultiplier(ItemStack stack, int tintIndex) {
 		return getBandColorForDye(EnumDyeColor.byMetadata(stack.getMetadata()));
 	}
 
@@ -118,7 +116,7 @@ public class GiftColorHandler implements IBlockColor, IItemColor{
 		case WHITE:
 			return MapColor.RED.colorValue;
 		default:
-			return MinaUtils.invertColor(color.getMapColor().colorValue);
+			return MinaUtils.invertColor(color.getColorValue());
 		}
 	}
 	

@@ -10,14 +10,15 @@ import lu.kremi151.minamod.capabilities.CapabilityItemKey;
 import lu.kremi151.minamod.capabilities.IKey;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import lu.kremi151.minamod.util.MinaUtils;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -33,7 +34,7 @@ public class ItemKey extends Item implements ISyncCapabilitiesToClient{
 	
 	@Override
     @SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		ExtendedKeyCapability key = (ExtendedKeyCapability) stack.getCapability(IKey.CAPABILITY_KEY, null);
 		switch(key.getState()){
 		case DUPLICATE:

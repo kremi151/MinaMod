@@ -216,10 +216,10 @@ public class BlockPalmLeaves extends BlockMinaLeafBase{
     
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-    	list.add(new ItemStack(itemIn, 1, 0));//Full
-    	list.add(new ItemStack(itemIn, 1, 1));//Slab
+    	list.add(new ItemStack(this, 1, 0));//Full
+    	list.add(new ItemStack(this, 1, 1));//Slab
     }
     //
 }

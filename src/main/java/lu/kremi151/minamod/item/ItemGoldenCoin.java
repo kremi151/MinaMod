@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.item;
 
-import lu.kremi151.minamod.interfaces.IEconomyValuable;
 import lu.kremi151.minamod.interfaces.IUnitEconomyValuable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -17,10 +16,10 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        subItems.add(new ItemStack(itemIn, 1, 0));
-        subItems.add(new ItemStack(itemIn, 1, 1));
+        subItems.add(new ItemStack(this, 1, 0));
+        subItems.add(new ItemStack(this, 1, 1));
     }
 	
 	@Override

@@ -15,7 +15,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -183,11 +182,11 @@ public class BlockMinaSapling extends BlockBush implements IGrowable
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values())
         {
-            list.add(new ItemStack(itemIn, 1, type.getMetadata()));
+            list.add(new ItemStack(this, 1, type.getMetadata()));
         }
     }
 

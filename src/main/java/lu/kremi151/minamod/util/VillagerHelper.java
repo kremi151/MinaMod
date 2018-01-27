@@ -20,9 +20,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipeList;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class VillagerHelper {
 	
@@ -35,6 +35,8 @@ public class VillagerHelper {
 	public final VillagerCareer careerBaker;
 	public final VillagerCareer careerCarpenter;
 	public final VillagerCareer careerJewelier;
+	
+	private boolean initialized = false;
 
 	private VillagerHelper(){
 		if(instance != null){
@@ -49,8 +51,6 @@ public class VillagerHelper {
 				MinaMod.MODID + ":textures/entity/zombie_villager/carpenter.png");
 		professionJewelier = new VillagerProfession(MinaMod.MODID + ":jewelier",
 				MinaMod.MODID + ":textures/entity/villager/jewelier.png");
-		
-		register();
 
 		careerBaker = new VillagerCareer(professionBaker, MinaMod.MODID + ".baker");
 		careerCarpenter = new VillagerCareer(professionCarpenter, MinaMod.MODID + ".carpenter");
@@ -58,7 +58,12 @@ public class VillagerHelper {
 		//System.out.println("created villagers");
 	}
 
-	public void registerVillagers() {
+	private void initVillagers() {
+		if(initialized) {
+			return;
+		}else {
+			initialized = true;
+		}
 		careerBaker.addTrade(1, new ListItemForEmeralds(Items.CAKE, new PriceInfo(3, 5)),
 				new ListItemForEmeralds(Item.getItemFromBlock(MinaBlocks.CHOCOLATE_CAKE), new PriceInfo(5, 8)),
 				new ListItemForEmeralds(Item.getItemFromBlock(MinaBlocks.STRAWBERRY_CAKE), new PriceInfo(5, 8)));
@@ -131,22 +136,13 @@ public class VillagerHelper {
 				new EmeraldForItems(MinaItems.CITRIN, new PriceInfo(16, 21)) };
 
 		careerJewelier.addTrade(3, new SelectionOfTrades(1, tl));
-
-		/*
-		 * GameRegistry.register(professionBaker);
-		 * GameRegistry.register(professionCarpenter);
-		 * GameRegistry.register(professionJewelier);
-		 */
-
-		//register();
 	}
 	
-	private void register(){
-		//System.out.println("registering villagers...");
-		VillagerRegistry.instance().register(professionBaker);
-		VillagerRegistry.instance().register(professionCarpenter);
-		VillagerRegistry.instance().register(professionJewelier);
-		//System.out.println("registered villagers");
+	public void register(IForgeRegistry<VillagerProfession> registry){
+		initVillagers();
+		registry.register(professionBaker);
+		registry.register(professionCarpenter);
+		registry.register(professionJewelier);
 	}
 	
 	public static VillagerHelper instance(){

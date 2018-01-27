@@ -31,6 +31,10 @@ public class StatData {
 		return new StatData(this.actual, training);
 	}
 	
+	public StatData copy() {
+		return new StatData(actual, training);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj != null && obj instanceof StatData) {

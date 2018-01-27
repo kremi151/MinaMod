@@ -2,13 +2,16 @@ package lu.kremi151.minamod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lu.kremi151.minamod.MinaCreativeTabs;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 
 public class ItemChip extends Item{
 
@@ -18,16 +21,16 @@ public class ItemChip extends Item{
 	}
 	
 	@Override
-	public void getSubItems(Item a1, CreativeTabs a2, NonNullList<ItemStack> a3){
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
 		for(ChipType type : ChipType.values()){
-			a3.add(new ItemStack(a1,1,type.meta));
+			items.add(new ItemStack(this,1,type.meta));
 		}
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		ChipType type = ChipType.getByMeta(stack.getItemDamage());
-		if(type.has_tooltip)list.add(I18n.translateToLocal("item.chip.info." + type.name));
+		if(type.has_tooltip)tooltip.add(I18n.translateToLocal("item.chip.info." + type.name));
 	}
 	
 	@Override
