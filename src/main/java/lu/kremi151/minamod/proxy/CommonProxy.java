@@ -31,19 +31,12 @@ public class CommonProxy{
 	public void executeClientSide(Runnable r){}
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
-	public void setAchievementsCustomStringFormatters() {}
 	
 	public IThreadListener getThreadListener(MessageContext context) {
 		if(context.side.isServer()) {
 			return context.getServerHandler().player.mcServer;
 		}else{
 			throw new RuntimeException("Cannot get a thread listener from a client context on a dedicated server");
-		}
-	}
-	
-	public void showAchievementOverlay(EntityPlayer player, String title, String desc, long duration, ItemStack icon) {
-		if(player instanceof EntityPlayerMP) {
-			MinaMod.getMinaMod().getPacketDispatcher().sendTo(new MessageShowCustomAchievement(title, desc, duration, icon), (EntityPlayerMP)player);
 		}
 	}
 	

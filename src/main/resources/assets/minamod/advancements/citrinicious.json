@@ -1,0 +1,20 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:citrin"
+        },
+        "title": "achievement.minamod.citrinicious"
+    },
+    "criteria": {
+        "got_citrin": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minamod:citrin"
+                    }
+                ]
+            }
+        }
+    }
+}

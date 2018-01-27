@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 
 import org.apache.logging.log4j.Logger;
 
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.annotations.MinaPermission;
 import lu.kremi151.minamod.block.tileentity.TileEntityAccumulator;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoCrafter;
@@ -135,6 +136,7 @@ public class MinaMod {
 
 		MinaBlocks.setFireInfos();
 		MinaAchievements.register();
+		MinaTriggers.register();
 		
 		GameRegistry.registerTileEntity(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"));
 		GameRegistry.registerTileEntity(TileEntityAutoFeeder.class, createNamespacedIdentifier("auto_feeder"));

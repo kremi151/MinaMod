@@ -3,11 +3,8 @@ package lu.kremi151.minamod.proxy;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
-
 import org.lwjgl.input.Keyboard;
 
-import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.BlockCampfire;
@@ -53,7 +50,6 @@ import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
-import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.particle.Particle;
@@ -65,7 +61,6 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.MathHelper;
@@ -220,23 +215,6 @@ public class ClientProxy extends CommonProxy {
 		if(!entity.getRenderData().checked_water_state){
 			entity.getRenderData().was_in_water = entity.isInWater();
 			entity.getRenderData().checked_water_state = true;
-		}
-	}
-	
-	@Override
-	public void setAchievementsCustomStringFormatters() {
-		MinaAchievements.OPEN_STATS.setStatStringFormatter(str -> String.format(str, KEY_PLAYER_STATS.getDisplayName()));
-		MinaAchievements.OPEN_AMULET_INV.setStatStringFormatter(str -> String.format(str, KEY_AMULETS.getDisplayName()));
-	}
-	
-	@Override
-	public void showAchievementOverlay(@Nullable EntityPlayer player, String title, String desc, long duration, ItemStack icon) {
-		try {
-			Achievement ach = new Achievement("dummy", title, 0, 0, icon, null);
-			boolean permanent = duration < 0;
-			ReflectionLoader.GuiAchievement_postCustomAchievement(Minecraft.getMinecraft().guiAchievement, title, desc, Minecraft.getSystemTime() /*+ duration*/, ach, permanent);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
 		}
 	}
 	

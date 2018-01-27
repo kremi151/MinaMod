@@ -1,0 +1,13 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:amulet_of_ender"
+        },
+        "title": "achievement.minamod.amulets"
+    },
+    "criteria": {
+        "see_amulets": {
+            "trigger": "minamod:open_amulet_inventory"
+        }
+    }
+}

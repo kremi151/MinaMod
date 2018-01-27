@@ -1,0 +1,13 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:battery"
+        },
+        "title": "achievement.minamod.stats"
+    },
+    "criteria": {
+        "see_stats": {
+            "trigger": "minamod:open_stats"
+        }
+    }
+}
