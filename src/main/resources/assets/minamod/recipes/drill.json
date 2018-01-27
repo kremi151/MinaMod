@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:drill",
+    "count": 1
+  },
+  "pattern": [
+    "IQQ",
+    "  R",
+    " QQ"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget",
+      "count": 1
+    },
+    "Q": {
+      "item": "minecraft:quartz",
+      "count": 1
+    },
+    "R": {
+      "item": "minamod:rubber",
+      "count": 1
+    }
+  }
+}

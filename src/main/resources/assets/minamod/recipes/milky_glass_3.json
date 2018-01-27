@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:milky_glass",
+    "data": 3,
+    "count": 8
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:stained_glass",
+      "data": 3,
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:milk_bucket",
+      "count": 1
+    }
+  }
+}

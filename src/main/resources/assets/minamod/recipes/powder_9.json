@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:powder",
+    "data": 9,
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minamod:herb",
+      "data": 9,
+      "count": 1
+    }
+  ]
+}

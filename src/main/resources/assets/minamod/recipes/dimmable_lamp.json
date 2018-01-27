@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:dimmable_lamp",
+    "count": 1
+  },
+  "pattern": [
+    " Q ",
+    "QLQ",
+    " Q "
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz",
+      "count": 1
+    },
+    "L": {
+      "item": "minecraft:redstone_lamp",
+      "count": 1
+    }
+  }
+}

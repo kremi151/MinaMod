@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:collector",
+    "count": 1
+  },
+  "pattern": [
+    "CCC",
+    "WHW",
+    "CRC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone",
+      "count": 1
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 0,
+      "count": 1
+    },
+    "H": {
+      "item": "minecraft:hopper",
+      "count": 1
+    },
+    "R": {
+      "item": "minecraft:redstone",
+      "count": 1
+    }
+  }
+}

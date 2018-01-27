@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:goulash",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:baked_potato",
+      "count": 1
+    },
+    {
+      "item": "minecraft:mushroom_stew",
+      "count": 1
+    },
+    {
+      "item": "minecraft:carrot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:beef",
+      "count": 1
+    }
+  ]
+}

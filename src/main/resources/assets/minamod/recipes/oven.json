@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:oven",
+    "count": 1
+  },
+  "pattern": [
+    "PQP",
+    "P G",
+    "PQP"
+  ],
+  "key": {
+    "P": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    },
+    "Q": {
+      "item": "minecraft:quartz",
+      "count": 1
+    },
+    "G": {
+      "item": "minecraft:glass",
+      "count": 1
+    }
+  }
+}

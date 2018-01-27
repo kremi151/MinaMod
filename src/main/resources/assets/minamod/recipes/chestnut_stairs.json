@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:chestnut_stairs",
+    "count": 4
+  },
+  "pattern": [
+    "  P",
+    " PP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "minamod:mina_planks",
+      "data": 2,
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:elevator_control",
+    "count": 1
+  },
+  "pattern": [
+    "III",
+    "QCQ"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "Q": {
+      "item": "minecraft:quartz",
+      "count": 1
+    },
+    "C": {
+      "item": "minamod:chip",
+      "data": 1,
+      "count": 1
+    }
+  }
+}

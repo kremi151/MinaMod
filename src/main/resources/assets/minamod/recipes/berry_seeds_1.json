@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:berry_seeds",
+    "data": 1,
+    "count": 2
+  },
+  "ingredients": [
+    {
+      "item": "minamod:berry",
+      "data": 1,
+      "count": 1
+    }
+  ]
+}

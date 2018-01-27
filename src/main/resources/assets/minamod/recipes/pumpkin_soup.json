@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:pumpkin_soup",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:bowl",
+      "count": 1
+    },
+    {
+      "item": "minecraft:pumpkin",
+      "count": 1
+    },
+    {
+      "item": "minecraft:pumpkin_seeds",
+      "count": 1
+    }
+  ]
+}

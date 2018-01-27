@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:cable",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minamod:rubber",
+      "count": 1
+    },
+    {
+      "item": "minamod:copper_nugget",
+      "count": 1
+    },
+    {
+      "item": "minamod:copper_nugget",
+      "count": 1
+    }
+  ]
+}

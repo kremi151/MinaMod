@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:sieve",
+    "count": 1
+  },
+  "pattern": [
+    "I I",
+    "IFI",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "F": {
+      "item": "minecraft:string",
+      "count": 1
+    }
+  }
+}

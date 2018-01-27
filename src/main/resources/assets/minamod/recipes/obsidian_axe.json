@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:obsidian_axe",
+    "count": 1
+  },
+  "pattern": [
+    "AA",
+    "AB",
+    " B"
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:obsidian_fragment",
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:chicken_nuggets",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:cooked_chicken",
+      "count": 1
+    },
+    {
+      "item": "minamod:flour",
+      "count": 1
+    }
+  ]
+}

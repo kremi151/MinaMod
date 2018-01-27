@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:autocrafter",
+    "count": 1
+  },
+  "pattern": [
+    "PHP",
+    "PWP",
+    "PUP"
+  ],
+  "key": {
+    "P": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    },
+    "H": {
+      "item": "minecraft:hopper",
+      "count": 1
+    },
+    "W": {
+      "item": "minecraft:crafting_table",
+      "count": 1
+    },
+    "U": {
+      "item": "minamod:chip",
+      "data": 3,
+      "count": 1
+    }
+  }
+}

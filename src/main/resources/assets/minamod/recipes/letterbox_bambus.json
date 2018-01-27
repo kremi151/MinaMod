@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:letterbox_bambus",
+    "count": 1
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:bambus_block",
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:hopper",
+      "count": 1
+    },
+    "C": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

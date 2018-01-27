@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:ice_sword",
+    "count": 1
+  },
+  "pattern": [
+    "I",
+    "I",
+    "B"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:ice",
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:blaze_rod",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:filter",
+    "count": 1
+  },
+  "pattern": [
+    " H ",
+    "PSP",
+    " P "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hopper",
+      "count": 1
+    },
+    "P": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    },
+    "S": {
+      "item": "minecraft:string",
+      "count": 1
+    }
+  }
+}

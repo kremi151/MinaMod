@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:platinum_helmet",
+    "count": 1
+  },
+  "pattern": [
+    "AAA",
+    "A A"
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    }
+  }
+}

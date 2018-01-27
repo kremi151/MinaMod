@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:citrin",
+    "count": 9
+  },
+  "ingredients": [
+    {
+      "item": "minamod:citrin_block",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:strawberrycake",
+    "count": 1
+  },
+  "pattern": [
+    "MMM",
+    "SES",
+    "WSW"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:milk_bucket",
+      "count": 1
+    },
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "strawberry"
+    },
+    "E": {
+      "item": "minecraft:egg",
+      "count": 1
+    },
+    "W": {
+      "item": "minecraft:wheat",
+      "count": 1
+    }
+  }
+}

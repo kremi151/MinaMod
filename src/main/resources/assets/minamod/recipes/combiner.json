@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:combiner",
+    "count": 1
+  },
+  "pattern": [
+    " I ",
+    " R ",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "R": {
+      "item": "minecraft:redstone",
+      "count": 1
+    }
+  }
+}

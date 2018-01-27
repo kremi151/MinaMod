@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:sapphire",
+    "count": 9
+  },
+  "ingredients": [
+    {
+      "item": "minamod:sapphire_block",
+      "count": 1
+    }
+  ]
+}

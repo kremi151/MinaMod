@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:amulet_of_experience",
+    "count": 1
+  },
+  "pattern": [
+    " S ",
+    "S S",
+    " N "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string",
+      "count": 1
+    },
+    "N": {
+      "item": "minecraft:emerald",
+      "count": 1
+    }
+  }
+}

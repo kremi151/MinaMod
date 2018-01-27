@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:candy_cane",
+    "count": 1
+  },
+  "pattern": [
+    " S ",
+    "SRS",
+    "  S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:sugar",
+      "count": 1
+    },
+    "R": {
+      "item": "minecraft:dye",
+      "data": 1,
+      "count": 1
+    }
+  }
+}

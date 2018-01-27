@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:katana",
+    "count": 1
+  },
+  "pattern": [
+    "  E",
+    "WE ",
+    "BW "
+  ],
+  "key": {
+    "B": {
+      "item": "minamod:bambus",
+      "count": 1
+    },
+    "E": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 0,
+      "count": 1
+    }
+  }
+}

@@ -22,6 +22,7 @@ public class ItemStrawberry extends ItemSeedFood{
 	public ItemStrawberry() {
 		super(1, 0.2f, MinaBlocks.STRAWBERRY_CROP, Blocks.FARMLAND);
 		this.setHasSubtypes(true);
+		this.setCreativeTab(CreativeTabs.FOOD);
 	}
 
 	@Override

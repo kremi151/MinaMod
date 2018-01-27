@@ -56,7 +56,7 @@ public class MinaRecipes {
 	private static boolean init = false, init_brewing = false, init_furnace = false;
 
 	static void initCraftingRecipes(MinaMod mod) {
-		if(false) {
+		if(true) {
 			System.out.println("### Skipping crafting recipes...");
 			return;
 		}
@@ -99,7 +99,7 @@ public class MinaRecipes {
 	
 	private static void addShapedRecipe(@Nullable String customRecipeName, ItemStack output, Object... params) {
 		JsonObject jo = new JsonObject();
-		jo.addProperty("type", "crafting_shaped");
+		jo.addProperty("type", "minecraft:crafting_shaped");
 		jo.addProperty("group", "minamod");
 		
 		JsonArray patternArray = new JsonArray();
@@ -107,7 +107,7 @@ public class MinaRecipes {
 		JsonObject result = new JsonObject();
 		
 		result.addProperty("item", output.getItem().getRegistryName().toString());
-		if(output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
+		if(output.getItem().getHasSubtypes() ||output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
 		result.addProperty("count", output.getCount());
 		jo.add("result", result);
 		
@@ -135,12 +135,15 @@ public class MinaRecipes {
 					if(obj instanceof Item) {
 						JsonObject ing = new JsonObject();
 						ing.addProperty("item", ((Item)obj).getRegistryName().toString());
+						if(((Item)obj).getHasSubtypes())ing.addProperty("data", 0);
 						ing.addProperty("count", 1);
 						mappings.add("" + lastKey, ing);
 						lastKey = null;
 					}else if(obj instanceof Block) {
 						JsonObject ing = new JsonObject();
-						ing.addProperty("item", Item.getItemFromBlock((Block)obj).getRegistryName().toString());
+						Item item = Item.getItemFromBlock((Block)obj);
+						ing.addProperty("item", item.getRegistryName().toString());
+						if(item.getHasSubtypes())ing.addProperty("data", 0);
 						ing.addProperty("count", 1);
 						mappings.add("" + lastKey, ing);
 						lastKey = null;
@@ -148,7 +151,7 @@ public class MinaRecipes {
 						JsonObject ing = new JsonObject();
 						ItemStack stack = (ItemStack) obj;
 						ing.addProperty("item", stack.getItem().getRegistryName().toString());
-						if(stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
+						if(stack.getItem().getHasSubtypes() || stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
 						ing.addProperty("count", 1);
 						mappings.add("" + lastKey, ing);
 						lastKey = null;
@@ -203,14 +206,14 @@ public class MinaRecipes {
 	
 	private static void addShapelessRecipe(@Nullable String customRecipeName, ItemStack output, Object... params) {
 		JsonObject jo = new JsonObject();
-		jo.addProperty("type", "crafting_shapeless");
+		jo.addProperty("type", "minecraft:crafting_shapeless");
 		jo.addProperty("group", "minamod");
 		
 		JsonObject result = new JsonObject();
 		JsonArray ingredients = new JsonArray();
 		
 		result.addProperty("item", output.getItem().getRegistryName().toString());
-		if(output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
+		if(output.getItem().getHasSubtypes() || output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
 		result.addProperty("count", output.getCount());
 		jo.add("result", result);
 		
@@ -219,22 +222,25 @@ public class MinaRecipes {
 			if(obj instanceof Item) {
 				JsonObject ing = new JsonObject();
 				ing.addProperty("item", ((Item)obj).getRegistryName().toString());
+				if(((Item)obj).getHasSubtypes())ing.addProperty("data", 0);
 				ing.addProperty("count", 1);
 				ingredients.add(ing);
 			}else if(obj instanceof Block) {
 				JsonObject ing = new JsonObject();
-				ing.addProperty("item", Item.getItemFromBlock((Block)obj).getRegistryName().toString());
+				Item item = Item.getItemFromBlock((Block)obj);
+				ing.addProperty("item", item.getRegistryName().toString());
+				if(item.getHasSubtypes())ing.addProperty("data", 0);
 				ing.addProperty("count", 1);
 				ingredients.add(ing);
 			}else if(obj instanceof ItemStack) {
 				JsonObject ing = new JsonObject();
 				ItemStack stack = (ItemStack) obj;
 				ing.addProperty("item", stack.getItem().getRegistryName().toString());
-				if(stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
+				if(stack.getItem().getHasSubtypes() || stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
 				ing.addProperty("count", 1);
 				ingredients.add(ing);
 			}else if(obj instanceof String) {
-				jo.addProperty("type", "forge:ore_shapeless");
+				jo.addProperty("type", "forge:ore_shaped");
 				JsonObject ing = new JsonObject();
 				ing.addProperty("type", "forge:ore_dict");
 				ing.addProperty("ore", obj.toString());

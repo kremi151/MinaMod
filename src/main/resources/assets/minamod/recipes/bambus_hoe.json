@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:bambus_hoe",
+    "count": 1
+  },
+  "pattern": [
+    "AA",
+    " B",
+    " B"
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:bambus",
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

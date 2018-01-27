@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:herb_guide",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:writable_book",
+      "count": 1
+    },
+    {
+      "item": "minamod:herb",
+      "data": 32767,
+      "count": 1
+    }
+  ]
+}

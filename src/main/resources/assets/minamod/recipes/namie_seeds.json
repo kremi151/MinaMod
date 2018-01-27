@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:namie_seeds",
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "minamod:namie_fruit",
+      "count": 1
+    }
+  ]
+}

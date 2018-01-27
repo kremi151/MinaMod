@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:autofeeder",
+    "count": 1
+  },
+  "pattern": [
+    "PHP",
+    "DCD",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    },
+    "H": {
+      "item": "minecraft:hopper",
+      "count": 1
+    },
+    "D": {
+      "item": "minecraft:dispenser",
+      "count": 1
+    },
+    "C": {
+      "item": "minamod:chip",
+      "data": 0,
+      "count": 1
+    }
+  }
+}

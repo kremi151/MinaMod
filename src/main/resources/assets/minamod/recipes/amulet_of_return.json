@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:amulet_of_return",
+    "count": 1
+  },
+  "pattern": [
+    " S ",
+    "SES",
+    " Y "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string",
+      "count": 1
+    },
+    "Y": {
+      "item": "minecraft:ender_eye",
+      "count": 1
+    },
+    "E": {
+      "item": "minecraft:emerald",
+      "count": 1
+    }
+  }
+}

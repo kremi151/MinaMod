@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:iron_sickle",
+    "count": 1
+  },
+  "pattern": [
+    "II ",
+    " IH",
+    "  H"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "H": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

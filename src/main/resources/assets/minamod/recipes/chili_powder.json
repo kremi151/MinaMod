@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:chili_powder",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minamod:chili",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:campbench",
+    "data": 3,
+    "count": 2
+  },
+  "pattern": [
+    "WW",
+    "SS"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:log",
+      "data": 1,
+      "count": 1
+    },
+    "S": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

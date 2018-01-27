@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:chip",
+    "data": 3,
+    "count": 1
+  },
+  "pattern": [
+    "GAG",
+    "BSC",
+    "GRG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot",
+      "count": 1
+    },
+    "A": {
+      "item": "minamod:chip",
+      "data": 0,
+      "count": 1
+    },
+    "B": {
+      "item": "minamod:chip",
+      "data": 1,
+      "count": 1
+    },
+    "C": {
+      "item": "minamod:chip",
+      "data": 2,
+      "count": 1
+    },
+    "R": {
+      "item": "minecraft:redstone",
+      "count": 1
+    },
+    "S": {
+      "item": "minamod:rare_earth_ore",
+      "data": 1,
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:flour",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:wheat",
+      "count": 1
+    }
+  ]
+}

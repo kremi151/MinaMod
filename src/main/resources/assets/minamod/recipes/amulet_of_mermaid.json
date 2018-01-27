@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:amulet_of_mermaid",
+    "count": 1
+  },
+  "pattern": [
+    " S ",
+    "S S",
+    " G "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string",
+      "count": 1
+    },
+    "G": {
+      "item": "minamod:sapphire",
+      "count": 1
+    }
+  }
+}

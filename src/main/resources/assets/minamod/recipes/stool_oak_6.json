@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:stool_oak",
+    "data": 6,
+    "count": 3
+  },
+  "pattern": [
+    "AA",
+    "BB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:wool",
+      "data": 6,
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:planks",
+      "data": 0,
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:lit_milky_glass",
+    "data": 10,
+    "count": 8
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:milky_glass",
+      "data": 10,
+      "count": 1
+    },
+    "B": {
+      "item": "minamod:frozen_glowstone",
+      "count": 1
+    }
+  }
+}

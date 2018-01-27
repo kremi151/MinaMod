@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:amulet_of_ender",
+    "count": 1
+  },
+  "pattern": [
+    " S ",
+    "S S",
+    " E "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string",
+      "count": 1
+    },
+    "E": {
+      "item": "minecraft:ender_eye",
+      "count": 1
+    }
+  }
+}

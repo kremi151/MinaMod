@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:cobblebrick_stone",
+    "data": 1,
+    "count": 6
+  },
+  "pattern": [
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minamod:cobblebrick_stone",
+      "data": 0,
+      "count": 1
+    }
+  }
+}

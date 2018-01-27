@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:bambus",
+    "count": 9
+  },
+  "ingredients": [
+    {
+      "item": "minamod:bambus_block",
+      "count": 1
+    }
+  ]
+}

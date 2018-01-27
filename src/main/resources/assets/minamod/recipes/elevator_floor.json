@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:elevator_floor",
+    "data": 0,
+    "count": 1
+  },
+  "pattern": [
+    "IQI",
+    "QIQ",
+    "IQI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    "Q": {
+      "item": "minecraft:quartz",
+      "count": 1
+    }
+  }
+}

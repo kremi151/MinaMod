@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:pumpkin_lantern",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:stick",
+      "count": 1
+    },
+    {
+      "item": "minecraft:stone",
+      "data": 0,
+      "count": 1
+    },
+    {
+      "item": "minecraft:lit_pumpkin",
+      "count": 1
+    }
+  ]
+}

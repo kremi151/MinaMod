@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:golden_coin",
+    "data": 1,
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minamod:golden_coin",
+      "data": 0,
+      "count": 1
+    },
+    {
+      "item": "minamod:golden_coin",
+      "data": 0,
+      "count": 1
+    },
+    {
+      "item": "minamod:golden_coin",
+      "data": 0,
+      "count": 1
+    },
+    {
+      "item": "minamod:golden_coin",
+      "data": 0,
+      "count": 1
+    },
+    {
+      "item": "minamod:golden_coin",
+      "data": 0,
+      "count": 1
+    }
+  ]
+}

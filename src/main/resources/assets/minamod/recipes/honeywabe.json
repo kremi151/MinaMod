@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:honeywabe",
+    "count": 9
+  },
+  "ingredients": [
+    {
+      "item": "minamod:wabe_block",
+      "count": 1
+    }
+  ]
+}

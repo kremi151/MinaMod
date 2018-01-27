@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:poulet_special_piquant",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "minamod:sweet_sour",
+      "count": 1
+    },
+    {
+      "item": "minecraft:cooked_chicken",
+      "count": 1
+    }
+  ]
+}

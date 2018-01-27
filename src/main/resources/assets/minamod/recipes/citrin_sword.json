@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:citrin_sword",
+    "count": 1
+  },
+  "pattern": [
+    "A",
+    "A",
+    "B"
+  ],
+  "key": {
+    "A": {
+      "item": "minamod:citrin",
+      "count": 1
+    },
+    "B": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}

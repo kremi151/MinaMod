@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:coal_compressor",
+    "count": 1
+  },
+  "pattern": [
+    "PPP",
+    "POP",
+    "POP"
+  ],
+  "key": {
+    "P": {
+      "item": "minamod:platinum_ingot",
+      "count": 1
+    },
+    "O": {
+      "item": "minecraft:obsidian",
+      "count": 1
+    }
+  }
+}

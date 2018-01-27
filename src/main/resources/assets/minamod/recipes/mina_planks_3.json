@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:mina_planks",
+    "data": 3,
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "minamod:log_cherry",
+      "count": 1
+    }
+  ]
+}
