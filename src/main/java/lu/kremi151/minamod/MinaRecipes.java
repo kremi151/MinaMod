@@ -1,7 +1,15 @@
 package lu.kremi151.minamod;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import lu.kremi151.minamod.annotations.AutoRecipe;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
@@ -22,6 +30,7 @@ import lu.kremi151.minamod.recipe.RecipeFixDrill;
 import lu.kremi151.minamod.recipe.RecipeHerbMixture;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -39,14 +48,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class MinaRecipes {
 
 	private static boolean init = false, init_brewing = false, init_furnace = false;
 
 	static void initCraftingRecipes(MinaMod mod) {
-		if(true) {
+		if(false) {
 			System.out.println("### Skipping crafting recipes...");
 			return;
 		}
@@ -81,24 +89,178 @@ public class MinaRecipes {
 		init_brewing = true;
 	}
 	
+	private static final Gson MY_GSON = new GsonBuilder().setPrettyPrinting().create();
+	
 	private static void addShapedRecipe(ItemStack output, Object... params) {
+		JsonObject jo = new JsonObject();
+		jo.addProperty("type", "crafting_shaped");
+		jo.addProperty("group", "minamod");
+		
+		JsonArray patternArray = new JsonArray();
+		JsonObject mappings = new JsonObject();
+		JsonObject result = new JsonObject();
+		
+		result.addProperty("item", output.getItem().getRegistryName().toString());
+		if(output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
+		result.addProperty("count", output.getCount());
+		jo.add("result", result);
+		
+		boolean expectingPattern = true;
+		Character lastKey = null;
+		for(int i = 0 ; i < params.length ; i++) {
+			Object obj = params[i];
+			if(expectingPattern) {
+				if(obj instanceof String) {
+					patternArray.add(obj.toString());
+				}else {
+					expectingPattern = false;
+					i--;
+				}
+			}else {
+				if(lastKey == null) {
+					if(obj instanceof String && ((String)obj).length() == 1) {
+						lastKey = ((String)obj).charAt(0);
+					}else if(obj instanceof Character) {
+						lastKey = (Character) obj;
+					}else {
+						throw new IllegalStateException("Expected key, got " + obj);
+					}
+				}else {
+					if(obj instanceof Item) {
+						JsonObject ing = new JsonObject();
+						ing.addProperty("item", ((Item)obj).getRegistryName().toString());
+						ing.addProperty("count", 1);
+						mappings.add("" + lastKey, ing);
+						lastKey = null;
+					}else if(obj instanceof Block) {
+						JsonObject ing = new JsonObject();
+						ing.addProperty("item", Item.getItemFromBlock((Block)obj).getRegistryName().toString());
+						ing.addProperty("count", 1);
+						mappings.add("" + lastKey, ing);
+						lastKey = null;
+					}else if(obj instanceof ItemStack) {
+						JsonObject ing = new JsonObject();
+						ItemStack stack = (ItemStack) obj;
+						ing.addProperty("item", stack.getItem().getRegistryName().toString());
+						if(stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
+						ing.addProperty("count", 1);
+						mappings.add("" + lastKey, ing);
+						lastKey = null;
+					}else if(obj instanceof String) {
+						jo.addProperty("type", "forge:ore_shaped");
+						JsonObject ing = new JsonObject();
+						ing.addProperty("type", "forge:ore_dict");
+						ing.addProperty("ore", obj.toString());
+						mappings.add("" + lastKey, ing);
+						lastKey = null;
+					}else {
+						throw new IllegalStateException("Unrecognized ingredient: " + obj);
+					}
+				}
+			}
+		}
+
+		jo.add("pattern", patternArray);
+		jo.add("key", mappings);
+		
+		final File recipeFolder = new File("generatedRecipes");
+		if(!recipeFolder.exists()) {
+			recipeFolder.mkdirs();
+		}
+		final File destFile = new File(recipeFolder, output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json");
+		
+		if(destFile.exists()) {
+			throw new IllegalStateException("File name collison: " + destFile.getAbsolutePath());
+		}
+		
+		try(FileWriter fw = new FileWriter(destFile)){
+			MY_GSON.toJson(jo, fw);
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+		
 		//TODO: Catch and generate JSON files
-		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
+		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
 	
 	private static void addShapedOreRecipe(ItemStack output, Object... params) {
 		//TODO: Catch and generate JSON files
-		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
+		addShapedRecipe(output, params);
+		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
 	
 	private static void addShapelessRecipe(ItemStack output, Object... params) {
+		JsonObject jo = new JsonObject();
+		jo.addProperty("type", "crafting_shapeless");
+		jo.addProperty("group", "minamod");
+		
+		JsonObject result = new JsonObject();
+		JsonArray ingredients = new JsonArray();
+		
+		result.addProperty("item", output.getItem().getRegistryName().toString());
+		if(output.getMetadata() != 0)result.addProperty("data", output.getMetadata());
+		result.addProperty("count", output.getCount());
+		jo.add("result", result);
+		
+		for(int i = 0 ; i < params.length ; i++) {
+			Object obj = params[i];
+			if(obj instanceof Item) {
+				JsonObject ing = new JsonObject();
+				ing.addProperty("item", ((Item)obj).getRegistryName().toString());
+				ing.addProperty("count", 1);
+				ingredients.add(ing);
+			}else if(obj instanceof Block) {
+				JsonObject ing = new JsonObject();
+				ing.addProperty("item", Item.getItemFromBlock((Block)obj).getRegistryName().toString());
+				ing.addProperty("count", 1);
+				ingredients.add(ing);
+			}else if(obj instanceof ItemStack) {
+				JsonObject ing = new JsonObject();
+				ItemStack stack = (ItemStack) obj;
+				ing.addProperty("item", stack.getItem().getRegistryName().toString());
+				if(stack.getMetadata() != 0)ing.addProperty("data", stack.getMetadata());
+				ing.addProperty("count", 1);
+				ingredients.add(ing);
+			}else if(obj instanceof String) {
+				jo.addProperty("type", "forge:ore_shapeless");
+				JsonObject ing = new JsonObject();
+				ing.addProperty("type", "forge:ore_dict");
+				ing.addProperty("ore", obj.toString());
+				ingredients.add(ing);
+			}else {
+				throw new IllegalStateException("Unrecognized ingredient: " + obj);
+			}
+		}
+
+		jo.add("ingredients", ingredients);
+		
+		final File recipeFolder = new File("generatedRecipes");
+		if(!recipeFolder.exists()) {
+			recipeFolder.mkdirs();
+		}
+		final File destFile = new File(recipeFolder, output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json");
+		
+		if(destFile.exists()) {
+			throw new IllegalStateException("File name collison: " + destFile.getAbsolutePath());
+		}
+		
+		try(FileWriter fw = new FileWriter(destFile)){
+			MY_GSON.toJson(jo, fw);
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+		
 		//TODO: Catch and generate JSON files
-		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
+		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
 	
 	private static void addRecipe(IRecipe recipe) {
 		//TODO: Catch and generate JSON files
-		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
+		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
 
 	private static void initDefaultRecipes() {
@@ -202,7 +364,7 @@ public class MinaRecipes {
 	
 		addShapedRecipe(new ItemStack(MinaItems.COIN_BAG, 1), "L", "L", 'L', Items.LEATHER);
 	
-		addShapedRecipe(new ItemStack(MinaItems.KEY, 1), " L", "I ", 'L', Items.LEATHER, 'I', Items.IRON_INGOT);
+		//Collision? addShapedRecipe(new ItemStack(MinaItems.KEY, 1), " L", "I ", 'L', Items.LEATHER, 'I', Items.IRON_INGOT);
 	
 		addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_EXPERIENCE), " S ", "S S", " N ", 'S', Items.STRING, 'N', Items.EMERALD);
 		addShapedRecipe(new ItemStack(MinaItems.AMULET_OF_ENDER), " S ", "S S", " E ", 'S', Items.STRING, 'E', Items.ENDER_EYE);
