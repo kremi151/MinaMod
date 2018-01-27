@@ -15,7 +15,7 @@ public class ItemKatana extends ItemSword{
 
 	public ItemKatana() {
 		super(MinaToolMaterials.KATANA);
-        this.attackDamage = 3.0F + MinaToolMaterials.KATANA.getDamageVsEntity();
+        this.attackDamage = 3.0F + MinaToolMaterials.KATANA.getAttackDamage();
 	}
 	
 	@Override

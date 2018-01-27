@@ -2,7 +2,6 @@ package lu.kremi151.minamod.util.eventlisteners;
 
 import java.util.List;
 
-import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaEnchantments;
 import lu.kremi151.minamod.MinaItems;
@@ -17,7 +16,6 @@ import lu.kremi151.minamod.worlddata.data.FrostTemplePosition;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -33,7 +31,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -178,13 +175,13 @@ public class PlayerSpecificEvents {
 		container.addListener(new SyncItemCapabilitiesListener(player));
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onPickupItem(EntityItemPickupEvent event) {
 		if(!event.getItem().getItem().isEmpty()) {
 			if(event.getItem().getItem().getItem() == MinaItems.CITRIN) {
 				event.getEntityPlayer().addStat(MinaAchievements.CITRINICIOUS, 1);
 			}
 		}
-	}
+	}*/
 
 }

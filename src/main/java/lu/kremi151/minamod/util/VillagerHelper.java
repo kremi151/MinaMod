@@ -50,7 +50,8 @@ public class VillagerHelper {
 				MinaMod.MODID + ":textures/entity/villager/carpenter.png",
 				MinaMod.MODID + ":textures/entity/zombie_villager/carpenter.png");
 		professionJewelier = new VillagerProfession(MinaMod.MODID + ":jewelier",
-				MinaMod.MODID + ":textures/entity/villager/jewelier.png");
+				MinaMod.MODID + ":textures/entity/villager/jewelier.png",
+				MinaMod.MODID + ":textures/entity/zombie_villager/jewelier.png");
 
 		careerBaker = new VillagerCareer(professionBaker, MinaMod.MODID + ".baker");
 		careerCarpenter = new VillagerCareer(professionCarpenter, MinaMod.MODID + ".carpenter");

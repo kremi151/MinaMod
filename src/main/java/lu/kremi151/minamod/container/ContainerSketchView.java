@@ -25,7 +25,7 @@ public class ContainerSketchView extends BaseContainer{
 				}
 				invCraft.setInventorySlotContents(i, order.get(i).copy());
 			}
-			ItemStack result = CraftingManager.getInstance().findMatchingRecipe(invCraft, player.world);
+			ItemStack result = CraftingManager.findMatchingResult(invCraft, player.world);
 			invRes.setInventorySlotContents(0, result.copy());
 		}
 		

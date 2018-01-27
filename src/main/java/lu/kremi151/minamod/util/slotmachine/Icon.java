@@ -25,11 +25,17 @@ public class Icon{
 				this.weight = nbt.getInteger("Weight");
 				this.cherry = nbt.getBoolean("Cherry");
 			}else {
-				throw new NBTException("Unknown item: " + iconRes.toString());
+				throw makeException(nbt, "Item", "Unknown item: " + iconRes.toString());
 			}
 		}else {
-			throw new NBTException("The NBT data for this icon is missing either an Item or Weight attribute, or both");
+			throw new NBTException("The NBT data for this icon is missing either an Item or Weight attribute, or both", nbt.toString(), 0);
 		}
+	}
+	
+	private NBTException makeException(NBTTagCompound source, String element, String message) {
+		String json = source.toString();
+		int index = json.indexOf(element);
+		return new NBTException(message, json, index);
 	}
 	
 	public NBTTagCompound serialize() {

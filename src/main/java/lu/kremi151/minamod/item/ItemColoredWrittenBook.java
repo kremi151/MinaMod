@@ -1,10 +1,8 @@
 package lu.kremi151.minamod.item;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.util.MinaUtils;
+import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
@@ -14,7 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,17 +41,7 @@ public class ItemColoredWrittenBook extends ItemWrittenBook{
 		ItemStack itemStackIn = playerIn.getHeldItem(handIn);
 		if (!worldIn.isRemote)
         {
-			Method method = ReflectionHelper.findMethod(ItemWrittenBook.class, this, new String[] {
-                    "resolveContents", "func_179229_a" }, ItemStack.class, EntityPlayer.class);
-			try {
-				method.invoke(this, itemStackIn, playerIn);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
+			ReflectionLoader.ItemWrittenBook_resolveContents(this, itemStackIn, playerIn);
         }
 
         MinaMod.getProxy().openBook(itemStackIn);

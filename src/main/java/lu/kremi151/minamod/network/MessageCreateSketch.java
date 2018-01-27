@@ -36,13 +36,7 @@ public class MessageCreateSketch implements IMessage{
 	public static class Handler extends AbstractServerMessageHandler<MessageCreateSketch>{
 		
 		private Optional<IRecipe> findMatchingRecipe(InventoryCrafting inv, World worldIn) {
-			CraftingManager cm = CraftingManager.getInstance();
-			for(IRecipe recipe : cm.getRecipeList()) {
-				if(recipe.matches(inv, worldIn)) {
-					return Optional.of(recipe);
-				}
-			}
-			return Optional.empty();
+			return Optional.ofNullable(CraftingManager.findMatchingRecipe(inv, worldIn));
 		}
 
 		@Override

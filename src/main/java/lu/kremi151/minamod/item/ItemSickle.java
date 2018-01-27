@@ -16,14 +16,14 @@ public class ItemSickle extends ItemTool{
 	}
 	
 	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState state)
+	public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
         for (String type : getToolClasses(stack))
         {
             if (state.getBlock().isToolEffective(type, state))
-                return efficiencyOnProperMaterial;
+                return efficiency;
         }
-        return (state.getBlock() instanceof IPlantable) ? this.efficiencyOnProperMaterial : 1.0F;
+        return (state.getBlock() instanceof IPlantable) ? this.efficiency : 1.0F;
     }
 	
 	@Override

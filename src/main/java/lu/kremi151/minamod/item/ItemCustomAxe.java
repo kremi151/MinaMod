@@ -23,15 +23,15 @@ public class ItemCustomAxe extends ItemTool
     public ItemCustomAxe(Item.ToolMaterial material)
     {
         super(material, EFFECTIVE_ON);
-        this.damageVsEntity = 1.5f + material.getDamageVsEntity();
+        this.attackDamage = 1.5f + material.getAttackDamage();
         this.attackSpeed = -3.5f;
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state)
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
         Material material = state.getMaterial();
-        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
 
 }

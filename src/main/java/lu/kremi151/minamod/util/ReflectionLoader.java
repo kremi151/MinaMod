@@ -12,9 +12,11 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -37,6 +39,7 @@ public class ReflectionLoader {
 	
 	private static final Method CONTAINER_MERGE_ITEMSTACK;
 	private static final Method CRITERIATRIGGERS_REGISTER;
+	private static final Method ITEM_WRITTENBOOK_RESOLVE_CONTENTS;
 	
 	@SideOnly(Side.CLIENT)
 	private static Method GUI_CONTAINER_DRAW_ITEMSTACK;
@@ -51,6 +54,7 @@ public class ReflectionLoader {
 			
 			CONTAINER_MERGE_ITEMSTACK = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
 			CRITERIATRIGGERS_REGISTER = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
+			ITEM_WRITTENBOOK_RESOLVE_CONTENTS = ReflectionHelper.findMethod(ItemWrittenBook.class, "resolveContents", "func_179229_a", ItemStack.class, EntityPlayer.class);
 			
 			try {
 				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
@@ -110,6 +114,15 @@ public class ReflectionLoader {
 		try {
 			CRITERIATRIGGERS_REGISTER.setAccessible(true);
 			CRITERIATRIGGERS_REGISTER.invoke(null, trigger);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static void ItemWrittenBook_resolveContents(ItemWrittenBook instance, ItemStack stack, EntityPlayer player) {
+		try {
+			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.setAccessible(true);
+			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.invoke(instance, stack, player);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}

@@ -111,7 +111,7 @@ public class TileEntityAutoCrafter extends TileEntitySidedInventory implements I
 					for(int i = 0 ; i < cap.getOrder().size() ; i++) {
 						invCrafting.setInventorySlotContents(i, cap.getOrder().get(i));
 					}
-					ItemStack result = CraftingManager.getInstance().findMatchingRecipe(invCrafting, world);
+					ItemStack result = CraftingManager.findMatchingResult(invCrafting, world);
 					if(!result.isEmpty()) {
 						if(ItemHandlerHelper.insertItem(resultsItemHandler, result, true).isEmpty()) {
 							for(ItemStack stack : req) {

@@ -1,7 +1,6 @@
 package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
-import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.network.abstracts.AbstractMessageHandler;
