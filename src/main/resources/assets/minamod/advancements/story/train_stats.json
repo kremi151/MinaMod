@@ -10,7 +10,7 @@
             "translate": "achievement.minamod.train_stats.desc"
         }
     },
-	"parent": "minamod:modify_stats",
+	"parent": "minamod:story/modify_stats",
     "criteria": {
         "train_stats": {
             "trigger": "minamod:train_stats"

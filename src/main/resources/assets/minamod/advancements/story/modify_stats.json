@@ -10,7 +10,7 @@
             "translate": "achievement.minamod.modify_stats.desc"
         }
     },
-	"parent": "minamod:open_stats",
+	"parent": "minamod:story/open_stats",
     "criteria": {
         "modify_stats": {
             "trigger": "minamod:modify_stats"

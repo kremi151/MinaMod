@@ -10,6 +10,7 @@
             "translate": "achievement.minamod.amulets.desc"
         }
     },
+	"parent": "minamod:story/root",
     "criteria": {
         "see_amulets": {
             "trigger": "minamod:open_amulet_inventory"

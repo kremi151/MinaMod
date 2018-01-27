@@ -525,4 +525,5 @@ achievement.minamod.train_stats=Sei stärker
 achievement.minamod.train_stats.desc=Mache den zweiten Schritt um stärker zu werden indem du trainierst
 achievement.minamod.amulets=Magischer Schmuck
 achievement.minamod.amulets.desc=Öffne das Inventar zu deinen getragenen Amuletten mit Hilfe der '%s' Taste
+advancement.minamod.start=Willkommen bei MinaMod
 inventory.autocrafter=Automatische Werkbank

@@ -9,6 +9,7 @@ import lu.kremi151.minamod.MinaEnchantments;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPotions;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
@@ -186,6 +187,9 @@ public class EntityEvents {
 		}
 		if(event.getEntity().hasCapability(ICapabilityStats.CAPABILITY, null)){
 			((ICapabilityStats)event.getEntity().getCapability(ICapabilityStats.CAPABILITY, null)).initAttributes();//TODO:should this be here?
+		}
+		if(event.getEntity() instanceof EntityPlayerMP) {
+			MinaTriggers.TRIGGER_JOIN.trigger((EntityPlayerMP)event.getEntity());
 		}
 	}
 	

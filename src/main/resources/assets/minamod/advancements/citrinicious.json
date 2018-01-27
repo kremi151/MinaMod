@@ -10,6 +10,7 @@
             "translate": "achievement.minamod.citrinicious.desc"
         }
     },
+	"parent": "minecraft:story/upgrade_tools",
     "criteria": {
         "got_citrin": {
             "trigger": "minecraft:inventory_changed",

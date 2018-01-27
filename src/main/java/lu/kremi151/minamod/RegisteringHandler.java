@@ -104,9 +104,6 @@ public final class RegisteringHandler {
 	
 	@SubscribeEvent
 	protected static void onRegisterVillagers(RegistryEvent.Register<VillagerProfession> event) {
-		for(int i = 0 ; i < 10 ; i++)System.out.println("#");
-		System.out.println("Villagers are registered correctly. If you see this message, please remove it from the code. Thank you. Sincerely, you.");
-		for(int i = 0 ; i < 10 ; i++)System.out.println("#");
 		VillagerHelper.instance().register(event.getRegistry());
 	}
 	

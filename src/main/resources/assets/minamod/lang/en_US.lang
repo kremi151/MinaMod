@@ -526,4 +526,6 @@ achievement.minamod.train_stats=Be stronger
 achievement.minamod.train_stats.desc=Make the second step to optimize your stats by training
 achievement.minamod.amulets=Magic jewelry
 achievement.minamod.amulets.desc=Open the inventory of your current amulets using the '%s' key
+advancement.minamod.start=Welcome to MinaMod
+advancement.minamod.start.desc=Make Minecraft great again!
 inventory.autocrafter=Automatic workbench

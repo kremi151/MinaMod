@@ -1,0 +1,20 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:herb",
+			"data": 2
+        },
+        "title": {
+		    "translate": "advancement.minamod.start"
+	    },
+        "description": {
+            "translate": "advancement.minamod.start.desc"
+        },
+		"background": "minamod:textures/blocks/frozen_brick.png"
+    },
+    "criteria": {
+        "first_join": {
+            "trigger": "minamod:join"
+        }
+    }
+}
