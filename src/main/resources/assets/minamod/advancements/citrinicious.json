@@ -3,7 +3,12 @@
         "icon": {
             "item": "minamod:citrin"
         },
-        "title": "achievement.minamod.citrinicious"
+        "title": {
+		    "translate": "achievement.minamod.citrinicious"
+	    },
+        "description": {
+            "translate": "achievement.minamod.citrinicious.desc"
+        }
     },
     "criteria": {
         "got_citrin": {

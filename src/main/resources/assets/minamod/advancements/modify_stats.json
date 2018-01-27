@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:mixture"
+        },
+        "title": {
+		    "translate": "achievement.minamod.modify_stats"
+	    },
+        "description": {
+            "translate": "achievement.minamod.modify_stats.desc"
+        }
+    },
+	"parent": "minamod:open_stats",
+    "criteria": {
+        "modify_stats": {
+            "trigger": "minamod:modify_stats"
+        }
+    }
+}

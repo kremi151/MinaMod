@@ -3,10 +3,10 @@ package lu.kremi151.minamod.capabilities.stats;
 import java.util.Optional;
 import java.util.Random;
 
-import lu.kremi151.minamod.MinaAchievements;
-import lu.kremi151.minamod.capabilities.stats.ICapabilityStats.Key;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -34,8 +34,8 @@ public class CapabilityStatsPlayerImpl extends CapabilityStatsImpl<EntityPlayer>
 	@Override
 	protected boolean onLevelUp(){
 		boolean res = super.onLevelUp();
-		if(res && !entity.world.isRemote) {
-			entity.addStat(MinaAchievements.TRAIN_STATS, 1);
+		if(res && !entity.world.isRemote && entity instanceof EntityPlayerMP) {
+			MinaTriggers.TRIGGER_TRAIN_STATS.trigger((EntityPlayerMP) entity);
 		}
 		return res;
 	}

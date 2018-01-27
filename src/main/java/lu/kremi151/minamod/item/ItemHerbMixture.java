@@ -8,7 +8,7 @@ import java.util.function.BiConsumer;
 
 import javax.annotation.Nullable;
 
-import lu.kremi151.minamod.MinaAchievements;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
@@ -17,6 +17,7 @@ import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemFood;
@@ -50,7 +51,7 @@ public class ItemHerbMixture extends ItemFood implements ISyncCapabilitiesToClie
     		ISnack mixture = stack.getCapability(ISnack.CAPABILITY, null);
     		
     		if(mixture != null && mixture instanceof HerbMixtureSnack) {
-            	player.addStat(MinaAchievements.MODIFY_STATS, 1);
+            	MinaTriggers.TRIGGER_MODIFY_STATS.trigger((EntityPlayerMP) player);
             	
             	ICapabilityStats<EntityPlayer> stats = player.getCapability(ICapabilityStats.CAPABILITY, null);
             	

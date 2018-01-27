@@ -15,22 +15,22 @@ import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
-public class TriggerOpenInventory implements ICriterionTrigger {
+public class TriggerCustom implements ICriterionTrigger {
 
 	private final ResourceLocation id;
 	private final HashMap<PlayerAdvancements, Listeners> listeners = new HashMap<>();
 
-	public TriggerOpenInventory(String domain, String name) {
+	public TriggerCustom(String domain, String name) {
 		super();
 		id = new ResourceLocation(domain, name);
 	}
 
-	public TriggerOpenInventory(String parString) {
+	public TriggerCustom(String parString) {
 		super();
 		id = new ResourceLocation(parString);
 	}
 
-	public TriggerOpenInventory(ResourceLocation id) {
+	public TriggerCustom(ResourceLocation id) {
 		super();
 		this.id = id;
 	}

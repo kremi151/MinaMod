@@ -135,7 +135,6 @@ public class MinaMod {
 		TerrainEventListeners terrainEventListener = new TerrainEventListeners(this);
 
 		MinaBlocks.setFireInfos();
-		MinaAchievements.register();
 		MinaTriggers.register();
 		
 		GameRegistry.registerTileEntity(TileEntityLetterbox.class, createNamespacedIdentifier("letterbox"));

@@ -3,7 +3,12 @@
         "icon": {
             "item": "minamod:battery"
         },
-        "title": "achievement.minamod.stats"
+        "title": {
+		    "translate": "achievement.minamod.stats"
+	    },
+        "description": {
+            "translate": "achievement.minamod.stats.desc"
+        }
     },
     "criteria": {
         "see_stats": {

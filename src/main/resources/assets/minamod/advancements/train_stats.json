@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:katana"
+        },
+        "title": {
+		    "translate": "achievement.minamod.train_stats"
+	    },
+        "description": {
+            "translate": "achievement.minamod.train_stats.desc"
+        }
+    },
+	"parent": "minamod:modify_stats",
+    "criteria": {
+        "train_stats": {
+            "trigger": "minamod:train_stats"
+        }
+    }
+}

@@ -3,7 +3,12 @@
         "icon": {
             "item": "minamod:amulet_of_ender"
         },
-        "title": "achievement.minamod.amulets"
+        "title": {
+		    "translate": "achievement.minamod.amulets"
+	    },
+        "description": {
+            "translate": "achievement.minamod.amulets.desc"
+        }
     },
     "criteria": {
         "see_amulets": {
