@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class RecipeColoredBook extends RecipeBase{
+public class RecipeColoredBook extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -87,13 +87,13 @@ public class RecipeColoredBook extends RecipeBase{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 9;
+	public ItemStack getRecipeOutput() {
+		return new ItemStack(MinaItems.COLORED_BOOK);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.COLORED_BOOK);
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }

@@ -10,7 +10,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class RecipeEncodeKey extends RecipeBase{
+public class RecipeEncodeKey extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -52,13 +52,13 @@ public class RecipeEncodeKey extends RecipeBase{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 1;
+	public ItemStack getRecipeOutput() {
+		return new ItemStack(MinaItems.KEY, 1);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.KEY, 1);
+	public boolean canFit(int width, int height) {
+		return width > 0 && height > 0;
 	}
 
 }

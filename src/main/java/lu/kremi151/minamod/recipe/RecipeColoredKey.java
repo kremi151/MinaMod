@@ -10,7 +10,7 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class RecipeColoredKey extends RecipeBase{
+public class RecipeColoredKey extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World w) {
@@ -75,13 +75,13 @@ public class RecipeColoredKey extends RecipeBase{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 9;
+	public ItemStack getRecipeOutput() {
+		return new ItemStack(MinaItems.KEY, 1);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.KEY, 1);
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }

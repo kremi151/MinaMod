@@ -6,11 +6,10 @@ import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemKey.State;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class RecipeCopyKey implements IRecipe{
+public class RecipeCopyKey extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -72,11 +71,6 @@ public class RecipeCopyKey implements IRecipe{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 2;
-	}
-
-	@Override
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(MinaItems.KEY, 9);
 	}
@@ -94,6 +88,11 @@ public class RecipeCopyKey implements IRecipe{
 			}
 		}
 		return aitemstack;
+	}
+
+	@Override
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }

@@ -15,12 +15,11 @@ import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class RecipeHerbMixture implements IRecipe{
+public class RecipeHerbMixture extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -104,11 +103,6 @@ public class RecipeHerbMixture implements IRecipe{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 9;
-	}
-
-	@Override
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(MinaItems.MIXTURE);
 	}
@@ -116,6 +110,11 @@ public class RecipeHerbMixture implements IRecipe{
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {//leave it like that please
 		return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+	}
+
+	@Override
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }

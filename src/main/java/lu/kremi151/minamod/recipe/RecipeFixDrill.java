@@ -6,7 +6,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class RecipeFixDrill extends RecipeBase{
+public class RecipeFixDrill extends RecipeBase.Dynamic{
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -16,7 +16,7 @@ public class RecipeFixDrill extends RecipeBase{
 			if(!stack.isEmpty()) {
 				if(stack.getItem() == MinaItems.DRILL && stack.getItemDamage() > 0 && !drill) {
 					drill = true;
-				}else if(stack.getItem() == Items.field_191525_da && !bit) {
+				}else if(stack.getItem() == Items.IRON_NUGGET && !bit) {
 					bit = true;
 				}else {
 					return false;
@@ -45,13 +45,13 @@ public class RecipeFixDrill extends RecipeBase{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 2;
+	public ItemStack getRecipeOutput() {
+		return new ItemStack(MinaItems.DRILL);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.DRILL);
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }

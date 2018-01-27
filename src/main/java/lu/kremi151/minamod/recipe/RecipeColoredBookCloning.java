@@ -5,12 +5,11 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class RecipeColoredBookCloning implements IRecipe
+public class RecipeColoredBookCloning extends RecipeBase.Dynamic
 {
     /**
      * Used to check if a recipe matches current crafting inventory
@@ -106,15 +105,6 @@ public class RecipeColoredBookCloning implements IRecipe
         }
     }
 
-    /**
-     * Returns the size of the recipe area
-     */
-    @Override
-    public int getRecipeSize()
-    {
-        return 9;
-    }
-
     @Override
     public ItemStack getRecipeOutput()
     {
@@ -142,5 +132,10 @@ public class RecipeColoredBookCloning implements IRecipe
 
         return nnl;
     }
+
+	@Override
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
+	}
 
 }

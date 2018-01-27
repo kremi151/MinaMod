@@ -6,7 +6,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class RecipeDamagedSoulPearl extends RecipeBase{
+public class RecipeDamagedSoulPearl extends RecipeBase.Dynamic{//TODO: Maybe replace with RecipeRepairItem
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -41,13 +41,13 @@ public class RecipeDamagedSoulPearl extends RecipeBase{
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 2;
+	public ItemStack getRecipeOutput() {
+		return new ItemStack(MinaItems.SOUL_PEARL, 1);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return new ItemStack(MinaItems.SOUL_PEARL, 1);
+	public boolean canFit(int width, int height) {
+		return (width * height) >= 2;
 	}
 
 }
