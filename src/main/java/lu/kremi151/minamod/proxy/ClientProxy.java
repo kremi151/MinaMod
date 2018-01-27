@@ -3,6 +3,8 @@ package lu.kremi151.minamod.proxy;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.input.Keyboard;
 
 import lu.kremi151.minamod.MinaBlocks;
@@ -50,6 +52,7 @@ import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.particle.Particle;
@@ -314,6 +317,12 @@ public class ClientProxy extends CommonProxy {
 	public void openBook(ItemStack book) {
 		boolean signed = book.hasTagCompound() && book.getTagCompound().hasKey("author", 8);
 		Minecraft.getMinecraft().displayGuiScreen(new GuiScreenBook(Minecraft.getMinecraft().player, book, !signed));
+	}
+	
+	@Override
+	public void showNotification(@Nullable EntityPlayer player, String title, String message, long duration, ItemStack icon) {
+		//TODO: Replace with advancement like notification
+		TextHelper.sendChatMessage(Minecraft.getMinecraft().player, "[" + title + "] " + message);
 	}
 	
 }

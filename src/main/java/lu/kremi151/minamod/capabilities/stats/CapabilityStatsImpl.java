@@ -11,7 +11,6 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.util.Stat;
-import lu.kremi151.minamod.network.MessageShowCustomAchievement;
 import lu.kremi151.minamod.util.BlissHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -114,7 +113,7 @@ public class CapabilityStatsImpl<E extends EntityLivingBase> implements ICapabil
 		final int points = BlissHelper.getBliss(entity).chanceOneIn(10) ? 5 : 3;
 		int mods = distribute(entity.getRNG(), points);
 		if(mods > 0 && entity instanceof EntityPlayerMP){
-			MinaMod.getProxy().showAchievementOverlay((EntityPlayerMP)entity, "Stat upgrade", "Take a look", 2000l, new ItemStack(MinaItems.BATTERY));
+			MinaMod.getProxy().showNotification((EntityPlayerMP)entity, "Stat upgrade", "Take a look", 2000l, new ItemStack(MinaItems.BATTERY));
 		}
 		return mods > 0;
 	}

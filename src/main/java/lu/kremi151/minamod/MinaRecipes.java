@@ -46,6 +46,10 @@ public class MinaRecipes {
 	private static boolean init = false, init_brewing = false, init_furnace = false;
 
 	static void initCraftingRecipes(MinaMod mod) {
+		if(true) {
+			System.out.println("### Skipping crafting recipes...");
+			return;
+		}
 		if (init)throw new RuntimeException("Duplicate call of function");
 		initDefaultRecipes();
 		initColoredRecipes();
@@ -78,6 +82,11 @@ public class MinaRecipes {
 	}
 	
 	private static void addShapedRecipe(ItemStack output, Object... params) {
+		//TODO: Catch and generate JSON files
+		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
+	}
+	
+	private static void addShapedOreRecipe(ItemStack output, Object... params) {
 		//TODO: Catch and generate JSON files
 		throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
@@ -119,8 +128,8 @@ public class MinaRecipes {
 		
 		addShapedRecipe(new ItemStack(MinaBlocks.HONEY_CAKE, 1), "MMM", "HEH", "WHW", 'M',
 				Items.MILK_BUCKET, 'H', MinaItems.HONEY_POT, 'E', Items.EGG, 'W', Items.WHEAT);
-		addRecipe(new ShapedOreRecipe(new ItemStack(MinaBlocks.STRAWBERRY_CAKE, 1), "MMM", "SES", "WSW", 'M',
-				Items.MILK_BUCKET, 'S', "strawberry", 'E', Items.EGG, 'W', Items.WHEAT));
+		addShapedOreRecipe(new ItemStack(MinaBlocks.STRAWBERRY_CAKE, 1), "MMM", "SES", "WSW", 'M',
+				Items.MILK_BUCKET, 'S', "strawberry", 'E', Items.EGG, 'W', Items.WHEAT);
 		addShapedRecipe(new ItemStack(MinaBlocks.CHOCOLATE_CAKE, 1), "MMM", "CEC", "WCW", 'M',
 				Items.MILK_BUCKET, 'C', new ItemStack(Items.DYE, 1, 3), 'E', Items.EGG, 'W', Items.WHEAT);
 		addShapedRecipe(new ItemStack(MinaBlocks.RHUBARB_PIE, 1), "MMM", "RER", "WRW", 'M',

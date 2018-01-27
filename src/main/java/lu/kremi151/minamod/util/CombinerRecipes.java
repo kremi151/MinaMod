@@ -59,7 +59,7 @@ public final class CombinerRecipes {
             }
         }
 
-        RECIPES.add(new ShapelessRecipes(output, list));
+        //TODO: RECIPES.add(new ShapelessRecipes(output, list));
 	}
 
 }

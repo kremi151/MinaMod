@@ -60,7 +60,7 @@ public class MessageShowCustomAchievement implements IMessage{
 
 		@Override
 		public IMessage handleClientMessage(EntityPlayer player, MessageShowCustomAchievement msg, MessageContext ctx) {
-			MinaMod.getProxy().showAchievementOverlay(null, msg.getTitle(), msg.getDescription(), msg.getDuration(), msg.getIcon());
+			MinaMod.getProxy().showNotification(player, msg.getTitle(), msg.getDescription(), msg.getDuration(), msg.getIcon());
 			return null;
 		}
 

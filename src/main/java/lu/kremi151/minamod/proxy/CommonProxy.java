@@ -10,6 +10,7 @@ import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.network.MessageShowCustomAchievement;
 import lu.kremi151.minamod.network.MessageSpawnParticleEffect;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,11 @@ public class CommonProxy{
 	public void executeClientSide(Runnable r){}
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
+	
+	public void showNotification(EntityPlayer player, String title, String message, long duration, ItemStack icon) {
+		//TODO: Replace with advancement like notification
+		TextHelper.sendChatMessage(player, "[" + title + "] " + message);
+	}
 	
 	public IThreadListener getThreadListener(MessageContext context) {
 		if(context.side.isServer()) {
