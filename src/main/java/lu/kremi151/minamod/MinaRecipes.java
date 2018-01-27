@@ -163,7 +163,7 @@ public class MinaRecipes {
 		jo.add("pattern", patternArray);
 		jo.add("key", mappings);
 		
-		final File recipeFolder = new File("generatedRecipes");
+		final File recipeFolder = new File("generatedRecipes/shaped");
 		if(!recipeFolder.exists()) {
 			recipeFolder.mkdirs();
 		}
@@ -236,7 +236,7 @@ public class MinaRecipes {
 
 		jo.add("ingredients", ingredients);
 		
-		final File recipeFolder = new File("generatedRecipes");
+		final File recipeFolder = new File("generatedRecipes/shapeless");
 		if(!recipeFolder.exists()) {
 			recipeFolder.mkdirs();
 		}
