@@ -3,9 +3,11 @@ package lu.kremi151.minamod.network;
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaAchievements;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.network.abstracts.AbstractMessageHandler;
 import lu.kremi151.minamod.util.IDRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -69,7 +71,7 @@ public class MessageOpenGui implements IMessage{
 		@Override
 		public IMessage handleServerMessage(EntityPlayer player, MessageOpenGui message, MessageContext ctx) {
 			if(message.getGuiId() == IDRegistry.guiIdAmulets) {
-				player.addStat(MinaAchievements.OPEN_AMULET_INV, 1);
+				MinaTriggers.TRIGGER_OPEN_AMULET_INVENTORY.trigger((EntityPlayerMP) player);
 			}
 			player.openGui(MinaMod.getMinaMod(), message.getGuiId(), player.world, message.x(), message.y(), message.z());
 			return null;
