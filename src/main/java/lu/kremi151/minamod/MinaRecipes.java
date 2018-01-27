@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -92,6 +94,10 @@ public class MinaRecipes {
 	private static final Gson MY_GSON = new GsonBuilder().setPrettyPrinting().create();
 	
 	private static void addShapedRecipe(ItemStack output, Object... params) {
+		addShapedRecipe(null, output, params);
+	}
+	
+	private static void addShapedRecipe(@Nullable String customRecipeName, ItemStack output, Object... params) {
 		JsonObject jo = new JsonObject();
 		jo.addProperty("type", "crafting_shaped");
 		jo.addProperty("group", "minamod");
@@ -163,11 +169,11 @@ public class MinaRecipes {
 		jo.add("pattern", patternArray);
 		jo.add("key", mappings);
 		
-		final File recipeFolder = new File("generatedRecipes/shaped");
+		final File recipeFolder = new File("generatedRecipes");
 		if(!recipeFolder.exists()) {
 			recipeFolder.mkdirs();
 		}
-		final File destFile = new File(recipeFolder, output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json");
+		final File destFile = new File(recipeFolder, (customRecipeName != null) ? (customRecipeName + ".json") : (output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json"));
 		
 		if(destFile.exists()) {
 			throw new IllegalStateException("File name collison: " + destFile.getAbsolutePath());
@@ -192,6 +198,10 @@ public class MinaRecipes {
 	}
 	
 	private static void addShapelessRecipe(ItemStack output, Object... params) {
+		addShapelessRecipe(null, output, params);
+	}
+	
+	private static void addShapelessRecipe(@Nullable String customRecipeName, ItemStack output, Object... params) {
 		JsonObject jo = new JsonObject();
 		jo.addProperty("type", "crafting_shapeless");
 		jo.addProperty("group", "minamod");
@@ -236,11 +246,11 @@ public class MinaRecipes {
 
 		jo.add("ingredients", ingredients);
 		
-		final File recipeFolder = new File("generatedRecipes/shapeless");
+		final File recipeFolder = new File("generatedRecipes");
 		if(!recipeFolder.exists()) {
 			recipeFolder.mkdirs();
 		}
-		final File destFile = new File(recipeFolder, output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json");
+		final File destFile = new File(recipeFolder, (customRecipeName != null) ? (customRecipeName + ".json") : (output.getItem().getRegistryName().getResourcePath() + (output.getMetadata() != 0 ? ("_" + output.getMetadata()) : "") + ".json"));
 		
 		if(destFile.exists()) {
 			throw new IllegalStateException("File name collison: " + destFile.getAbsolutePath());
@@ -276,11 +286,11 @@ public class MinaRecipes {
 		addShapedRecipe(new ItemStack(MinaBlocks.PLATINUM_BLOCK, 1), "III", "III", "III", 'I',
 				MinaItems.PLATINUM_INGOT);
 		addShapelessRecipe(new ItemStack(MinaItems.PLATINUM_INGOT, 9), MinaBlocks.PLATINUM_BLOCK);
-		addShapelessRecipe(new ItemStack(MinaItems.COPPER_INGOT, 9), MinaBlocks.COPPER_BLOCK);
+		addShapelessRecipe("split_copper_block", new ItemStack(MinaItems.COPPER_INGOT, 9), MinaBlocks.COPPER_BLOCK);
 		addShapedRecipe(new ItemStack(MinaBlocks.COPPER_BLOCK, 1), "III", "III", "III", 'I',
 				MinaItems.COPPER_INGOT);
 		addShapelessRecipe(new ItemStack(MinaItems.COPPER_NUGGET, 9), MinaItems.COPPER_INGOT);
-		addShapedRecipe(new ItemStack(MinaItems.COPPER_INGOT), "NNN", "NNN", "NNN", 'N', MinaItems.COPPER_NUGGET);
+		addShapedRecipe("combine_copper_nuggets", new ItemStack(MinaItems.COPPER_INGOT), "NNN", "NNN", "NNN", 'N', MinaItems.COPPER_NUGGET);
 		addShapedRecipe(new ItemStack(MinaBlocks.SAPPHIRE_BLOCK, 1), "CCC", "CCC", "CCC", 'C',
 				MinaItems.SAPPHIRE);
 		addShapelessRecipe(new ItemStack(MinaItems.SAPPHIRE, 9), MinaBlocks.SAPPHIRE_BLOCK);
@@ -327,11 +337,11 @@ public class MinaRecipes {
 		addShapelessRecipe(new ItemStack(MinaItems.POULET_SPECIAL_PIQUANT), MinaItems.SWEET_SOUR,
 				Items.COOKED_CHICKEN);
 
-		addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 1), Items.GOLD_NUGGET);
-		addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 1, 1), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), 
+		addShapelessRecipe("one_golden_coin", new ItemStack(MinaItems.GOLDEN_COIN, 1), Items.GOLD_NUGGET);
+		addShapelessRecipe("five_golden_coin", new ItemStack(MinaItems.GOLDEN_COIN, 1, 1), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), 
 				new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), 
 				new ItemStack(MinaItems.GOLDEN_COIN, 1, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 0));
-		addShapelessRecipe(new ItemStack(MinaItems.GOLDEN_COIN, 5, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 1));
+		addShapelessRecipe("five_golden_coins", new ItemStack(MinaItems.GOLDEN_COIN, 5, 0), new ItemStack(MinaItems.GOLDEN_COIN, 1, 1));
 
 		addShapelessRecipe(new ItemStack(MinaItems.NAMIE_SEEDS, 4), MinaItems.NAMIE_FRUIT);
 
