@@ -37,6 +37,9 @@ public class GuiExtendedCrafting extends GuiCrafting{
 			MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageCreateSketch());
 		}else {
 			super.actionPerformed(guibutton);
+			if(guibutton.id == 10) {
+				setupPositions();
+			}
 		}
 	}
 	
