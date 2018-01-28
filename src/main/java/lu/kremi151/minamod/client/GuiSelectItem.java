@@ -10,7 +10,6 @@ import lu.kremi151.minamod.network.MessageItemSelected;
 import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiSelectItem extends GuiContainer {
+public class GuiSelectItem extends GuiCustomContainer.Inventory {
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/select_item/default.png");
 
@@ -71,12 +70,6 @@ public class GuiSelectItem extends GuiContainer {
 				this.selectedSlot = slot.slotNumber;
 			}
 		}
-    }
-	
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
-		super.drawScreen(mouseX, mouseY, partialTicks);
     }
 	
 	@Override

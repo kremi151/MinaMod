@@ -5,15 +5,13 @@ import org.lwjgl.opengl.GL11;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.container.ContainerAmuletInventory;
 import lu.kremi151.minamod.proxy.ClientProxy;
-import lu.kremi151.minamod.util.MinaUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAmuletInventory extends GuiContainer {
+public class GuiAmuletInventory extends GuiCustomContainer.Inventory {
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/amulets/default.png");
 
@@ -39,9 +37,7 @@ public class GuiAmuletInventory extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float par1, int par2,
-			int par3) {
-		// draw your Gui here, only thing you need to change is the path
+	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;

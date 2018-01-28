@@ -3,14 +3,11 @@ package lu.kremi151.minamod.client;
 import org.lwjgl.opengl.GL11;
 
 import lu.kremi151.minamod.MinaMod;
-import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.container.ContainerFilter;
-import lu.kremi151.minamod.util.MinaUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
-public class GuiFilter extends GuiContainer {
+public class GuiFilter extends GuiCustomContainer.Inventory {
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/filter/default.png");
 
@@ -33,8 +30,7 @@ public class GuiFilter extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
-			int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;

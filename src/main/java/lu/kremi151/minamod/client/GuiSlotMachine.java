@@ -5,7 +5,6 @@ import static lu.kremi151.minamod.client.GuiUtils.isHovering;
 import static lu.kremi151.minamod.client.GuiUtils.playClickSound;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import org.lwjgl.opengl.GL11;
 
@@ -177,6 +176,7 @@ public class GuiSlotMachine extends GuiContainer{
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+		drawDefaultBackground();
 		refreshButtonVisibilities();
 		if(displayInfoPage) {
 			totalInfoPages = (container.getIconCount() / 6) + (((container.getIconCount() % 6) > 0) ? 1 : 0);

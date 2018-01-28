@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiOven extends GuiContainer{
+public class GuiOven extends GuiCustomContainer.Inventory{
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/oven/default.png");
 	private final ContainerOven container;

@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.client;
 
+import java.io.IOException;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.client.element.GuiButtonItem;
@@ -30,9 +32,11 @@ public class GuiExtendedCrafting extends GuiCrafting{
 	}
 	
 	@Override
-	protected void actionPerformed(GuiButton guibutton) {
+	protected void actionPerformed(GuiButton guibutton) throws IOException{
 		if(guibutton.id == 0) {
 			MinaMod.getMinaMod().getPacketDispatcher().sendToServer(new MessageCreateSketch());
+		}else {
+			super.actionPerformed(guibutton);
 		}
 	}
 	

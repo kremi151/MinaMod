@@ -6,15 +6,13 @@ import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.block.tileentity.TileEntityAutoFeeder;
 import lu.kremi151.minamod.container.ContainerAutoFeeder;
 import lu.kremi151.minamod.util.MinaUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAutoFeeder extends GuiContainer {
+public class GuiAutoFeeder extends GuiCustomContainer.Inventory {
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/autofeeder/default.png");
 
@@ -41,8 +39,7 @@ public class GuiAutoFeeder extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
-			int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(guiTextures);
 		int x = (width - xSize) / 2;
@@ -58,9 +55,6 @@ public class GuiAutoFeeder extends GuiContainer {
 		}else{
 			this.drawTexturedModalRect(x + 115, y + 40, 4, 158, 10, 7);
 		}
-		
-//		this.drawTexturedModalRect(80, 80, 4, 141, 10, 14);
-
 	}
 
 }

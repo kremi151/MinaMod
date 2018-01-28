@@ -1,41 +1,38 @@
 package lu.kremi151.minamod.client;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public abstract class GuiCustomContainer extends GuiContainer{
-	
-	private static Method method_drawItemStack;
-	
-	static{
-		Method mm[] = GuiContainer.class.getDeclaredMethods();
-		for(Method m : mm){
-			if(m.getName().equals("drawItemStack") || m.getName().equals("func_146982_a")){
-				method_drawItemStack = m;
-				method_drawItemStack.setAccessible(true);
-				break;
-			}
-		}
-		if(method_drawItemStack == null){
-			throw new RuntimeException("Method not found");
-		}
-	}
 
 	public GuiCustomContainer(Container inventorySlotsIn) {
 		super(inventorySlotsIn);
 	}
 	
     protected void drawItemStack(ItemStack stack, int x, int y, String altText){
-    	try {
-			method_drawItemStack.invoke(this, stack, x, y, altText);
-		} catch (Throwable t){
-			t.printStackTrace();
-			throw new RuntimeException("Error working with drawItemStack");
+    	ReflectionLoader.GuiContainer_drawItemStack(this, stack, x, y, altText);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static abstract class Inventory extends GuiCustomContainer{
+
+		public Inventory(Container inventorySlotsIn) {
+			super(inventorySlotsIn);
 		}
+
+	    @Override
+	    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+	    {
+	        this.drawDefaultBackground();
+	        super.drawScreen(mouseX, mouseY, partialTicks);
+	        this.renderHoveredToolTip(mouseX, mouseY);
+	    }
+	    
     }
 
 }

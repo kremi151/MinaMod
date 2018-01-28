@@ -22,8 +22,6 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static lu.kremi151.minamod.client.GuiUtils.isHovering;
-
 @SideOnly(Side.CLIENT)
 public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.Listener{
 
@@ -119,6 +117,8 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		drawDefaultBackground();
+		
 		for (int i = 0; i < this.buttonList.size(); ++i) {
 			GuiButton b = this.buttonList.get(i);
 			b.enabled = true;
@@ -133,6 +133,8 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 		}else if(matchesDepositButton(mouseX, mouseY)) {
 			this.drawHoveringText(I18n.translateToLocal("gui.coin_bag.deposit"), mouseX, mouseY);
 		}
+		
+		renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	private boolean matchesWithdrawButton(int mouseX, int mouseY) {
@@ -251,6 +253,8 @@ public class GuiCoinBag extends GuiCustomContainer implements GuiButtonHoldable.
 
 		this.drawTexturedModalRect(23, 46, 0, 177, 5, 5);// Green arrow
 		this.drawTexturedModalRect(23, 66, 5, 177, 5, 5);// Red arrow
+		
+		renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override

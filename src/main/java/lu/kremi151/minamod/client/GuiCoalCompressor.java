@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.container.ContainerCoalCompressor;
 import lu.kremi151.minamod.util.MinaUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCoalCompressor extends GuiContainer{
+public class GuiCoalCompressor extends GuiCustomContainer.Inventory{
 
 	private static final ResourceLocation guiTextures = new ResourceLocation(MinaMod.MODID, "textures/gui/coal_compressor/default.png");
 
