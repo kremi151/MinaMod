@@ -321,10 +321,10 @@ public class MinaRecipes {
 		addShapedRecipe(new ItemStack(MinaItems.SOUL_PEARL, 1), " C ", "CSC", " C ", 'C',
 				MinaItems.CITRIN, 'S', Blocks.SOUL_SAND);
 
-		addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta), Items.GOLD_NUGGET, Items.REDSTONE);
-		addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta), Items.GOLD_INGOT, Items.REDSTONE);
-		addShapelessRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_C.meta), Items.GOLD_INGOT, MinaItems.CITRIN, Items.REDSTONE, new ItemStack(MinaItems.RARE_EARTH, 1, 1));
-		addShapedRecipe(new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta), "GAG", "BSC", "GRG", 
+		addShapelessRecipe("chip_a", new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta), Items.GOLD_NUGGET, Items.REDSTONE);
+		addShapelessRecipe("chip_b", new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta), Items.GOLD_INGOT, Items.REDSTONE);
+		addShapelessRecipe("chip_c", new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_C.meta), Items.GOLD_INGOT, MinaItems.CITRIN, Items.REDSTONE, new ItemStack(MinaItems.RARE_EARTH, 1, 1));
+		addShapedRecipe("processor_unit", new ItemStack(MinaItems.CHIP, 1, ChipType.PROCESSOR_UNIT.meta), "GAG", "BSC", "GRG", 
 				'G', Items.GOLD_INGOT, 
 				'A', new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_A.meta),
 				'B', new ItemStack(MinaItems.CHIP, 1, ChipType.TYPE_B.meta),
@@ -355,16 +355,16 @@ public class MinaRecipes {
 
 		addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_CONTROL, 1), "III", "QCQ", 'I',
 				Items.IRON_INGOT, 'Q', Items.QUARTZ, 'C', new ItemStack(MinaItems.CHIP, 1, ItemChip.ChipType.TYPE_B.meta));
-		addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 0), "IQI", "QIQ", "IQI", 'I',
+		addShapedRecipe("elevator_level_floor", new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 0), "IQI", "QIQ", "IQI", 'I',
 				Items.IRON_INGOT, 'Q', Items.QUARTZ);
-		addShapedRecipe(new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 1), "IQI", "QSQ", "IQI", 'I',
+		addShapedRecipe("elevator_jumper_floor", new ItemStack(MinaBlocks.ELEVATOR_FLOOR, 1, 1), "IQI", "QSQ", "IQI", 'I',
 				Items.IRON_INGOT, 'Q', Items.QUARTZ, 'S', Items.SLIME_BALL);
 		
 		addShapedRecipe(new ItemStack(MinaItems.IRON_SICKLE, 1), "II ", " IH", "  H", 'I', Items.IRON_INGOT, 'H', Items.STICK);
 
-		addShapelessRecipe(new ItemStack(MinaItems.BERRY_SEEDS, 2, 0), new ItemStack(MinaItems.BERRY, 1, 0));
-		addShapelessRecipe(new ItemStack(MinaItems.BERRY_SEEDS, 2, 1), new ItemStack(MinaItems.BERRY, 1, 1));
-		addShapelessRecipe(new ItemStack(MinaItems.BERRY_SEEDS, 2, 2), new ItemStack(MinaItems.BERRY, 1, 2));
+		addShapelessRecipe("doge_berry", new ItemStack(MinaItems.BERRY_SEEDS, 2, 0), new ItemStack(MinaItems.BERRY, 1, 0));
+		addShapelessRecipe("kevikus_berry", new ItemStack(MinaItems.BERRY_SEEDS, 2, 1), new ItemStack(MinaItems.BERRY, 1, 1));
+		addShapelessRecipe("tracius_berry", new ItemStack(MinaItems.BERRY_SEEDS, 2, 2), new ItemStack(MinaItems.BERRY, 1, 2));
 		
 		addShapelessRecipe(new ItemStack(MinaItems.PUMPKIN_SOUP), Items.BOWL, Blocks.PUMPKIN, Items.PUMPKIN_SEEDS);
 	
@@ -396,10 +396,10 @@ public class MinaRecipes {
 	
 		addShapedRecipe(new ItemStack(MinaBlocks.COBBLEBRICKS, 6, 1), "CCC", 'C', new ItemStack(MinaBlocks.COBBLEBRICKS, 1, 0));
 
-		addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 0), "WW", "SS", 'W', new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.getMetadata() % 4), 'S', Items.STICK);
-		addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 1), "WW", "SS", 'W', new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.getMetadata() % 4), 'S', Items.STICK);
-		addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 2), "WW", "SS", 'W', new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata() % 4), 'S', Items.STICK);
-		addShapedRecipe(new ItemStack(MinaBlocks.CAMPBENCH, 2, 3), "WW", "SS", 'W', new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.getMetadata() % 4), 'S', Items.STICK);
+		addShapedRecipe("campbench_acacia", new ItemStack(MinaBlocks.CAMPBENCH, 2, 0), "WW", "SS", 'W', new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.ACACIA.getMetadata() % 4), 'S', Items.STICK);
+		addShapedRecipe("campbench_birch", new ItemStack(MinaBlocks.CAMPBENCH, 2, 1), "WW", "SS", 'W', new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.BIRCH.getMetadata() % 4), 'S', Items.STICK);
+		addShapedRecipe("campbench_dark_oak", new ItemStack(MinaBlocks.CAMPBENCH, 2, 2), "WW", "SS", 'W', new ItemStack(Blocks.LOG2, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata() % 4), 'S', Items.STICK);
+		addShapedRecipe("campbench_spruce", new ItemStack(MinaBlocks.CAMPBENCH, 2, 3), "WW", "SS", 'W', new ItemStack(Blocks.LOG, 1, BlockPlanks.EnumType.SPRUCE.getMetadata() % 4), 'S', Items.STICK);
 
 		addShapelessRecipe(new ItemStack(MinaItems.HERB_GUIDE, 1), Items.WRITABLE_BOOK, new ItemStack(MinaItems.HERB, 1, OreDictionary.WILDCARD_VALUE));
 		
@@ -438,22 +438,22 @@ public class MinaRecipes {
 	
 	private static void initColoredRecipes(){
 		if(init)throw new RuntimeException("Duplicate call of function");
-		for(int i = 0 ; i < EnumDyeColor.values().length ; i++){
-			addShapedRecipe(new ItemStack(MinaBlocks.MILKY_GLASS, 8, i), "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.STAINED_GLASS, 1, i), 'B', Items.MILK_BUCKET);
-			addShapedRecipe(new ItemStack(MinaBlocks.LIT_MILKY_GLASS, 8, i), "AAA", "ABA", "AAA", 'A', new ItemStack(MinaBlocks.MILKY_GLASS, 1, i), 'B', MinaBlocks.FROZEN_GLOWSTONE);
-			addShapedRecipe(new ItemStack(MinaItems.UNPACKED_GIFT, 1, i), " W ", "W W", " W ", 'W', new ItemStack(Blocks.CARPET, 1, i));
+		for(EnumDyeColor dye : EnumDyeColor.values()){
+			addShapedRecipe("milky_glass_" + dye.getName(), new ItemStack(MinaBlocks.MILKY_GLASS, 8, dye.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.STAINED_GLASS, 1, dye.getMetadata()), 'B', Items.MILK_BUCKET);
+			addShapedRecipe("lit_milky_glass_" + dye.getName(), new ItemStack(MinaBlocks.LIT_MILKY_GLASS, 8, dye.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(MinaBlocks.MILKY_GLASS, 1, dye.getMetadata()), 'B', MinaBlocks.FROZEN_GLOWSTONE);
+			addShapedRecipe("unpacked_gift_" + dye.getName(), new ItemStack(MinaItems.UNPACKED_GIFT, 1, dye.getMetadata()), " W ", "W W", " W ", 'W', new ItemStack(Blocks.CARPET, 1, dye.getMetadata()));
 		}
 	}
 
 	private static void initStoolRecipes() {
 		if (init)throw new RuntimeException("Duplicate call of function");
-		for (int i = 0; i < 16; i++) {
-			addShapedRecipe(new ItemStack(MinaBlocks.ACACIA_STOOL, 3, i), "AA", "BB", 'A',
-					new ItemStack(Blocks.WOOL, 1, i), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.ACACIA.getMetadata()));
-			addShapedRecipe(new ItemStack(MinaBlocks.DARK_OAK_STOOL, 3, i), "AA", "BB", 'A',
-					new ItemStack(Blocks.WOOL, 1, i), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
-			addShapedRecipe(new ItemStack(MinaBlocks.OAK_STOOL, 3, i), "AA", "BB", 'A',
-					new ItemStack(Blocks.WOOL, 1, i), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.OAK.getMetadata()));
+		for (EnumDyeColor dye : EnumDyeColor.values()) {
+			addShapedRecipe("acacia_stool_" + dye.getName(), new ItemStack(MinaBlocks.ACACIA_STOOL, 3, dye.getMetadata()), "AA", "BB", 'A',
+					new ItemStack(Blocks.WOOL, 1, dye.getMetadata()), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.ACACIA.getMetadata()));
+			addShapedRecipe("dark_oak_stool_" + dye.getName(), new ItemStack(MinaBlocks.DARK_OAK_STOOL, 3, dye.getMetadata()), "AA", "BB", 'A',
+					new ItemStack(Blocks.WOOL, 1, dye.getMetadata()), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
+			addShapedRecipe("oak_stool_" + dye.getName(), new ItemStack(MinaBlocks.OAK_STOOL, 3, dye.getMetadata()), "AA", "BB", 'A',
+					new ItemStack(Blocks.WOOL, 1, dye.getMetadata()), 'B', new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.OAK.getMetadata()));
 		}
 	}
 
@@ -513,16 +513,16 @@ public class MinaRecipes {
 				Blocks.HOPPER, 'C', Items.STICK);
 
 		for(BlockMinaPlanks.EnumType type : BlockMinaPlanks.EnumType.values()){
-			addShapelessRecipe(new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
-			addShapedRecipe(new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
-			addShapedRecipe(new ItemStack(BlockMinaWoodStairs.getForType(type), 4), "  P", " PP", "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
+			addShapelessRecipe("planks_" + type.getName(), new ItemStack(MinaBlocks.PLANKS, 4, type.getMetadata()), BlockStandaloneLog.getBlockFor(type));
+			addShapedRecipe("wooden_slab_" + type.getName(), new ItemStack(MinaBlocks.WOODEN_SLAB, 6, type.getMetadata()), "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
+			addShapedRecipe("stairs_" + type.getName(), new ItemStack(BlockMinaWoodStairs.getForType(type), 4), "  P", " PP", "PPP", 'P', new ItemStack(MinaBlocks.PLANKS, 1, type.getMetadata()));
 		}
 	}
 
 	private static void initHerbRecipes() {
 		if (init)throw new RuntimeException("Duplicate call of function");
 		for (EnumHerb herb : EnumHerb.values()) {
-			addShapelessRecipe(new ItemStack(MinaItems.POWDER, 1, herb.getHerbId()),
+			addShapelessRecipe("powder_" + herb.getName(), new ItemStack(MinaItems.POWDER, 1, herb.getHerbId()),
 					new ItemStack(MinaItems.HERB, 1, herb.getHerbId()));
 		}
 	}

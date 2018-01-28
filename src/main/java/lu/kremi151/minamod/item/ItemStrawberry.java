@@ -47,10 +47,12 @@ public class ItemStrawberry extends ItemSeedFood{
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        subItems.add(new ItemStack(this, 1, 0));//Default
-        subItems.add(new ItemStack(this, 1, 1));//Ruby
-        subItems.add(new ItemStack(this, 1, 2));//Sapphire
-        subItems.add(new ItemStack(this, 1, 3));//Citrin
+        if(isInCreativeTab(tab)) {
+        	subItems.add(new ItemStack(this, 1, 0));//Default
+            subItems.add(new ItemStack(this, 1, 1));//Ruby
+            subItems.add(new ItemStack(this, 1, 2));//Sapphire
+            subItems.add(new ItemStack(this, 1, 3));//Citrin
+        }
     }
 	
 	@Override

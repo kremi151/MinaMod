@@ -56,8 +56,10 @@ public class ItemBerry extends ItemFood{
 	@SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        for(int i = 0 ; i < VARIANT_NAMES.length ; i++){
-        	subItems.add(new ItemStack(this, 1, i));
+        if(isInCreativeTab(tab)) {
+        	for(int i = 0 ; i < VARIANT_NAMES.length ; i++){
+            	subItems.add(new ItemStack(this, 1, i));
+            }
         }
     }
 

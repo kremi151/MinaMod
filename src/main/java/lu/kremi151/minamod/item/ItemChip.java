@@ -22,8 +22,10 @@ public class ItemChip extends Item{
 	
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
-		for(ChipType type : ChipType.values()){
-			items.add(new ItemStack(this,1,type.meta));
+		if(isInCreativeTab(tab)) {
+			for(ChipType type : ChipType.values()){
+				items.add(new ItemStack(this,1,type.meta));
+			}
 		}
 	}
 	

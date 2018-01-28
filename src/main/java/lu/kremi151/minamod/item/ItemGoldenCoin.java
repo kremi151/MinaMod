@@ -18,8 +18,10 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        subItems.add(new ItemStack(this, 1, 0));
-        subItems.add(new ItemStack(this, 1, 1));
+        if(isInCreativeTab(tab)) {
+        	subItems.add(new ItemStack(this, 1, 0));
+            subItems.add(new ItemStack(this, 1, 1));
+        }
     }
 	
 	@Override
