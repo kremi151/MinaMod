@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:solar_panel"
+        },
+        "title": {
+		    "translate": "advancement.minamod.place_solar_panel"
+	    },
+        "description": {
+            "translate": "advancement.minamod.place_solar_panel.desc"
+        }
+    },
+	"parent": "minamod:story/place_accumulator",
+    "criteria": {
+        "place_solar_panel": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "minamod:solar_panel"
+            }
+        }
+    }
+}

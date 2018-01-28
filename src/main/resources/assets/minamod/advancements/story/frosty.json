@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:ever_snow"
+        },
+        "title": {
+		    "translate": "advancement.minamod.frosty"
+	    },
+        "description": {
+            "translate": "advancement.minamod.frosty.desc"
+        }
+    },
+	"parent": "minamod:story/root",
+    "criteria": {
+        "got_ever_snow": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minamod:ever_snow"
+                    }
+                ]
+            }
+        }
+    }
+}

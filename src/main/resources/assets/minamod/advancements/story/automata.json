@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:autocrafter"
+        },
+        "title": {
+		    "translate": "advancement.minamod.automata"
+	    },
+        "description": {
+            "translate": "advancement.minamod.automata.desc"
+        }
+    },
+	"parent": "minamod:story/root",
+    "criteria": {
+        "craft_autocrafter": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minamod:autocrafter"
+                    }
+                ]
+            }
+        }
+    }
+}

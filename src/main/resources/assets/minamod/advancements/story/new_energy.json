@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:cable"
+        },
+        "title": {
+		    "translate": "advancement.minamod.new_energy"
+	    },
+        "description": {
+            "translate": "advancement.minamod.new_energy.desc"
+        }
+    },
+	"parent": "minamod:story/root",
+    "criteria": {
+        "placed_cable": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "minamod:cable"
+            }
+        }
+    }
+}

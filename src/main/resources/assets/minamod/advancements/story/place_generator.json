@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:generator"
+        },
+        "title": {
+		    "translate": "advancement.minamod.place_generator"
+	    },
+        "description": {
+            "translate": "advancement.minamod.place_generator.desc"
+        }
+    },
+	"parent": "minamod:story/place_accumulator",
+    "criteria": {
+        "place_generator": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "minamod:generator"
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:accumulator"
+        },
+        "title": {
+		    "translate": "advancement.minamod.place_accumulator"
+	    },
+        "description": {
+            "translate": "advancement.minamod.place_accumulator.desc"
+        }
+    },
+	"parent": "minamod:story/new_energy",
+    "criteria": {
+        "place_accumulator": {
+            "trigger": "minecraft:placed_block",
+            "conditions": {
+                "block": "minamod:accumulator"
+            }
+        }
+    }
+}

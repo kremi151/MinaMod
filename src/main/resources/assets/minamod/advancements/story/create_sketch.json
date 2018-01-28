@@ -10,7 +10,7 @@
             "translate": "advancement.minamod.create_sketch.desc"
         }
     },
-	"parent": "minamod:story/root",
+	"parent": "minamod:story/automata",
     "criteria": {
         "create_new_sketch": {
             "trigger": "minamod:create_sketch"
