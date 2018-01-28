@@ -10,6 +10,7 @@ public class MinaTriggers {
 	public static final TriggerCustom TRIGGER_MODIFY_STATS = new TriggerCustom(MinaMod.MODID, "modify_stats");
 	public static final TriggerCustom TRIGGER_TRAIN_STATS = new TriggerCustom(MinaMod.MODID, "train_stats");
 	public static final TriggerCustom TRIGGER_JOIN = new TriggerCustom(MinaMod.MODID, "join");
+	public static final TriggerCustom TRIGGER_CREATE_SKETCH = new TriggerCustom(MinaMod.MODID, "create_sketch");
 
 	public static void register() {
 		ReflectionLoader.CriteriaTriggers_register(TRIGGER_OPEN_AMULET_INVENTORY);
@@ -17,5 +18,6 @@ public class MinaTriggers {
 		ReflectionLoader.CriteriaTriggers_register(TRIGGER_MODIFY_STATS);//TODO: Use vanilla trigger?
 		ReflectionLoader.CriteriaTriggers_register(TRIGGER_TRAIN_STATS);
 		ReflectionLoader.CriteriaTriggers_register(TRIGGER_JOIN);
+		ReflectionLoader.CriteriaTriggers_register(TRIGGER_CREATE_SKETCH);
 	}
 }

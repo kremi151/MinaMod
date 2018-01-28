@@ -528,4 +528,6 @@ achievement.minamod.amulets=Magic jewelry
 achievement.minamod.amulets.desc=Open the inventory of your current amulets using the '%s' key
 advancement.minamod.start=Welcome to MinaMod
 advancement.minamod.start.desc=Make Minecraft great again!
+advancement.minamod.create_sketch=A new engineer
+advancement.minamod.create_sketch.desc=Create your first sketch of a crafting recipe
 inventory.autocrafter=Automatic workbench

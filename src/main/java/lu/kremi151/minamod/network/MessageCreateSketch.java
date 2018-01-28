@@ -5,11 +5,13 @@ import java.util.Optional;
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaPermissions;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
 import lu.kremi151.minamod.events.CreateSketchEvent;
 import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.inventory.InventoryCrafting;
@@ -59,6 +61,8 @@ public class MessageCreateSketch implements IMessage{
 							}
 							cap.setOrder(order);
 							cap.setCachedRecipe(recipe);
+							
+							MinaTriggers.TRIGGER_CREATE_SKETCH.trigger((EntityPlayerMP) player);
 							
 							sketch = ItemHandlerHelper.insertItem(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), sketch, false);
 							if(!sketch.isEmpty()) {

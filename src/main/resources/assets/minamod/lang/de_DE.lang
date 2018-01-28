@@ -526,4 +526,6 @@ achievement.minamod.train_stats.desc=Mache den zweiten Schritt um stärker zu we
 achievement.minamod.amulets=Magischer Schmuck
 achievement.minamod.amulets.desc=Öffne das Inventar zu deinen getragenen Amuletten mit Hilfe der '%s' Taste
 advancement.minamod.start=Willkommen bei MinaMod
+advancement.minamod.create_sketch=Ein neuer Ingenieur
+advancement.minamod.create_sketch.desc=Erstelle deinen ersten Bauplan zu einem Rezept
 inventory.autocrafter=Automatische Werkbank

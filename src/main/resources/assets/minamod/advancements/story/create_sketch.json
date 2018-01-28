@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:sketch"
+        },
+        "title": {
+		    "translate": "advancement.minamod.create_sketch"
+	    },
+        "description": {
+            "translate": "advancement.minamod.create_sketch.desc"
+        }
+    },
+	"parent": "minamod:story/root",
+    "criteria": {
+        "create_new_sketch": {
+            "trigger": "minamod:create_sketch"
+        }
+    }
+}
