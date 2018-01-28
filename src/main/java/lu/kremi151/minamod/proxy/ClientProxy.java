@@ -38,6 +38,7 @@ import lu.kremi151.minamod.client.render.RenderIceSentinel;
 import lu.kremi151.minamod.client.render.RenderPenguin;
 import lu.kremi151.minamod.client.render.RenderTurtle;
 import lu.kremi151.minamod.client.render.RenderWookie;
+import lu.kremi151.minamod.client.toast.NotificationToast;
 import lu.kremi151.minamod.client.util.ScreenDoge;
 import lu.kremi151.minamod.entity.EntityBee;
 import lu.kremi151.minamod.entity.EntityFish;
@@ -321,8 +322,8 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void showNotification(@Nullable EntityPlayer player, String title, String message, long duration, ItemStack icon) {
-		//TODO: Replace with advancement like notification
-		TextHelper.sendChatMessage(Minecraft.getMinecraft().player, "[" + title + "] " + message);
+		NotificationToast not = new NotificationToast(icon, title, message, duration);
+		Minecraft.getMinecraft().getToastGui().add(not);
 	}
 	
 }
