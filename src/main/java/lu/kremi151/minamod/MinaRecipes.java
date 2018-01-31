@@ -57,7 +57,7 @@ public class MinaRecipes {
 
 	static void initCraftingRecipes(MinaMod mod) {
 		if(true) {
-			System.out.println("### Skipping crafting recipes...");
+			System.out.println("### Skipping crafting recipes... Will be phased out in a future release");
 			return;
 		}
 		if (init)throw new RuntimeException("Duplicate call of function");

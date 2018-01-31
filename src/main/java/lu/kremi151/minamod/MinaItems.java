@@ -67,7 +67,9 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemSoup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraftforge.oredict.OreDictionary;
 
 
 public class MinaItems {
@@ -350,6 +352,8 @@ public class MinaItems {
 		registry.register(RUBBER_TREE_BRANCH, "rubber_tree_branch").submit();
 		registry.register(RUBBER, "rubber").submit();
 		registry.register(DIAGNOSE_TOOL, "diagnose_tool").submit();
+		
+		registerOreEntries();//Final step, when all items are registered
 	}
 	
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
@@ -368,5 +372,9 @@ public class MinaItems {
 		registry.register(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves").variantNames("palm_leaf_stack", "palm_leaf").submit();
 		registry.register(new ItemSlab(MinaBlocks.WOODEN_SLAB, MinaBlocks.WOODEN_SLAB, MinaBlocks.DOUBLE_WOODEN_SLAB).setRegistryName(MinaBlocks.WOODEN_SLAB.getRegistryName()), "mina_wooden_slab").variantNames(BlockMinaPlanks.EnumType.variantNamesSlabs).submit();
 		registry.register(new ItemBlockCable(MinaBlocks.CABLE).setRegistryName(MinaBlocks.CABLE.getRegistryName()), "cable").submit();
+	}
+
+	private static void registerOreEntries(){
+		OreDictionary.registerOre("plankWood", new ItemStack(MinaBlocks.PLANKS, 1, OreDictionary.WILDCARD_VALUE));
 	}
 }

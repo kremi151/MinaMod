@@ -349,11 +349,6 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(GENERATOR, "generator").submit();
 		registry.register(COMPRESSOR, "coal_compressor").submit();
 		
-		registerOreEntries();
-	}
-	
-	private static void registerOreEntries(){
-		OreDictionary.registerOre("plankWood", new ItemStack(PLANKS, 1, OreDictionary.WILDCARD_VALUE));
 	}
 
 	static void setFireInfos() {
