@@ -7,7 +7,8 @@
 		    "translate": "achievement.minamod.amulets"
 	    },
         "description": {
-            "translate": "achievement.minamod.amulets.desc"
+            "translate": "achievement.minamod.amulets.desc",
+            "with":[{"keybind":"key.minamod.amulets"}]
         }
     },
 	"parent": "minamod:story/root",

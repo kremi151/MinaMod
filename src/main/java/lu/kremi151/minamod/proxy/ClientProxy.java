@@ -84,13 +84,13 @@ public class ClientProxy extends CommonProxy {
 
 	private GuiMinaOverlay overlayHandler;
 
-	public static final KeyBinding KEY_JETPACK = new KeyBinding("gui.key.jetpack.desc", Keyboard.KEY_J, "gui.key.category.minamod");
-	public static final KeyBinding KEY_PLAYER_STATS = new KeyBinding("gui.key.player_stats.desc", Keyboard.KEY_M, "gui.key.category.minamod");
-	public static final KeyBinding KEY_AMULETS = new KeyBinding("gui.key.amulets.desc", Keyboard.KEY_N, "gui.key.category.minamod");
+	public static final KeyBinding KEY_JETPACK = new KeyBinding("key.minamod.jetpack", Keyboard.KEY_J, "key.minamod.category.minamod");
+	public static final KeyBinding KEY_PLAYER_STATS = new KeyBinding("key.minamod.player_stats", Keyboard.KEY_M, "key.minamod.category.minamod");
+	public static final KeyBinding KEY_AMULETS = new KeyBinding("key.minamod.amulets", Keyboard.KEY_N, "key.minamod.category.minamod");
 
-	public static final KeyBinding KEY_AMULET_1 = new KeyBinding("gui.key.amulets.1.desc", Keyboard.KEY_I, "gui.key.category.minamod");
-	public static final KeyBinding KEY_AMULET_2 = new KeyBinding("gui.key.amulets.2.desc", Keyboard.KEY_O, "gui.key.category.minamod");
-	public static final KeyBinding KEY_AMULET_3 = new KeyBinding("gui.key.amulets.3.desc", Keyboard.KEY_P, "gui.key.category.minamod");
+	public static final KeyBinding KEY_AMULET_1 = new KeyBinding("key.minamod.amulets.1", Keyboard.KEY_I, "key.minamod.category.minamod");
+	public static final KeyBinding KEY_AMULET_2 = new KeyBinding("key.minamod.amulets.2", Keyboard.KEY_O, "key.minamod.category.minamod");
+	public static final KeyBinding KEY_AMULET_3 = new KeyBinding("key.minamod.amulets.3", Keyboard.KEY_P, "key.minamod.category.minamod");
 	
 	@Override
 	public IThreadListener getThreadListener(MessageContext context) {
