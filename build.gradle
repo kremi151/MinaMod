@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 group = "lu.kremi151.minamod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "minamod"
 
-def mcVersion         = "1.11.2"
+def mcVersion         = "1.12.2"
 def majorModVersion   = "1"
 def apiModVersion     = "1"
 def minorModVersion   = "0"
