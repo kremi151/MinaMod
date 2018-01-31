@@ -287,7 +287,6 @@ public class MinaMod {
 		setupNetworkWrapper(event.getSide());
 
 		MinaFluids.registerFluids();
-		MinaBlocks.registerOreEntries();
 		
 		MinaCapabilities.init();
 
