@@ -70,7 +70,8 @@ public class MessageOpenGui implements IMessage{
 		@Override
 		public IMessage handleServerMessage(EntityPlayer player, MessageOpenGui message, MessageContext ctx) {
 			if(message.getGuiId() == IDRegistry.guiIdAmulets) {
-				MinaTriggers.TRIGGER_OPEN_AMULET_INVENTORY.trigger((EntityPlayerMP) player);
+				MinaMod.getProxy().getThreadListener(ctx)
+					.addScheduledTask(() -> MinaTriggers.TRIGGER_OPEN_AMULET_INVENTORY.trigger((EntityPlayerMP) player));
 			}
 			player.openGui(MinaMod.getMinaMod(), message.getGuiId(), player.world, message.x(), message.y(), message.z());
 			return null;

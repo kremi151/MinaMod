@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import io.netty.buffer.ByteBuf;
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.capabilities.sketch.ISketch;
@@ -62,7 +63,8 @@ public class MessageCreateSketch implements IMessage{
 							cap.setOrder(order);
 							cap.setCachedRecipe(recipe);
 							
-							MinaTriggers.TRIGGER_CREATE_SKETCH.trigger((EntityPlayerMP) player);
+							MinaMod.getProxy().getThreadListener(ctx)
+								.addScheduledTask(() -> MinaTriggers.TRIGGER_CREATE_SKETCH.trigger((EntityPlayerMP) player));
 							
 							sketch = ItemHandlerHelper.insertItem(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), sketch, false);
 							if(!sketch.isEmpty()) {

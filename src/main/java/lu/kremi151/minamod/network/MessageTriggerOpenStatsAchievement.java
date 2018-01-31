@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.network;
 
 import io.netty.buffer.ByteBuf;
+import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.network.abstracts.AbstractServerMessageHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +23,8 @@ public class MessageTriggerOpenStatsAchievement implements IMessage{
 
 		@Override
 		public IMessage handleServerMessage(EntityPlayer player, MessageTriggerOpenStatsAchievement message, MessageContext ctx) {
-			MinaTriggers.TRIGGER_OPEN_STATS.trigger((EntityPlayerMP) player);
+			MinaMod.getProxy().getThreadListener(ctx)
+				.addScheduledTask(() -> MinaTriggers.TRIGGER_OPEN_STATS.trigger((EntityPlayerMP) player));
 			return null;
 		}
 
