@@ -1,0 +1,12 @@
+{
+    "recipes": {
+        "colored_book": "lu.kremi151.minamod.recipe.RecipeColoredBook$Factory",
+        "clone_colored_book": "lu.kremi151.minamod.recipe.RecipeColoredBookCloning$Factory",
+        "colored_key": "lu.kremi151.minamod.recipe.RecipeColoredKey$Factory",
+        "copy_key": "lu.kremi151.minamod.recipe.RecipeCopyKey$Factory",
+        "repair_soul_pearl": "lu.kremi151.minamod.recipe.RecipeDamagedSoulPearl$Factory",
+        "encode_key": "lu.kremi151.minamod.recipe.RecipeEncodeKey$Factory",
+        "repair_drill": "lu.kremi151.minamod.recipe.RecipeFixDrill$Factory",
+        "herb_mixture": "lu.kremi151.minamod.recipe.RecipeHerbMixture$Factory"
+    }
+}

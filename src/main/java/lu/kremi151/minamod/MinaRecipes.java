@@ -22,14 +22,6 @@ import lu.kremi151.minamod.item.ItemChip;
 import lu.kremi151.minamod.item.ItemChip.ChipType;
 import lu.kremi151.minamod.item.ItemCustomAxe;
 import lu.kremi151.minamod.item.ItemKey;
-import lu.kremi151.minamod.recipe.RecipeColoredBook;
-import lu.kremi151.minamod.recipe.RecipeColoredBookCloning;
-import lu.kremi151.minamod.recipe.RecipeColoredKey;
-import lu.kremi151.minamod.recipe.RecipeCopyKey;
-import lu.kremi151.minamod.recipe.RecipeDamagedSoulPearl;
-import lu.kremi151.minamod.recipe.RecipeEncodeKey;
-import lu.kremi151.minamod.recipe.RecipeFixDrill;
-import lu.kremi151.minamod.recipe.RecipeHerbMixture;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.block.Block;
@@ -45,11 +37,9 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.RecipeSorter;
 
 public class MinaRecipes {
 
@@ -270,11 +260,6 @@ public class MinaRecipes {
 			throw new IllegalStateException(e);
 		}
 		
-		//TODO: Catch and generate JSON files
-		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
-	}
-	
-	private static void addRecipe(IRecipe recipe) {
 		//TODO: Catch and generate JSON files
 		//throw new AbstractMethodError("If you see this, it means you still have not implemented the recipe-to-JSON conversion methods");
 	}
@@ -528,17 +513,7 @@ public class MinaRecipes {
 	}
 
 	private static void initCustomRecipes() {
-		if (init)throw new RuntimeException("Duplicate call of function");
-		addRecipe(new RecipeColoredKey());
-		addRecipe(new RecipeHerbMixture());
-		addRecipe(new RecipeDamagedSoulPearl());
-		addRecipe(new RecipeColoredBook());
-		addRecipe(new RecipeColoredBookCloning());
-		addRecipe(new RecipeCopyKey());
-		addRecipe(new RecipeEncodeKey());
-		addRecipe(new RecipeFixDrill());
-
-		RecipeSorter.register(MinaMod.MODID + ":colored_key", RecipeColoredKey.class, RecipeSorter.Category.SHAPELESS,
+		/*RecipeSorter.register(MinaMod.MODID + ":colored_key", RecipeColoredKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":herb_mixture", RecipeHerbMixture.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
@@ -553,7 +528,7 @@ public class MinaRecipes {
 		RecipeSorter.register(MinaMod.MODID + ":encode_key", RecipeEncodeKey.class, RecipeSorter.Category.SHAPELESS,
 				"after:minecraft:shapeless");
 		RecipeSorter.register(MinaMod.MODID + ":fix_drill", RecipeFixDrill.class, RecipeSorter.Category.SHAPELESS,
-				"after:minecraft:shapeless");
+				"after:minecraft:shapeless");*/
 	}
 
 	private static void initArmorRecipes() {

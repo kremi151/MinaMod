@@ -95,7 +95,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.server.permission.PermissionAPI;
 
-@Mod(modid = MinaMod.MODID, name = MinaMod.MODNAME, version = MinaMod.VERSION, guiFactory = "lu.kremi151.minamod.util.MinaGuiFactory")
+@Mod(modid = MinaMod.MODID, name = MinaMod.MODNAME, version = MinaMod.VERSION,
+	guiFactory = "lu.kremi151.minamod.util.MinaGuiFactory", dependencies = "after:guidebook")
 public class MinaMod {
 	
 	public static final String MODNAME = "Mina Mod";

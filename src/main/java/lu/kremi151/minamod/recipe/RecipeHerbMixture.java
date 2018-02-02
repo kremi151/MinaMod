@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
@@ -15,9 +17,12 @@ import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.IRecipeFactory;
+import net.minecraftforge.common.crafting.JsonContext;
 
 public class RecipeHerbMixture extends RecipeBase.Dynamic{
 
@@ -115,6 +120,15 @@ public class RecipeHerbMixture extends RecipeBase.Dynamic{
 	@Override
 	public boolean canFit(int width, int height) {
 		return (width * height) >= 2;
+	}
+	
+	public static class Factory implements IRecipeFactory{
+
+		@Override
+		public IRecipe parse(JsonContext context, JsonObject json) {
+			return new RecipeHerbMixture();
+		}
+		
 	}
 
 }

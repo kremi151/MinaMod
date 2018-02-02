@@ -2,13 +2,18 @@ package lu.kremi151.minamod.recipe;
 
 import java.util.UUID;
 
+import com.google.gson.JsonObject;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.IKey;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemKey.State;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.IRecipeFactory;
+import net.minecraftforge.common.crafting.JsonContext;
 
 public class RecipeEncodeKey extends RecipeBase.Dynamic{
 
@@ -59,6 +64,15 @@ public class RecipeEncodeKey extends RecipeBase.Dynamic{
 	@Override
 	public boolean canFit(int width, int height) {
 		return width > 0 && height > 0;
+	}
+	
+	public static class Factory implements IRecipeFactory{
+
+		@Override
+		public IRecipe parse(JsonContext context, JsonObject json) {
+			return new RecipeEncodeKey();
+		}
+		
 	}
 
 }

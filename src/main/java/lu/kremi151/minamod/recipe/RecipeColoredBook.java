@@ -1,13 +1,18 @@
 package lu.kremi151.minamod.recipe;
 
+import com.google.gson.JsonObject;
+
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.IRecipeFactory;
+import net.minecraftforge.common.crafting.JsonContext;
 
 public class RecipeColoredBook extends RecipeBase.Dynamic{
 
@@ -94,6 +99,15 @@ public class RecipeColoredBook extends RecipeBase.Dynamic{
 	@Override
 	public boolean canFit(int width, int height) {
 		return (width * height) >= 2;
+	}
+	
+	public static class Factory implements IRecipeFactory{
+
+		@Override
+		public IRecipe parse(JsonContext context, JsonObject json) {
+			return new RecipeColoredBook();
+		}
+		
 	}
 
 }
