@@ -219,7 +219,7 @@ public class MinaItems {
 			.setUnlocalizedName("turtle_shell_boots");
 	public static final ItemHerbMixture MIXTURE = (ItemHerbMixture)new ItemHerbMixture().setUnlocalizedName("mixture");
 	public static final ItemSickle IRON_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.IRON).setUnlocalizedName("iron_sickle");
-	public static final ItemColoredWrittenBook COLORED_BOOK = (ItemColoredWrittenBook) new ItemColoredWrittenBook().setUnlocalizedName("written_book");
+	public static final ItemColoredWrittenBook COLORED_BOOK = (ItemColoredWrittenBook) new ItemColoredWrittenBook().setUnlocalizedName("writtenBook");
 	public static final Item COTTON = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("cotton");
 	public static final Item BERRY = new ItemBerry(5, 1f, false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName("berry");
 	public static final Item BERRY_SEEDS = new ItemBerrySeed();

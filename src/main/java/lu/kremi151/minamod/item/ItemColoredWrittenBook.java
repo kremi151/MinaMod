@@ -24,7 +24,7 @@ public class ItemColoredWrittenBook extends ItemWrittenBook{
 		return MinaUtils.COLOR_WHITE;
 	}
 	
-	public void setBookColor(ItemStack is, int color){
+	public ItemStack setBookColor(ItemStack is, int color){
 		NBTTagCompound tag;
 		if(!is.hasTagCompound()){
 			tag = new NBTTagCompound();
@@ -33,6 +33,7 @@ public class ItemColoredWrittenBook extends ItemWrittenBook{
 			tag = is.getTagCompound();
 		}
 		tag.setInteger("color", color);
+		return is;
 	}
 	
 	@Override
