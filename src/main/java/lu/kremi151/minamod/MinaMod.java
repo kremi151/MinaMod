@@ -2,6 +2,8 @@ package lu.kremi151.minamod;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.logging.log4j.Logger;
 
@@ -297,6 +299,19 @@ public class MinaMod {
 		WorldProviderOverworldHook.hookIn();
 		
 		MinaDataSerializers.register();
+		
+		try {
+			Class.forName("com.creysys.guideBook.api.RecipeManager");
+			println("GuideBook mod was found, registering handler...");
+			Class gbRecipeHandler = Class.forName("lu.kremi151.minamod.guidebook.GuideBookRecipeHandler");
+			Method gbRecipeHandlerRegister = gbRecipeHandler.getDeclaredMethod("register");
+			gbRecipeHandlerRegister.invoke(null);
+			println("GuideBook handler was registered!");
+		}
+		catch (ClassNotFoundException e) {}
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@EventHandler
