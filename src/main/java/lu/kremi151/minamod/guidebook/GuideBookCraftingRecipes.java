@@ -21,11 +21,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuideBookRecipeHandler extends RecipeHandler{
+public class GuideBookCraftingRecipes extends RecipeHandler{
 	
 	private final ArrayList<DrawableRecipe> recipes;
 	
-	public GuideBookRecipeHandler() {
+	public GuideBookCraftingRecipes() {
 		recipes = new ArrayList<>(8);
 		
 		recipes.add(new DrawableRecipeCrafting(
@@ -74,10 +74,6 @@ public class GuideBookRecipeHandler extends RecipeHandler{
 	@Override
 	public int recipesPerPage() {
 		return 2;
-	}
-	
-	public static void register() {
-		RecipeManager.registerHandler(new GuideBookRecipeHandler());
 	}
 
 }

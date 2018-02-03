@@ -303,7 +303,7 @@ public class MinaMod {
 		try {
 			Class.forName("com.creysys.guideBook.api.RecipeManager");
 			println("GuideBook mod was found, registering handler...");
-			Class gbRecipeHandler = Class.forName("lu.kremi151.minamod.guidebook.GuideBookRecipeHandler");
+			Class gbRecipeHandler = Class.forName("lu.kremi151.minamod.guidebook.GuideBookPlugin");
 			Method gbRecipeHandlerRegister = gbRecipeHandler.getDeclaredMethod("register");
 			gbRecipeHandlerRegister.invoke(null);
 			println("GuideBook handler was registered!");
