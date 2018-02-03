@@ -542,3 +542,5 @@ advancement.minamod.place_generator=Fossile Energie
 advancement.minamod.place_generator.desc=Produziere Energie mit einem Generator
 inventory.autocrafter=Automatische Werkbank
 guidebook.minamod.combining=Kombinieren
+guidebook.minamod.dynamic_crafting=Spezielle Craftingrezepte
+guidebook.minamod.color_crafting=Färbungsrezepte

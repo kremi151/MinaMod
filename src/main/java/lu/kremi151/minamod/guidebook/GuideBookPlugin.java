@@ -6,6 +6,7 @@ public class GuideBookPlugin {
 
 	public static void register() {
 		RecipeManager.registerHandler(new GuideBookCraftingRecipes());
+		RecipeManager.registerHandler(new GuideBookColorRecipes());
 		RecipeManager.registerHandler(new GuideBookCombinerRecipes());
 	}
 	
