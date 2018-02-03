@@ -1,5 +1,7 @@
 package lu.kremi151.minamod.proxy;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -324,6 +326,21 @@ public class ClientProxy extends CommonProxy {
 	public void showNotification(@Nullable EntityPlayer player, String title, String message, long duration, ItemStack icon) {
 		NotificationToast not = new NotificationToast(icon, title, message, duration);
 		Minecraft.getMinecraft().getToastGui().add(not);
+	}
+	
+	@Override
+	public void tryInitGuideBook(){
+		try {
+			Class.forName("com.creysys.guideBook.api.RecipeManager");
+			Class gbRecipeHandler = Class.forName("lu.kremi151.minamod.guidebook.GuideBookPlugin");
+			Method gbRecipeHandlerRegister = gbRecipeHandler.getDeclaredMethod("register");
+			gbRecipeHandlerRegister.invoke(null);
+		}
+		catch (ClassNotFoundException e) {}
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

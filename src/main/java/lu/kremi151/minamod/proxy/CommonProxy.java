@@ -31,6 +31,7 @@ public class CommonProxy{
 	public void executeClientSide(Runnable r){}
 	public void openBook(ItemStack book){}
 	public void initClientEvents(){}
+	public void tryInitGuideBook(){}
 	
 	public void showNotification(EntityPlayer player, String title, String message, long duration, ItemStack icon) {
 		if(player instanceof EntityPlayerMP) {

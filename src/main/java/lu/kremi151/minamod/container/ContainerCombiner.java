@@ -3,7 +3,7 @@ package lu.kremi151.minamod.container;
 import lu.kremi151.minamod.inventory.BaseInventoryImpl;
 import lu.kremi151.minamod.inventory.SlotReadOnly;
 import lu.kremi151.minamod.inventory.SlotReadOnly.ISlotReadOnlyHandler;
-import lu.kremi151.minamod.util.CombinerRecipes;
+import lu.kremi151.minamod.recipe.combiner.CombinerRecipeManager;
 import lu.kremi151.minamod.util.ShiftClickManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -80,7 +80,7 @@ public class ContainerCombiner extends BaseContainer implements ISlotReadOnlyHan
     {
         super.onCraftMatrixChanged(inventoryIn);
         if(inventoryIn == inputInv) {
-        	outputInv.setInventorySlotContents(0, CombinerRecipes.tryCombine((InventoryCrafting)inventoryIn, player.world));
+        	outputInv.setInventorySlotContents(0, CombinerRecipeManager.getResult((InventoryCrafting)inventoryIn));
         }
     }
 

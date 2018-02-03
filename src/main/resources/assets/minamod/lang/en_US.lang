@@ -543,3 +543,4 @@ advancement.minamod.place_solar_panel.desc=Produce energy with a solar panel
 advancement.minamod.place_generator=Fossil energy
 advancement.minamod.place_generator.desc=Produce energy with a generator
 inventory.autocrafter=Automatic workbench
+guidebook.minamod.combining=Combining
