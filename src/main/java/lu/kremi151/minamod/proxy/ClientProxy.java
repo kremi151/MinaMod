@@ -337,8 +337,7 @@ public class ClientProxy extends CommonProxy {
 			gbRecipeHandlerRegister.invoke(null);
 		}
 		catch (ClassNotFoundException e) {}
-		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
