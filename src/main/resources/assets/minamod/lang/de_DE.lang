@@ -373,6 +373,7 @@ enchantment.wood_backup=Holzklopfer
 enchantment.fusion=Fusion
 enchantment.spawn_keeper=Fortbestehung
 enchantment.freeze_protection=Vereisungsschutz
+enchantment.harvest_range=Ernteradius
 potion.minamod.podoom=Dem Untergang geweit
 potion.minamod.saturation=Sättigung
 potion.minamod.freeze=Vereisung

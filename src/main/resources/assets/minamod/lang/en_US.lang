@@ -374,6 +374,7 @@ enchantment.wood_backup=Wooden slayer
 enchantment.fusion=Fusion
 enchantment.spawn_keeper=Spawn keeper
 enchantment.freeze_protection=Freeze protection
+enchantment.harvest_range=Harvest range
 potion.minamod.podoom=Doomed
 potion.minamod.saturation=Saturation
 potion.minamod.freeze=Freeze
