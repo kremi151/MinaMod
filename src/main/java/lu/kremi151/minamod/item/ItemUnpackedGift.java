@@ -30,7 +30,6 @@ public class ItemUnpackedGift extends Item{
 		setCreativeTab(CreativeTabs.DECORATIONS);
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {

@@ -17,8 +17,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemHerb extends Item implements net.minecraftforge.common.IPlantable{
@@ -42,7 +40,6 @@ public class ItemHerb extends Item implements net.minecraftforge.common.IPlantab
     }
 	
 	@Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
 		if(isInCreativeTab(tab)) {

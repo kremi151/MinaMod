@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBerry extends ItemFood{
 	
@@ -53,7 +51,6 @@ public class ItemBerry extends ItemFood{
     }
 	
 	@Override
-	@SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         if(isInCreativeTab(tab)) {

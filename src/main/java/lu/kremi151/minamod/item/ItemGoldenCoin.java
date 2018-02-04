@@ -5,8 +5,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 
@@ -14,7 +12,6 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 		this.setHasSubtypes(true);
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {

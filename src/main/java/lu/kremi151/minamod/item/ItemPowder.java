@@ -12,8 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPowder extends Item implements IMixtureIngredient{
 
@@ -35,7 +33,6 @@ public class ItemPowder extends Item implements IMixtureIngredient{
     }
 	
 	@Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
 		if(isInCreativeTab(tab)) {
