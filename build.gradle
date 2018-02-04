@@ -49,6 +49,7 @@ repositories {
         name = 'sponge'
         url = 'https://repo.spongepowered.org/maven'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -75,6 +76,8 @@ dependencies {
 
 
     //compile 'org.spongepowered:spongeapi:6.0.0'
+    
+    compile 'com.github.kremi151:GuideBook:v1.7.0-mc1.12-beta.2'
 }
 
 processResources {
