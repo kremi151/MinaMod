@@ -2,12 +2,16 @@ package lu.kremi151.minamod.block;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.block.tileentity.TileEntityWallCable;
+import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
+import lu.kremi151.minamod.interfaces.IDiagnosable;
+import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +22,7 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-public class BlockWallCable extends Block{
+public class BlockWallCable extends Block implements IDiagnosable{
 
 	public static final IUnlistedProperty<Integer> MODEL_ID = new IntUProperty("model_id");
 	public static final IUnlistedProperty<Integer> MODEL_META = new IntUProperty("model_meta");
@@ -38,6 +42,15 @@ public class BlockWallCable extends Block{
     {
         return new TileEntityWallCable();
     }
+
+	@Override
+	public void onDiagnose(IBlockAccess world, BlockPos pos, ICommandSender subject) {
+		IEnergyNetworkProvider nrj = world.getTileEntity(pos).getCapability(IEnergyNetworkProvider.CAPABILITY, null);
+		if(nrj != null) {
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.energy", nrj.getEnergyStored());
+			TextHelper.sendTranslateableChatMessage(subject, "msg.network.client_count", nrj.getNetwork().clientCount());
+		}
+	}
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
