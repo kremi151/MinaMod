@@ -29,6 +29,7 @@ public class TileEntityAccumulator extends BaseTileEntity implements ITickable{
 	    }
 		
 	};
+	private int lastStateCharge = 0;
 
 	@Override
 	public void update() {
@@ -39,7 +40,11 @@ public class TileEntityAccumulator extends BaseTileEntity implements ITickable{
 				int extract = nrj.extractEnergy(MAX_EXTRACT, false);
 				int consumed = te.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()).receiveEnergy(extract, false);
 				nrj.receiveEnergy(extract - consumed, false);
-				if(extract != consumed) sync();
+				int newStateCharge = getStateCharge();
+				if(lastStateCharge != newStateCharge) {
+					lastStateCharge = newStateCharge;
+					sync();
+				}
 			}
 		}
 	}
