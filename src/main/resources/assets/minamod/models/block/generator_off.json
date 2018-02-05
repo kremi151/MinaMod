@@ -6,7 +6,7 @@
     "down": "minamod:blocks/platinum_block",
 	"north": "minamod:blocks/generator_front_off",
     "east": "minamod:blocks/platinum_block",
-    "south": "minamod:blocks/platinum_block",
+    "south": "minamod:blocks/platinum_machine_output",
     "west": "minamod:blocks/platinum_block"
   }
 }
