@@ -196,7 +196,6 @@ public class MinaMod {
 				64, 1, true, MinaUtils.convertRGBToDecimal(255, 0, 102), MinaUtils.convertRGBToDecimal(51, 204, 255));
 
 		println("Registering recipes...");
-		MinaRecipes.initCraftingRecipes(this);
 		MinaRecipes.initFurnaceRecipes(this);
 		MinaRecipes.initBrewingRecipes(this);
 

@@ -1,6 +1,5 @@
 package lu.kremi151.minamod;
 
-import lu.kremi151.minamod.annotations.AutoRecipe;
 import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
@@ -83,38 +82,28 @@ public class MinaItems {
 	public static final Item MILK_BOTTLE = new ItemMilkBottle().setUnlocalizedName("milk_bottle");
 	public static final Item CITRIN = new Item().setUnlocalizedName("citrin")
 			.setCreativeTab(CreativeTabs.MATERIALS);
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_SWORD = new ItemCustomSword(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_sword");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_AXE = new ItemCustomAxe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_axe");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_pickaxe");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_SHOVEL = new ItemCustomShovel(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_shovel");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_HOE = new ItemCustomHoe(MinaToolMaterials.CITRIN)
 			.setUnlocalizedName("citrin_hoe");
 	public static final Item HONEYWABE = new Item().setUnlocalizedName("honeywabe")
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item STRAWBERRY = new ItemStrawberry().setUnlocalizedName("strawberry");
 	public static final Item BAMBUS = new ItemBambus().setUnlocalizedName("bambus");
-	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_SWORD = new ItemCustomSword(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_sword");
-	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_AXE = new ItemCustomAxe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_axe");
-	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_pickaxe");
-	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_SHOVEL = new ItemCustomShovel(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_shovel");
-	@AutoRecipe(material="minamod:bambus")
 	public static final Item BAMBUS_HOE = new ItemCustomHoe(MinaToolMaterials.BAMBUS)
 			.setUnlocalizedName("bambus_hoe");
 	public static final Item RHUBARB = new Item().setUnlocalizedName("rhubarb")
@@ -126,45 +115,32 @@ public class MinaItems {
 	public static final Item CHERRY = new ItemFood(1, 0.2f, false).setUnlocalizedName("cherry");
 	public static final Item OBSIDIAN_FRAGMENT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
 			.setUnlocalizedName("obsidian_fragment");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_SWORD = new ItemCustomSword(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_sword");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_AXE = new ItemCustomAxe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_axe");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_PICKAXE = new ItemCustomPickaxe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_pickaxe");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_SHOVEL = new ItemCustomShovel(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_shovel");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_HOE = new ItemCustomHoe(MinaToolMaterials.OBSIDIAN)
 			.setUnlocalizedName("obsidian_hoe");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_HELMET = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("citrin_helmet");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("citrin_chestplate");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("citrin_leggings");
-	@AutoRecipe(material="minamod:citrin")
 	public static final Item CITRIN_BOOTS = new ItemCustomArmor(MinaArmorMaterial.CITRIN, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("citrin_boots");
 	public static final Item KEY = new ItemKey().setUnlocalizedName("key");
 	public static final Item CHIP = new ItemChip().setUnlocalizedName("chip");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_HELMET = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("obsidian_helmet");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("obsidian_chestplate");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("obsidian_leggings");
-	@AutoRecipe(material="minamod:obsidian_fragment")
 	public static final Item OBSIDIAN_BOOTS = new ItemCustomArmor(MinaArmorMaterial.OBSIDIAN, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("obsidian_boots");
 	public static final Item BLACK_PEARL = new Item().setUnlocalizedName("black_pearl")
@@ -186,16 +162,12 @@ public class MinaItems {
 	public static final Item PLATINUM_INGOT = new Item().setCreativeTab(CreativeTabs.MATERIALS)
 			.setUnlocalizedName("platinum_ingot");
 	public static final Item SOUL_PEARL = new ItemSoulPearl().setUnlocalizedName("soul_pearl");
-	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_HELMET = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.HEAD)
 			.setUnlocalizedName("platinum_helmet");
-	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_CHESTPLATE = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.CHEST)
 			.setUnlocalizedName("platinum_chestplate");
-	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_LEGGINGS = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.LEGS)
 			.setUnlocalizedName("platinum_leggings");
-	@AutoRecipe(material="minamod:platinum_ingot")
 	public static final Item PLATINUM_BOOTS = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("platinum_boots");
 	public static final ItemHerb HERB = (ItemHerb) new ItemHerb().setUnlocalizedName("herb");
