@@ -218,6 +218,8 @@ public class MinaItems {
 	public static final Item TURTLE_BOOTS = new ItemCustomArmor(MinaArmorMaterial.TURTLE_SHELL, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("turtle_shell_boots");
 	public static final ItemHerbMixture MIXTURE = (ItemHerbMixture)new ItemHerbMixture().setUnlocalizedName("mixture");
+	public static final ItemSickle WOOD_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.WOOD).setUnlocalizedName("wood_sickle");
+	public static final ItemSickle STONE_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.STONE).setUnlocalizedName("stone_sickle");
 	public static final ItemSickle IRON_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.IRON).setUnlocalizedName("iron_sickle");
 	public static final ItemColoredWrittenBook COLORED_BOOK = (ItemColoredWrittenBook) new ItemColoredWrittenBook().setUnlocalizedName("writtenBook");
 	public static final Item COTTON = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("cotton");
@@ -321,6 +323,8 @@ public class MinaItems {
 		registry.register(TURTLE_LEGGINGS, "turtle_shell_leggings").submit();
 		registry.register(TURTLE_BOOTS, "turtle_shell_boots").submit();
 		registry.register(MIXTURE, "mixture").submit();
+		registry.register(WOOD_SICKLE, "wood_sickle").submit();
+		registry.register(STONE_SICKLE, "stone_sickle").submit();
 		registry.register(IRON_SICKLE, "iron_sickle").submit();
 		registry.register(COLORED_BOOK, "colored_written_book").submit();
 		registry.register(COTTON, "cotton").ore().submit();

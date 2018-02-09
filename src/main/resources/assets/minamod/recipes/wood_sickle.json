@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "minamod",
+  "result": {
+    "item": "minamod:wood_sickle",
+    "count": 1
+  },
+  "pattern": [
+    "II ",
+    " IH",
+    "  H"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "H": {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  }
+}
