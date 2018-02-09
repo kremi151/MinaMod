@@ -10,7 +10,10 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber(modid = MODID)
 public class MappingsHandler {
 	
 	private static final ResourceLocation OLD_LOG = new ResourceLocation(MODID, "mina_log_g1");
@@ -19,8 +22,9 @@ public class MappingsHandler {
 	private static final ResourceLocation TRACIUS_SEEDS = new ResourceLocation(MODID, "tracius_seeds");
 	private static final ResourceLocation OLD_AMULET = new ResourceLocation(MODID, "amulet");
 	private static final ResourceLocation OLD_BAMBUS_ID = new ResourceLocation(MODID, "bambus_item");
-	
-	public static void handleItemMappings(RegistryEvent.MissingMappings<Item> event){
+
+	@SubscribeEvent
+	protected static void handleItemMappings(RegistryEvent.MissingMappings<Item> event){
 		for(Mapping<Item> mapping : event.getMappings()) {
 			handleItemMapping(mapping);
 		}
@@ -43,7 +47,8 @@ public class MappingsHandler {
 		}
 	}
 	
-	public static void handleBlockMappings(RegistryEvent.MissingMappings<Block> event){
+	@SubscribeEvent
+	protected static void handleBlockMappings(RegistryEvent.MissingMappings<Block> event){
 		for(Mapping<Block> mapping : event.getMappings()) {
 			handleBlockMapping(mapping);
 		}

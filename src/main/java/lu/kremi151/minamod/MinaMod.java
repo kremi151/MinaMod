@@ -56,7 +56,6 @@ import lu.kremi151.minamod.proxy.CommonProxy;
 import lu.kremi151.minamod.util.FMLEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.IDRegistry;
-import lu.kremi151.minamod.util.MappingsHandler;
 import lu.kremi151.minamod.util.MinaGuiHandler;
 import lu.kremi151.minamod.util.MinaModConfiguration;
 import lu.kremi151.minamod.util.MinaTickEventHandler;
@@ -74,12 +73,10 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
-import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -388,16 +385,6 @@ public class MinaMod {
 	
 	public static ResourceLocation createResourceLocation(String name){
 		return new ResourceLocation(MODID, name);
-	}
-	
-	@EventHandler
-	public void onMissingBlockMappings(RegistryEvent.MissingMappings<Block> event){
-		MappingsHandler.handleBlockMappings(event);
-	}
-	
-	@EventHandler
-	public void onMissingItemMappings(RegistryEvent.MissingMappings<Item> event){
-		MappingsHandler.handleItemMappings(event);
 	}
 
 }
