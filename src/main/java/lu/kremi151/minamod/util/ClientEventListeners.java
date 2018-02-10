@@ -1,8 +1,10 @@
 package lu.kremi151.minamod.util;
 
+import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.client.GuiAmuletInventory;
 import lu.kremi151.minamod.client.GuiPlayerStats;
+import lu.kremi151.minamod.client.blockmodel.ModelGravestone;
 import lu.kremi151.minamod.network.MessageJetpack;
 import lu.kremi151.minamod.network.MessageOpenGui;
 import lu.kremi151.minamod.network.MessageTriggerOpenStatsAchievement;
@@ -10,10 +12,16 @@ import lu.kremi151.minamod.network.MessageUseAmulet;
 import lu.kremi151.minamod.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -107,5 +115,28 @@ public class ClientEventListeners {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void onModelBake(ModelBakeEvent event) {
+		if(false) {//TODO: Enable if working
+			final ModelResourceLocation MRL_GRAVESTONE = new ModelResourceLocation(MinaBlocks.GRAVESTONE.getRegistryName(), "normal");
+			
+			IBakedModel bakedGravestone = event.getModelRegistry().getObject(MRL_GRAVESTONE);
+			ModelGravestone unbakedGravestone = new ModelGravestone(bakedGravestone);
+			event.getModelRegistry().putObject(MRL_GRAVESTONE, unbakedGravestone.bake(
+					null,
+					DefaultVertexFormats.BLOCK,
+					ModelLoader.defaultTextureGetter()
+					));
+		}
+	}
+	
+	/**
+	 * Register additional textures as sprites which are not referenced in model JSON files
+	 */
+	@SubscribeEvent
+	public void onPreStitch(TextureStitchEvent.Pre event) {
+		event.getMap().registerSprite(ModelGravestone.font2);
 	}
 }
