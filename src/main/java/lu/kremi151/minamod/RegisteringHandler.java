@@ -16,7 +16,9 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -100,6 +102,16 @@ public final class RegisteringHandler {
 		proxy.registerItemModels();
 		proxy.registerCustomMeshDefinitions();
 		main_proxy.registerFluidModels();
+	}
+	
+	@SubscribeEvent
+	protected static void onModelBake(ModelBakeEvent event) {
+		MinaMod.getProxy().handleModelBakeEvent(event);
+	}
+	
+	@SubscribeEvent
+	protected static void onPreStitch(TextureStitchEvent.Pre event) {
+		MinaMod.getProxy().handleTexturePreStitch(event);
 	}
 	
 	@SubscribeEvent

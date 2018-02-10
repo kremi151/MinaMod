@@ -70,12 +70,4 @@ public class TileEntityGravestone extends BaseTileEntity{
         readFromNBT(packet.getNbtCompound());
         sync();
 	}
-	
-	@Override
-	public void onLoad()
-    {
-        if(world != null && !world.isRemote) {
-        	System.out.println("Grave loaded");
-        }
-    }
 }

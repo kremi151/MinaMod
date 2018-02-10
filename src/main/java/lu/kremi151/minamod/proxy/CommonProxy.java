@@ -15,6 +15,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -25,6 +27,8 @@ public class CommonProxy{
 	public void registerRenderers() {}
 	public void registerBuildInBlocks() {}
 	public void registerStateMappings() {}
+	public void handleModelBakeEvent(ModelBakeEvent event) {}
+	public void handleTexturePreStitch(TextureStitchEvent.Pre event) {}
 	public void registerKeyBindings(){}
 	public void registerFluidModels() {}
 	public void registerItemAndBlockColors() {}

@@ -23,25 +23,26 @@ import net.minecraftforge.common.model.TRSRTransformation;
 
 public class ModelGravestone implements IModel
 {
-    private static final ResourceLocation font = new ResourceLocation("minecraft", "textures/font/ascii.png");
-    private static final ResourceLocation font2 = new ResourceLocation("minecraft", "font/ascii");
+	private static final ResourceLocation font = new ResourceLocation("minecraft", "textures/font/ascii.png");
+    public static final ResourceLocation font2 = new ResourceLocation("minecraft", "font/ascii");
     private static final LoadingCache<VertexFormat, SimpleModelFontRenderer> fontCache = CacheBuilder.newBuilder().maximumSize(3).build(new CacheLoader<VertexFormat, SimpleModelFontRenderer>()
     {
+        @Override
         public SimpleModelFontRenderer load(VertexFormat format) throws Exception
         {
             Matrix4f m = new Matrix4f();
             m.m20 = 1f / 128f;
             m.m01 = m.m12 = -m.m20;
             m.m33 = 1;
-            m.setTranslation(new Vector3f(1, 1, 0));
+            m.setTranslation(new Vector3f(1 + 1f / 0x100, 1f, 0));
             return new SimpleModelFontRenderer(
-            Minecraft.getMinecraft().gameSettings,
-            font,
-            Minecraft.getMinecraft().getTextureManager(),
-            false,
-            m,
-            format)
-            {
+                Minecraft.getMinecraft().gameSettings,
+                font,
+                Minecraft.getMinecraft().getTextureManager(),
+                false,
+                m,
+                format
+            ) {
                 @Override
                 protected float renderUnicodeChar(char c, boolean italic)
                 {
@@ -51,11 +52,11 @@ public class ModelGravestone implements IModel
         }
     });
 
-    private final String message;
+    private final IBakedModel wrapped;
 
-    public ModelGravestone(String message)
+    public ModelGravestone(IBakedModel wrapped)
     {
-        this.message = message;
+        this.wrapped = wrapped;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ModelGravestone implements IModel
     @Override
     public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
     {
-        return new BakedModelGravestone(fontCache.getUnchecked(format), message, bakedTextureGetter.apply(font2));
+        return new BakedModelGravestone(wrapped, fontCache.getUnchecked(format), bakedTextureGetter.apply(font2));
     }
 
     @Override

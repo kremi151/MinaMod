@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.proxy;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -32,6 +31,7 @@ import lu.kremi151.minamod.client.ItemColorHandler;
 import lu.kremi151.minamod.client.LeafColorHandler;
 import lu.kremi151.minamod.client.WallCableColorHandler;
 import lu.kremi151.minamod.client.blockmodel.MinaModelLoader;
+import lu.kremi151.minamod.client.blockmodel.ModelGravestone;
 import lu.kremi151.minamod.client.fx.EntityFXSpore;
 import lu.kremi151.minamod.client.render.RenderBee;
 import lu.kremi151.minamod.client.render.RenderFish;
@@ -55,15 +55,17 @@ import lu.kremi151.minamod.enums.EnumParticleEffect;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
-import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelManager;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -71,6 +73,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -340,6 +344,31 @@ public class ClientProxy extends CommonProxy {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//Baked model replacement START
+
+	@Override
+	public void handleModelBakeEvent(ModelBakeEvent event) {
+		if(false) {//TODO: Enable if working
+			final ModelResourceLocation MRL_GRAVESTONE = new ModelResourceLocation(MinaBlocks.GRAVESTONE.getRegistryName(), "normal");
+			
+			IBakedModel bakedGravestone = event.getModelRegistry().getObject(MRL_GRAVESTONE);
+			ModelGravestone unbakedGravestone = new ModelGravestone(bakedGravestone);
+			event.getModelRegistry().putObject(MRL_GRAVESTONE, unbakedGravestone.bake(
+					null,
+					DefaultVertexFormats.BLOCK,
+					ModelLoader.defaultTextureGetter()
+					));
+		}
+	}
+	
+	@Override
+	/**
+	 * Register additional textures as sprites which are not referenced in model JSON files
+	 */
+	public void handleTexturePreStitch(TextureStitchEvent.Pre event) {
+		event.getMap().registerSprite(ModelGravestone.font2);
 	}
 	
 }
