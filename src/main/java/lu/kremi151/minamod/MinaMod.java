@@ -19,6 +19,7 @@ import lu.kremi151.minamod.block.tileentity.TileEntityEnergyToRedstone;
 import lu.kremi151.minamod.block.tileentity.TileEntityFilter;
 import lu.kremi151.minamod.block.tileentity.TileEntityGenerator;
 import lu.kremi151.minamod.block.tileentity.TileEntityGiftBox;
+import lu.kremi151.minamod.block.tileentity.TileEntityGravestone;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLock;
@@ -155,6 +156,7 @@ public class MinaMod {
 		GameRegistry.registerTileEntity(TileEntityOven.class, createNamespacedIdentifier("oven"));
 		GameRegistry.registerTileEntity(TileEntityGenerator.class, createNamespacedIdentifier("generator"));
 		GameRegistry.registerTileEntity(TileEntityCoalCompressor.class, createNamespacedIdentifier("coal_compressor"));
+		GameRegistry.registerTileEntity(TileEntityGravestone.class, createNamespacedIdentifier("gravestone"));
 
 		EntityRegistry.registerModEntity(EntityIceGolhem.ID, EntityIceGolhem.class, createDottedIdentifier(EntityIceGolhem.entityId), IDRegistry.entityIceGolhemId,
 				this, 64, 1, true, MinaUtils.convertRGBToDecimal(17, 173, 238),

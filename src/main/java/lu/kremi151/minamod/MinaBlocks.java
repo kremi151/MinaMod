@@ -32,6 +32,7 @@ import lu.kremi151.minamod.block.BlockEnergyToRedstone;
 import lu.kremi151.minamod.block.BlockFilter;
 import lu.kremi151.minamod.block.BlockGenerator;
 import lu.kremi151.minamod.block.BlockGiftBox;
+import lu.kremi151.minamod.block.BlockGravestone;
 import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.BlockHoneycomb;
 import lu.kremi151.minamod.block.BlockIceAltar;
@@ -71,8 +72,6 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 
 public class MinaBlocks { // NO_UCD (unused code)
@@ -242,7 +241,8 @@ public class MinaBlocks { // NO_UCD (unused code)
     public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
     public static final BlockGenerator GENERATOR = (BlockGenerator) new BlockGenerator().setUnlocalizedName("generator").setHardness(3.5f).setResistance(6f);
 	public static final BlockCoalCompressor COMPRESSOR = (BlockCoalCompressor) new BlockCoalCompressor().setUnlocalizedName("coal_compressor").setHardness(3.5f).setResistance(6f);
-    
+    public static final BlockGravestone GRAVESTONE = new BlockGravestone();
+	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
 		BlockTable.registerTableBlocks(registry);
 		BlockStool.registerStoolBlocks(registry);
@@ -348,7 +348,7 @@ public class MinaBlocks { // NO_UCD (unused code)
 		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
 		registry.register(GENERATOR, "generator").submit();
 		registry.register(COMPRESSOR, "coal_compressor").submit();
-		
+		registry.register(GRAVESTONE, "gravestone").blockOnly().submit();
 	}
 
 	static void setFireInfos() {

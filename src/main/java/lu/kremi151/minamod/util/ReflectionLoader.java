@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,10 +14,12 @@ import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -36,6 +39,7 @@ public class ReflectionLoader {
 	private static final Field ENTITY_LIVING_BASE_IS_JUMPING;
 	private static final Field DIMENSION_TYPE_CLAZZ;
 	private static final Field BLOCK_LEAVES_LEAVES_FANCY;
+	private static final Field INVENTORYPLAYER_ALLINVENTORIES;
 	
 	private static final Method CONTAINER_MERGE_ITEMSTACK;
 	private static final Method CRITERIATRIGGERS_REGISTER;
@@ -51,6 +55,7 @@ public class ReflectionLoader {
 			ENTITY_LIVING_BASE_IS_JUMPING = ReflectionHelper.findField(EntityLivingBase.class, "isJumping", "field_70703_bu");
 			DIMENSION_TYPE_CLAZZ = ReflectionHelper.findField(DimensionType.class, "field_186077_g", "clazz");
 			BLOCK_LEAVES_LEAVES_FANCY = ReflectionHelper.findField(BlockLeaves.class, "leavesFancy", "field_185686_c");
+			INVENTORYPLAYER_ALLINVENTORIES = ReflectionHelper.findField(InventoryPlayer.class, "field_184440_g", "allInventories");
 			
 			CONTAINER_MERGE_ITEMSTACK = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
 			CRITERIATRIGGERS_REGISTER = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
@@ -124,6 +129,15 @@ public class ReflectionLoader {
 			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.setAccessible(true);
 			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.invoke(instance, stack, player);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static List<NonNullList<ItemStack>> InventoryPlayer_getAllInventories(InventoryPlayer instance){
+		try {
+			INVENTORYPLAYER_ALLINVENTORIES.setAccessible(true);
+			return (List<NonNullList<ItemStack>>) INVENTORYPLAYER_ALLINVENTORIES.get(instance);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
 	}

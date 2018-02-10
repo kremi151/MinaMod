@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.util.eventlisteners;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,6 +13,7 @@ import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
+import lu.kremi151.minamod.block.tileentity.TileEntityGravestone;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
@@ -46,7 +48,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
@@ -171,6 +175,20 @@ public class EntityEvents {
 				ei.setPosition(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
 				event.getEntityLiving().world.spawnEntity(ei);
 			}
+		}else if(event.getEntityLiving() instanceof EntityPlayer) {//TODO: Request specific item in inventory
+			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
+			List<NonNullList<ItemStack>> allInvs = ReflectionLoader.InventoryPlayer_getAllInventories(victim.inventory);
+			final BlockPos gravestonePos = victim.getPosition();
+			TileEntityGravestone gravestone = new TileEntityGravestone();
+			for(NonNullList<ItemStack> subInv : allInvs) {
+				for(ItemStack stack : subInv) {
+					if(!stack.isEmpty())gravestone.getItems().add(stack);
+				}
+			}
+			gravestone.setOwner(victim.getGameProfile());
+			victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
+			victim.world.setTileEntity(gravestonePos, gravestone);
+			victim.inventory.clear();
 		}
 	}
 	
