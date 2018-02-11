@@ -9,4 +9,6 @@ public interface IAmuletHolder {
 	boolean setAmuletAt(int slot, ItemStack amulet);
 	int amuletAmount();
 	NonNullList<ItemStack> getAmulets();
+	void clear();
+	
 }

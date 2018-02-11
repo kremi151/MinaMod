@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.capabilities.amulets;
 
-import lu.kremi151.minamod.item.ItemAmulet;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -63,6 +62,13 @@ public class CapabilityAmuletHolder implements IAmuletHolder{
 	@Override
 	public NonNullList<ItemStack> getAmulets() {
 		return inv;
+	}
+
+	@Override
+	public void clear() {
+		for(int i = 0 ; i < inv.size() ; i++) {
+			inv.set(i, ItemStack.EMPTY);
+		}
 	}
 
 }

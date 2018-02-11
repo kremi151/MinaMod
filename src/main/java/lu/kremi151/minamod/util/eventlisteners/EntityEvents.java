@@ -15,6 +15,8 @@ import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.tileentity.TileEntityGravestone;
 import lu.kremi151.minamod.capabilities.MinaCapabilities;
+import lu.kremi151.minamod.capabilities.amulets.CapabilityAmuletHolder;
+import lu.kremi151.minamod.capabilities.amulets.IAmuletHolder;
 import lu.kremi151.minamod.capabilities.stats.CapabilityStatsPlayerImpl;
 import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
@@ -48,7 +50,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -59,6 +60,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -185,10 +187,28 @@ public class EntityEvents {
 					if(!stack.isEmpty())gravestone.getItems().add(stack);
 				}
 			}
+			IAmuletHolder amuletInv = event.getEntityLiving().getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
+			if(amuletInv != null) {
+				for(ItemStack stack : amuletInv.getAmulets()) {
+					if(!stack.isEmpty())gravestone.getItems().add(stack);
+				}
+				amuletInv.clear();
+			}
 			gravestone.setOwner(victim.getGameProfile());
 			victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
 			victim.world.setTileEntity(gravestonePos, gravestone);
 			victim.inventory.clear();
+		}
+	}
+	
+	@SubscribeEvent
+	public void onLivingDrops(LivingDropsEvent event) {
+		if(event.getEntityLiving().hasCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null)) {
+			IAmuletHolder amuletInv = event.getEntityLiving().getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
+			for(ItemStack amulet : amuletInv.getAmulets()) {
+				if(!amulet.isEmpty())event.getEntityLiving().entityDropItem(amulet, 0.5f);
+			}
+			amuletInv.clear();
 		}
 	}
 	
