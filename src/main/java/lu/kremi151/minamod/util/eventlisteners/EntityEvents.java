@@ -169,15 +169,7 @@ public class EntityEvents {
 				((ICapabilityStats)killer.getCapability(ICapabilityStats.CAPABILITY, null)).offer(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR, 1 + superMobLvl);
 			}
 		}
-		if(event.getEntityLiving() instanceof EntitySheep){
-			if(event.getEntityLiving().getRNG().nextInt(18) == 0){
-				ItemStack is = new ItemStack(MinaItems.BAMBUS, 1);
-				EntityItem ei = new EntityItem(event.getEntityLiving().world);
-				ei.setItem(is);
-				ei.setPosition(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
-				event.getEntityLiving().world.spawnEntity(ei);
-			}
-		}else if(event.getEntityLiving() instanceof EntityPlayer) {//TODO: Request specific item in inventory
+		if(event.getEntityLiving() instanceof EntityPlayer) {//TODO: Request specific item in inventory
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
 			List<NonNullList<ItemStack>> allInvs = ReflectionLoader.InventoryPlayer_getAllInventories(victim.inventory);
 			final BlockPos gravestonePos = victim.getPosition();
@@ -209,6 +201,10 @@ public class EntityEvents {
 				if(!amulet.isEmpty())event.getEntityLiving().entityDropItem(amulet, 0.5f);
 			}
 			amuletInv.clear();
+		}else if(event.getEntityLiving() instanceof EntitySheep){
+			if(event.getEntityLiving().getRNG().nextInt(18) == 0){
+				event.getEntityLiving().entityDropItem(new ItemStack(MinaItems.BAMBUS, 1), 0.5f);
+			}
 		}
 	}
 	
