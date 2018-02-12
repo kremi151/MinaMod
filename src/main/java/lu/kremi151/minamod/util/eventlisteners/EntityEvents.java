@@ -176,7 +176,7 @@ public class EntityEvents {
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
 			final BlockPos gravestonePos = victim.getPosition();
 			TileEntityGravestone gravestone = new TileEntityGravestone();
-			CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone, victim, gravestonePos);
+			CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone.getItems(), victim, gravestonePos);
 			if(!MinecraftForge.EVENT_BUS.post(gevent)) {
 				gravestone.setOwner(victim.getGameProfile());
 				victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
