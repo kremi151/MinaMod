@@ -172,15 +172,17 @@ public class EntityEvents {
 				((ICapabilityStats)killer.getCapability(ICapabilityStats.CAPABILITY, null)).offer(CapabilityStatsPlayerImpl.DISTRIBUTION_MULTIPLICATOR, 1 + superMobLvl);
 			}
 		}
-		if(event.getEntityLiving() instanceof EntityPlayer) {//TODO: Request specific item in inventory
+		if(event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
-			final BlockPos gravestonePos = victim.getPosition();
-			TileEntityGravestone gravestone = new TileEntityGravestone();
-			CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone.getItems(), victim, gravestonePos);
-			if(!MinecraftForge.EVENT_BUS.post(gevent)) {
-				gravestone.setOwner(victim.getGameProfile());
-				victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
-				victim.world.setTileEntity(gravestonePos, gravestone);
+			if(MinaUtils.consumeInventoryItems(victim.inventory, MinaItems.BRING_ME_TO_LIFE, 1)) {
+				final BlockPos gravestonePos = victim.getPosition();
+				TileEntityGravestone gravestone = new TileEntityGravestone();
+				CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone.getItems(), victim, gravestonePos);
+				if(!MinecraftForge.EVENT_BUS.post(gevent)) {
+					gravestone.setOwner(victim.getGameProfile());
+					victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
+					victim.world.setTileEntity(gravestonePos, gravestone);
+				}
 			}
 		}
 	}

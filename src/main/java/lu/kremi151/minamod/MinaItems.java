@@ -224,6 +224,7 @@ public class MinaItems {
 	public static final Item RUBBER_TREE_BRANCH = new ItemRubberTreeBranch().setUnlocalizedName("rubber_tree_branch");
 	public static final Item RUBBER = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("rubber");
 	public static final Item DIAGNOSE_TOOL = new ItemEnergyDiagnostic().setUnlocalizedName("diagnose_tool");
+	public static final Item BRING_ME_TO_LIFE = new Item().setCreativeTab(CreativeTabs.MISC);//TODO: Find a name
 
 	public static void registerItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry) {
 		registerItemBlocks(registry);
@@ -328,6 +329,7 @@ public class MinaItems {
 		registry.register(RUBBER_TREE_BRANCH, "rubber_tree_branch").submit();
 		registry.register(RUBBER, "rubber").submit();
 		registry.register(DIAGNOSE_TOOL, "diagnose_tool").submit();
+		registry.register(BRING_ME_TO_LIFE, "unnamed_resurrection_item").submit();//TODO: Rename
 		
 		registerOreEntries();//Final step, when all items are registered
 	}
