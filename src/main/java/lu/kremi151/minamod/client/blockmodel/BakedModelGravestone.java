@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+import lu.kremi151.minamod.block.BlockGravestone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -22,11 +23,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.SimpleModelFontRenderer;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class BakedModelGravestone implements IBakedModel
 {
     private final SimpleModelFontRenderer fontRenderer;
-    private final String message;
     private final TextureAtlasSprite fontTexture;
     private final IBakedModel wrapped;
     private ImmutableList<BakedQuad> quads;
@@ -35,7 +36,6 @@ public class BakedModelGravestone implements IBakedModel
     {
         this.wrapped = wrapped;
         this.fontRenderer = fontRenderer;
-        this.message = "test :)";
         this.fontTexture = fontTexture;
     }
 
@@ -48,6 +48,13 @@ public class BakedModelGravestone implements IBakedModel
             {
                 fontRenderer.setSprite(fontTexture);
                 fontRenderer.setFillBlanks(true);
+                String message = null;
+                if(state instanceof IExtendedBlockState) {
+                	message = ((IExtendedBlockState)state).getValue(BlockGravestone.CAPTION);
+                }
+                if(message == null) {
+                	message = "???";
+                }
                 String[] lines = message.split("\\r?\\n");
                 List<String> splitLines = Lists.newArrayList();
                 for (int y = 0; y < lines.length; y++)

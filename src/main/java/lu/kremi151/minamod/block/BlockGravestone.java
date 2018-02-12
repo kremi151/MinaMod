@@ -1,9 +1,13 @@
 package lu.kremi151.minamod.block;
 
+import com.mojang.authlib.GameProfile;
+
 import lu.kremi151.minamod.block.tileentity.TileEntityGravestone;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -13,8 +17,35 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class BlockGravestone extends Block{
+	
+	public static final IUnlistedProperty<String> CAPTION = new IUnlistedProperty() {
+
+		@Override
+		public String getName() {
+			return "caption";
+		}
+
+		@Override
+		public boolean isValid(Object value) {
+			return true;
+		}
+
+		@Override
+		public Class getType() {
+			return String.class;
+		}
+
+		@Override
+		public String valueToString(Object value) {
+			return value.toString();
+		}
+		
+	};
 	
 	private static final AxisAlignedBB GRAVESTONE_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.375D, 0.875D, 0.8125D, 0.625D);
 
@@ -79,6 +110,26 @@ public class BlockGravestone extends Block{
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return GRAVESTONE_AABB;
+    }
+	
+	@Override
+    protected BlockStateContainer createBlockState()
+    {
+        return new ExtendedBlockState(this, new IProperty[0], new IUnlistedProperty[] {CAPTION});
+    }
+	
+	@Override
+	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
+		TileEntity te = world.getTileEntity(pos);
+		String caption = "Herobrine";
+		if(te instanceof TileEntityGravestone) {
+			GameProfile profile = ((TileEntityGravestone)te).getOwner();
+			if(profile != null) {
+				caption = profile.getName();
+			}
+		}
+        return ((IExtendedBlockState)state).withProperty(CAPTION, caption);
     }
 
 }
