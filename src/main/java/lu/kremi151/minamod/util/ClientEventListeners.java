@@ -119,17 +119,15 @@ public class ClientEventListeners {
 	
 	@SubscribeEvent
 	public void onModelBake(ModelBakeEvent event) {
-		if(false) {//TODO: Enable if working
-			final ModelResourceLocation MRL_GRAVESTONE = new ModelResourceLocation(MinaBlocks.GRAVESTONE.getRegistryName(), "normal");
-			
-			IBakedModel bakedGravestone = event.getModelRegistry().getObject(MRL_GRAVESTONE);
-			ModelGravestone unbakedGravestone = new ModelGravestone(bakedGravestone);
-			event.getModelRegistry().putObject(MRL_GRAVESTONE, unbakedGravestone.bake(
-					null,
-					DefaultVertexFormats.BLOCK,
-					ModelLoader.defaultTextureGetter()
-					));
-		}
+		final ModelResourceLocation MRL_GRAVESTONE = new ModelResourceLocation(MinaBlocks.GRAVESTONE.getRegistryName(), "normal");
+		
+		IBakedModel bakedGravestone = event.getModelRegistry().getObject(MRL_GRAVESTONE);
+		ModelGravestone unbakedGravestone = new ModelGravestone(bakedGravestone);
+		event.getModelRegistry().putObject(MRL_GRAVESTONE, unbakedGravestone.bake(
+				null,
+				DefaultVertexFormats.BLOCK,
+				ModelLoader.defaultTextureGetter()
+				));
 	}
 	
 	/**
