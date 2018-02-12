@@ -22,6 +22,7 @@ import lu.kremi151.minamod.capabilities.stats.ICapabilityStats;
 import lu.kremi151.minamod.capabilities.stats.types.StatType;
 import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.entity.EntityIceGolhem;
+import lu.kremi151.minamod.events.CreateGravestoneEvent;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.MinaUtils;
 import lu.kremi151.minamod.util.ReflectionLoader;
@@ -56,6 +57,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
@@ -66,6 +68,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityEvents {
@@ -171,25 +174,14 @@ public class EntityEvents {
 		}
 		if(event.getEntityLiving() instanceof EntityPlayer) {//TODO: Request specific item in inventory
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
-			List<NonNullList<ItemStack>> allInvs = ReflectionLoader.InventoryPlayer_getAllInventories(victim.inventory);
 			final BlockPos gravestonePos = victim.getPosition();
 			TileEntityGravestone gravestone = new TileEntityGravestone();
-			for(NonNullList<ItemStack> subInv : allInvs) {
-				for(ItemStack stack : subInv) {
-					if(!stack.isEmpty())gravestone.getItems().add(stack);
-				}
+			CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone, victim, gravestonePos);
+			if(!MinecraftForge.EVENT_BUS.post(gevent)) {
+				gravestone.setOwner(victim.getGameProfile());
+				victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
+				victim.world.setTileEntity(gravestonePos, gravestone);
 			}
-			IAmuletHolder amuletInv = event.getEntityLiving().getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
-			if(amuletInv != null) {
-				for(ItemStack stack : amuletInv.getAmulets()) {
-					if(!stack.isEmpty())gravestone.getItems().add(stack);
-				}
-				amuletInv.clear();
-			}
-			gravestone.setOwner(victim.getGameProfile());
-			victim.world.setBlockState(gravestonePos, MinaBlocks.GRAVESTONE.getDefaultState());
-			victim.world.setTileEntity(gravestonePos, gravestone);
-			victim.inventory.clear();
 		}
 	}
 	
@@ -205,6 +197,24 @@ public class EntityEvents {
 			if(event.getEntityLiving().getRNG().nextInt(18) == 0){
 				event.getEntityLiving().entityDropItem(new ItemStack(MinaItems.BAMBUS, 1), 0.5f);
 			}
+		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onCreateGravestone(CreateGravestoneEvent event) {
+		List<NonNullList<ItemStack>> allInvs = ReflectionLoader.InventoryPlayer_getAllInventories(event.getPlayer().inventory);
+		for(NonNullList<ItemStack> subInv : allInvs) {
+			for(ItemStack stack : subInv) {
+				if(!stack.isEmpty())event.getItems().add(stack);
+			}
+		}
+		event.getPlayer().inventory.clear();
+		IAmuletHolder amuletInv = event.getPlayer().getCapability(CapabilityAmuletHolder.CAPABILITY_AMULET_HOLDER, null);
+		if(amuletInv != null) {
+			for(ItemStack stack : amuletInv.getAmulets()) {
+				if(!stack.isEmpty())event.getItems().add(stack);
+			}
+			amuletInv.clear();
 		}
 	}
 	
