@@ -56,7 +56,8 @@ public class BakedModelGravestone implements IBakedModel
             List<String> splitLines = Lists.newArrayList();
             for (int y = 0; y < lines.length; y++)
             {
-                splitLines.addAll(fontRenderer.listFormattedStringToWidth(lines[y], 0x80));
+            	// 0x80 = 128 => 1 block length
+                splitLines.addAll(fontRenderer.listFormattedStringToWidth(lines[y], 64));
             }
             for (int y = 0; y < splitLines.size(); y++)
             {
