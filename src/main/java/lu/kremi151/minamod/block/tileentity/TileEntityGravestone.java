@@ -7,6 +7,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -20,9 +21,13 @@ public class TileEntityGravestone extends BaseTileEntity{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		if(nbt.hasKey("Items", 9)) {
-			items.clear();
-			ItemStackHelper.loadAllItems(nbt, items);
+		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+		items.clear();
+		for(int i = 0 ; i < nbttaglist.tagCount() ; i++) {
+			ItemStack stack = new ItemStack(nbttaglist.getCompoundTagAt(i));
+			if(!stack.isEmpty()) {
+				items.add(stack);
+			}
 		}
 		if(nbt.hasKey("Owner", 10)) {
 			owner = NBTUtil.readGameProfileFromNBT(nbt.getCompoundTag("Owner"));
@@ -34,7 +39,13 @@ public class TileEntityGravestone extends BaseTileEntity{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
-		ItemStackHelper.saveAllItems(nbt, items, false);
+		NBTTagList nbttaglist = new NBTTagList();
+		for(ItemStack stack : items) {
+			if(!stack.isEmpty()) {
+				nbttaglist.appendTag(stack.writeToNBT(new NBTTagCompound()));
+			}
+		}
+		nbt.setTag("Items", nbttaglist);
 		if(owner != null) {
 			nbt.setTag("Owner", NBTUtil.writeGameProfile(new NBTTagCompound(), owner));
 		}
@@ -67,7 +78,12 @@ public class TileEntityGravestone extends BaseTileEntity{
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-        readFromNBT(packet.getNbtCompound());
+		final NBTTagCompound nbt = packet.getNbtCompound();
+		if(nbt.hasKey("Owner", 10)) {
+			owner = NBTUtil.readGameProfileFromNBT(nbt.getCompoundTag("Owner"));
+		}else {
+			owner = null;
+		}
         sync();
 	}
 }
