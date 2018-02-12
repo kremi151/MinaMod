@@ -30,7 +30,6 @@ public class BakedModelGravestone implements IBakedModel
     private final SimpleModelFontRenderer fontRenderer;
     private final TextureAtlasSprite fontTexture;
     private final IBakedModel wrapped;
-    private ImmutableList<BakedQuad> quads;
 
     public BakedModelGravestone(IBakedModel wrapped, SimpleModelFontRenderer fontRenderer, TextureAtlasSprite fontTexture)
     {
@@ -44,33 +43,29 @@ public class BakedModelGravestone implements IBakedModel
     {
         if (side == null)
         {
-            if (quads == null)
-            {
-                fontRenderer.setSprite(fontTexture);
-                fontRenderer.setFillBlanks(true);
-                String message = null;
-                if(state instanceof IExtendedBlockState) {
-                	message = ((IExtendedBlockState)state).getValue(BlockGravestone.CAPTION);
-                }
-                if(message == null) {
-                	message = "???";
-                }
-                String[] lines = message.split("\\r?\\n");
-                List<String> splitLines = Lists.newArrayList();
-                for (int y = 0; y < lines.length; y++)
-                {
-                    splitLines.addAll(fontRenderer.listFormattedStringToWidth(lines[y], 0x80));
-                }
-                for (int y = 0; y < splitLines.size(); y++)
-                {
-                    fontRenderer.drawString(splitLines.get(y), 0, (int)((y - splitLines.size() / 2f) * fontRenderer.FONT_HEIGHT) + 0x40, 0xFF00FFFF);
-                }
-                ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-                builder.addAll(fontRenderer.build());
-                builder.addAll(wrapped.getQuads(state, side, rand));
-                quads = builder.build();
+        	fontRenderer.setSprite(fontTexture);
+            fontRenderer.setFillBlanks(true);
+            String message = null;
+            if(state instanceof IExtendedBlockState) {
+            	message = ((IExtendedBlockState)state).getValue(BlockGravestone.CAPTION);
             }
-            return quads;
+            if(message == null) {
+            	message = "???";
+            }
+            String[] lines = message.split("\\r?\\n");
+            List<String> splitLines = Lists.newArrayList();
+            for (int y = 0; y < lines.length; y++)
+            {
+                splitLines.addAll(fontRenderer.listFormattedStringToWidth(lines[y], 0x80));
+            }
+            for (int y = 0; y < splitLines.size(); y++)
+            {
+                fontRenderer.drawString(splitLines.get(y), 0, (int)((y - splitLines.size() / 2f) * fontRenderer.FONT_HEIGHT) + 0x40, 0xFF00FFFF);
+            }
+            ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+            builder.addAll(fontRenderer.build());
+            builder.addAll(wrapped.getQuads(state, side, rand));
+            return builder.build();
         }
         return wrapped.getQuads(state, side, rand);
     }

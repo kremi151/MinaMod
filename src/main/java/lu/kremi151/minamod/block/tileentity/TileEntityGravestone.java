@@ -38,14 +38,19 @@ public class TileEntityGravestone extends BaseTileEntity{
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
-		super.writeToNBT(nbt);
-		NBTTagList nbttaglist = new NBTTagList();
-		for(ItemStack stack : items) {
-			if(!stack.isEmpty()) {
-				nbttaglist.appendTag(stack.writeToNBT(new NBTTagCompound()));
+		return serializeGravestone(super.writeToNBT(nbt), true);
+	}
+	
+	private NBTTagCompound serializeGravestone(NBTTagCompound nbt, boolean full) {
+		if(full) {
+			NBTTagList nbttaglist = new NBTTagList();
+			for(ItemStack stack : items) {
+				if(!stack.isEmpty()) {
+					nbttaglist.appendTag(stack.writeToNBT(new NBTTagCompound()));
+				}
 			}
+			nbt.setTag("Items", nbttaglist);
 		}
-		nbt.setTag("Items", nbttaglist);
 		if(owner != null) {
 			nbt.setTag("Owner", NBTUtil.writeGameProfile(new NBTTagCompound(), owner));
 		}
@@ -69,11 +74,7 @@ public class TileEntityGravestone extends BaseTileEntity{
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
-		NBTTagCompound tagPacket = new NBTTagCompound();
-		if(owner != null) {
-			tagPacket.setTag("Owner", NBTUtil.writeGameProfile(new NBTTagCompound(), owner));
-		}
-		return new SPacketUpdateTileEntity(this.pos, 0, tagPacket);
+		return new SPacketUpdateTileEntity(this.pos, 0, serializeGravestone(new NBTTagCompound(), false));
 	}
 	
 	@Override
@@ -85,5 +86,10 @@ public class TileEntityGravestone extends BaseTileEntity{
 			owner = null;
 		}
         sync();
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return serializeGravestone(super.getUpdateTag(), false);
 	}
 }
