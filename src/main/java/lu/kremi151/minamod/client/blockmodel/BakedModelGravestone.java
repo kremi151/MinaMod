@@ -56,12 +56,12 @@ public class BakedModelGravestone implements IBakedModel
             List<String> splitLines = Lists.newArrayList();
             for (int y = 0; y < lines.length; y++)
             {
-            	// 0x80 = 128 => 1 block length
+            	// 128 = 1 block length => 64 = 1/2 block length
                 splitLines.addAll(fontRenderer.listFormattedStringToWidth(lines[y], 64));
             }
             for (int y = 0; y < splitLines.size(); y++)
             {
-                fontRenderer.drawString(splitLines.get(y), 0, (int)((y - splitLines.size() / 2f) * fontRenderer.FONT_HEIGHT) + 0x40, 0xFF00FFFF);
+                fontRenderer.drawString(splitLines.get(y), (64 - fontRenderer.getStringWidth(splitLines.get(y))) / 2, (int)((y - splitLines.size() / 2f) * fontRenderer.FONT_HEIGHT) + 0x40, 0xFF00FFFF);
             }
             /*ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
             builder.addAll(fontRenderer.build());
