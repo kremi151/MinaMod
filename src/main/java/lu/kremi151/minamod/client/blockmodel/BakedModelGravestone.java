@@ -9,10 +9,10 @@ import javax.vecmath.Vector3f;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import lu.kremi151.minamod.block.BlockGravestone;
+import lu.kremi151.minamod.util.ConcatenatedImmutableList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -63,10 +63,11 @@ public class BakedModelGravestone implements IBakedModel
             {
                 fontRenderer.drawString(splitLines.get(y), 0, (int)((y - splitLines.size() / 2f) * fontRenderer.FONT_HEIGHT) + 0x40, 0xFF00FFFF);
             }
-            ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+            /*ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
             builder.addAll(fontRenderer.build());
             builder.addAll(wrapped.getQuads(state, side, rand));
-            return builder.build();
+            return builder.build();*/
+            return new ConcatenatedImmutableList<>(fontRenderer.build(), wrapped.getQuads(state, side, rand));
         }
         return wrapped.getQuads(state, side, rand);
     }
