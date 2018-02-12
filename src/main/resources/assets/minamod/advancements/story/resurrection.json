@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "minamod:unnamed_resurrection_item"
+        },
+        "title": {
+            "translate": "advancement.minamod.resurrection"
+        },
+        "description": {
+            "translate": "advancement.minamod.resurrection.desc"
+        }
+    },
+    "parent": "minamod:story/root",
+    "criteria": {
+        "broke_grave": {
+            "trigger": "minamod:break_grave"
+        }
+    }
+}

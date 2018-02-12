@@ -7,6 +7,7 @@ import lu.kremi151.minamod.MinaEnchantments;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
+import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
@@ -18,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -141,29 +143,8 @@ public class BlockEvents {
 				break_bypass.put("br_" + event.getPos().toString(), nbt);
 				
 			}
-		/*}else if(!event.getPlayer().capabilities.isCreativeMode && event.getState().getBlock() == MinaBlocks.SIEVE){
-			ItemStack held = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
-			if(held.isEmpty() || held.getItem() instanceof ItemSpade || !(held.getItem() instanceof ItemTool)){
-				int level = event.getState().getValue(BlockSieve.LEVEL);
-				if(level > 0){
-					BlockSieve.MaterialType material = MinaBlocks.SIEVE.getActualState(event.getState(), event.getWorld(), event.getPos()).getValue(BlockSieve.MATERIAL);
-					
-					if(material != BlockSieve.MaterialType.AIR && material.getLootTable() != null && event.getPlayer().getRNG().nextInt(3) == 0){
-						List<ItemStack> stacks = event.getWorld().getLootTableManager().getLootTableFromLocation(material.getLootTable()).generateLootForPools(event.getPlayer().getRNG(), new LootContext.Builder((WorldServer) event.getWorld()).build());
-						final int length = stacks.size();
-						if(length > 0){
-							MinaUtils.dropItem(stacks.get(event.getPlayer().getRNG().nextInt(length)), event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
-						}
-					}
-					
-					IBlockState newState = event.getState().withProperty(BlockSieve.LEVEL, level - 1);
-					if(level == 1){
-						newState = newState.withProperty(BlockSieve.MATERIAL, BlockSieve.MaterialType.AIR);
-					}
-					event.getWorld().setBlockState(event.getPos(), newState);
-					event.setCanceled(true);
-				}
-			}*/
+		}else if(event.getState().getBlock() == MinaBlocks.GRAVESTONE && !event.getWorld().isRemote && !event.getPlayer().capabilities.isCreativeMode) {
+			MinaTriggers.TRIGGER_BREAK_GRAVE.trigger((EntityPlayerMP) event.getPlayer());
 		}
 	}
 	
