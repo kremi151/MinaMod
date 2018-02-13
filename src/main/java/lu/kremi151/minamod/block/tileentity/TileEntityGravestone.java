@@ -17,6 +17,7 @@ public class TileEntityGravestone extends BaseTileEntity{
 
 	private final NonNullList<ItemStack> items = NonNullList.create();
 	private GameProfile owner;
+	private String customCaption = null;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
@@ -34,6 +35,9 @@ public class TileEntityGravestone extends BaseTileEntity{
 		}else {
 			owner = null;
 		}
+		if(nbt.hasKey("Caption", 8)) {
+			customCaption = nbt.getString("Caption");
+		}
 	}
 
 	@Override
@@ -50,9 +54,12 @@ public class TileEntityGravestone extends BaseTileEntity{
 				}
 			}
 			nbt.setTag("Items", nbttaglist);
+			if(owner != null) {
+				nbt.setTag("Owner", NBTUtil.writeGameProfile(new NBTTagCompound(), owner));
+			}
 		}
-		if(owner != null) {
-			nbt.setTag("Owner", NBTUtil.writeGameProfile(new NBTTagCompound(), owner));
+		if(customCaption != null) {
+			nbt.setString("Caption", customCaption);
 		}
 		return nbt;
 	}
@@ -72,6 +79,23 @@ public class TileEntityGravestone extends BaseTileEntity{
 		sync();
 	}
 	
+	@Nullable
+	public String getCaption() {
+		if(customCaption != null) {
+			return customCaption;
+		}else if(owner != null) {
+			return owner.getName();
+		}else {
+			return null;
+		}
+	}
+	
+	public void setCaption(String caption) {
+		this.customCaption = caption;
+		markDirty();
+		sync();
+	}
+	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
 		return new SPacketUpdateTileEntity(this.pos, 0, serializeGravestone(new NBTTagCompound(), false));
@@ -80,16 +104,22 @@ public class TileEntityGravestone extends BaseTileEntity{
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		final NBTTagCompound nbt = packet.getNbtCompound();
-		if(nbt.hasKey("Owner", 10)) {
-			owner = NBTUtil.readGameProfileFromNBT(nbt.getCompoundTag("Owner"));
+		if(nbt.hasKey("Caption", 8)) {
+			customCaption = nbt.getString("Caption");
 		}else {
-			owner = null;
+			customCaption = null;
 		}
         sync();
 	}
 	
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		return serializeGravestone(super.getUpdateTag(), false);
+		NBTTagCompound nbt = super.getUpdateTag();
+		if(customCaption != null) {
+			nbt.setString("Caption", customCaption);
+		}else if(owner != null) {
+			nbt.setString("Caption", owner.getName());
+		}
+		return nbt;
 	}
 }

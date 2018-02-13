@@ -124,9 +124,9 @@ public class BlockGravestone extends Block{
 		TileEntity te = world.getTileEntity(pos);
 		String caption = "Herobrine";
 		if(te instanceof TileEntityGravestone) {
-			GameProfile profile = ((TileEntityGravestone)te).getOwner();
-			if(profile != null) {
-				caption = profile.getName();
+			String caption1 = ((TileEntityGravestone)te).getCaption();
+			if(caption1 != null) {
+				caption = caption1;
 			}
 		}
         return ((IExtendedBlockState)state).withProperty(CAPTION, caption);
