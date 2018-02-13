@@ -209,7 +209,7 @@ public class MinaMod {
 
 		proxy.registerBuildInBlocks();
 		
-		new AnnotationProcessor<>(MinaPermission.class, String.class).process(MinaPermissions.class, (node, pnode) -> {
+		new AnnotationProcessor<>(MinaPermission.class, String.class).processStrict(MinaPermissions.class, (node, pnode) -> {
 			if(getMinaConfig().isDebugging()){
 				println("Registering permission node \"%s\"...", pnode);
 			}

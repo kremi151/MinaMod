@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.util;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,33 +16,18 @@ import net.minecraft.world.chunk.Chunk;
 
 public class OreInjectorManager {
 
-	private static final Map<String, IOreInjector> INJECTORS;
-	private static Random rand = new Random(System.currentTimeMillis());
-	
-	static{
-		Field fields[] = WorldGenerators.class.getDeclaredFields();
-		HashMap<String, IOreInjector> injectors = new HashMap<>();
-		for(Field f : fields){
-			f.setAccessible(true);
-			OreInjector oi = f.getAnnotation(OreInjector.class);
-			if(IOreInjector.class.isAssignableFrom(f.getType()) && oi != null){
-				try {
-					if(!injectors.containsKey(oi.value())) {
-						injectors.put(oi.value(), (IOreInjector)f.get(null));
+	private static final Map<String, IOreInjector> INJECTORS = Collections.unmodifiableMap(
+			new AnnotationProcessor<>(OreInjector.class, IOreInjector.class)
+				.processWithResult(WorldGenerators.class, (oi, injector, map) -> {
+			    	if(!map.containsKey(oi.value())) {
+						map.put(oi.value(), injector);
 					}else {
 						throw new RuntimeException("Ore injector with id " + oi.value() + " already defined");
 					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		INJECTORS = Collections.unmodifiableMap(injectors);
-		
-		MinaMod.println("Found %d ore injectors", injectors.size());
-	}
+			    	return map;
+			    }, new HashMap<String, IOreInjector>()));
+	
+	private static Random rand = new Random(System.currentTimeMillis());
 	
 	public static void performOreInjection(World world, Chunk chunk, String... injectorIds){
 		for(String injid : injectorIds) {
