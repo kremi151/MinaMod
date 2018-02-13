@@ -108,21 +108,19 @@ public class EntityIceGolhem extends EntityTameable{
 	public void writeEntityToNBT(NBTTagCompound nbt)
     {
 		super.writeEntityToNBT(nbt);
-		nbt.setByte("ig_state", getState().getStateId());
-		nbt.setDouble("max_life", this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue());
+		nbt.setByte("State", getState().getStateId());
+		nbt.setDouble("MaxHealth", this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue());
     }
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt)
     {
 		super.readEntityFromNBT(nbt);
-		if(nbt.hasKey("state_id")){
-			setState(EnumIceGolhemState.getFromId((byte)nbt.getInteger("state_id")));
-		}else if(nbt.hasKey("ig_state")){
-			setState(EnumIceGolhemState.getFromId(nbt.getByte("ig_state")));
+		if(nbt.hasKey("State", 99)){
+			setState(EnumIceGolhemState.getFromId(nbt.getByte("State")));
 		}
-		if(nbt.hasKey("max_life")){
-			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(nbt.getDouble("max_life"));
+		if(nbt.hasKey("MaxHealth", 99)){
+			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(nbt.getDouble("MaxHealth"));
 		}
 		this.initEntityAI();
     }
