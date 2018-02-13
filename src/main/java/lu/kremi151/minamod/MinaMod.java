@@ -54,6 +54,7 @@ import lu.kremi151.minamod.network.MessageUpdateTileEntity;
 import lu.kremi151.minamod.network.MessageUseAmulet;
 import lu.kremi151.minamod.network.MessageUseElevator;
 import lu.kremi151.minamod.proxy.CommonProxy;
+import lu.kremi151.minamod.util.AnnotationProcessor;
 import lu.kremi151.minamod.util.FMLEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.IDRegistry;
@@ -208,24 +209,12 @@ public class MinaMod {
 
 		proxy.registerBuildInBlocks();
 		
-		Field fields[] = MinaPermissions.class.getDeclaredFields();
-		for(Field f : fields){
-			f.setAccessible(true);
-			MinaPermission node = f.getAnnotation(MinaPermission.class);
-			if(node != null && f.getType() == String.class){
-				try {
-					String pnode = (String) f.get(null);
-					if(getMinaConfig().isDebugging()){
-						println("Registering permission node \"%s\"...", pnode);
-					}
-					PermissionAPI.registerNode(pnode, node.lvl(), node.desc());
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
+		new AnnotationProcessor<>(MinaPermission.class, String.class).process(MinaPermissions.class, (node, pnode) -> {
+			if(getMinaConfig().isDebugging()){
+				println("Registering permission node \"%s\"...", pnode);
 			}
-		}
+			PermissionAPI.registerNode(pnode, node.lvl(), node.desc());
+		});
 	}
 
 	@EventHandler
