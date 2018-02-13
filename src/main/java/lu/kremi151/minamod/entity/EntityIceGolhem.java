@@ -61,8 +61,8 @@ public class EntityIceGolhem extends EntityTameable{
 	protected void initEntityAI(){
 		this.tasks.taskEntries.clear();
 		this.targetTasks.taskEntries.clear();
-		if(!isZombie())this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6F));
-		if(!isZombie())this.tasks.addTask(2, new EntityAIPanic(this, 0.8D));
+		if(!isDisabled())this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6F));
+		if(isPassive())this.tasks.addTask(2, new EntityAIPanic(this, 0.8D));
 		
         if(!isDisabled() &! isZombie())this.tasks.addTask(0, new EntityAISwimming(this));
         if(!isDisabled())this.tasks.addTask(3, new EntityAIWander(this, 0.6D));//Movement Speed
@@ -181,7 +181,7 @@ public class EntityIceGolhem extends EntityTameable{
 	
 	@Override
 	public boolean isEntityInvulnerable(DamageSource ds){
-		if(this.isDisabled()) return true;
+		if(this.isDisabled() && !ds.isCreativePlayer()) return true;
 		return super.isEntityInvulnerable(ds);
 	}
 	
