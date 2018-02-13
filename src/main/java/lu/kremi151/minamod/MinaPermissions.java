@@ -20,6 +20,10 @@ public class MinaPermissions {
 
 	@MinaPermission(desc = "Allows to access the entire content of letterboxes from other players", lvl = DefaultPermissionLevel.OP)
 	public static final String WATCH_LETTERBOX_CONTENT = "minamod.admin.letterbox.watch";
+
+	
+	@MinaPermission(desc = "Allows a player to always receive a gravestone upon death", lvl = DefaultPermissionLevel.NONE)
+	public static final String GRAVESTONE_ON_DEATH = "minamod.gravestone.always";
 	
 	
 	@MinaPermission(desc = "Allows to receive a copy of the herb guide", lvl = DefaultPermissionLevel.OP)

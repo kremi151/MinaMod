@@ -9,6 +9,7 @@ import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaEnchantments;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
+import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.MinaPotions;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
 import lu.kremi151.minamod.block.BlockElevatorFloor;
@@ -70,6 +71,7 @@ import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class EntityEvents {
 
@@ -174,7 +176,7 @@ public class EntityEvents {
 		}
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
-			if(MinaUtils.consumeInventoryItems(victim.inventory, MinaItems.BRING_ME_TO_LIFE, 1)) {
+			if(PermissionAPI.hasPermission(victim, MinaPermissions.GRAVESTONE_ON_DEATH) || MinaUtils.consumeInventoryItems(victim.inventory, MinaItems.BRING_ME_TO_LIFE, 1)) {
 				final BlockPos gravestonePos = victim.getPosition();
 				TileEntityGravestone gravestone = new TileEntityGravestone();
 				CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone.getItems(), victim, gravestonePos);
