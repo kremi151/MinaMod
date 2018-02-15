@@ -59,16 +59,16 @@ public class BlockEvents {
 	
 	@SubscribeEvent
 	public void onBlockLeftClicked(PlayerInteractEvent.LeftClickBlock e) { // NO_UCD (unused code)
-		if(e.getWorld().isRemote)return;
-		IBlockState bs = e.getWorld().getBlockState(e.getPos());
-		boolean creative = e.getEntityPlayer().capabilities.isCreativeMode;
+		final ItemStack stackInMainhand = e.getEntityPlayer().getHeldItemMainhand();
+		final IBlockState state = e.getWorld().getBlockState(e.getPos());
+		final boolean creative = e.getEntityPlayer().capabilities.isCreativeMode;
 		if(!e.getEntityPlayer().getHeldItemMainhand().isEmpty()){
-			if(bs.getBlock() == MinaBlocks.ICE_ALTAR && bs.getValue(BlockIceAltar.CAN_SPAWN_BOSS) && e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.CITRIN){//TODO: Citrin ersetzen
-				boolean bp = (Boolean) bs.getValue(BlockIceAltar.BLACK_PEARL);
-				boolean wp = (Boolean) bs.getValue(BlockIceAltar.WHITE_PEARL);
+			if(!e.getWorld().isRemote && state.getBlock() == MinaBlocks.ICE_ALTAR && state.getValue(BlockIceAltar.CAN_SPAWN_BOSS) && e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.CITRIN){//TODO: Citrin ersetzen
+				boolean bp = (Boolean) state.getValue(BlockIceAltar.BLACK_PEARL);
+				boolean wp = (Boolean) state.getValue(BlockIceAltar.WHITE_PEARL);
 				if(bp && wp){
 					e.getWorld().playSound(e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER, 4.0f, (1.0F + (e.getWorld().rand.nextFloat() - e.getWorld().rand.nextFloat()) * 0.2F) * 0.7F, true);
-					e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.BLACK_PEARL, false).withProperty(BlockIceAltar.WHITE_PEARL, false));
+					e.getWorld().setBlockState(e.getPos(), state.withProperty(BlockIceAltar.BLACK_PEARL, false).withProperty(BlockIceAltar.WHITE_PEARL, false));
 					int ty = MinaUtils.getHeightValue(e.getWorld(), e.getPos().getX(), e.getPos().getZ());
 					EntityIceSentinel eis = new EntityIceSentinel(e.getWorld());
 					eis.setPosition((double)e.getPos().getX() + 0.5d, (double)ty + 0.1d, (double)e.getPos().getZ() + 0.5d);
@@ -79,51 +79,63 @@ public class BlockEvents {
 	}
 
 	@SubscribeEvent
-	public void onBlockRightClicked(PlayerInteractEvent.RightClickBlock e) { // NO_UCD (unused code)
-		if(e.getWorld().isRemote)return;
-		IBlockState bs = e.getWorld().getBlockState(e.getPos());
-		boolean creative = e.getEntityPlayer().capabilities.isCreativeMode;
-		if(bs.getBlock() == Blocks.CRAFTING_TABLE) {
-			e.getEntityPlayer().openGui(MinaMod.getMinaMod(), IDRegistry.guiIdExtendedCrafting, e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
-			e.setCanceled(true);
-		}else if(!e.getEntityPlayer().getHeldItemMainhand().isEmpty()){
-			if(bs.getBlock() == MinaBlocks.ICE_ALTAR){
-				if(e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.BLACK_PEARL && !((Boolean)bs.getValue(BlockIceAltar.BLACK_PEARL))){
-					e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.BLACK_PEARL, true));
-					if(!creative)e.getEntityPlayer().getHeldItemMainhand().shrink(1);
-					return;
+	public void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) { // NO_UCD (unused code)
+		if(!event.getWorld().isRemote && onBlockRightClickedLocal(event)) {
+			return;
+		}
+		onBlockRightClickedCommon(event);
+	}
+	
+	private boolean onBlockRightClickedLocal(PlayerInteractEvent.RightClickBlock event) {
+		final IBlockState state = event.getWorld().getBlockState(event.getPos());
+		final boolean creative = event.getEntityPlayer().capabilities.isCreativeMode;
+		if(state.getBlock() == Blocks.CRAFTING_TABLE) {
+			event.getEntityPlayer().openGui(MinaMod.getMinaMod(), IDRegistry.guiIdExtendedCrafting, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
+			event.setCanceled(true);
+		}else if(!event.getEntityPlayer().getHeldItemMainhand().isEmpty()){
+			if(state.getBlock() == MinaBlocks.ICE_ALTAR){
+				if(event.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.BLACK_PEARL && !((Boolean)state.getValue(BlockIceAltar.BLACK_PEARL))){
+					event.getWorld().setBlockState(event.getPos(), state.withProperty(BlockIceAltar.BLACK_PEARL, true));
+					if(!creative)event.getEntityPlayer().getHeldItemMainhand().shrink(1);
+					return true;
 				}
-				if(e.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.WHITE_PEARL && !((Boolean)bs.getValue(BlockIceAltar.WHITE_PEARL))){
-					e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.WHITE_PEARL, true));
-					if(!creative)e.getEntityPlayer().getHeldItemMainhand().shrink(1);
-					return;
+				if(event.getEntityPlayer().getHeldItemMainhand().getItem() == MinaItems.WHITE_PEARL && !((Boolean)state.getValue(BlockIceAltar.WHITE_PEARL))){
+					event.getWorld().setBlockState(event.getPos(), state.withProperty(BlockIceAltar.WHITE_PEARL, true));
+					if(!creative)event.getEntityPlayer().getHeldItemMainhand().shrink(1);
+					return true;
 				}
 			}
 			
-			if(e.getEntityPlayer().getHeldItemMainhand().getItem() == Items.BLAZE_ROD && PermissionAPI.hasPermission(e.getEntityPlayer(), MinaPermissions.TICK_BLOCK_MANUALLY)){
-				IBlockState ibs = e.getWorld().getBlockState(e.getPos());
+			if(event.getEntityPlayer().getHeldItemMainhand().getItem() == Items.BLAZE_ROD && PermissionAPI.hasPermission(event.getEntityPlayer(), MinaPermissions.TICK_BLOCK_MANUALLY)){
+				IBlockState ibs = event.getWorld().getBlockState(event.getPos());
 				Block btu = ibs.getBlock();
-				btu.updateTick(e.getWorld(), e.getPos(), ibs, e.getWorld().rand);
-				return;
-			}else if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemWrittenBook) {
-				TileEntityBook teBook = new TileEntityBook();
-				teBook.setBookItem(e.getEntityPlayer().getHeldItemMainhand().copy());
-				e.getEntityPlayer().getHeldItemMainhand().shrink(1);
-				BlockPos pos = e.getPos().offset(e.getFace());
-				e.getWorld().setBlockState(pos, MinaBlocks.BOOK.getDefaultState().withProperty(BlockBook.FACING, e.getEntityPlayer().getAdjustedHorizontalFacing()));
-				e.getWorld().setTileEntity(pos, teBook);
-				e.setCanceled(true);
-				return;
+				btu.updateTick(event.getWorld(), event.getPos(), ibs, event.getWorld().rand);
+				return true;
 			}
 		}else{
-			if(bs.getBlock() == MinaBlocks.ICE_ALTAR){
-				boolean bp = (Boolean) bs.getValue(BlockIceAltar.BLACK_PEARL);
-				boolean wp = (Boolean) bs.getValue(BlockIceAltar.WHITE_PEARL);
-				if(bp)e.getEntityPlayer().dropItem(MinaItems.BLACK_PEARL, 1);
-				if(wp)e.getEntityPlayer().dropItem(MinaItems.WHITE_PEARL, 1);
-				e.getWorld().setBlockState(e.getPos(), bs.withProperty(BlockIceAltar.BLACK_PEARL, false).withProperty(BlockIceAltar.WHITE_PEARL, false));
-				return;
+			if(state.getBlock() == MinaBlocks.ICE_ALTAR){
+				boolean bp = (Boolean) state.getValue(BlockIceAltar.BLACK_PEARL);
+				boolean wp = (Boolean) state.getValue(BlockIceAltar.WHITE_PEARL);
+				if(bp)event.getEntityPlayer().dropItem(MinaItems.BLACK_PEARL, 1);
+				if(wp)event.getEntityPlayer().dropItem(MinaItems.WHITE_PEARL, 1);
+				event.getWorld().setBlockState(event.getPos(), state.withProperty(BlockIceAltar.BLACK_PEARL, false).withProperty(BlockIceAltar.WHITE_PEARL, false));
+				return true;
 			}
+		}
+		return false;
+	}
+	
+	private void onBlockRightClickedCommon(PlayerInteractEvent.RightClickBlock event) {
+		final ItemStack stackInMainhand = event.getItemStack();
+		if(!stackInMainhand.isEmpty() && !event.getEntityPlayer().isSneaking() && stackInMainhand.getItem() instanceof ItemWrittenBook) {
+			TileEntityBook teBook = new TileEntityBook();
+			teBook.setBookItem(stackInMainhand.copy());
+			stackInMainhand.shrink(1);
+			BlockPos pos = event.getPos().offset(event.getFace());
+			event.getWorld().setBlockState(pos, MinaBlocks.BOOK.getDefaultState().withProperty(BlockBook.FACING, event.getEntityPlayer().getAdjustedHorizontalFacing()));
+			event.getWorld().setTileEntity(pos, teBook);
+			event.setCanceled(true);
+			return;
 		}
 	}
 	
