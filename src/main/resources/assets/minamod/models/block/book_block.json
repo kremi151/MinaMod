@@ -1,47 +1,60 @@
 {
     "parent": "block/block",
     "textures": {
-        "0": "minamod:blocks/book_back",
-        "1": "minamod:blocks/book_top",
-        "2": "minamod:blocks/book_paper",
+        "0": "minamod:blocks/book_cover_bottom",
+        "1": "minamod:blocks/book_paper",
+        "2": "minamod:blocks/book_cover_back",
+        "3": "minamod:blocks/book_cover_top",
 		"particle": "minamod:blocks/book_paper"
     },
     "elements": [
         {
-            "name": "BookletDown",
-            "from": [ 3.0, 0.0, 2.0 ], 
-            "to": [ 13.0, 0.0, 14.0 ], 
+            "name": "CoverBottom",
+            "from": [ 4.0, 0.0, 2.0 ], 
+            "to": [ 13.0, 1.0, 14.0 ], 
             "faces": {
-                "up": { "texture": "#0", "uv": [ 3.0, 2.0, 13.0, 14.0 ], "tintindex": 1 },
-                "down": { "texture": "#0", "uv": [ 3.0, 2.0, 13.0, 14.0 ], "tintindex": 1 }
-            }
-        },
-        {
-            "name": "BookletBack",
-            "from": [ 3.0, 0.0, 2.0 ], 
-            "to": [ 3.0, 2.0, 14.0 ], 
-            "faces": {
-                "east": { "texture": "#0", "uv": [ 1.0, 0.0, 13.0, 2.0 ], "tintindex": 1 },
-                "west": { "texture": "#0", "uv": [ 1.0, 0.0, 13.0, 2.0 ], "tintindex": 1 }
-            }
-        },
-        {
-            "name": "BookletUp",
-            "from": [ 3.0, 2.0, 2.0 ], 
-            "to": [ 13.0, 2.0, 14.0 ], 
-            "faces": {
-                "up": { "texture": "#1", "uv": [ 3.0, 2.0, 13.0, 14.0 ], "tintindex": 1 },
-                "down": { "texture": "#1", "uv": [ 3.0, 2.0, 13.0, 14.0 ], "tintindex": 1 }
+                "north": { "texture": "#0", "uv": [ 0.0, 12.0, 9.0, 13.0 ], "tintindex": 1 },
+                "east": { "texture": "#0", "uv": [ 0.0, 13.0, 12.0, 14.0 ], "tintindex": 1 },
+                "south": { "texture": "#0", "uv": [ 0.0, 12.0, 9.0, 13.0 ], "tintindex": 1 },
+                "west": { "texture": "#0", "uv": [ 0.0, 13.0, 12.0, 14.0 ], "tintindex": 1 },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 12.0 ], "tintindex": 1 },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 9.0, 12.0 ], "tintindex": 1 }
             }
         },
         {
             "name": "Paper",
-            "from": [ 3.0, 0.0, 3.0 ], 
-            "to": [ 12.0, 2.0, 13.0 ], 
+            "from": [ 4.0, 1.0, 3.0 ], 
+            "to": [ 12.0, 3.0, 13.0 ], 
             "faces": {
-                "north": { "texture": "#2", "uv": [ 0.0, 0.0, 9.0, 2.0 ] },
-                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
-                "south": { "texture": "#2", "uv": [ 0.0, 0.0, 9.0, 2.0 ] }
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "CoverBack",
+            "from": [ 3.0, 0.0, 2.0 ], 
+            "to": [ 4.0, 4.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 12.0, 0.0, 13.0, 4.0 ], "tintindex": 1 },
+                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 4.0 ], "tintindex": 1 },
+                "south": { "texture": "#2", "uv": [ 12.0, 0.0, 13.0, 4.0 ], "tintindex": 1 },
+                "west": { "texture": "#2", "uv": [ 0.0, 0.0, 12.0, 4.0 ], "tintindex": 1 },
+                "up": { "texture": "#2", "uv": [ 13.0, 0.0, 14.0, 12.0 ], "tintindex": 1 },
+                "down": { "texture": "#2", "uv": [ 13.0, 0.0, 14.0, 12.0 ], "tintindex": 1 }
+            }
+        },
+        {
+            "name": "CoverTop",
+            "from": [ 4.0, 3.0, 2.0 ], 
+            "to": [ 13.0, 4.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 0.0, 12.0, 9.0, 13.0 ], "tintindex": 1 },
+                "east": { "texture": "#3", "uv": [ 0.0, 13.0, 12.0, 14.0 ], "tintindex": 1 },
+                "south": { "texture": "#3", "uv": [ 0.0, 12.0, 9.0, 13.0 ], "tintindex": 1 },
+                "west": { "texture": "#3", "uv": [ 0.0, 13.0, 12.0, 14.0 ], "tintindex": 1 },
+                "up": { "texture": "#3", "uv": [ 0.0, 0.0, 9.0, 12.0 ], "tintindex": 1 },
+                "down": { "texture": "#3", "uv": [ 0.0, 0.0, 9.0, 12.0 ], "tintindex": 1 }
             }
         }
     ]
