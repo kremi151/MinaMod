@@ -6,6 +6,7 @@ import lu.kremi151.minamod.util.ReflectionLoader;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.tileentity.TileEntity;
@@ -17,8 +18,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockBook extends BlockCustomHorizontal{
-	
-	private static final AxisAlignedBB BOOK_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.375D, 0.875D, 0.8125D, 0.625D);
+
+	private static final AxisAlignedBB BOOK_AABB_NORTH_SOUTH = new AxisAlignedBB(0.1875D, 0.0D, 0.125D, 0.8125D, 0.25D, 0.875D);
+	private static final AxisAlignedBB BOOK_AABB_EAST_WEST = new AxisAlignedBB(0.125D, 0.0D, 0.1875D, 0.875D, 0.25D, 0.8125D);
 
 	public BlockBook() {
 		super(Material.WOOD);
@@ -49,6 +51,21 @@ public class BlockBook extends BlockCustomHorizontal{
     }
 	
 	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		
+		if(!worldIn.isRemote){
+			if(tileentity instanceof TileEntityBook) {
+				ItemStack book = ((TileEntityBook)tileentity).getBookItem();
+				if(!book.isEmpty())InventoryHelper.spawnItemStack(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), book);
+			}
+		}
+
+        super.breakBlock(worldIn, pos, state);
+    }
+	
+	@Override
 	public boolean hasTileEntity(IBlockState bs)
     {
         return true;
@@ -75,7 +92,13 @@ public class BlockBook extends BlockCustomHorizontal{
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return BOOK_AABB;
+		switch(state.getValue(FACING)) {
+		case EAST:
+		case WEST: 
+			return BOOK_AABB_EAST_WEST;
+		default: 
+			return BOOK_AABB_NORTH_SOUTH;
+		}
     }
 
 }
