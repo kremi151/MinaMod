@@ -4,10 +4,10 @@
             "item": "minamod:totem_of_legacy"
         },
         "title": {
-            "translate": "advancement.minamod.resurrection"
+            "translate": "advancement.minamod.legacy"
         },
         "description": {
-            "translate": "advancement.minamod.resurrection.desc"
+            "translate": "advancement.minamod.legacy.desc"
         }
     },
     "parent": "minamod:story/root",
