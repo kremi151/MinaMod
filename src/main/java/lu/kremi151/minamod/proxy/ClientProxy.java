@@ -131,32 +131,24 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerItemAndBlockColors() {
 		BlockColors bc = Minecraft.getMinecraft().getBlockColors();
-		/*bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHESTNUT);
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_COTTON);
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);*/
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.MINA_LEAVES_A);
-		bc.registerBlockColorHandler(LeafColorHandler.get(), MinaBlocks.PALM_LEAVES);
-		bc.registerBlockColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
-		bc.registerBlockColorHandler(HerbColorHandler.get(), MinaBlocks.HERB_CROP);
-		bc.registerBlockColorHandler(new WallCableColorHandler(), MinaBlocks.WALL_CABLE);
+		bc.registerBlockColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.MINA_LEAVES_A);
+		bc.registerBlockColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.PALM_LEAVES);
+		bc.registerBlockColorHandler(GiftColorHandler.INSTANCE, MinaBlocks.GIFT_BOX);
+		bc.registerBlockColorHandler(HerbColorHandler.INSTANCE, MinaBlocks.HERB_CROP);
+		bc.registerBlockColorHandler(WallCableColorHandler.INSTANCE, MinaBlocks.WALL_CABLE);
 		bc.registerBlockColorHandler(BookBlockColorHandler.INSTANCE, MinaBlocks.BOOK);
 
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
-		/*ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHESTNUT);
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_COTTON);
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_PEPPEL);*/
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.MINA_LEAVES_A);
-		ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.PALM_LEAVES);
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.KEY);
-		ic.registerItemColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
+		ic.registerItemColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.MINA_LEAVES_A);
+		ic.registerItemColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.PALM_LEAVES);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.KEY);
+		ic.registerItemColorHandler(GiftColorHandler.INSTANCE, MinaBlocks.GIFT_BOX);
 		
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.HERB);
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.POWDER);
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.MIXTURE);
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.SOUL_PEARL);
-		ic.registerItemColorHandler(ItemColorHandler.get(), MinaItems.COLORED_BOOK);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.HERB);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.POWDER);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.MIXTURE);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.SOUL_PEARL);
+		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.COLORED_BOOK);
 	}
 
 	@Override

@@ -15,11 +15,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LeafColorHandler implements IItemColor, IBlockColor{
-	
-	private static LeafColorHandler instance = null;
-	
-	private LeafColorHandler(){}
+public enum LeafColorHandler implements IItemColor, IBlockColor{
+	INSTANCE;
 
 	@Override
 	public int colorMultiplier(ItemStack stack, int tintIndex) {
@@ -43,11 +40,4 @@ public class LeafColorHandler implements IItemColor, IBlockColor{
 		return MinaUtils.COLOR_WHITE;
 	}
 	
-	public static LeafColorHandler get(){
-		if(instance == null){
-			instance = new LeafColorHandler();
-		}
-		return instance;
-	}
-
 }

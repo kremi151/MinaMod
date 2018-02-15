@@ -10,11 +10,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class HerbColorHandler implements IBlockColor{
-
-	private static HerbColorHandler i = null;
-	
-	private HerbColorHandler(){}
+public enum HerbColorHandler implements IBlockColor{
+	INSTANCE;
 	
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess worldIn, BlockPos pos, int tintIndex) {
@@ -23,13 +20,6 @@ public class HerbColorHandler implements IBlockColor{
 			return state.getValue(BlockHerb.TYPE).getTint();
 		}
 		return 0;
-	}
-	
-	public static HerbColorHandler get(){
-		if(i == null){
-			i = new HerbColorHandler();
-		}
-		return i;
 	}
 
 }

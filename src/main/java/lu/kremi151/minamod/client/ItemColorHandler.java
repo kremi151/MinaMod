@@ -14,11 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ItemColorHandler implements IItemColor{
-	
-	private static ItemColorHandler instance = null;
-	
-	private ItemColorHandler(){}
+public enum ItemColorHandler implements IItemColor{
+	INSTANCE;
 
 	@Override
 	public int colorMultiplier(ItemStack stack, int tintIndex) {
@@ -37,13 +34,6 @@ public class ItemColorHandler implements IItemColor{
 		}
 		
 		return MinaUtils.COLOR_WHITE;
-	}
-	
-	public static ItemColorHandler get(){
-		if(instance == null){
-			instance = new ItemColorHandler();
-		}
-		return instance;
 	}
 
 }

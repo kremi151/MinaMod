@@ -29,9 +29,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GiftColorHandler implements IBlockColor, IItemColor{
+public enum GiftColorHandler implements IBlockColor, IItemColor{
+	INSTANCE;
 	
-	private static GiftColorHandler i = null;
 	private static final int bandColors[] = new int[EnumDyeColor.values().length];
 	private static final ResourceLocation giftBandDefinitionJson = new ResourceLocation(MinaMod.MODID, "misc/gift_bands.json");
 	
@@ -118,13 +118,6 @@ public class GiftColorHandler implements IBlockColor, IItemColor{
 		default:
 			return MinaUtils.invertColor(color.getColorValue());
 		}
-	}
-	
-	public static GiftColorHandler get(){
-		if(i == null){
-			i = new GiftColorHandler();
-		}
-		return i;
 	}
 
 }
