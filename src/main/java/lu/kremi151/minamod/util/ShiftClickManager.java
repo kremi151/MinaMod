@@ -1,6 +1,5 @@
 package lu.kremi151.minamod.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -17,45 +16,34 @@ public class ShiftClickManager {
 	}
 
 	public ItemStack handle(Container container, EntityPlayer player, int slot){
-		try{
-			Slot _slot = container.getSlot(slot);
-			ItemStack stack = ItemStack.EMPTY;
-			if(_slot != null && _slot.getHasStack()){
-				stack = _slot.getStack();
-				ItemStack copy = stack.copy();
-				
-				boolean handled = false;
-				for(IHandler handler : handlers){
-					if(handler.accepts(slot, stack)){
-						if(handler.handle(container, stack) == ItemStack.EMPTY){
-							return ItemStack.EMPTY;
-						}
-						handled = true;
-						break;
+		Slot _slot = container.getSlot(slot);
+		ItemStack stack = ItemStack.EMPTY;
+		if(_slot != null && _slot.getHasStack()){
+			stack = _slot.getStack();
+			ItemStack copy = stack.copy();
+			
+			boolean handled = false;
+			for(IHandler handler : handlers){
+				if(handler.accepts(slot, stack)){
+					if(handler.handle(container, stack) == ItemStack.EMPTY){
+						return ItemStack.EMPTY;
 					}
+					handled = true;
+					break;
 				}
-				
-				if(!handled){
-					return ItemStack.EMPTY;
-				}
-				
-				if(!ItemStack.areItemStacksEqual(stack, copy)){
-					_slot.onSlotChange(stack, copy);
-					_slot.onTake(player, stack);
-				}
-				return stack;
-			}else{
+			}
+			
+			if(!handled){
 				return ItemStack.EMPTY;
 			}
-		}catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Reflection error");
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Reflection error");
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Reflection error");
+			
+			if(!ItemStack.areItemStacksEqual(stack, copy)){
+				_slot.onSlotChange(stack, copy);
+				_slot.onTake(player, stack);
+			}
+			return stack;
+		}else{
+			return ItemStack.EMPTY;
 		}
 	}
 	
@@ -65,7 +53,7 @@ public class ShiftClickManager {
 	
 	private static interface IHandler{
 		
-		ItemStack handle(Container container, ItemStack stack) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
+		ItemStack handle(Container container, ItemStack stack);
 		boolean accepts(int slot, ItemStack stack);
 		
 	}
@@ -89,7 +77,7 @@ public class ShiftClickManager {
 		}
 
 		@Override
-		public ItemStack handle(Container container, ItemStack stack) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		public ItemStack handle(Container container, ItemStack stack) {
 			boolean result = predicate.test(stack) && ReflectionLoader.Container_mergeItemStack(container, stack, destMinIncl, destMaxExcl, inverse);
 			if(result){
 				return stack;
@@ -120,8 +108,7 @@ public class ShiftClickManager {
 	private static class EmptyHandler implements IHandler{
 
 		@Override
-		public ItemStack handle(Container container, ItemStack stack)
-				throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		public ItemStack handle(Container container, ItemStack stack) {
 			return ItemStack.EMPTY;
 		}
 

@@ -53,7 +53,7 @@ public class WorldProviderOverworldHook extends WorldProviderSurface{
 	public static void hookIn(){
 		try {
 			ReflectionLoader.DimensionType_setClazz(DimensionType.OVERWORLD, WorldProviderOverworldHook.class);
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+		} catch (RuntimeException e) {
 			System.err.println("Could not register hook for overworld provider");
 			e.printStackTrace();
 		}

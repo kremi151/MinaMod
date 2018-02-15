@@ -93,22 +93,10 @@ public class EntityEvents {
 			if(living.isSneaking() && MinaBlocks.ELEVATOR_FLOOR.checkCooldown(living)){
 				MinaBlocks.ELEVATOR_FLOOR.jumpElevate(living, false);
 				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
-			}else if(isJumping(living) && MinaBlocks.ELEVATOR_FLOOR.checkCooldown(living)){
+			}else if(ReflectionLoader.EntityLivingBase_isJumping(living) && MinaBlocks.ELEVATOR_FLOOR.checkCooldown(living)){
 				MinaBlocks.ELEVATOR_FLOOR.jumpElevate(living, true);
 				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
 			}
-		}
-	}
-	
-	private boolean isJumping(EntityLivingBase e){
-		try {
-			return ReflectionLoader.EntityLivingBase_isJumping(e);
-		} catch (IllegalArgumentException e1) {
-			e1.printStackTrace();
-			throw new RuntimeException();
-		} catch (IllegalAccessException e1) {
-			e1.printStackTrace();
-			throw new RuntimeException();
 		}
 	}
 	

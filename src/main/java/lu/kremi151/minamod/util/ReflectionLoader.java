@@ -53,17 +53,26 @@ public class ReflectionLoader {
 	static{
 		try {
 			ENTITY_LIVING_BASE_IS_JUMPING = ReflectionHelper.findField(EntityLivingBase.class, "isJumping", "field_70703_bu");
+			ENTITY_LIVING_BASE_IS_JUMPING.setAccessible(true);
 			DIMENSION_TYPE_CLAZZ = ReflectionHelper.findField(DimensionType.class, "field_186077_g", "clazz");
+			DIMENSION_TYPE_CLAZZ.setAccessible(true);
 			BLOCK_LEAVES_LEAVES_FANCY = ReflectionHelper.findField(BlockLeaves.class, "leavesFancy", "field_185686_c");
+			BLOCK_LEAVES_LEAVES_FANCY.setAccessible(true);
 			INVENTORYPLAYER_ALLINVENTORIES = ReflectionHelper.findField(InventoryPlayer.class, "field_184440_g", "allInventories");
+			INVENTORYPLAYER_ALLINVENTORIES.setAccessible(true);
 			
 			CONTAINER_MERGE_ITEMSTACK = ReflectionHelper.findMethod(Container.class, "mergeItemStack", "func_75135_a", ItemStack.class, int.class, int.class, boolean.class);
+			CONTAINER_MERGE_ITEMSTACK.setAccessible(true);
 			CRITERIATRIGGERS_REGISTER = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
+			CRITERIATRIGGERS_REGISTER.setAccessible(true);
 			ITEM_WRITTENBOOK_RESOLVE_CONTENTS = ReflectionHelper.findMethod(ItemWrittenBook.class, "resolveContents", "func_179229_a", ItemStack.class, EntityPlayer.class);
+			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.setAccessible(true);
 			
 			try {
 				GUI_CONTAINER_DRAW_ITEMSTACK = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "drawItemStack", "func_146982_a", ItemStack.class, int.class, int.class, String.class);
+				GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
 				GUI_CONTAINER_GET_SLOT_AT_POSITION = findClientMethod(net.minecraft.client.gui.inventory.GuiContainer.class, "getSlotAtPosition", "func_146975_c", int.class, int.class);
+				GUI_CONTAINER_GET_SLOT_AT_POSITION.setAccessible(true);
 			}catch(NoSuchFieldError | NoSuchMethodError | NoClassDefFoundError e) {}//TODO: Find a better way to handle this}
 		}catch (UnableToFindFieldException e) {
 			throw new IllegalStateException("At least one needed reflection field does not exists", e);
@@ -84,40 +93,54 @@ public class ReflectionLoader {
 		return ReflectionHelper.findField(clazz, fieldNames);
 	}
 	
-	public static boolean EntityLivingBase_isJumping(EntityLivingBase entity) throws IllegalAccessException{
+	public static boolean EntityLivingBase_isJumping(EntityLivingBase entity){
 		ENTITY_LIVING_BASE_IS_JUMPING.setAccessible(true);
-		return ENTITY_LIVING_BASE_IS_JUMPING.getBoolean(entity);
+		try {
+			return ENTITY_LIVING_BASE_IS_JUMPING.getBoolean(entity);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static void DimensionType_setClazz(DimensionType instance, Class<? extends WorldProvider> clazz) throws NoSuchFieldException, SecurityException, IllegalAccessException{
-		DIMENSION_TYPE_CLAZZ.setAccessible(true);
-		
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-	    modifiersField.setAccessible(true);
-	    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() & ~Modifier.FINAL);
-	    DIMENSION_TYPE_CLAZZ.set(instance, clazz);
-	    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() | Modifier.FINAL);
-	    DIMENSION_TYPE_CLAZZ.setAccessible(false);
+	public static void DimensionType_setClazz(DimensionType instance, Class<? extends WorldProvider> clazz) {
+		try {
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+		    modifiersField.setAccessible(true);
+		    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() & ~Modifier.FINAL);
+		    DIMENSION_TYPE_CLAZZ.set(instance, clazz);
+		    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() | Modifier.FINAL);
+		    DIMENSION_TYPE_CLAZZ.setAccessible(false);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static boolean BlockLeaves_isFancyLeaves(BlockLeaves block) throws IllegalAccessException{
-		BLOCK_LEAVES_LEAVES_FANCY.setAccessible(true);
-		return BLOCK_LEAVES_LEAVES_FANCY.getBoolean(block);
+	public static boolean BlockLeaves_isFancyLeaves(BlockLeaves block) {
+		try{
+			return BLOCK_LEAVES_LEAVES_FANCY.getBoolean(block);
+		}catch(IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static void BlockLeaves_setFancyLeaves(BlockLeaves block, boolean v) throws IllegalAccessException{
-		BLOCK_LEAVES_LEAVES_FANCY.setAccessible(true);
-		BLOCK_LEAVES_LEAVES_FANCY.set(block, v);
+	public static void BlockLeaves_setFancyLeaves(BlockLeaves block, boolean v) {
+		try{
+			BLOCK_LEAVES_LEAVES_FANCY.set(block, v);
+		}catch(IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static boolean Container_mergeItemStack(Container container, ItemStack stack, int destMinIncl, int destMaxExcl, boolean inverse) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		CONTAINER_MERGE_ITEMSTACK.setAccessible(true);
-		return (Boolean)CONTAINER_MERGE_ITEMSTACK.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
+	public static boolean Container_mergeItemStack(Container container, ItemStack stack, int destMinIncl, int destMaxExcl, boolean inverse) {
+		try {
+			return (Boolean)CONTAINER_MERGE_ITEMSTACK.invoke(container, stack, destMinIncl, destMaxExcl, inverse);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public static void CriteriaTriggers_register(ICriterionTrigger trigger) {
 		try {
-			CRITERIATRIGGERS_REGISTER.setAccessible(true);
 			CRITERIATRIGGERS_REGISTER.invoke(null, trigger);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);
@@ -126,7 +149,6 @@ public class ReflectionLoader {
 	
 	public static void ItemWrittenBook_resolveContents(ItemWrittenBook instance, ItemStack stack, EntityPlayer player) {
 		try {
-			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.setAccessible(true);
 			ITEM_WRITTENBOOK_RESOLVE_CONTENTS.invoke(instance, stack, player);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);
@@ -135,7 +157,6 @@ public class ReflectionLoader {
 	
 	public static List<NonNullList<ItemStack>> InventoryPlayer_getAllInventories(InventoryPlayer instance){
 		try {
-			INVENTORYPLAYER_ALLINVENTORIES.setAccessible(true);
 			return (List<NonNullList<ItemStack>>) INVENTORYPLAYER_ALLINVENTORIES.get(instance);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
@@ -145,7 +166,6 @@ public class ReflectionLoader {
 	@SideOnly(Side.CLIENT)
 	public static void GuiContainer_drawItemStack(net.minecraft.client.gui.inventory.GuiContainer container, ItemStack stack, int x, int y, String altText) {
 		try {
-			GUI_CONTAINER_DRAW_ITEMSTACK.setAccessible(true);
 			GUI_CONTAINER_DRAW_ITEMSTACK.invoke(container, stack, x, y, altText);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);
