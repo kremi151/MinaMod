@@ -8,8 +8,10 @@ import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.advancements.triggers.MinaTriggers;
+import lu.kremi151.minamod.block.BlockBook;
 import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
+import lu.kremi151.minamod.block.tileentity.TileEntityBook;
 import lu.kremi151.minamod.block.tileentity.TileEntityLetterbox;
 import lu.kremi151.minamod.capabilities.energynetwork.IEnergyNetworkProvider;
 import lu.kremi151.minamod.entity.EntityIceSentinel;
@@ -25,11 +27,13 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -100,6 +104,15 @@ public class BlockEvents {
 				IBlockState ibs = e.getWorld().getBlockState(e.getPos());
 				Block btu = ibs.getBlock();
 				btu.updateTick(e.getWorld(), e.getPos(), ibs, e.getWorld().rand);
+				return;
+			}else if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemWrittenBook) {
+				TileEntityBook teBook = new TileEntityBook();
+				teBook.setBookItem(e.getEntityPlayer().getHeldItemMainhand().copy());
+				e.getEntityPlayer().getHeldItemMainhand().shrink(1);
+				BlockPos pos = e.getPos().offset(e.getFace());
+				e.getWorld().setBlockState(pos, MinaBlocks.BOOK.getDefaultState().withProperty(BlockBook.FACING, e.getEntityPlayer().getAdjustedHorizontalFacing()));
+				e.getWorld().setTileEntity(pos, teBook);
+				e.setCanceled(true);
 				return;
 			}
 		}else{

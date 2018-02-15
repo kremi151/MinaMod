@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=east": { "model": "minamod:book_block", "y": 90 },
+        "facing=west": { "model": "minamod:book_block", "y": 270 },
+        "facing=south": { "model": "minamod:book_block", "y": 180 },
+        "facing=north": { "model": "minamod:book_block" }
+    }
+}

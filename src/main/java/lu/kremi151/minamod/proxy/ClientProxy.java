@@ -24,6 +24,7 @@ import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLeaf;
+import lu.kremi151.minamod.client.BookBlockColorHandler;
 import lu.kremi151.minamod.client.GiftColorHandler;
 import lu.kremi151.minamod.client.GuiMinaOverlay;
 import lu.kremi151.minamod.client.HerbColorHandler;
@@ -139,6 +140,7 @@ public class ClientProxy extends CommonProxy {
 		bc.registerBlockColorHandler(GiftColorHandler.get(), MinaBlocks.GIFT_BOX);
 		bc.registerBlockColorHandler(HerbColorHandler.get(), MinaBlocks.HERB_CROP);
 		bc.registerBlockColorHandler(new WallCableColorHandler(), MinaBlocks.WALL_CABLE);
+		bc.registerBlockColorHandler(BookBlockColorHandler.INSTANCE, MinaBlocks.BOOK);
 
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
 		/*ic.registerItemColorHandler(LeafColorHandler.get(), MinaBlocks.LEAVES_CHERRY);
