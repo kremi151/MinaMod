@@ -24,14 +24,13 @@ import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
 import lu.kremi151.minamod.block.BlockPalmLog;
 import lu.kremi151.minamod.block.BlockStandaloneLeaf;
-import lu.kremi151.minamod.client.BookBlockColorHandler;
-import lu.kremi151.minamod.client.GiftColorHandler;
+import lu.kremi151.minamod.block.tileentity.TileEntityBook;
+import lu.kremi151.minamod.capabilities.stats.snack.ISnack;
 import lu.kremi151.minamod.client.GuiMinaOverlay;
-import lu.kremi151.minamod.client.HerbColorHandler;
-import lu.kremi151.minamod.client.ItemColorHandler;
-import lu.kremi151.minamod.client.LeafColorHandler;
-import lu.kremi151.minamod.client.WallCableColorHandler;
 import lu.kremi151.minamod.client.blockmodel.MinaModelLoader;
+import lu.kremi151.minamod.client.colorhandlers.GiftColorHandler;
+import lu.kremi151.minamod.client.colorhandlers.LeafColorHandler;
+import lu.kremi151.minamod.client.colorhandlers.WallCableColorHandler;
 import lu.kremi151.minamod.client.fx.EntityFXSpore;
 import lu.kremi151.minamod.client.render.RenderBee;
 import lu.kremi151.minamod.client.render.RenderFish;
@@ -51,21 +50,28 @@ import lu.kremi151.minamod.entity.EntityPenguin;
 import lu.kremi151.minamod.entity.EntitySoulPearl;
 import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
+import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
+import lu.kremi151.minamod.item.ItemHerbMixture;
+import lu.kremi151.minamod.item.ItemKey;
+import lu.kremi151.minamod.item.ItemSoulPearl;
 import lu.kremi151.minamod.network.MessageAddScreenLayer;
 import lu.kremi151.minamod.util.ClientEventListeners;
 import lu.kremi151.minamod.util.FeatureList;
+import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.MathHelper;
@@ -130,25 +136,52 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerItemAndBlockColors() {
+		GiftColorHandler.INSTANCE.init();
+		
 		BlockColors bc = Minecraft.getMinecraft().getBlockColors();
 		bc.registerBlockColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.MINA_LEAVES_A);
 		bc.registerBlockColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.PALM_LEAVES);
 		bc.registerBlockColorHandler(GiftColorHandler.INSTANCE, MinaBlocks.GIFT_BOX);
-		bc.registerBlockColorHandler(HerbColorHandler.INSTANCE, MinaBlocks.HERB_CROP);
+		bc.registerBlockColorHandler((state, world, pos, tintIndex) -> {
+			if(state.getBlock() == MinaBlocks.HERB_CROP && tintIndex == 1){
+				state = MinaBlocks.HERB_CROP.getActualState(state, world, pos);
+				return state.getValue(BlockHerb.TYPE).getTint();
+			}
+			return 0;
+		}, MinaBlocks.HERB_CROP);
 		bc.registerBlockColorHandler(WallCableColorHandler.INSTANCE, MinaBlocks.WALL_CABLE);
-		bc.registerBlockColorHandler(BookBlockColorHandler.INSTANCE, MinaBlocks.BOOK);
+		bc.registerBlockColorHandler((state, world, pos, tintIndex) -> {
+			if(tintIndex == 1) {
+				TileEntity te = world.getTileEntity(pos);
+				if(te.getClass() == TileEntityBook.class) {
+					return ((TileEntityBook)te).getBookColor();
+				}
+			}
+			return MinaUtils.COLOR_WHITE;
+		}, MinaBlocks.BOOK);
 
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
 		ic.registerItemColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.MINA_LEAVES_A);
 		ic.registerItemColorHandler(LeafColorHandler.INSTANCE, MinaBlocks.PALM_LEAVES);
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.KEY);
+		ic.registerItemColorHandler((stack, tintIndex) -> {
+			return tintIndex == 1 ? ItemKey.getColor(stack) : MinaUtils.COLOR_WHITE;
+		}, MinaItems.KEY);
 		ic.registerItemColorHandler(GiftColorHandler.INSTANCE, MinaBlocks.GIFT_BOX);
 		
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.HERB);
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.POWDER);
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.MIXTURE);
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.SOUL_PEARL);
-		ic.registerItemColorHandler(ItemColorHandler.INSTANCE, MinaItems.COLORED_BOOK);
+		final IItemColor herbPowderColor = (stack, tintIndex) -> {
+			return EnumHerb.isValidId((byte)stack.getMetadata()) ? EnumHerb.getByHerbId((byte)stack.getMetadata(), EnumHerb.WHITE).getTint() : MinaUtils.COLOR_WHITE;
+		};
+		ic.registerItemColorHandler(herbPowderColor, MinaItems.HERB);
+		ic.registerItemColorHandler(herbPowderColor, MinaItems.POWDER);
+		ic.registerItemColorHandler((stack, tintIndex) -> {
+			return (tintIndex == 1) ? ((ItemHerbMixture.HerbMixtureSnack) stack.getCapability(ISnack.CAPABILITY, null)).getColor() : MinaUtils.COLOR_WHITE;
+		}, MinaItems.MIXTURE);
+		ic.registerItemColorHandler((stack, tintIndex) -> {
+			return (ItemSoulPearl.checkIfTinted(stack)) ? stack.getTagCompound().getInteger("tint") : MinaUtils.COLOR_WHITE;
+		}, MinaItems.SOUL_PEARL);
+		ic.registerItemColorHandler((stack, tintIndex) -> {
+			return tintIndex == 0 ? MinaItems.COLORED_BOOK.getBookColor(stack) : MinaUtils.COLOR_WHITE;
+		}, MinaItems.COLORED_BOOK);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.client;
+package lu.kremi151.minamod.client.colorhandlers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +35,7 @@ public enum GiftColorHandler implements IBlockColor, IItemColor{
 	private static final int bandColors[] = new int[EnumDyeColor.values().length];
 	private static final ResourceLocation giftBandDefinitionJson = new ResourceLocation(MinaMod.MODID, "misc/gift_bands.json");
 	
-	private GiftColorHandler(){
+	public void init(){
 		((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(rm -> loadColorDefinitions());
 	}
 	

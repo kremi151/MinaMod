@@ -1,4 +1,4 @@
-package lu.kremi151.minamod.client;
+package lu.kremi151.minamod.client.colorhandlers;
 
 import lu.kremi151.minamod.block.tileentity.TileEntityWallCable;
 import lu.kremi151.minamod.util.MinaUtils;
