@@ -109,7 +109,6 @@ public class ReflectionLoader {
 		    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() & ~Modifier.FINAL);
 		    DIMENSION_TYPE_CLAZZ.set(instance, clazz);
 		    modifiersField.setInt(DIMENSION_TYPE_CLAZZ, DIMENSION_TYPE_CLAZZ.getModifiers() | Modifier.FINAL);
-		    DIMENSION_TYPE_CLAZZ.setAccessible(false);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
