@@ -176,7 +176,7 @@ public class EntityEvents {
 		}
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer victim = (EntityPlayer)event.getEntityLiving();
-			if(PermissionAPI.hasPermission(victim, MinaPermissions.GRAVESTONE_ON_DEATH) || MinaUtils.consumeInventoryItems(victim.inventory, MinaItems.BRING_ME_TO_LIFE, 1)) {
+			if(PermissionAPI.hasPermission(victim, MinaPermissions.GRAVESTONE_ON_DEATH) || MinaUtils.consumeInventoryItems(victim.inventory, MinaItems.TOTEM_LEGACY, 1)) {
 				final BlockPos gravestonePos = victim.getPosition();
 				TileEntityGravestone gravestone = new TileEntityGravestone();
 				CreateGravestoneEvent gevent = new CreateGravestoneEvent(gravestone.getItems(), victim, gravestonePos);

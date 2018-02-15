@@ -370,6 +370,7 @@ item.drill_broken.name=Drill (broken)
 item.rubber_tree_branch.name=Rubber tree branch
 item.rubber.name=Rubber
 item.diagnose_tool.name=Diagnose tool
+item.totem_of_legacy.name=Totem of legacy
 enchantment.emergency=Emergency
 enchantment.beheader=Beheader
 enchantment.wood_backup=Wooden slayer
