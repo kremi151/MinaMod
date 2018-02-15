@@ -170,8 +170,8 @@ public class MinaItems {
 			.setUnlocalizedName("platinum_leggings");
 	public static final Item PLATINUM_BOOTS = new ItemCustomArmor(MinaArmorMaterial.PLATINUM, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("platinum_boots");
-	public static final ItemHerb HERB = (ItemHerb) new ItemHerb().setUnlocalizedName("herb");
-	public static final ItemPowder POWDER = (ItemPowder) new ItemPowder().setUnlocalizedName("powder");
+	public static final Item HERB = new ItemHerb().setUnlocalizedName("herb");
+	public static final Item POWDER = new ItemPowder().setUnlocalizedName("powder");
 	public static final Item EMPTY_POT = new ItemEmptyPot().setUnlocalizedName("empty_pot")
 			.setCreativeTab(CreativeTabs.MATERIALS);
 	public static final Item HONEY_POT = new ItemHoneyPot().setUnlocalizedName("honey_pot")
@@ -189,18 +189,18 @@ public class MinaItems {
 			.setUnlocalizedName("turtle_shell_leggings");
 	public static final Item TURTLE_BOOTS = new ItemCustomArmor(MinaArmorMaterial.TURTLE_SHELL, 0, EntityEquipmentSlot.FEET)
 			.setUnlocalizedName("turtle_shell_boots");
-	public static final ItemHerbMixture MIXTURE = (ItemHerbMixture)new ItemHerbMixture().setUnlocalizedName("mixture");
-	public static final ItemSickle WOOD_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.WOOD).setUnlocalizedName("wood_sickle");
-	public static final ItemSickle STONE_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.STONE).setUnlocalizedName("stone_sickle");
-	public static final ItemSickle IRON_SICKLE = (ItemSickle) new ItemSickle(ToolMaterial.IRON).setUnlocalizedName("iron_sickle");
-	public static final ItemColoredWrittenBook COLORED_BOOK = (ItemColoredWrittenBook) new ItemColoredWrittenBook().setUnlocalizedName("writtenBook");
+	public static final Item MIXTURE = new ItemHerbMixture().setUnlocalizedName("mixture");
+	public static final Item WOOD_SICKLE = new ItemSickle(ToolMaterial.WOOD).setUnlocalizedName("wood_sickle");
+	public static final Item STONE_SICKLE = new ItemSickle(ToolMaterial.STONE).setUnlocalizedName("stone_sickle");
+	public static final Item IRON_SICKLE = new ItemSickle(ToolMaterial.IRON).setUnlocalizedName("iron_sickle");
+	public static final Item COLORED_BOOK = new ItemColoredWrittenBook().setUnlocalizedName("writtenBook");
 	public static final Item COTTON = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("cotton");
 	public static final Item BERRY = new ItemBerry(5, 1f, false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName("berry");
 	public static final Item BERRY_SEEDS = new ItemBerrySeed();
 	public static final Item PUMPKIN_SOUP = new ItemSoup(10).setUnlocalizedName("pumpkin_soup");
-	public static final ItemFood CANDY_CANE = (ItemFood) new ItemFood(2, 0.6f, false).setUnlocalizedName("candy_cane");
+	public static final Item CANDY_CANE = (ItemFood) new ItemFood(2, 0.6f, false).setUnlocalizedName("candy_cane");
 	public static final Item ICE_SWORD = new ItemSword(MinaToolMaterials.ICE).setUnlocalizedName("ice_sword");
-	public static final ItemFood GOULASH = (ItemFood) new ItemSoup(12).setUnlocalizedName("goulash");
+	public static final Item GOULASH = (ItemFood) new ItemSoup(12).setUnlocalizedName("goulash");
 	public static final Item KATANA = new ItemKatana().setUnlocalizedName("katana");
 	public static final Item COIN_BAG = new ItemCoinBag().setUnlocalizedName("coin_bag");
 	public static final Item AMULET_OF_ENDER = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_ender");
@@ -209,16 +209,16 @@ public class MinaItems {
 	public static final Item AMULET_OF_REGENERATION = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_regeneration");
 	public static final Item AMULET_OF_MERMAID = new ItemAmulet.Syncable().setUnlocalizedName("amulet_of_mermaid");
 	public static final Item AMULET_OF_HARMONY = new ItemAmulet().setUnlocalizedName("amulet_of_harmony");
-	public static final ItemBattery BATTERY = (ItemBattery)new ItemBattery().setUnlocalizedName("battery");
+	public static final Item BATTERY = new ItemBattery().setUnlocalizedName("battery");
 	public static final Item HERB_GUIDE = new ItemHerbGuide().setUnlocalizedName("herb_guide");
 	public static final Item CHICKEN_NUGGETS = new ItemFood(8, 0.6f, false).setUnlocalizedName("chicken_nuggets");
 	public static final Item FLOUR = new Item().setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("flour");
-	public static final ItemUnpackedGift UNPACKED_GIFT = (ItemUnpackedGift) new ItemUnpackedGift().setUnlocalizedName("unpacked_gift");
-	public static final ItemKeyChain KEY_CHAIN = (ItemKeyChain) new ItemKeyChain().setUnlocalizedName("key_chain");
-	public static final ItemSketch SKETCH = (ItemSketch) new ItemSketch().setUnlocalizedName("sketch");
-	public static final ItemCombiner COMBINER = (ItemCombiner) new ItemCombiner().setUnlocalizedName("combiner");
-	public static final ItemRareEarth RARE_EARTH = (ItemRareEarth) new ItemRareEarth().setUnlocalizedName("rare_earth");
-	public static final ItemDrill DRILL = (ItemDrill) new ItemDrill().setUnlocalizedName("drill");
+	public static final Item UNPACKED_GIFT = new ItemUnpackedGift().setUnlocalizedName("unpacked_gift");
+	public static final Item KEY_CHAIN = new ItemKeyChain().setUnlocalizedName("key_chain");
+	public static final Item SKETCH = new ItemSketch().setUnlocalizedName("sketch");
+	public static final Item COMBINER = new ItemCombiner().setUnlocalizedName("combiner");
+	public static final Item RARE_EARTH = new ItemRareEarth().setUnlocalizedName("rare_earth");
+	public static final Item DRILL = new ItemDrill().setUnlocalizedName("drill");
 	public static final Item COPPER_INGOT = new ItemCopperIngot().setUnlocalizedName("copper_ingot");
 	public static final Item COPPER_NUGGET = new ItemCopperIngot().setUnlocalizedName("copper_nugget");
 	public static final Item RUBBER_TREE_BRANCH = new ItemRubberTreeBranch().setUnlocalizedName("rubber_tree_branch");

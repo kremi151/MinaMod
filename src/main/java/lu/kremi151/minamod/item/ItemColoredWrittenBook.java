@@ -17,23 +17,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemColoredWrittenBook extends ItemWrittenBook{
 
-	public int getBookColor(ItemStack is){
-		if(is.hasTagCompound() && is.getTagCompound().hasKey("color", 3)){
-			return is.getTagCompound().getInteger("color");
+	public static int getBookColor(ItemStack stack){
+		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("color", 3)){
+			return stack.getTagCompound().getInteger("color");
 		}
 		return MinaUtils.COLOR_WHITE;
 	}
 	
-	public ItemStack setBookColor(ItemStack is, int color){
+	public static ItemStack setBookColor(ItemStack stack, int color){
 		NBTTagCompound tag;
-		if(!is.hasTagCompound()){
+		if(!stack.hasTagCompound()){
 			tag = new NBTTagCompound();
-			is.setTagCompound(tag);
+			stack.setTagCompound(tag);
 		}else{
-			tag = is.getTagCompound();
+			tag = stack.getTagCompound();
 		}
 		tag.setInteger("color", color);
-		return is;
+		return stack;
 	}
 	
 	@Override

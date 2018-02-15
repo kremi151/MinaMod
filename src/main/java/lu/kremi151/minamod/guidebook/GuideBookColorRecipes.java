@@ -8,6 +8,7 @@ import com.creysys.guideBook.plugin.vanilla.recipe.DrawableRecipeCrafting;
 
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.capabilities.IKey;
+import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.item.ItemKey;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -26,7 +27,7 @@ public class GuideBookColorRecipes extends RecipeHandler{
 		for(EnumDyeColor color : EnumDyeColor.values()) {
 			final Ingredient ingDye = Ingredient.fromStacks(new ItemStack(Items.DYE, 1, color.getDyeDamage()));
 			recipes.add(new DrawableRecipeCrafting(
-					MinaItems.COLORED_BOOK.setBookColor(new ItemStack(MinaItems.COLORED_BOOK, 1), color.getColorValue()),
+					ItemColoredWrittenBook.setBookColor(new ItemStack(MinaItems.COLORED_BOOK, 1), color.getColorValue()),
 					NonNullList.from(Ingredient.EMPTY,
 							Ingredient.fromStacks(new ItemStack(Items.WRITTEN_BOOK)),
 							ingDye),
@@ -58,7 +59,7 @@ public class GuideBookColorRecipes extends RecipeHandler{
 	@Override
 	public Object getTabIcon() {
 		if(icon == null) {
-			icon = MinaItems.COLORED_BOOK.setBookColor(new ItemStack(MinaItems.COLORED_BOOK, 1), EnumDyeColor.RED.getColorValue());
+			icon = ItemColoredWrittenBook.setBookColor(new ItemStack(MinaItems.COLORED_BOOK, 1), EnumDyeColor.RED.getColorValue());
 		}
 		return icon;
 	}

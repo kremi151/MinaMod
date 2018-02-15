@@ -1,6 +1,6 @@
 package lu.kremi151.minamod.block.tileentity;
 
-import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
@@ -37,8 +37,8 @@ public class TileEntityBook extends BaseTileEntity{
 	public boolean setBookItem(ItemStack stack) {
 		if(isValidBook(stack)) {
 			theBook = stack;
-			if(stack.getItem() == MinaItems.COLORED_BOOK) {
-				color = MinaItems.COLORED_BOOK.getBookColor(stack);
+			if(stack.getItem() instanceof ItemColoredWrittenBook) {
+				color = ItemColoredWrittenBook.getBookColor(stack);
 			}else {
 				color = DEFAULT_COLOR;
 			}

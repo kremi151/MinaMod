@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
+import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.interfaces.ISyncCapabilitiesToClient;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -89,8 +90,8 @@ public class ItemBattery extends Item implements ISyncCapabilitiesToClient{
 		}
 	}
 	
-	public ItemStack createNotRechargeable(int maxCapacity) {
-		ItemStack res = new ItemStack(this);
+	public static ItemStack createNotRechargeable(int maxCapacity) {
+		ItemStack res = new ItemStack(MinaItems.BATTERY);
 		((BatteryStorage)res.getCapability(CapabilityEnergy.ENERGY, null))
 				.setRechargeable(false)
 				.setMaxCapacity(maxCapacity)

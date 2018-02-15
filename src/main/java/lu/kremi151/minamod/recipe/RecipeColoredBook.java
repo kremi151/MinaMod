@@ -3,6 +3,7 @@ package lu.kremi151.minamod.recipe;
 import com.google.gson.JsonObject;
 
 import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -86,7 +87,7 @@ public class RecipeColoredBook extends RecipeBase.Dynamic{
 		int fgreen = Math.min(greens / hcount, 255);
 		int fblue = Math.min(blues / hcount, 255);
 		
-		MinaItems.COLORED_BOOK.setBookColor(res, MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
+		ItemColoredWrittenBook.setBookColor(res, MinaUtils.convertRGBToDecimal(fred, fgreen, fblue));
 		
 		return res;
 	}
