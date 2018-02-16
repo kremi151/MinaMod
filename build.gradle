@@ -77,7 +77,7 @@ dependencies {
 
     //compile 'org.spongepowered:spongeapi:6.0.0'
     
-    compile 'com.github.kremi151:GuideBook:v1.7.0-mc1.12-beta.3'
+    compile 'com.github.kremi151:GuideBook:v1.7.0-mc1.12-beta.4'
 }
 
 processResources {

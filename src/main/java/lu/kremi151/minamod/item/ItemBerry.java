@@ -18,6 +18,7 @@ public class ItemBerry extends ItemFood{
 		super(amount, saturation, isWolfFood);
 		this.setHasSubtypes(true);
 		this.setAlwaysEdible();
+		this.setCreativeTab(CreativeTabs.FOOD);
 	}
 	
 	@Override

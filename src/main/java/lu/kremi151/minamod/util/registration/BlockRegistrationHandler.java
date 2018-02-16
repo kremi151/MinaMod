@@ -25,4 +25,9 @@ public abstract class BlockRegistrationHandler extends CommonRegistrationHandler
 		return this;
 	}
 
+	public BlockRegistrationHandler autoname() {
+		this.obj.setUnlocalizedName(name);
+		return this;
+	}
+
 }

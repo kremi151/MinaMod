@@ -3,6 +3,7 @@ package lu.kremi151.minamod.container;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.inventory.SlotReadOnly;
+import lu.kremi151.minamod.item.ItemGoldenCoin;
 import lu.kremi151.minamod.network.MessageCoinBag;
 import lu.kremi151.minamod.util.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,8 +53,8 @@ public class ContainerCoinBag extends BaseContainer{
 				stack = _slot.getStack();
 				if(!stack.isEmpty() && stack.getItem() == MinaItems.GOLDEN_COIN){
 					ItemStack copy = stack.copy();
-					final int amount = MinaItems.GOLDEN_COIN.getCoinValue(stack);
-					final int unit = MinaItems.GOLDEN_COIN.getUnitCoinValue(stack);
+					final int amount = ItemGoldenCoin.getCoinValue(stack);
+					final int unit = ItemGoldenCoin.getUnitCoinValue(stack);
 					ItemStack coinBag = getStack();
 					int maxMeta = coinBag.getMetadata() + amount;
 					int newMeta = (maxMeta <= Short.MAX_VALUE)?maxMeta:Short.MAX_VALUE;

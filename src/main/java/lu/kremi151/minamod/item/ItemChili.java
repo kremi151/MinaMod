@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.item;
 
 import lu.kremi151.minamod.MinaBlocks;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
@@ -16,6 +17,7 @@ public class ItemChili extends ItemSeedFood{
 	public ItemChili() {
 		super(0, 0.5f, MinaBlocks.CHILI_CROP, Blocks.FARMLAND);
 		this.setAlwaysEdible();
+		this.setCreativeTab(CreativeTabs.FOOD);
 	}
 	
 	@Override

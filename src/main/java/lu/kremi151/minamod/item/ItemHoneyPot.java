@@ -27,6 +27,12 @@ public class ItemHoneyPot extends ItemFood{
 	}
 	
 	@Override
+	public Item getContainerItem()
+    {
+		return MinaItems.EMPTY_POT;
+    }
+	
+	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		String i = null;
 		switch(stack.getItemDamage()){

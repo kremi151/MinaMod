@@ -7,9 +7,15 @@ import lu.kremi151.minamod.capabilities.stats.types.StatTypes;
 import lu.kremi151.minamod.interfaces.IMixtureApplicator;
 import lu.kremi151.minamod.interfaces.IMixtureIngredient;
 import lu.kremi151.minamod.util.MinaUtils;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 public class ItemChiliPowder extends ItemChili implements IMixtureIngredient, IMixtureApplicator{
+	
+	public ItemChiliPowder() {
+		super();
+		this.setCreativeTab(CreativeTabs.MATERIALS);
+	}
 
 	@Override
 	public int getStatEffect(StatType stat) {

@@ -6,6 +6,7 @@ import java.util.function.ToIntFunction;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.interfaces.IEconomyValuable;
 import lu.kremi151.minamod.interfaces.IUnitEconomyValuable;
+import lu.kremi151.minamod.item.ItemGoldenCoin;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -134,8 +135,8 @@ public abstract class BaseInventoryCoinHandler implements ICoinHandler{
 		while(it.hasNext()) {
 			ItemStack stack = it.next();
 			if(stack.getItem() == MinaItems.GOLDEN_COIN) {//TODO: Make compatible with other items
-				final int unit = MinaItems.GOLDEN_COIN.getUnitCoinValue(stack);
-				final int value = MinaItems.GOLDEN_COIN.getCoinValue(stack);
+				final int unit = ItemGoldenCoin.getUnitCoinValue(stack);
+				final int value = ItemGoldenCoin.getCoinValue(stack);
 				if(amount <= value) {
 					int leftover = amount % unit;
 					int stackSize = stack.getCount() - (amount / unit);

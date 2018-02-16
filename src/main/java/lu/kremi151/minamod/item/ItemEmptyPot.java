@@ -4,6 +4,7 @@ import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.block.BlockHoneycomb;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 public class ItemEmptyPot extends Item{
 
 	public ItemEmptyPot(){
-		
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
 	@Override

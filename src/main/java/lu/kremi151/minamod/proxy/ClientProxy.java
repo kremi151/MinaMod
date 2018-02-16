@@ -52,6 +52,7 @@ import lu.kremi151.minamod.entity.EntityTurtle;
 import lu.kremi151.minamod.entity.EntityWookie;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.enums.EnumParticleEffect;
+import lu.kremi151.minamod.item.ItemColoredWrittenBook;
 import lu.kremi151.minamod.item.ItemHerbMixture;
 import lu.kremi151.minamod.item.ItemKey;
 import lu.kremi151.minamod.item.ItemSoulPearl;
@@ -180,7 +181,7 @@ public class ClientProxy extends CommonProxy {
 			return (ItemSoulPearl.checkIfTinted(stack)) ? stack.getTagCompound().getInteger("tint") : MinaUtils.COLOR_WHITE;
 		}, MinaItems.SOUL_PEARL);
 		ic.registerItemColorHandler((stack, tintIndex) -> {
-			return tintIndex == 0 ? MinaItems.COLORED_BOOK.getBookColor(stack) : MinaUtils.COLOR_WHITE;
+			return tintIndex == 0 ? ItemColoredWrittenBook.getBookColor(stack) : MinaUtils.COLOR_WHITE;
 		}, MinaItems.COLORED_BOOK);
 	}
 

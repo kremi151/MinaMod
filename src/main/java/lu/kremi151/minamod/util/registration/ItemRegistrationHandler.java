@@ -15,4 +15,8 @@ public abstract class ItemRegistrationHandler extends CommonRegistrationHandler<
 		submit();
 	}
 
+	public ItemRegistrationHandler autoname() {
+		this.obj.setUnlocalizedName(name);
+		return this;
+	}
 }

@@ -2,7 +2,7 @@ package lu.kremi151.minamod.capabilities.coinhandler;
 
 import java.util.ListIterator;
 
-import lu.kremi151.minamod.MinaItems;
+import lu.kremi151.minamod.item.ItemGoldenCoin;
 import lu.kremi151.minamod.util.MinaUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -23,7 +23,7 @@ public class EntityCoinHandler extends BaseInventoryCoinHandler{
 	@Override
 	protected void giveCoins(int amount) {
 		NonNullList<ItemStack> coinStacks = NonNullList.create();
-		MinaItems.GOLDEN_COIN.regroupToCoins(coinStacks, amount);
+		ItemGoldenCoin.regroupToCoins(coinStacks, amount);
 		ListIterator<ItemStack> it = coinStacks.listIterator();
 		if(entity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
 			IItemHandler inv = (IItemHandler) entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

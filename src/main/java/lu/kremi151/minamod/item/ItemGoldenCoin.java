@@ -1,5 +1,6 @@
 package lu.kremi151.minamod.item;
 
+import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.interfaces.IUnitEconomyValuable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -10,6 +11,7 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 
 	public ItemGoldenCoin() {
 		this.setHasSubtypes(true);
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
 	@Override
@@ -27,19 +29,19 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
         return super.getUnlocalizedName(stack) + (stack.getMetadata() == 1 ? ".five" : ".one");
     }
 	
-	public void regroupToCoins(NonNullList<ItemStack> coinStacks, int amount) {
+	public static void regroupToCoins(NonNullList<ItemStack> coinStacks, int amount) {
 		int fiveUnits = amount / 5;
 		int oneUnits = amount % 5;
 		while(fiveUnits > 0) {
-			ItemStack coinStack = new ItemStack(this, Math.min(fiveUnits, this.getItemStackLimit()), 1);
+			ItemStack coinStack = new ItemStack(MinaItems.GOLDEN_COIN, Math.min(fiveUnits, MinaItems.GOLDEN_COIN.getItemStackLimit()), 1);
 			fiveUnits -= coinStack.getCount();
 			coinStacks.add(coinStack);
 		}
-		coinStacks.add(new ItemStack(this, oneUnits, 0));
+		coinStacks.add(new ItemStack(MinaItems.GOLDEN_COIN, oneUnits, 0));
 	}
 	
-	public int getUnitCoinValue(ItemStack stack) {
-		if(stack.isEmpty() || stack.getItem() != this) {
+	public static int getUnitCoinValue(ItemStack stack) {
+		if(stack.isEmpty() || stack.getItem() != MinaItems.GOLDEN_COIN) {
 			throw new IllegalArgumentException();
 		}
 		switch(stack.getMetadata()) {
@@ -50,7 +52,7 @@ public class ItemGoldenCoin extends Item implements IUnitEconomyValuable{
 		}
 	}
 	
-	public int getCoinValue(ItemStack stack) {
+	public static int getCoinValue(ItemStack stack) {
 		return getUnitCoinValue(stack) * stack.getCount();
 	}
 

@@ -243,6 +243,11 @@ public class MinaMod {
 					}
 				}
 			}
+			try {
+				MinaItems.verifyObjectHolders();
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
