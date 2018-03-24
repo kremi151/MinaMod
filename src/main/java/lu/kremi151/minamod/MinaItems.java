@@ -2,12 +2,9 @@ package lu.kremi151.minamod;
 
 import java.lang.reflect.Field;
 
-import lu.kremi151.minamod.block.BlockCampbench;
 import lu.kremi151.minamod.block.BlockCustomStainedGlass;
-import lu.kremi151.minamod.block.BlockElevatorFloor;
 import lu.kremi151.minamod.block.BlockGiftBox;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
-import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockStool;
 import lu.kremi151.minamod.block.BlockTable;
 import lu.kremi151.minamod.item.ItemAmulet;
@@ -287,14 +284,14 @@ public class MinaItems {
 	private static void registerItemBlocks(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
 		BlockTable.registerTableItems(registry);
 		BlockStool.registerStoolItems(registry);
-		registry.register(new ItemBlockMulti<BlockMinaPlanks>(MinaBlocks.PLANKS, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.PLANKS.getRegistryName()), "mina_planks").variantNames(BlockMinaPlanks.EnumType.variantNamesPlanks).submit();
-		registry.register(new ItemBlockMulti<BlockMinaSapling>(MinaBlocks.SAPLING, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.SAPLING.getRegistryName()), "mina_sapling").variantNames(BlockMinaPlanks.EnumType.variantNamesSaplings).submit();
+		registry.register(new ItemBlockMulti(MinaBlocks.PLANKS, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.PLANKS.getRegistryName()), "mina_planks").variantNames(BlockMinaPlanks.EnumType.variantNamesPlanks).submit();
+		registry.register(new ItemBlockMulti(MinaBlocks.SAPLING, BlockMinaPlanks.EnumType.subVariantNames).setRegistryName(MinaBlocks.SAPLING.getRegistryName()), "mina_sapling").variantNames(BlockMinaPlanks.EnumType.variantNamesSaplings).submit();
 		registry.register(new ItemCloth(MinaBlocks.MILKY_GLASS).setRegistryName(MinaBlocks.MILKY_GLASS.getRegistryName()), "milky_glass").variantNames(BlockCustomStainedGlass.milkyGlassVariantNames).submit();
 		registry.register(new ItemCloth(MinaBlocks.LIT_MILKY_GLASS).setRegistryName(MinaBlocks.LIT_MILKY_GLASS.getRegistryName()), "lit_milky_glass").variantNames(BlockCustomStainedGlass.litMilkyGlassVariantNames).submit();
 		registry.register(new ItemBlockGiftBox(MinaBlocks.GIFT_BOX).setRegistryName(MinaBlocks.GIFT_BOX.getRegistryName()), "gift_box").variantNames(BlockGiftBox.getVariantNames("gift_box")).submit();
 		registry.register(new ItemBlockCombined(MinaBlocks.COBBLEBRICKS).setRegistryName(MinaBlocks.COBBLEBRICKS.getRegistryName()), "cobblebricks").variantNames("cobblebrick_stone", "cobblebrick_slab").submit();
-		registry.register(new ItemBlockMulti<BlockElevatorFloor>(MinaBlocks.ELEVATOR_FLOOR, "default", "jumper").setRegistryName(MinaBlocks.ELEVATOR_FLOOR.getRegistryName()), "elevator_floor").variantNames("elevator_floor", "elevator_jumper").submit();
-		registry.register(new ItemBlockMulti<BlockCampbench>(MinaBlocks.CAMPBENCH, "acacia", "birch", "dark_oak", "spruce").setRegistryName(MinaBlocks.CAMPBENCH.getRegistryName()), "campbench").variantNames("campbench_acacia", "campbench_birch", "campbench_dark_oak", "campbench_spruce").submit();
+		registry.register(new ItemBlockMulti(MinaBlocks.ELEVATOR_FLOOR, "default", "jumper").setRegistryName(MinaBlocks.ELEVATOR_FLOOR.getRegistryName()), "elevator_floor").variantNames("elevator_floor", "elevator_jumper").submit();
+		registry.register(new ItemBlockMulti(MinaBlocks.CAMPBENCH, "acacia", "birch", "dark_oak", "spruce").setRegistryName(MinaBlocks.CAMPBENCH.getRegistryName()), "campbench").variantNames("campbench_acacia", "campbench_birch", "campbench_dark_oak", "campbench_spruce").submit();
 		registry.register(new ItemBlockLeaves(MinaBlocks.MINA_LEAVES_A, MinaBlocks.MINA_LEAVES_A.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_A.getRegistryName()), "mina_leaves_a").variantNames(MinaBlocks.MINA_LEAVES_A.getVariantNames()).submit();
 		//registry.register(new ItemBlockMulti(MinaBlocks.MINA_LEAVES_B, MinaBlocks.MINA_LEAVES_B.getUnlocalizedNames()).setRegistryName(MinaBlocks.MINA_LEAVES_B.getRegistryName()), "mina_leaves_b", MinaBlocks.MINA_LEAVES_B.getVariantNames());
 		registry.register(new ItemBlockCombined(MinaBlocks.PALM_LEAVES).setRegistryName(MinaBlocks.PALM_LEAVES.getRegistryName()), "palm_leaves").variantNames("palm_leaf_stack", "palm_leaf").submit();

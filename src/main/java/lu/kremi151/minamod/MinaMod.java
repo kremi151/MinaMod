@@ -228,15 +228,19 @@ public class MinaMod {
 				if(net.minecraft.block.Block.class.isAssignableFrom(field.getType())){
 					try {
 						net.minecraft.block.Block theBlock = (Block) field.get(null);
-						Field blockHardness = Block.class.getDeclaredField("blockHardness");
-						Field blockResistance = Block.class.getDeclaredField("blockResistance");
-						blockHardness.setAccessible(true);
-						blockResistance.setAccessible(true);
-						if(((Float)blockHardness.get(theBlock)) == 0.0f){
-							System.out.println("### WARNING: No blockHardness parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
-						}
-						if(((Float)blockResistance.get(theBlock)) == 0.0f){
-							System.out.println("### WARNING: No blockResistance parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
+						if(theBlock != null) {
+							Field blockHardness = Block.class.getDeclaredField("blockHardness");
+							Field blockResistance = Block.class.getDeclaredField("blockResistance");
+							blockHardness.setAccessible(true);
+							blockResistance.setAccessible(true);
+							if(((Float)blockHardness.get(theBlock)) == 0.0f){
+								System.out.println("### WARNING: No blockHardness parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
+							}
+							if(((Float)blockResistance.get(theBlock)) == 0.0f){
+								System.out.println("### WARNING: No blockResistance parameter set for block " + theBlock.getRegistryName() + " (" + field.getName() + ")");
+							}
+						}else {
+							System.err.println("Found NULL block for MinaBlocks::" + field.getName());
 						}
 					} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 						e.printStackTrace();
@@ -245,6 +249,11 @@ public class MinaMod {
 			}
 			try {
 				MinaItems.verifyObjectHolders();
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			try {
+				MinaBlocks.verifyObjectHolders();
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

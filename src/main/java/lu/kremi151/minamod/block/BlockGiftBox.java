@@ -39,6 +39,7 @@ public class BlockGiftBox extends BlockColored{
 		super(Material.CLOTH);
 		setSoundType(SoundType.PLANT);
 		setCreativeTab(CreativeTabs.DECORATIONS);
+		setHardness(0.5f);
 	}
 	
     @SideOnly(Side.CLIENT)

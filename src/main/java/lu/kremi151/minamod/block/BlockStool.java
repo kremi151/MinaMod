@@ -5,13 +5,10 @@ import java.util.Iterator;
 
 import lu.kremi151.minamod.MinaBlocks;
 import lu.kremi151.minamod.MinaCreativeTabs;
-import lu.kremi151.minamod.interfaces.TriConsumer;
 import lu.kremi151.minamod.item.block.ItemBlockStool;
 import lu.kremi151.minamod.util.MinaUtils;
-import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
 import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -59,7 +56,7 @@ public class BlockStool extends BlockColored{
 		return stool_blocks.iterator();
 	}
 	
-	private static void registerStools(TriConsumer<BlockStool, String, String[]> consumer){
+	public static void registerStoolItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
 		EnumDyeColor[] colors = EnumDyeColor.values();
 		String[] vn_oak;
 		String[] vn_dark_oak;
@@ -74,17 +71,9 @@ public class BlockStool extends BlockColored{
 			vn_acacia[i] = colors[i].getName().toLowerCase() + "_stool_acacia";
 		}
 		
-    	consumer.accept(MinaBlocks.OAK_STOOL, "stool_oak", vn_oak);
-    	consumer.accept(MinaBlocks.DARK_OAK_STOOL, "stool_dark_oak", vn_dark_oak);
-    	consumer.accept(MinaBlocks.ACACIA_STOOL, "stool_acacia", vn_acacia);
-	}
-	
-	public static void registerStoolBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry){
-		registerStools((block, name, variantNames) -> registry.register(block, name).blockOnly().submit());
-	}
-	
-	public static void registerStoolItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
-		registerStools((block, name, variantNames) -> registry.register(new ItemBlockStool(block).setRegistryName(block.getRegistryName()), name).variantNames(variantNames).submit());
-	}
+		registry.register(new ItemBlockStool(MinaBlocks.OAK_STOOL).setRegistryName(MinaBlocks.OAK_STOOL.getRegistryName()), "stool_oak").variantNames(vn_oak).submit();
+		registry.register(new ItemBlockStool(MinaBlocks.DARK_OAK_STOOL).setRegistryName(MinaBlocks.DARK_OAK_STOOL.getRegistryName()), "stool_dark_oak").variantNames(vn_dark_oak).submit();
+		registry.register(new ItemBlockStool(MinaBlocks.ACACIA_STOOL).setRegistryName(MinaBlocks.ACACIA_STOOL.getRegistryName()), "stool_acacia").variantNames(vn_acacia).submit();
+    }
 	
 }

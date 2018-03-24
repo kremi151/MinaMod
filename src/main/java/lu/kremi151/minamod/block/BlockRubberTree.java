@@ -334,7 +334,7 @@ public class BlockRubberTree extends BlockBush implements IGrowable{
 			int z = (chunkZ * 16) + random.nextInt(16);
 			int y = MinaUtils.getHeightValue(world, x, z);
 			BlockPos pos = new BlockPos(x, y, z);
-			MinaBlocks.RUBBER_TREE.placeAt(world, pos, 7);
+			((BlockRubberTree)MinaBlocks.RUBBER_TREE).placeAt(world, pos, 7);
 		}
 		
 	}

@@ -3,6 +3,7 @@ package lu.kremi151.minamod.worldgen;
 import java.util.Random;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.block.BlockHerb;
 import lu.kremi151.minamod.block.tileentity.TileEntityHerbCrop;
 import lu.kremi151.minamod.enums.EnumHerb;
 import lu.kremi151.minamod.util.MinaUtils;
@@ -33,7 +34,7 @@ public class WorldGenRandomHerbs implements IWorldGenerator{
 			if(world.getBlockState(pos.down()).getBlock() != Blocks.GRASS)return;
 	    	boolean doGen = TerrainGen.decorate(world, random, pos, Decorate.EventType.FLOWERS);
 	    	EnumHerb eh = EnumHerb.getRandomNatural(random);
-	    	IBlockState plant = MinaBlocks.HERB_CROP.withAge(7);
+	    	IBlockState plant = ((BlockHerb)MinaBlocks.HERB_CROP).withAge(7);
 			if(world.isAirBlock(pos) && plant.getBlock().canPlaceBlockAt(world, pos) && doGen){
 				world.setBlockState(pos, plant);
 				TileEntityHerbCrop te = new TileEntityHerbCrop();

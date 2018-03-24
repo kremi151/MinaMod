@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaCreativeTabs;
-import lu.kremi151.minamod.interfaces.TriConsumer;
 import lu.kremi151.minamod.item.block.ItemBlockMulti;
-import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
 import lu.kremi151.minamod.util.registration.ItemRegistrationHandler;
 import net.minecraft.block.Block;
@@ -99,11 +97,11 @@ public class BlockTable extends Block{
 		return tables.iterator();
 	}
 	
-	private static void prepareRegistering(TriConsumer<BlockTable, String, String[]> consumer) {
+	public static void registerTableItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
 		for(int i = 0 ; i < tables.size() ; i++){
-			BlockTable t = tables.get(i);
-			String tname = t.getUnlocalizedName().substring(5);
-			String[] variantNames = new String[FORM_NAMES.length];
+			final BlockTable t = tables.get(i);
+			final String tname = t.getRegistryName().getResourcePath();
+			final String[] variantNames = new String[FORM_NAMES.length];
 			for(int j = 0 ; j < FORM_NAMES.length; j++){
 				if(j == 0){
 					variantNames[j] = tname;
@@ -111,17 +109,9 @@ public class BlockTable extends Block{
 					variantNames[j] = tname + "_" + FORM_NAMES[j];
 				}
 			}
-			consumer.accept(t, tname, variantNames);
+			registry.register(new ItemBlockMulti(t, FORM_NAMES).setRegistryName(t.getRegistryName()), tname).variantNames(variantNames).submit();
 			t.setCreativeTab(MinaCreativeTabs.FURNISHING);
 		}
-	}
-	
-	public static void registerTableBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry){
-		prepareRegistering((t, tname, variantNames) -> registry.register(t, tname).blockOnly().submit());
-	}
-	
-	public static void registerTableItems(IRegistrationInterface<Item, ItemRegistrationHandler> registry){
-		prepareRegistering((t, tname, variantNames) -> registry.register(new ItemBlockMulti<BlockTable>(t, FORM_NAMES).setRegistryName(t.getRegistryName()), tname).variantNames(variantNames).submit());
 	}
 	
 	public static void registerFireInfos(){

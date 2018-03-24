@@ -4,9 +4,9 @@ import lu.kremi151.minamod.block.BlockTable;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemMultiTexture;
 
-public class ItemBlockMulti<A extends Block> extends ItemMultiTexture{
+public class ItemBlockMulti extends ItemMultiTexture{
 
-	public ItemBlockMulti(A block, String... namesByMeta) { // NO_UCD (unused code)
+	public ItemBlockMulti(Block block, String... namesByMeta) {
 		super(block, block, namesByMeta);
 	}
 

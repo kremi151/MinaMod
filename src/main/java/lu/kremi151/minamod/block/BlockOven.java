@@ -28,8 +28,9 @@ public class BlockOven extends BlockCustomHorizontal{
 
 	public BlockOven() {
 		super(Material.IRON);
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(COOKING, false));
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(COOKING, false));
+		setHardness(3.5F);
 	}
 	
 	@Override

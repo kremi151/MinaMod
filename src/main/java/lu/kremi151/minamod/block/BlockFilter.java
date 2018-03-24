@@ -46,9 +46,11 @@ public class BlockFilter extends BlockContainer
     public BlockFilter()
     {
         super(Material.IRON, MapColor.GRAY);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN).withProperty(ENABLED, Boolean.valueOf(true)));
-        this.setCreativeTab(CreativeTabs.REDSTONE);
-        this.setSoundType(SoundType.METAL);
+        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN).withProperty(ENABLED, Boolean.valueOf(true)));
+        setCreativeTab(CreativeTabs.REDSTONE);
+        setSoundType(SoundType.METAL);
+        setHardness(3.0F);
+        setResistance(8.0F);
     }
 
     @Override

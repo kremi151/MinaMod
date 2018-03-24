@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
 import lu.kremi151.minamod.block.tileentity.TileEntityElevatorControl;
@@ -41,6 +42,7 @@ public class BlockElevatorControl extends Block{
 		setHardness(3.0F);
 		setResistance(5.0F);
 		setSoundType(SoundType.METAL);
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
 
 	@Override

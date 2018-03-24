@@ -33,8 +33,10 @@ public class BlockGenerator extends BlockCustomHorizontal{
 
 	public BlockGenerator() {
 		super(Material.IRON, MapColor.BLACK);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(HEATING, false));
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setDefaultState(this.blockState.getBaseState().withProperty(HEATING, false));
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setHardness(3.5f);
+		setResistance(6f);
 	}
 	
 	@Override

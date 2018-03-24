@@ -28,7 +28,9 @@ public class BlockCoalCompressor extends Block{
 
 	public BlockCoalCompressor() {
 		super(Material.IRON, MapColor.GRAY);
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setHardness(3.5f);
+		setResistance(6f);
 	}
 
     @Override

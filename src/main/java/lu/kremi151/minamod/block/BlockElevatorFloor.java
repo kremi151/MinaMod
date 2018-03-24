@@ -65,12 +65,12 @@ public class BlockElevatorFloor extends Block{
     }
 	
 	
-	public void jumpElevate(EntityLivingBase entity, boolean up){
+	public static void jumpElevate(EntityLivingBase entity, boolean up){
 		BlockPos origin = up ? entity.getPosition() : entity.getPosition().down(2);
 		for(int y = origin.getY() ; up?(y <= 255):(y >= 0) ;){
 			BlockPos pos = new BlockPos(origin.getX(), y, origin.getZ());
 			IBlockState state = entity.world.getBlockState(pos);
-			if(state.getBlock() == this && state.getValue(JUMPER)){
+			if(state.getBlock() == MinaBlocks.ELEVATOR_FLOOR && state.getValue(JUMPER)){
 				entity.setPositionAndUpdate(entity.posX, pos.getY() + 1.0, entity.posZ);
 				entity.setJumping(false);
 				break;
@@ -79,11 +79,11 @@ public class BlockElevatorFloor extends Block{
 		}
 	}
 	
-	public boolean checkCooldown(EntityLivingBase entity){
+	public static boolean checkCooldown(EntityLivingBase entity){
 		return (entity instanceof EntityPlayer) ? (System.currentTimeMillis() - MinaMod.getProxy().getCooldownDate("ejump", entity.getUniqueID()) >= 0) : true;
 	}
 	
-	public void setCooldown(EntityLivingBase entity){
+	public static void setCooldown(EntityLivingBase entity){
 		if(entity instanceof EntityPlayer)MinaMod.getProxy().setCooldownDate("ejump", entity.getUniqueID(), System.currentTimeMillis() + 500);
 	}
 	

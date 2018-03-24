@@ -20,7 +20,9 @@ public class BlockAutoCrafter extends BlockContainer{
 
 	public BlockAutoCrafter() {
 		super(Material.IRON, MapColor.BLACK);
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setHardness(3.0F);
+		setResistance(8.0F);
 	}
 
 	@Override

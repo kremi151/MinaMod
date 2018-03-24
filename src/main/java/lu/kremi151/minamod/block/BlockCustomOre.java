@@ -16,10 +16,23 @@ import net.minecraft.world.World;
 
 public class BlockCustomOre extends Block{
 
-    public BlockCustomOre()
+    public BlockCustomOre(int harvestLevel, float hardness, float resistance)
     {
         super(Material.ROCK);
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		this.setHarvestLevel("pickaxe", harvestLevel);
+		this.setHardness(hardness);
+		this.setResistance(resistance);
+		this.setSoundType(blockSoundType.STONE);
+    }
+
+    public BlockCustomOre(int harvestLevel)
+    {
+    	this(harvestLevel, 3.5f, 5.0f);
+    }
+    
+    public BlockCustomOre() {
+    	this(1);
     }
 
     @Override
@@ -33,6 +46,8 @@ public class BlockCustomOre extends Block{
     		return MinaItems.RUBY;
     	}else if(this == MinaBlocks.RARE_EARTH_ORE) {
     		return MinaItems.RARE_EARTH;
+    	}else if(this == MinaBlocks.COPPER_ORE) {
+    		return Item.getItemFromBlock(MinaBlocks.COPPER_ORE);
     	}else{
     		return Item.getItemFromBlock(this);
     	}

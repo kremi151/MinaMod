@@ -1,5 +1,7 @@
 package lu.kremi151.minamod;
 
+import java.lang.reflect.Field;
+
 import lu.kremi151.minamod.block.BlockAccumulator;
 import lu.kremi151.minamod.block.BlockAutoCrafter;
 import lu.kremi151.minamod.block.BlockAutoFeeder;
@@ -16,7 +18,6 @@ import lu.kremi151.minamod.block.BlockCoconut;
 import lu.kremi151.minamod.block.BlockCollector;
 import lu.kremi151.minamod.block.BlockCombined;
 import lu.kremi151.minamod.block.BlockCopperBlock;
-import lu.kremi151.minamod.block.BlockCopperOre;
 import lu.kremi151.minamod.block.BlockCustom;
 import lu.kremi151.minamod.block.BlockCustomAxis;
 import lu.kremi151.minamod.block.BlockCustomBush;
@@ -40,11 +41,9 @@ import lu.kremi151.minamod.block.BlockIceAltar;
 import lu.kremi151.minamod.block.BlockLetterbox;
 import lu.kremi151.minamod.block.BlockLock;
 import lu.kremi151.minamod.block.BlockMinaLeaf;
-import lu.kremi151.minamod.block.BlockMinaLeafBase;
 import lu.kremi151.minamod.block.BlockMinaPlanks;
 import lu.kremi151.minamod.block.BlockMinaSapling;
 import lu.kremi151.minamod.block.BlockMinaWoodSlab;
-import lu.kremi151.minamod.block.BlockMinaWoodStairs;
 import lu.kremi151.minamod.block.BlockNamieFlower;
 import lu.kremi151.minamod.block.BlockOven;
 import lu.kremi151.minamod.block.BlockPalmLeaves;
@@ -66,292 +65,284 @@ import lu.kremi151.minamod.util.FeatureList;
 import lu.kremi151.minamod.util.registration.BlockRegistrationHandler;
 import lu.kremi151.minamod.util.registration.IRegistrationInterface;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
+@ObjectHolder(MinaMod.MODID)
+public class MinaBlocks {
 
-public class MinaBlocks { // NO_UCD (unused code)
-
-	public static final BlockTable OAK_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("oak_table");
-	public static final BlockTable SPRUCE_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("spruce_table");
-	public static final BlockTable BIRCH_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("birch_table");
-	public static final BlockTable JUNGLE_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("jungle_table");
-	public static final BlockTable ACACIA_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("acacia_table");
-	public static final BlockTable DARK_OAK_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("dark_oak_table");
-	public static final BlockTable PEPPEL_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("peppel_table");
-	public static final BlockTable CHESTNUT_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("chestnut_table");
-	public static final BlockTable CHERRY_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("cherry_table");
-	public static final BlockTable COTTON_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Wood)
-			.setUnlocalizedName("cotton_table");
-	public static final BlockTable STONE_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Stone)
-			.setUnlocalizedName("stone_table");
-	public static final BlockTable IRON_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("iron_table");
-	public static final BlockTable GOLD_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("gold_table");
-	public static final BlockTable LAPIS_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("lapis_table");
-	public static final BlockTable OBSIDIAN_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("obsidian_table");
-	public static final BlockTable DIAMOND_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("diamond_table");
-	public static final BlockTable ICE_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("ice_table");
-	public static final BlockTable CITRIN_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("citrin_table");
-	public static final BlockTable SPONGE_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("sponge_table");
-	public static final BlockTable QUARTZ_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("quartz_table");
-	public static final BlockTable EMERALD_TABLE = (BlockTable) new BlockTable(BlockTable.TableType.Rare)
-			.setUnlocalizedName("emerald_table");
-	public static final BlockStool OAK_STOOL = (BlockStool) new BlockStool().setUnlocalizedName("stool");
-	public static final BlockStool DARK_OAK_STOOL = (BlockStool) new BlockStool().setUnlocalizedName("stool");
-	public static final BlockStool ACACIA_STOOL = (BlockStool) new BlockStool().setUnlocalizedName("stool");
-	public static final BlockNamieFlower NAMIE_FLOWER = new BlockNamieFlower();
-	public static final BlockCustomOre CITRIN_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
-			.setResistance(5.0F).setUnlocalizedName("citrin_ore");
-	public static final Block CITRIN_BLOCK = new BlockCustom(Material.IRON).setUnlocalizedName("citrin_block")
-			.setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final BlockHoneycomb HONEYCOMB = (BlockHoneycomb) new BlockHoneycomb()
-			.setUnlocalizedName("honeycomb");
-	public static final Block HONEY_CAKE = new BlockCustomCake().setUnlocalizedName("honeycake");
-	public static final BlockStrawberryCrop STRAWBERRY_CROP = new BlockStrawberryCrop();
-	public static final Block CHOCOLATE_CAKE = new BlockCustomCake().setUnlocalizedName("chocolatecake");
-	public static final Block STRAWBERRY_CAKE = new BlockCustomCake().setUnlocalizedName("strawberrycake");
-	public static final Block RHUBARB_PLANT = new BlockRhubarb().setUnlocalizedName("rhubarb_plant");
-	public static final Block CREEPER_CAKE = new BlockCustomCake().setFoodAmountPerSlice(4)
-			.setUnlocalizedName("creepercake");
-	public static final Block FROZEN_STONE = new BlockCustom(Material.ROCK).setUnlocalizedName("frozen_stone")
-			.setHardness(1.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final Block FROZEN_BRICK = new BlockCustom(Material.ROCK).setUnlocalizedName("frozen_brick")
-			.setHardness(3f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final Block FROZEN_GLOWSTONE = new BlockCustom(Material.GLASS).setSoundType(SoundType.GLASS)
-			.setUnlocalizedName("frozen_glowstone").setHardness(0.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
-			.setLightLevel(1f);
-	public static final Block BAMBUS_CROP = new BlockBambusCrop().setUnlocalizedName("bambus_crop");
-	public static final Block EVER_ICE_BLOCK = new BlockCustom(Material.ROCK).setSoundType(SoundType.GLASS).setUnlocalizedName("ever_ice")
-			.setHardness(8f).setResistance(11f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final Block RHUBARB_PIE = new BlockCustomCake().setBlockHeight(4f / 16f)
-			.setUnlocalizedName("rhubarbpie");
-	public static final Block LITTLE_BUSH = new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS).setUnlocalizedName("little_bush");
-	public static final Block OPAQUE_BUSH = new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS).setUnlocalizedName("opaque_bush");
-	public static final Block BAMBUS_BLOCK = new BlockCustomAxis(Material.CLOTH, MapColor.GRASS).setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
-			.setUnlocalizedName("bambus_block");
-	public static final BlockEffectBush EFFECT_BUSH = (BlockEffectBush) new BlockEffectBush()
-			.setUnlocalizedName("effect_bush");
-	public static final Block KEY_LOCK = new BlockLock().setUnlocalizedName("keylock");
-	public static final Block ICE_ALTAR = new BlockIceAltar().setUnlocalizedName("ice_altar")
-			.setCreativeTab(CreativeTabs.DECORATIONS);
-	public static final Block PLATINUM_ORE = new BlockCustomOre().setHardness(4.5F).setResistance(6.0F)
-			.setUnlocalizedName("platinum_ore");
-	public static final Block PLATINUM_BLOCK = new BlockCustom(Material.IRON).setUnlocalizedName("platinum_block")
-			.setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setHardness(3.5f).setResistance(6f);
-	public static final BlockMinaPlanks PLANKS = (BlockMinaPlanks) new BlockMinaPlanks().setSoundType(SoundType.WOOD).setHardness(2.0f).setResistance(5.0f).setUnlocalizedName("mina_planks");
-	public static final BlockStandaloneLog LOG_PEPPEL = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("log_peppel");
-	public static final BlockStandaloneLog LOG_COTTON = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("log_cotton");
-	public static final BlockStandaloneLog LOG_CHESTNUT = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("log_chestnut");
-	public static final BlockStandaloneLog LOG_CHERRY = (BlockStandaloneLog) new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("log_cherry");
-	public static final BlockPalmLog LOG_PALM = (BlockPalmLog) new BlockPalmLog(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("log_palm");
-	public static final BlockMinaLeaf MINA_LEAVES_A = (BlockMinaLeaf) new BlockMinaLeaf.A().setUnlocalizedName("mina_leaves_a");
+	public static final Block OAK_TABLE = null;
+	public static final Block SPRUCE_TABLE = null;
+	public static final Block BIRCH_TABLE = null;
+	public static final Block JUNGLE_TABLE = null;
+	public static final Block ACACIA_TABLE = null;
+	public static final Block DARK_OAK_TABLE = null;
+	public static final Block PEPPEL_TABLE = null;
+	public static final Block CHESTNUT_TABLE = null;
+	public static final Block CHERRY_TABLE = null;
+	public static final Block COTTON_TABLE = null;
+	public static final Block STONE_TABLE = null;
+	public static final Block IRON_TABLE = null;
+	public static final Block GOLD_TABLE = null;
+	public static final Block LAPIS_TABLE = null;
+	public static final Block OBSIDIAN_TABLE = null;
+	public static final Block DIAMOND_TABLE = null;
+	public static final Block ICE_TABLE = null;
+	public static final Block CITRIN_TABLE = null;
+	public static final Block SPONGE_TABLE = null;
+	public static final Block QUARTZ_TABLE = null;
+	public static final Block EMERALD_TABLE = null;
+	@ObjectHolder("stool_oak") public static final Block OAK_STOOL = null;
+	@ObjectHolder("stool_dark_oak") public static final Block DARK_OAK_STOOL = null;
+	@ObjectHolder("stool_acacia") public static final Block ACACIA_STOOL = null;
+	@ObjectHolder("namie_flower_crop") public static final Block NAMIE_FLOWER = null;
+	public static final Block CITRIN_ORE = null;
+	public static final Block CITRIN_BLOCK = null;
+	public static final Block HONEYCOMB = null;
+	@ObjectHolder("honeycake") public static final Block HONEY_CAKE = null;
+	public static final Block STRAWBERRY_CROP = null;
+	@ObjectHolder("chocolatecake") public static final Block CHOCOLATE_CAKE = null;
+	@ObjectHolder("strawberrycake") public static final Block STRAWBERRY_CAKE = null;
+	@ObjectHolder("rhubarb") public static final Block RHUBARB_PLANT = null;
+	@ObjectHolder("creepercake") public static final Block CREEPER_CAKE = null;
+	public static final Block FROZEN_STONE = null;
+	public static final Block FROZEN_BRICK = null;
+	public static final Block FROZEN_GLOWSTONE = null;
+	public static final Block BAMBUS_CROP = null;
+	@ObjectHolder("ever_ice") public static final Block EVER_ICE_BLOCK = null;
+	@ObjectHolder("rhubarbpie") public static final Block RHUBARB_PIE = null;
+	public static final Block LITTLE_BUSH = null;
+	public static final Block OPAQUE_BUSH = null;
+	public static final Block BAMBUS_BLOCK = null;
+	public static final Block EFFECT_BUSH = null;
+	@ObjectHolder("keylock") public static final Block KEY_LOCK = null;
+	public static final Block ICE_ALTAR = null;
+	public static final Block PLATINUM_ORE = null;
+	public static final Block PLATINUM_BLOCK = null;
+	@ObjectHolder("mina_planks") public static final Block PLANKS = null;
+	public static final Block LOG_PEPPEL = null;
+	public static final Block LOG_COTTON = null;
+	public static final Block LOG_CHESTNUT = null;
+	public static final Block LOG_CHERRY = null;
+	public static final Block LOG_PALM = null;
+	public static final BlockMinaLeaf MINA_LEAVES_A = null;
 	//public static final BlockMinaLeaf MINA_LEAVES_B = (BlockMinaLeaf) new BlockMinaLeaf.B().setUnlocalizedName("mina_leaves_b");
-	public static final BlockMinaLeafBase PALM_LEAVES = (BlockMinaLeafBase) new BlockPalmLeaves().setUnlocalizedName("palm_leaves");
-	public static final BlockMinaSapling SAPLING = (BlockMinaSapling) new BlockMinaSapling().setUnlocalizedName("mina_sapling");
-	public static final BlockMinaWoodSlab WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Half().setUnlocalizedName("woodSlab");
-	public static final BlockMinaWoodSlab DOUBLE_WOODEN_SLAB = (BlockMinaWoodSlab) new BlockMinaWoodSlab.Double().setUnlocalizedName("woodSlab");
-	public static final BlockMinaWoodStairs PEPPEL_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.PEPPEL).setUnlocalizedName("peppel_stairs");
-	public static final BlockMinaWoodStairs COTTON_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.COTTON).setUnlocalizedName("cotton_stairs");
-	public static final BlockMinaWoodStairs CHESTNUT_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.CHESTNUT).setUnlocalizedName("chestnut_stairs");
-	public static final BlockMinaWoodStairs CHERRY_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.CHERRY).setUnlocalizedName("cherry_stairs");
-	public static final BlockMinaWoodStairs PALM_STAIRS = (BlockMinaWoodStairs) new BlockMinaWoodStairs(BlockMinaPlanks.EnumType.PALM).setUnlocalizedName("palm_stairs");
+	public static final Block PALM_LEAVES = null;
+	@ObjectHolder("mina_sapling") public static final Block SAPLING = null;
+	@ObjectHolder("mina_wooden_slab") public static final BlockSlab WOODEN_SLAB = null;
+	@ObjectHolder("mina_double_wooden_slab") public static final BlockSlab DOUBLE_WOODEN_SLAB = null;
+	public static final Block PEPPEL_STAIRS = null;
+	public static final Block COTTON_STAIRS = null;
+	public static final Block CHESTNUT_STAIRS = null;
+	public static final Block CHERRY_STAIRS = null;
+	public static final Block PALM_STAIRS = null;
 	
-	public static final Block OAK_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_oak");
-	public static final Block SPRUCE_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_spruce");
-	public static final Block BIRCH_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_birch");
-	public static final Block JUNGLE_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_jungle");
-	public static final Block ACACIA_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_acacia");
-	public static final Block BIG_OAK_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_big_oak");
-	public static final Block CHESTNUT_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_chestnut");
-	public static final Block CHERRY_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_cherry");
-	public static final Block PEPPEL_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_peppel");
-	public static final Block COTTON_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_cotton");
-	public static final Block PALM_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_palm");
-	public static final Block BAMBUS_LETTERBOX = new BlockLetterbox().setUnlocalizedName("letterbox_bambus");
+	@ObjectHolder("letterbox_oak") public static final Block OAK_LETTERBOX = null;
+	@ObjectHolder("letterbox_spruce") public static final Block SPRUCE_LETTERBOX = null;
+	@ObjectHolder("letterbox_birch") public static final Block BIRCH_LETTERBOX = null;
+	@ObjectHolder("letterbox_jungle") public static final Block JUNGLE_LETTERBOX = null;
+	@ObjectHolder("letterbox_acacia") public static final Block ACACIA_LETTERBOX = null;
+	@ObjectHolder("letterbox_big_oak") public static final Block BIG_OAK_LETTERBOX = null;
+	@ObjectHolder("letterbox_chestnut") public static final Block CHESTNUT_LETTERBOX = null;
+	@ObjectHolder("letterbox_cherry") public static final Block CHERRY_LETTERBOX = null;
+	@ObjectHolder("letterbox_peppel") public static final Block PEPPEL_LETTERBOX = null;
+	@ObjectHolder("letterbox_cotton") public static final Block COTTON_LETTERBOX = null;
+	@ObjectHolder("letterbox_palm") public static final Block PALM_LETTERBOX = null;
+	@ObjectHolder("letterbox_bambus") public static final Block BAMBUS_LETTERBOX = null;
 	
-	public static final BlockCustomOre SAPPHIRE_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
-			.setResistance(5.0F).setUnlocalizedName("sapphire_ore");
-	public static final BlockCustomOre RUBY_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
-			.setResistance(5.0F).setUnlocalizedName("ruby_ore");
-	public static final Block SAPPHIRE_BLOCK = new BlockCustom(Material.IRON).setUnlocalizedName("sapphire_block")
-			.setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final Block RUBY_BLOCK = new BlockCustom(Material.IRON).setUnlocalizedName("ruby_block")
-			.setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-	public static final BlockElevatorFloor ELEVATOR_FLOOR = (BlockElevatorFloor) new BlockElevatorFloor()
-			.setUnlocalizedName("elevator_floor");
-	public static final Block ELEVATOR_CONTROL = new BlockElevatorControl()
-			.setCreativeTab(MinaCreativeTabs.TECHNOLOGY).setUnlocalizedName("elevator_control");
-	public static final BlockStairs FROZEN_BRICK_STAIRS = (BlockStairs) new BlockCustomStairs(MinaBlocks.FROZEN_BRICK.getDefaultState()).setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setUnlocalizedName("frozen_brick_stairs");
-	public static final BlockAutoFeeder AUTO_FEEDER = (BlockAutoFeeder) new BlockAutoFeeder().setUnlocalizedName("autofeeder");
-	public static final BlockRedstoneCrossroad REDSTONE_CROSSROAD = (BlockRedstoneCrossroad) new BlockRedstoneCrossroad().setUnlocalizedName("redstone_crossroad");
-	public static final BlockCable CABLE = (BlockCable) new BlockCable().setUnlocalizedName("cable");
-	public static final BlockWallCable WALL_CABLE = (BlockWallCable) new BlockWallCable().setUnlocalizedName("wall_cable");
-	public static final BlockCustomStainedGlass MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.3F).setUnlocalizedName("milky_glass");
-	public static final BlockCustomStainedGlass LIT_MILKY_GLASS = (BlockCustomStainedGlass) new BlockCustomStainedGlass().setHardness(0.5f).setUnlocalizedName("lit_milky_glass").setLightLevel(1f);
-	public static final BlockGiftBox GIFT_BOX = (BlockGiftBox) new BlockGiftBox().setHardness(0.5f).setUnlocalizedName("gift_box");
-	public static final BlockBerryCrop DOGE_CROP = (BlockBerryCrop) new BlockBerryCrop(BlockBerryCrop.BerryType.DOGE);
-	public static final BlockBerryCrop KEVIKUS_CROP = (BlockBerryCrop) new BlockBerryCrop(BlockBerryCrop.BerryType.KEVIKUS);
-	public static final BlockBerryCrop TRACIUS_CROP = (BlockBerryCrop) new BlockBerryCrop(BlockBerryCrop.BerryType.TRACIUS);
-	public static final BlockChiliCrop CHILI_CROP = (BlockChiliCrop) new BlockChiliCrop();
-	public static final BlockCombined COBBLEBRICKS = (BlockCombined) new BlockCombined(Material.ROCK).setSoundType(SoundType.STONE).setUnlocalizedName("cobblebrick_stone").setCreativeTab(CreativeTabs.DECORATIONS).setHardness(4.0F).setResistance(6.0F);
-	public static final BlockSlotMachine SLOT_MACHINE = (BlockSlotMachine) new BlockSlotMachine().setHardness(4.5F).setResistance(6.0F).setCreativeTab(MinaCreativeTabs.TECHNOLOGY).setUnlocalizedName("slot_machine");
-	public static final Block COLLECTOR = new BlockCollector().setUnlocalizedName("collector");
-	public static final BlockCampfire CAMPFIRE = (BlockCampfire) new BlockCampfire().setHardness(2.0f).setResistance(5.0f).setUnlocalizedName("campfire");
-	public static final BlockChair OAK_CHAIR = (BlockChair) new BlockChair().setUnlocalizedName("oak_chair");
-	public static final BlockSieve SIEVE = (BlockSieve) new BlockSieve().setUnlocalizedName("sieve");
-	public static final BlockHerb HERB_CROP = new BlockHerb();
-	public static final BlockCampbench CAMPBENCH = (BlockCampbench) new BlockCampbench().setUnlocalizedName("campbench");
-	public static final BlockQuicksand QUICKSAND = (BlockQuicksand) new BlockQuicksand().setUnlocalizedName("quicksand");
-	public static final BlockCoconut COCONUT = (BlockCoconut) new BlockCoconut().setUnlocalizedName("coconut");
-	public static final BlockDimmableLight DIMMABLE_LIGHT = (BlockDimmableLight) new BlockDimmableLight().setUnlocalizedName("dimmable_lamp");
-	public static final BlockRotatedPillar WABE_BLOCK = (BlockRotatedPillar) new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setUnlocalizedName("wabe_block").setCreativeTab(CreativeTabs.DECORATIONS);
-	public static final BlockFilter FILTER = (BlockFilter) new BlockFilter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("filter");
-	public static final BlockAutoCrafter AUTO_CRAFTER = (BlockAutoCrafter) new BlockAutoCrafter().setHardness(3.0F).setResistance(8.0F).setUnlocalizedName("autocrafter");
-	public static final BlockCustomOre RARE_EARTH_ORE = (BlockCustomOre) new BlockCustomOre().setHardness(4.0F)
-			.setResistance(5.0F);
-	public static final BlockPumpkinLantern PUMPKIN_LANTERN = (BlockPumpkinLantern) new BlockPumpkinLantern().setUnlocalizedName("pumpkin_lantern");
-	public static final BlockSolarPanel SOLAR_PANEL = (BlockSolarPanel) new BlockSolarPanel().setUnlocalizedName("solar_panel").setHardness(2.0F);
-	public static final BlockEnergyToRedstone ENERGY_TO_REDSTONE = (BlockEnergyToRedstone) new BlockEnergyToRedstone().setUnlocalizedName("etr_converter");
-	public static final BlockAccumulator ACCUMULATOR = (BlockAccumulator) new BlockAccumulator().setHardness(3.5F).setUnlocalizedName("accumulator");
-	public static final BlockOven OVEN = (BlockOven) new BlockOven().setHardness(3.5F).setUnlocalizedName("oven");
-	public static final BlockCopperOre COPPER_ORE = (BlockCopperOre) new BlockCopperOre().setUnlocalizedName("copper_ore");
-    public static final BlockCopperBlock COPPER_BLOCK = (BlockCopperBlock) new BlockCopperBlock().setUnlocalizedName("copper_block");
-    public static final BlockRubberTree RUBBER_TREE = (BlockRubberTree) new BlockRubberTree();
-    public static final BlockGenerator GENERATOR = (BlockGenerator) new BlockGenerator().setUnlocalizedName("generator").setHardness(3.5f).setResistance(6f);
-	public static final BlockCoalCompressor COMPRESSOR = (BlockCoalCompressor) new BlockCoalCompressor().setUnlocalizedName("coal_compressor").setHardness(3.5f).setResistance(6f);
-    public static final BlockGravestone GRAVESTONE = new BlockGravestone();
-    public static final BlockBook BOOK = new BlockBook();
+	public static final Block SAPPHIRE_ORE = null;
+	public static final Block RUBY_ORE = null;
+	public static final Block SAPPHIRE_BLOCK = null;
+	public static final Block RUBY_BLOCK = null;
+	public static final Block ELEVATOR_FLOOR = null;
+	public static final Block ELEVATOR_CONTROL = null;
+	public static final Block FROZEN_BRICK_STAIRS = null;
+	@ObjectHolder("autofeeder") public static final Block AUTO_FEEDER = null;
+	public static final Block REDSTONE_CROSSROAD = null;
+	public static final BlockCable CABLE = null;
+	public static final Block WALL_CABLE = null;
+	@ObjectHolder("milky_glass") public static final BlockCustomStainedGlass MILKY_GLASS = null;
+	public static final Block LIT_MILKY_GLASS = null;
+	public static final Block GIFT_BOX = null;
+	public static final Block DOGE_CROP = null;
+	public static final Block KEVIKUS_CROP = null;
+	public static final Block TRACIUS_CROP = null;
+	public static final Block CHILI_CROP = null;
+	@ObjectHolder("cobblebrick_stone") public static final Block COBBLEBRICKS = null;
+	public static final Block SLOT_MACHINE = null;
+	public static final Block COLLECTOR = null;
+	public static final Block CAMPFIRE = null;
+	public static final Block OAK_CHAIR = null;
+	public static final Block SIEVE = null;
+	@ObjectHolder("herb") public static final Block HERB_CROP = null;
+	public static final Block CAMPBENCH = null;
+	public static final Block QUICKSAND = null;
+	public static final Block COCONUT = null;
+	@ObjectHolder("dimmable_lamp") public static final Block DIMMABLE_LIGHT = null;
+	public static final Block WABE_BLOCK = null;
+	public static final Block FILTER = null;
+	@ObjectHolder("autocrafter") public static final Block AUTO_CRAFTER = null;
+	public static final Block RARE_EARTH_ORE = null;
+	public static final Block PUMPKIN_LANTERN = null;
+	public static final Block SOLAR_PANEL = null;
+	@ObjectHolder("etr_converter") public static final Block ENERGY_TO_REDSTONE = null;
+	public static final Block ACCUMULATOR = null;
+	public static final Block OVEN = null;
+	public static final Block COPPER_ORE = null;
+    public static final Block COPPER_BLOCK = null;
+    public static final Block RUBBER_TREE = null;
+    public static final Block GENERATOR = null;
+	@ObjectHolder("coal_compressor") public static final Block COMPRESSOR = null;
+    public static final Block GRAVESTONE = null;
+    public static final Block BOOK = null;
+    
+    private static void registerTable(IRegistrationInterface<Block, BlockRegistrationHandler> registry, BlockTable.TableType type, String name) {
+    	registry.register(new BlockTable(BlockTable.TableType.Wood), name).autoname().blockOnly().submit();
+    }
 	
 	static void registerBlocks(IRegistrationInterface<Block, BlockRegistrationHandler> registry) {
-		BlockTable.registerTableBlocks(registry);
-		BlockStool.registerStoolBlocks(registry);
+		registerTable(registry, BlockTable.TableType.Wood, "oak_table");
+		registerTable(registry, BlockTable.TableType.Wood, "spruce_table");
+		registerTable(registry, BlockTable.TableType.Wood, "birch_table");
+		registerTable(registry, BlockTable.TableType.Wood, "jungle_table");
+		registerTable(registry, BlockTable.TableType.Wood, "acacia_table");
+		registerTable(registry, BlockTable.TableType.Wood, "dark_oak_table");
+		registerTable(registry, BlockTable.TableType.Wood, "peppel_table");
+		registerTable(registry, BlockTable.TableType.Wood, "chestnut_table");
+		registerTable(registry, BlockTable.TableType.Wood, "cherry_table");
+		registerTable(registry, BlockTable.TableType.Wood, "cotton_table");
+		registerTable(registry, BlockTable.TableType.Stone, "stone_table");
+		registerTable(registry, BlockTable.TableType.Rare, "iron_table");
+		registerTable(registry, BlockTable.TableType.Rare, "gold_table");
+		registerTable(registry, BlockTable.TableType.Rare, "lapis_table");
+		registerTable(registry, BlockTable.TableType.Rare, "obsidian_table");
+		registerTable(registry, BlockTable.TableType.Rare, "diamond_table");
+		registerTable(registry, BlockTable.TableType.Rare, "ice_table");
+		registerTable(registry, BlockTable.TableType.Rare, "citrin_table");
+		registerTable(registry, BlockTable.TableType.Rare, "sponge_table");
+		registerTable(registry, BlockTable.TableType.Rare, "quartz_table");
+		registerTable(registry, BlockTable.TableType.Rare, "emerald_table");
 
-		registry.register(NAMIE_FLOWER, "namie_flower_crop").blockOnly().submit();
-		registry.register(CITRIN_ORE, "citrin_ore").ore("oreCitrin").submit();
-		registry.register(CITRIN_BLOCK, "citrin_block").ore("blockCitrin").submit();
-		registry.register(HONEYCOMB, "honeycomb").ore("honeycomb").submit();
-		registry.register(HONEY_CAKE, "honeycake").submit();
-		registry.register(STRAWBERRY_CROP, "strawberry_crop").submit();
-		registry.register(STRAWBERRY_CAKE, "strawberrycake").submit();
-		registry.register(CHOCOLATE_CAKE, "chocolatecake").submit();
-		registry.register(RHUBARB_PLANT, "rhubarb").blockOnly().submit();
-		registry.register(CREEPER_CAKE, "creepercake").submit();
-		registry.register(FROZEN_STONE, "frozen_stone").submit();
-		registry.register(FROZEN_BRICK, "frozen_brick").submit();
-		registry.register(FROZEN_GLOWSTONE, "frozen_glowstone").submit();
-		BlockCustomStairs.registerStairBlocks(registry);
-		registry.register(BAMBUS_CROP, "bambus_crop").blockOnly().submit();
-		registry.register(EVER_ICE_BLOCK, "ever_ice").submit();
-		registry.register(RHUBARB_PIE, "rhubarbpie").submit();
-		registry.register(LITTLE_BUSH, "little_bush").submit();
-		registry.register(OPAQUE_BUSH, "opaque_bush").submit();
-		registry.register(BAMBUS_BLOCK, "bambus_block").submit();
-		registry.register(EFFECT_BUSH, "effect_bush").blockOnly().submit();
-		registry.register(KEY_LOCK, "keylock").submit();
-		if(FeatureList.enable_ice_altar){
-			registry.register(ICE_ALTAR, "ice_altar").submit();
-		}
-		registry.register(PLATINUM_ORE, "platinum_ore").ore("orePlatinum").submit();
-		registry.register(PLATINUM_BLOCK, "platinum_block").ore("blockPlatinum").submit();
-		registry.register(PLANKS, "mina_planks").blockOnly().submit();
-		registry.register(LOG_PEPPEL, "log_peppel").submit();
-		registry.register(LOG_COTTON, "log_cotton").submit();
-		registry.register(LOG_CHESTNUT, "log_chestnut").submit();
-		registry.register(LOG_CHERRY, "log_cherry").submit();
-		registry.register(MINA_LEAVES_A, "mina_leaves_a").blockOnly().submit();
-		//proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
-		registry.register(PALM_LEAVES, "palm_leaves").blockOnly().submit();
-		registry.register(SAPLING, "mina_sapling").blockOnly().submit();
-		registry.register(HERB_CROP, "herb").blockOnly().submit();
+		registry.register(new BlockStool().setUnlocalizedName("stool"), "stool_oak").blockOnly().submit();
+		registry.register(new BlockStool().setUnlocalizedName("stool"), "stool_dark_oak").blockOnly().submit();
+		registry.register(new BlockStool().setUnlocalizedName("stool"), "stool_acacia").blockOnly().submit();
+
+		registry.register(new BlockNamieFlower(), "namie_flower_crop").blockOnly().submit();
+		registry.register(new BlockCustomOre(2), "citrin_ore").autoname().ore("oreCitrin").submit();
+		registry.register(new BlockCustom(Material.IRON).setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "citrin_block").autoname().ore("blockCitrin").submit();
+		registry.register(new BlockHoneycomb(), "honeycomb").autoname().ore("honeycomb").submit();
+		registry.register(new BlockCustomCake(), "honeycake").autoname().submit();
+		registry.register(new BlockStrawberryCrop(), "strawberry_crop").blockOnly().submit();
+		registry.register(new BlockCustomCake(), "strawberrycake").autoname().submit();
+		registry.register(new BlockCustomCake(), "chocolatecake").autoname().submit();
+		registry.register(new BlockRhubarb(), "rhubarb").blockOnly().submit();
+		registry.register(new BlockCustomCake().setFoodAmountPerSlice(4), "creepercake").submit();
+		registry.register(new BlockCustom(Material.ROCK).setHardness(1.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "frozen_stone").autoname().submit();
+		registry.register(new BlockCustom(Material.GLASS).setSoundType(SoundType.GLASS).setHardness(0.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setLightLevel(1f), "frozen_glowstone").autoname().submit();
+
+		final Block frozenBrick = new BlockCustom(Material.ROCK).setHardness(3f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		registry.register(frozenBrick, "frozen_brick").autoname().submit();
+		registry.register(new BlockCustomStairs(frozenBrick.getDefaultState()).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "frozen_brick_stairs").autoname().submit();
 		
-		registry.register(OAK_LETTERBOX, "letterbox_oak").submit();
-		registry.register(SPRUCE_LETTERBOX, "letterbox_spruce").submit();
-		registry.register(BIRCH_LETTERBOX, "letterbox_birch").submit();
-		registry.register(JUNGLE_LETTERBOX, "letterbox_jungle").submit();
-		registry.register(ACACIA_LETTERBOX, "letterbox_acacia").submit();
-		registry.register(BIG_OAK_LETTERBOX, "letterbox_big_oak").submit();
-		registry.register(CHESTNUT_LETTERBOX, "letterbox_chestnut").submit();
-		registry.register(CHERRY_LETTERBOX, "letterbox_cherry").submit();
-		registry.register(PEPPEL_LETTERBOX, "letterbox_peppel").submit();
-		registry.register(COTTON_LETTERBOX, "letterbox_cotton").submit();
-		registry.register(PALM_LETTERBOX, "letterbox_palm").submit();
-		registry.register(BAMBUS_LETTERBOX, "letterbox_bambus").submit();
-		registry.register(RUBY_ORE, "ruby_ore").ore("oreRuby").submit();
-		registry.register(SAPPHIRE_ORE, "sapphire_ore").ore("oreSapphire").submit();
-		registry.register(RUBY_BLOCK, "ruby_block").ore("blockRuby").submit();
-		registry.register(SAPPHIRE_BLOCK, "sapphire_block").ore("blockSapphire").submit();
-		registry.register(ELEVATOR_FLOOR, "elevator_floor").blockOnly().submit();
-		registry.register(ELEVATOR_CONTROL, "elevator_control").submit();
-		registry.register(AUTO_FEEDER, "autofeeder").submit();
-		if(FeatureList.enable_redstone_crossroad){
-			registry.register(REDSTONE_CROSSROAD, "redstone_crossroad").submit();
+		registry.register(new BlockBambusCrop(), "bambus_crop").blockOnly().submit();
+		registry.register(new BlockCustom(Material.ROCK).setSoundType(SoundType.GLASS).setHardness(8f).setResistance(11f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "ever_ice").autoname().submit();
+		registry.register(new BlockCustomCake().setBlockHeight(4f / 16f), "rhubarbpie").autoname().submit();
+		registry.register(new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS), "little_bush").autoname().submit();
+		registry.register(new BlockCustomBush().setCreativeTab(CreativeTabs.DECORATIONS), "opaque_bush").autoname().submit();
+		registry.register(new BlockCustomAxis(Material.CLOTH, MapColor.GRASS).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "bambus_block").autoname().submit();
+		registry.register(new BlockEffectBush(), "effect_bush").blockOnly().submit();
+		registry.register(new BlockLock(), "keylock").autoname().submit();
+		if(FeatureList.enable_ice_altar){
+			registry.register(new BlockIceAltar().setCreativeTab(CreativeTabs.DECORATIONS), "ice_altar").autoname().submit();
 		}
-		registry.register(MILKY_GLASS, "milky_glass").blockOnly().submit();
-		registry.register(LIT_MILKY_GLASS, "lit_milky_glass").blockOnly().submit();
-		registry.register(GIFT_BOX, "gift_box").blockOnly().submit();
-		registry.register(DOGE_CROP, "doge_crop").blockOnly().submit();
-		registry.register(KEVIKUS_CROP, "kevikus_crop").blockOnly().submit();
-		registry.register(TRACIUS_CROP, "tracius_crop").blockOnly().submit();
-		registry.register(CHILI_CROP, "chili_crop").blockOnly().submit();
-		registry.register(COBBLEBRICKS, "cobblebrick_stone").blockOnly().submit();
-		registry.register(COLLECTOR, "collector").submit();
-		registry.register(CAMPFIRE, "campfire").submit();
-		registry.register(SLOT_MACHINE, "slot_machine").submit();
-		if(FeatureList.enable_chairs)registry.register(OAK_CHAIR, "oak_chair").submit();
-		registry.register(SIEVE, "sieve").submit();
-		registry.register(CAMPBENCH, "campbench").blockOnly().submit();
-		registry.register(QUICKSAND, "quicksand").submit();
-		registry.register(LOG_PALM, "log_palm").submit();
-		registry.register(WOODEN_SLAB, "mina_wooden_slab").blockOnly().submit();
-		registry.register(DOUBLE_WOODEN_SLAB, "mina_double_wooden_slab").blockOnly().submit();
-		registry.register(PEPPEL_STAIRS, "peppel_stairs").submit();
-		registry.register(COTTON_STAIRS, "cotton_stairs").submit();
-		registry.register(CHESTNUT_STAIRS, "chestnut_stairs").submit();
-		registry.register(CHERRY_STAIRS, "cherry_stairs").submit();
-		registry.register(PALM_STAIRS, "palm_stairs").submit();
-		registry.register(COCONUT, "coconut").ore("coconut").submit();
-		registry.register(DIMMABLE_LIGHT, "dimmable_lamp").submit();
-		registry.register(WABE_BLOCK, "wabe_block").submit();
-		registry.register(FILTER, "filter").submit();
-		registry.register(AUTO_CRAFTER, "autocrafter").submit();
-		registry.register(RARE_EARTH_ORE, "rare_earth_ore").blockOnly().submit();
-		registry.register(PUMPKIN_LANTERN, "pumpkin_lantern").submit();
-		registry.register(CABLE, "cable").blockOnly().submit();
-		registry.register(WALL_CABLE, "wall_cable").blockOnly().submit();
-		registry.register(SOLAR_PANEL, "solar_panel").submit();
-		registry.register(ENERGY_TO_REDSTONE, "etr_converter").submit();
-		registry.register(ACCUMULATOR, "accumulator").submit();
-		registry.register(OVEN, "oven").submit();
-		registry.register(COPPER_ORE, "copper_ore").ore("oreCopper").submit();
-		registry.register(COPPER_BLOCK, "copper_block").ore("blockCopper").submit();
-		registry.register(RUBBER_TREE, "rubber_tree").blockOnly().submit();
-		registry.register(GENERATOR, "generator").submit();
-		registry.register(COMPRESSOR, "coal_compressor").submit();
-		registry.register(GRAVESTONE, "gravestone").blockOnly().submit();
-		registry.register(BOOK, "book").blockOnly().submit();
+		registry.register(new BlockCustomOre(2, 4.5f, 6.0f), "platinum_ore").autoname().ore("orePlatinum").submit();
+		registry.register(new BlockCustom(Material.IRON).setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setHardness(3.5f).setResistance(6f), "platinum_block").autoname().ore("blockPlatinum").submit();
+		registry.register(new BlockStandaloneLog(BlockMinaPlanks.EnumType.PEPPEL), "log_peppel").autoname().submit();
+		registry.register(new BlockStandaloneLog(BlockMinaPlanks.EnumType.COTTON), "log_cotton").autoname().submit();
+		registry.register(new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHESTNUT), "log_chestnut").autoname().submit();
+		registry.register(new BlockStandaloneLog(BlockMinaPlanks.EnumType.CHERRY), "log_cherry").autoname().submit();
+		registry.register(new BlockMinaLeaf.A(), "mina_leaves_a").autoname().blockOnly().submit();
+		//proxy.registerBlockOnly(MINA_LEAVES_B, "mina_leaves_b");
+		registry.register(new BlockPalmLeaves(), "palm_leaves").autoname().blockOnly().submit();
+		registry.register(new BlockMinaSapling(), "mina_sapling").autoname().blockOnly().submit();
+		registry.register(new BlockHerb(), "herb").blockOnly().submit();
+		
+		registry.register(new BlockLetterbox(), "letterbox_oak").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_spruce").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_birch").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_jungle").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_acacia").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_big_oak").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_chestnut").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_cherry").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_peppel").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_cotton").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_palm").autoname().submit();
+		registry.register(new BlockLetterbox(), "letterbox_bambus").autoname().submit();
+		registry.register(new BlockCustomOre(), "ruby_ore").autoname().ore("oreRuby").submit();
+		registry.register(new BlockCustomOre(), "sapphire_ore").autoname().ore("oreSapphire").submit();
+		registry.register(new BlockCustom(Material.IRON).setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "ruby_block").autoname().ore("blockRuby").submit();
+		registry.register(new BlockCustom(Material.IRON).setHardness(3.5F).setResistance(5.5F).setLightLevel(2.5f).setCreativeTab(CreativeTabs.BUILDING_BLOCKS), "sapphire_block").autoname().ore("blockSapphire").submit();
+		registry.register(new BlockElevatorFloor(), "elevator_floor").autoname().blockOnly().submit();
+		registry.register(new BlockElevatorControl(), "elevator_control").autoname().submit();
+		registry.register(new BlockAutoFeeder(), "autofeeder").autoname().submit();
+		if(FeatureList.enable_redstone_crossroad){
+			registry.register(new BlockRedstoneCrossroad(), "redstone_crossroad").autoname().submit();
+		}
+		registry.register(new BlockCustomStainedGlass().setHardness(0.3F), "milky_glass").autoname().blockOnly().submit();
+		registry.register(new BlockCustomStainedGlass().setHardness(0.5f).setLightLevel(1f), "lit_milky_glass").autoname().blockOnly().submit();
+		registry.register(new BlockGiftBox(), "gift_box").autoname().blockOnly().submit();
+		registry.register(new BlockBerryCrop(BlockBerryCrop.BerryType.DOGE), "doge_crop").blockOnly().submit();
+		registry.register(new BlockBerryCrop(BlockBerryCrop.BerryType.KEVIKUS), "kevikus_crop").blockOnly().submit();
+		registry.register(new BlockBerryCrop(BlockBerryCrop.BerryType.TRACIUS), "tracius_crop").blockOnly().submit();
+		registry.register(new BlockChiliCrop(), "chili_crop").blockOnly().submit();
+		registry.register(new BlockCombined(Material.ROCK).setSoundType(SoundType.STONE).setCreativeTab(CreativeTabs.DECORATIONS).setHardness(4.0F).setResistance(6.0F), "cobblebrick_stone").autoname().blockOnly().submit();
+		registry.register(new BlockCollector(), "collector").autoname().submit();
+		registry.register(new BlockCampfire(), "campfire").autoname().submit();
+		registry.register(new BlockSlotMachine(), "slot_machine").autoname().submit();
+		if(FeatureList.enable_chairs)registry.register(new BlockChair(), "oak_chair").autoname().submit();
+		registry.register(new BlockSieve(), "sieve").autoname().submit();
+		registry.register(new BlockCampbench(), "campbench").autoname().blockOnly().submit();
+		registry.register(new BlockQuicksand(), "quicksand").autoname().submit();
+		registry.register(new BlockPalmLog(BlockMinaPlanks.EnumType.PALM), "log_palm").autoname().submit();
+		registry.register(new BlockMinaWoodSlab.Half().setUnlocalizedName("woodSlab"), "mina_wooden_slab").blockOnly().submit();
+		registry.register(new BlockMinaWoodSlab.Double().setUnlocalizedName("woodSlab"), "mina_double_wooden_slab").blockOnly().submit();
+
+		final Block planks = new BlockMinaPlanks();
+		final IBlockState planksDefault = planks.getDefaultState();
+		registry.register(planks, "mina_planks").blockOnly().submit();
+		registry.register(new BlockCustomStairs(planksDefault.withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.PEPPEL)), "peppel_stairs").autoname().submit();
+		registry.register(new BlockCustomStairs(planksDefault.withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.COTTON)), "cotton_stairs").autoname().submit();
+		registry.register(new BlockCustomStairs(planksDefault.withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.CHESTNUT)), "chestnut_stairs").autoname().submit();
+		registry.register(new BlockCustomStairs(planksDefault.withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.CHERRY)), "cherry_stairs").autoname().submit();
+		registry.register(new BlockCustomStairs(planksDefault.withProperty(BlockMinaPlanks.VARIANT, BlockMinaPlanks.EnumType.PALM)), "palm_stairs").autoname().submit();
+		
+		registry.register(new BlockCoconut(), "coconut").autoname().ore("coconut").submit();
+		registry.register(new BlockDimmableLight(), "dimmable_lamp").autoname().submit();
+		registry.register(new BlockCustomRotatedPillar(Material.CLOTH, MapColor.BROWN).setCreativeTab(CreativeTabs.DECORATIONS), "wabe_block").autoname().submit();
+		registry.register(new BlockFilter(), "filter").autoname().submit();
+		registry.register(new BlockAutoCrafter(), "autocrafter").autoname().submit();
+		registry.register(new BlockCustomOre(), "rare_earth_ore").blockOnly().submit();
+		registry.register(new BlockPumpkinLantern(), "pumpkin_lantern").autoname().submit();
+		registry.register(new BlockCable(), "cable").autoname().blockOnly().submit();
+		registry.register(new BlockWallCable(), "wall_cable").autoname().blockOnly().submit();
+		registry.register(new BlockSolarPanel(), "solar_panel").autoname().submit();
+		registry.register(new BlockEnergyToRedstone(), "etr_converter").autoname().submit();
+		registry.register(new BlockAccumulator(), "accumulator").autoname().submit();
+		registry.register(new BlockOven(), "oven").autoname().submit();
+		registry.register(new BlockCustomOre(1, 4.0f, 5.0f), "copper_ore").autoname().ore("oreCopper").submit();
+		registry.register(new BlockCopperBlock(), "copper_block").autoname().ore("blockCopper").submit();
+		registry.register(new BlockRubberTree(), "rubber_tree").blockOnly().submit();
+		registry.register(new BlockGenerator(), "generator").autoname().submit();
+		registry.register(new BlockCoalCompressor(), "coal_compressor").autoname().submit();
+		registry.register(new BlockGravestone(), "gravestone").blockOnly().submit();
+		registry.register(new BlockBook(), "book").blockOnly().submit();
 	}
 
 	static void setFireInfos() {
@@ -369,5 +360,14 @@ public class MinaBlocks { // NO_UCD (unused code)
 		Blocks.FIRE.setFireInfo(BAMBUS_BLOCK, 6, 50);
 		Blocks.FIRE.setFireInfo(WOODEN_SLAB, 5, 20);
 		Blocks.FIRE.setFireInfo(DOUBLE_WOODEN_SLAB, 5, 20);
+	}
+	
+	public static void verifyObjectHolders() throws IllegalArgumentException, IllegalAccessException {
+		Field fields[] = MinaBlocks.class.getDeclaredFields();
+		for(Field field : fields) {
+			if(field.get(null) == null) {
+				System.err.println("ObjectHolder MinaBlocks::" + field.getName() + " is null");
+			}
+		}
 	}
 }

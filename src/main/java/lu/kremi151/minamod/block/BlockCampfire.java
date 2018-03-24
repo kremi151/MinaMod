@@ -43,10 +43,12 @@ public class BlockCampfire extends Block{
 
 	public BlockCampfire() {
 		super(Material.WOOD, MapColor.WOOD);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(IGNITED, false));
-		this.setSoundType(SoundType.WOOD);
-		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		this.setTickRandomly(true);
+		setDefaultState(this.blockState.getBaseState().withProperty(IGNITED, false));
+		setSoundType(SoundType.WOOD);
+		setCreativeTab(CreativeTabs.DECORATIONS);
+		setTickRandomly(true);
+		setHardness(2.0f);
+		setResistance(5.0f);
 	}
 	
 	@Override

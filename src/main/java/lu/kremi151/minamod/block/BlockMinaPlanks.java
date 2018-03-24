@@ -1,6 +1,7 @@
 package lu.kremi151.minamod.block;
 
 import lu.kremi151.minamod.util.MinaUtils;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -23,8 +24,11 @@ public class BlockMinaPlanks extends BlockCustom
     public BlockMinaPlanks()
     {
         super(Material.WOOD);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockMinaPlanks.EnumType.PEPPEL));
-        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockMinaPlanks.EnumType.PEPPEL));
+        setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        setHardness(2.0f);
+        setResistance(5.0f);
+        setSoundType(SoundType.WOOD);
     }
 
     /**

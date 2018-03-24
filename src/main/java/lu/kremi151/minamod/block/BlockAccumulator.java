@@ -26,7 +26,8 @@ public class BlockAccumulator extends BlockCustomHorizontal implements IDiagnosa
 
 	public BlockAccumulator() {
 		super(Material.IRON, MapColor.SNOW);
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setHardness(3.5F);
 	}
 	
 	@Override

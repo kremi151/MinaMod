@@ -90,12 +90,12 @@ public class EntityEvents {
 		IBlockState beneath = living.world.getBlockState(living.getPosition().down());
 		
 		if(BlockElevatorFloor.isValidJumpFloor(beneath)){
-			if(living.isSneaking() && MinaBlocks.ELEVATOR_FLOOR.checkCooldown(living)){
-				MinaBlocks.ELEVATOR_FLOOR.jumpElevate(living, false);
-				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
-			}else if(ReflectionLoader.EntityLivingBase_isJumping(living) && MinaBlocks.ELEVATOR_FLOOR.checkCooldown(living)){
-				MinaBlocks.ELEVATOR_FLOOR.jumpElevate(living, true);
-				MinaBlocks.ELEVATOR_FLOOR.setCooldown(living);
+			if(living.isSneaking() && BlockElevatorFloor.checkCooldown(living)){
+				BlockElevatorFloor.jumpElevate(living, false);
+				BlockElevatorFloor.setCooldown(living);
+			}else if(ReflectionLoader.EntityLivingBase_isJumping(living) && BlockElevatorFloor.checkCooldown(living)){
+				BlockElevatorFloor.jumpElevate(living, true);
+				BlockElevatorFloor.setCooldown(living);
 			}
 		}
 	}

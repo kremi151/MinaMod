@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import lu.kremi151.minamod.MinaBlocks;
+import lu.kremi151.minamod.MinaCreativeTabs;
 import lu.kremi151.minamod.MinaItems;
 import lu.kremi151.minamod.MinaMod;
 import lu.kremi151.minamod.MinaPermissions;
@@ -53,7 +54,10 @@ public class BlockSlotMachine extends BlockCustomHorizontal{
 
 	public BlockSlotMachine() {
 		super(Material.IRON);
-		this.setSoundType(SoundType.METAL);
+		setSoundType(SoundType.METAL);
+		setHardness(4.5F);
+		setResistance(6.0F);
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
 	}
 	
 	@Override

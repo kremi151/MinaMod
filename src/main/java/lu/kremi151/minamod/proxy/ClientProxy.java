@@ -206,8 +206,10 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(MinaBlocks.CAMPFIRE, new StateMap.Builder().ignore(BlockCampfire.IGNITED).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.HERB_CROP, new StateMap.Builder().ignore(BlockHerb.TYPE).build());
 		
-		ModelLoader.setCustomStateMapper(MinaBlocks.ICE_ALTAR,
-				new StateMap.Builder().ignore(BlockIceAltar.CAN_SPAWN_BOSS).build());
+		if(FeatureList.enable_ice_altar) {
+			ModelLoader.setCustomStateMapper(MinaBlocks.ICE_ALTAR,
+					new StateMap.Builder().ignore(BlockIceAltar.CAN_SPAWN_BOSS).build());
+		}
 		ModelLoader.setCustomStateMapper(MinaBlocks.HONEYCOMB,
 				new StateMap.Builder().ignore(BlockHoneycomb.HAS_BEES).build());
 		ModelLoader.setCustomStateMapper(MinaBlocks.LOG_PALM, 

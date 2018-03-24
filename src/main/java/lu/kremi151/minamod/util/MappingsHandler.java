@@ -22,6 +22,7 @@ public class MappingsHandler {
 	private static final ResourceLocation TRACIUS_SEEDS = new ResourceLocation(MODID, "tracius_seeds");
 	private static final ResourceLocation OLD_AMULET = new ResourceLocation(MODID, "amulet");
 	private static final ResourceLocation OLD_BAMBUS_ID = new ResourceLocation(MODID, "bambus_item");
+	private static final ResourceLocation STRAWBERRY_CROP_ITEM = new ResourceLocation(MODID, "strawberry_crop");
 
 	@SubscribeEvent
 	protected static void handleItemMappings(RegistryEvent.MissingMappings<Item> event){
@@ -44,6 +45,8 @@ public class MappingsHandler {
 			mapping.remap(MinaItems.AMULET_OF_ENDER);
 		}else if(mapping.key.equals(OLD_BAMBUS_ID)) {
 			mapping.remap(MinaItems.BAMBUS);
+		}else if(mapping.key.equals(STRAWBERRY_CROP_ITEM)) {
+			mapping.ignore();
 		}
 	}
 	

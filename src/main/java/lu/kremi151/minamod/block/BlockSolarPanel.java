@@ -22,8 +22,9 @@ public class BlockSolarPanel extends Block{
 
 	public BlockSolarPanel() {
 		super(Material.GLASS, MapColor.OBSIDIAN);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(POSITION, 0));
-		this.setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setDefaultState(this.blockState.getBaseState().withProperty(POSITION, 0));
+		setCreativeTab(MinaCreativeTabs.TECHNOLOGY);
+		setHardness(2.0F);
 	}
 
     @Override
